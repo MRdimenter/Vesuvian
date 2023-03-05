@@ -1,0 +1,24 @@
+.main-wrapper {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  background-color: #dee7c4;
+
+  flex: 1 0 auto
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.wrapper {
+  padding: 20px;
+}

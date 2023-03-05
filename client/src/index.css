@@ -1,0 +1,16 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+#container {
+  height: 100%;
+  border-collapse: collapse;
+
+  background-color: aqua;
+}
