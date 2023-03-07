@@ -6,6 +6,7 @@ volumes:
 
 services:
   postgres:
+    container_name:  keycloak_postgres_service
     image: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -16,6 +17,7 @@ services:
 
 
   keycloak:
+    container_name: keycloak 
     image: quay.io/keycloak/keycloak:21.0.1
     environment:
       DB_VENDOR: POSTGRES
