@@ -1,4 +1,7 @@
-# Проект Vesuvian 
+# Проект Vesuvian <img src="https://i.ibb.co/QpMVQZF/123.png" alt="MarineGEO circle logo" style="height: 25px; width:25x;"/>
+
+
+
 
 ## Основная идея
 
