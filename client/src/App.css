@@ -22,3 +22,8 @@
 .wrapper {
   padding: 20px;
 }
+
+.theme-dark {
+  padding: 20px;
+  color: blue;
+}

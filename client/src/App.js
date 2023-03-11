@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+//import { Provider } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import './App.css';
 
@@ -12,9 +14,12 @@ import Dashboard from './components/Dashboard/Dashboard';
 
 
 export const App = () => {
+  const isDarkModeEnabled = useSelector((state) => state.DarkMode);
+
   return (
+
     <BrowserRouter>
-      <div className='wrapper'>
+      <div className={!isDarkModeEnabled ? 'wrapper' : 'theme-dark'}>
         <Header />
         <div className='main-wrapper'>
           <Routes>
