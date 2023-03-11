@@ -5,7 +5,5 @@ const reducers = combineReducers({
   DarkMode: darkModeReducer
 })
 
-
-
 export default reducers;
 
