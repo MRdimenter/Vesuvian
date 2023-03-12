@@ -21,11 +21,12 @@
 ## Стек технологий
 
 1) React
-2) Spring Boot
-3) Keycloak
-4) Maven
-5) Postgres
-6) Docker 
+2) Redux
+3) Spring Boot
+4) Keycloak
+5) Maven
+6) Postgres
+7) Docker 
 
 
 
