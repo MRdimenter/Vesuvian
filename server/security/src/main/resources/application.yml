@@ -1,6 +1,15 @@
 server:
   port: 8090
+  ssl:
+    enabled: false # настройка для Spring что бы он использовал SSL
+
+
 spring:
   application:
     name: security
+  security:
+    oauth2:
+      resource-server:
+        jwt:
+          jwk-set-uri: http://localhost:8282/realms/dev/protocol/openid-connect/certs # ссылка на сертификаты authserver для проверки целостности access token
 
