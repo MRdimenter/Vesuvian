@@ -17,11 +17,23 @@ export const Header = () => {
     dispatch(darkModeAction());
   }
 
+  const runFetch = () => {
+    fetch('https://swapi.dev/api/people/1')
+      .then((response) => {
+        console.log('Got Response', response.status);
+        return response.json();
+      })
+      .then((body) => {
+        console.log(body);
+      })
+  }
+
   return (
     <div className='header'>
-      <Link to={'main'}>Main page</Link>
+      <Link to={'/'}>Main page</Link>
       <LoginButtons />
       <Button action={onChangeTheme} />
+      <Button label='fetch' action={runFetch} />
     </div>
   )
 }

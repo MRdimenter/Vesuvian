@@ -23,7 +23,7 @@ export const App = () => {
         <Header />
         <div className='main-wrapper'>
           <Routes>
-            <Route path='/main' element={<Main />} />
+            <Route path='/' element={<Main />} exact/>
             <Route path='/dashboard' element={<Dashboard />} />
             <Route path='/login' element={<Login />} />
           </Routes>
