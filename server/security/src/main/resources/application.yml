@@ -8,8 +8,11 @@ spring:
   application:
     name: security
   security:
+
     oauth2:
       resource-server:
         jwt:
           jwk-set-uri: http://localhost:8282/realms/dev/protocol/openid-connect/certs # ссылка на сертификаты authserver для проверки целостности access token
 
+
+clientURL: https://localhost:8080 # тестовый порт
