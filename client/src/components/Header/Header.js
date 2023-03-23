@@ -33,7 +33,10 @@ export const Header = () => {
    * grant type = PKCE
    */
   const runTestAuthorization = () => {
-      console.log("WORK")
+      // в будущем сохранять его где-то в глобальных переменных
+      // должен создаваться автоматически в фоновом режиме при авторизации  
+      const state = generateState(30)
+      console.log('unique string: ' + state)
   }
 
 
