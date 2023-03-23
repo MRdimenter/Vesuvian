@@ -34,7 +34,23 @@ export const Header = () => {
    */
   const runTestAuthorization = () => {
       console.log("WORK")
+  }
 
+
+  /**
+   * Метод возвращает уникальную рандомную строку
+   * необходим для сравнения с AuthServer
+   * помогает понять что сервер прислал ответ именно на наш запрос
+   * служит защитой от CSRF атак
+   */
+  const generateState = (length) => {
+      const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      const charLength = chars.length;
+      let result = '';
+      for ( var i = 0; i < length; i++ ) {
+          result += chars.charAt(Math.floor(Math.random() * charLength));
+      }
+      return result;
   }
 
   return (
