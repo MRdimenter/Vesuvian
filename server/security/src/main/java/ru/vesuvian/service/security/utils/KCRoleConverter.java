@@ -1,4 +1,4 @@
-package ru.vesuvian.service.security.security.utils;
+package ru.vesuvian.service.security.utils;
 
 
 import org.springframework.core.convert.converter.Converter;
