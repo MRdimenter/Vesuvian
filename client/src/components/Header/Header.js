@@ -28,12 +28,22 @@ export const Header = () => {
       })
   }
 
+  /**
+   * Получение Access Token c KeyCloak
+   * grant type = PKCE
+   */
+  const runTestAuthorization = () => {
+      console.log("WORK")
+
+  }
+
   return (
     <div className='header'>
       <Link to={'/'}>Main page</Link>
       <LoginButtons />
       <Button action={onChangeTheme} />
       <Button label='fetch' action={runFetch} />
+      <Button label= 'test authorization' action={runTestAuthorization} />
     </div>
   )
 }
