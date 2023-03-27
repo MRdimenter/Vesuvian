@@ -34,9 +34,11 @@ export const Header = () => {
    */
   const runTestAuthorization = () => {
       // в будущем сохранять его где-то в глобальных переменных
-      // должен создаваться автоматически в фоновом режиме при авторизации  
+      // должен создаваться автоматически в фоновом режиме при авторизации
       const state = generateState(30)
-      console.log('unique string: ' + state)
+      const codeVerifier = generateCodeVerifier();
+      console.log(`unique string: ${state}`)
+      console.log(`code verifier: ${codeVerifier}`)
   }
 
 
@@ -56,7 +58,20 @@ export const Header = () => {
       return result;
   }
 
-  return (
+    /**
+     * Криптографический ключ для отправки на сервер авторизации для получения токена
+     */
+  const generateCodeVerifier = () => {
+        const array = new Uint32Array(56 / 2);
+        window.crypto.getRandomValues(array);
+        return Array.from(array, dec2hex).join("");
+    }
+
+  const dec2hex = (dec) => {
+      return ("0" + dec.toString(16)).substr(-2);
+    }
+
+    return (
     <div className='header'>
       <Link to={'/'}>Main page</Link>
       <LoginButtons />
