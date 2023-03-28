@@ -11,7 +11,15 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import ru.vesuvian.service.security.utils.KCRoleConverter;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 // помечаем класс как конфиг для Spring
 @Configuration
@@ -51,6 +59,20 @@ public class SpringSecurityConfig {
                 .jwtAuthenticationConverter(jwtAuthenticationConverter); // добавляем конвертер ролей из JWT в Authority
 
         return httpSecurity.build();
+    }
+
+    /**
+     * Задаем настройки с каких конкретно сайтов мы можем получать запросы
+     */
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowedOrigins(Collections.singletonList(clientURL)); // на этот микросервис разрешаем запросы только от clientURL
+        corsConfiguration.setAllowedHeaders(List.of("*")); // указываем какие заголовки мы разрешаем в запросе
+        corsConfiguration.setAllowedMethods(List.of("*")); // указываем какие методы мы разрешаем в запросе (post, get, update, delete)
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfiguration);
+        return source;
     }
 
 }
