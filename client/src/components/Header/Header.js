@@ -11,6 +11,27 @@ import { Button } from '../Button/Button';
 
 export const Header = () => {
 
+  // FIXME: разобраться куда можно вынести локальный адрес
+  // если сервер авторизации запускается не на локальной машине 
+  // то использовать удаленный адрес 
+  const KEYCLOAK_URL = 'http://localhost:8282/realms/dev/protocol/openid-connect';
+
+  //адрес по которому auth server будет отправлять access token 
+  const AUTH_CODE_REDIRECT_URL = 'http://localhost:3000/redirect';
+  
+  // название дожно совпадать с клиентом ищ KeyCloak
+  const CLIENT_ID = 'app-dev-client';
+
+  // для получения authorization code
+  const RESPONSE_TYPE_CODE = 'code'; 
+
+  // какие данные хотите получить помимо access token (refresh token, id token)
+  const SCOPE = 'openid'; 
+  
+  // используется как параметр для метода шифрования 
+  const SHA_256 = 'SHA_256';
+  const S256 = 'S256';
+
   const dispatch = useDispatch();
 
   const onChangeTheme = () => {
@@ -38,6 +59,7 @@ export const Header = () => {
     const state = generateState(30);
     const codeVerifier = generateCodeVerifier();
     let codeChallenge = await generateCodeChallengeFromVerifier(codeVerifier).then((value) => {
+
       return value;
     });
 
@@ -45,6 +67,27 @@ export const Header = () => {
     console.log(`unique string: ${state}`);
     console.log(`code verifier: ${codeVerifier}`);
     console.log(`code challenge: ${codeChallenge}`);
+
+    requestAuthCode(state, codeChallenge);
+
+  }
+
+  /**
+   * Запрос на получение auth code 
+   * Который потом будет нужен для получения access token и других токенов 
+   */
+  const requestAuthCode = (state, codeChallenge) => {
+    let authURL = KEYCLOAK_URL + '/auth';
+    
+    authURL += '?response_type=' + RESPONSE_TYPE_CODE;
+    authURL += '&client_id=' + CLIENT_ID; // берем из auth server
+    authURL += '&state='  + state; // auth server сохранит это значение себе и отправит в следующем запросе
+    authURL += '&scope='  + SCOPE; // какие данные хотите получить от auth server 
+    authURL += '&code_challenge=' + codeChallenge
+    authURL += '&code_challenge_method=' + S256 // функция применяется к code_verifier 
+    authURL += '&redirect_uri=' + AUTH_CODE_REDIRECT_URL; // куда auth server будет отправлять ответ
+
+    window.open(authURL, 'auth window', 'width=800, height=800, left=350, top=208')
   }
 
 
