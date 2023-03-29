@@ -14,7 +14,7 @@ export const Header = () => {
   // FIXME: разобраться куда можно вынести локальный адрес
   // если сервер авторизации запускается не на локальной машине 
   // то использовать удаленный адрес 
-  const KEYCLOAK_URL = 'http://localhost:8282/realms/dev/protocol/openid-connect';
+  const KEYCLOAK_URL = 'http://45.141.103.134:8282/realms/dev/protocol/openid-connect';
 
   //адрес по которому auth server будет отправлять access token 
   const AUTH_CODE_REDIRECT_URL = 'http://localhost:3000/redirect';
@@ -50,6 +50,7 @@ export const Header = () => {
   }
 
   /**
+   * TODO: Переписать на @react-keycloak/web 
    * Получение Access Token c KeyCloak
    * grant type = PKCE
    */
@@ -59,7 +60,6 @@ export const Header = () => {
     const state = generateState(30);
     const codeVerifier = generateCodeVerifier();
     let codeChallenge = await generateCodeChallengeFromVerifier(codeVerifier).then((value) => {
-
       return value;
     });
 
@@ -87,7 +87,7 @@ export const Header = () => {
     authURL += '&code_challenge_method=' + S256 // функция применяется к code_verifier 
     authURL += '&redirect_uri=' + AUTH_CODE_REDIRECT_URL; // куда auth server будет отправлять ответ
 
-    window.open(authURL, 'auth window', 'width=800, height=800, left=350, top=208')
+    window.open(authURL, '_self')
   }
 
 
