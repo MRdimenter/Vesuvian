@@ -9,6 +9,7 @@ import { LoginButtons } from '../LoginButtons/LoginButtons';
 import { Button } from '../Button/Button';
 
 
+
 export const Header = () => {
 
   // FIXME: разобраться куда можно вынести локальный адрес
@@ -83,11 +84,11 @@ export const Header = () => {
     authURL += '&client_id=' + CLIENT_ID; // берем из auth server
     authURL += '&state='  + state; // auth server сохранит это значение себе и отправит в следующем запросе
     authURL += '&scope='  + SCOPE; // какие данные хотите получить от auth server 
-    authURL += '&code_challenge=' + codeChallenge
-    authURL += '&code_challenge_method=' + S256 // функция применяется к code_verifier 
+    authURL += '&code_challenge=' + codeChallenge;
+    authURL += '&code_challenge_method=' + S256; // функция применяется к code_verifier 
     authURL += '&redirect_uri=' + AUTH_CODE_REDIRECT_URL; // куда auth server будет отправлять ответ
 
-    window.open(authURL, '_self')
+    window.open(authURL, '_self');
   }
 
 
