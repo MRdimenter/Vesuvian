@@ -1,0 +1,18 @@
+@import "../../common/styles/color.scss";
+
+.side-bar {
+    border-radius: 25px;
+    background-color: orange;
+    width: 250px;
+    height: auto;
+
+    padding: 15px;
+}
+
+
+.theme-dark {
+    .side-bar {
+      background-color: #204532;
+      box-shadow: 10px 5px 13px $shadow,  0px 0px 40px -7px $dark-dark-green inset;
+    }
+  }

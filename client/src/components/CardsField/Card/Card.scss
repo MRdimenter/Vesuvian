@@ -1,0 +1,16 @@
+@import "../../../common/styles/color.scss";
+
+.card {
+    border: 5px solid #38613e;
+    border-radius: 10px;
+    
+    width: 170px;
+    height: 200px;
+}
+
+.theme-dark {
+    .card {
+      background-color: #204532;
+      box-shadow: 10px 5px 13px $shadow,  0px 0px 40px -7px $dark-dark-green inset;
+    }
+}

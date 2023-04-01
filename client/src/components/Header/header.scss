@@ -1,0 +1,30 @@
+@import "../../common/styles/color.scss";
+
+@mixin primary {
+  border-radius: 50vh;
+  background-color: orange;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 15px;
+}
+
+.header {
+  @include primary();
+}
+
+.theme-dark {
+  .header {
+    background-color: #204532;
+    box-shadow: 10px 5px 13px $shadow,  0px 0px 40px -7px $dark-dark-green inset;
+  }
+}
+
+.Logo {
+  margin-left: 30px;
+  text-decoration: none;
+  color: #63ba5b;
+  font-size: 24px;
+}

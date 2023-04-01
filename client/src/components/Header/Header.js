@@ -1,4 +1,4 @@
-import './header.css';
+import './header.scss';
 
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -150,11 +150,11 @@ export const Header = () => {
 
   return (
     <div className='header'>
-      <Link to={'/'}>Main page</Link>
+      <Link className='Logo' to={'/'}>Vesuvian :)</Link>
       <LoginButtons />
-      <Button action={onChangeTheme} />
+      <Button label='DarkMode' action={onChangeTheme} />
       <Button label='fetch' action={runFetch} />
-      <Button label='test authorization' action={runTestAuthorization} />
+      <Button label='test auth' action={runTestAuthorization} />
     </div>
   )
 }

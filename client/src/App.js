@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 //import { Provider } from 'react-redux';
 import { useSelector } from 'react-redux';
 
-import './App.css';
+import './App.scss';
 
 import { Main } from './components/Main/Main';
 import Login from './components/Login/Login';
@@ -20,7 +20,6 @@ export const App = () => {
   const isDarkModeEnabled = useSelector((state) => state.DarkMode);
 
   return (
-
     <BrowserRouter>
       <div className={!isDarkModeEnabled ? 'wrapper' : 'theme-dark'}>
         <Header />
@@ -34,8 +33,9 @@ export const App = () => {
           </Routes>
         </div>
 
-        <Footer />
+        
       </div>
+      <Footer />
     </BrowserRouter>
   );
 }

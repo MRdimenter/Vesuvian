@@ -1,0 +1,16 @@
+@import "../../common/styles/color.scss";
+
+.cards-field {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    width: 500px;
+    height: 500px;
+}
+
+.column {
+    display: flex;
+    justify-content: space-around;
+}

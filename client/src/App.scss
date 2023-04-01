@@ -1,0 +1,25 @@
+@import "./common/styles/color.scss";
+
+@mixin primary {
+    padding: 10px;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: #dee7c4;
+
+    flex: 1 0 auto
+}
+
+.main-wrapper {
+    margin-top: 20px;
+}
+
+.wrapper {
+  }
+  
+.theme-dark {
+    @include primary();
+    background: linear-gradient(135deg, $dark-green, 15%, $dark-dark-green);
+}

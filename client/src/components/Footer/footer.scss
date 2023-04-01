@@ -1,0 +1,12 @@
+@import "../../common/styles/color.scss";
+
+.footer {
+  position: relative;
+  bottom: 0;
+
+  height: 70px;
+  width: 100%;
+
+  background-color: $grey;
+  box-shadow: 0px 0px 40px -7px $dark-dark-green inset;
+}
