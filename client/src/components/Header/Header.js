@@ -154,7 +154,7 @@ export const Header = () => {
       <LoginButtons />
       <Button label='DarkMode' action={onChangeTheme} />
       <Button label='fetch' action={runFetch} />
-      <Button label='test auth' action={runTestAuthorization} />
+      <Button label='test auth 2' action={runTestAuthorization} />
     </div>
   )
 }
