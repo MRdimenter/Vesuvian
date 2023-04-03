@@ -78,7 +78,8 @@ export const Header = () => {
    * Который потом будет нужен для получения access token и других токенов 
    */
   const requestAuthCode = (state, codeChallenge) => {
-    let authURL = KEYCLOAK_URL + '/auth';
+    //let authURL = KEYCLOAK_URL + '/auth';
+    let authURL = 'http://localhost:3000/login';
     
     authURL += '?response_type=' + RESPONSE_TYPE_CODE;
     authURL += '&client_id=' + CLIENT_ID; // берем из auth server

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 //import { Provider } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -18,6 +18,7 @@ import OAuth2Popup from './components/OAuthPopup/OAuth2Popup'
 
 export const App = () => {
   const isDarkModeEnabled = useSelector((state) => state.DarkMode);
+  const [token, setToken] = useState();
 
   return (
     <BrowserRouter>
@@ -27,7 +28,7 @@ export const App = () => {
           <Routes>
             <Route path='/' element={<Main />} exact/>
             <Route path='/dashboard' element={<Dashboard />} />
-            <Route path='/login' element={<Login />} />
+            <Route path='/login' element={<Login setToken={setToken}/>} />
             <Route path='/redirect' element={<RedirectPage />}></Route>
             <Route element={<OAuth2Popup />} path="/callback" />
           </Routes>
