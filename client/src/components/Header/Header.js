@@ -83,7 +83,7 @@ export const Header = () => {
     
     authURL += '?response_type=' + RESPONSE_TYPE_CODE;
     authURL += '&client_id=' + CLIENT_ID; // берем из auth server
-    authURL += '&state='  + state; // auth server сохранит это значение себе и отправит в следующем запросе
+    authURL += '&state='  + 'state123'; // auth server сохранит это значение себе и отправит в следующем запросе
     authURL += '&scope='  + SCOPE; // какие данные хотите получить от auth server 
     authURL += '&code_challenge=' + codeChallenge;
     authURL += '&code_challenge_method=' + S256; // функция применяется к code_verifier 
