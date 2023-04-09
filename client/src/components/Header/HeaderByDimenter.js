@@ -1,16 +1,13 @@
 import './header.scss';
 
 import React from 'react';
-import { Link, unstable_HistoryRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { darkModeAction } from '../../store/actions/darkModeAction';
 import { LoginButtons } from '../LoginButtons/LoginButtons';
 import { Button } from '../Button/Button';
 
-import { useNavigate } from 'react-router-dom';
-
-import Keycloak from "keycloak-js";
 
 
 export const Header = () => {
@@ -85,8 +82,6 @@ export const Header = () => {
     //http://45.141.103.134:8282/realms/dev/protocol/openid-connect/auth
     let authURL = 'http://localhost:3000/login';
 
-    https://oauth.pstmn.io/v1/callback?state=state&session_state=f0045ccb-de4b-453d-afb3-8c2468924075&code=d341a445-b234-42bf-bdfa-a5ea29eb5eea.f0045ccb-de4b-453d-afb3-8c2468924075.b23b4507-b151-4d19-89f7-4c8a918fb707
-    
     authURL += '?response_type=' + RESPONSE_TYPE_CODE;
     authURL += '&client_id=' + CLIENT_ID; // берем из auth server
     authURL += '&state='  + 'state12333'; // auth server сохранит это значение себе и отправит в следующем запросе
@@ -154,40 +149,19 @@ export const Header = () => {
     return base64encoded;
   }
 
-  const  viewProfile = function() {
-    window.location.assign('http://localhost:3000/login/');
-    };
-
-  
-  async function checkingSession() {
+  async function getCode() {
+    const KEYCLOAK_URL = 'http://45.141.103.134:8282/realms/dev/protocol/openid-connect/token';
     
-    
-
-      console.log('initKeycloak');
-      const keycloak = new Keycloak({
-        url: 'http://45.141.103.134:8282',
-        //http://45.141.103.134:8282/realms/dev/protocol/openid-connect/token
-        realm: 'dev',
-        clientId: 'app-dev-client',
-        username: 'test',
-        password: 'test',
-      });
-    
-      //let auth = await keycloak.init({onLoad: "check-sso"});
-      console.log('keycloak', keycloak);
-    
-      /*
-      keycloak.init().then(function(authenticated) {
-          alert(authenticated ? 'authenticated' : 'not authenticated');
-      }).catch(function() {
-          alert('failed to initialize');
-      });
-      */
-    
-
+    const url = 'http://45.141.103.134:8282/auth/realms/appsdeveloperblog/protocol/openid-connect/auth?client_id=app-dev-client&response_type=code&state=fj8o3n7bdy1op5'
+    let response  = fetch(url)
+    if (response.ok) { // если HTTP-статус в диапазоне 200-299
+      // получаем тело ответа (см. про этот метод ниже)
+      let json = await response.json();
+      console.log(json);
+    } else {
+      alert("Ошибка HTTP: " + response.status);
+    }
   }
-    
-
 
   return (
     <div className='header'>
@@ -196,9 +170,7 @@ export const Header = () => {
       <Button label='DarkMode' action={onChangeTheme} />
       <Button label='fetch' action={runFetch} />
       <Button label='test auth 2' action={runTestAuthorization} />
-      <Button label='Login' action={viewProfile} />
-      <Button label='Check session' action={checkingSession} />
-      
+      <Button label='get code' action={getCode} />
     </div>
   )
 }
