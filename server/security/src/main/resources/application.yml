@@ -12,7 +12,7 @@ spring:
     oauth2:
       resource-server:
         jwt:
-          jwk-set-uri: http://localhost:8282/realms/dev/protocol/openid-connect/certs # ссылка на сертификаты authserver для проверки целостности access token
+          jwk-set-uri: http://45.141.103.134:8282/realms/dev/protocol/openid-connect/certs # ссылка на сертификаты authserver для проверки целостности access token
 
 
 clientURL: https://localhost:3000 # тестовый порт REACT
