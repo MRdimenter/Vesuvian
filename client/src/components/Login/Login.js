@@ -20,15 +20,23 @@ async function initKeycloak() {
   console.log('initKeycloak');
   const keycloak = new Keycloak({
     url: 'http://45.141.103.134:8282',
-    //http://45.141.103.134:8282/realms/dev/protocol/openid-connect/token
     realm: 'dev',
     clientId: 'app-dev-client',
-    username: 'test',
-    password: 'test',
   });
 
+  /**
+   * Необходимо инициализировать keycloak что бы он начал работать
+   * Необходимо посмотреть в документации как можно это сделать с помощью ввода логина и пароля
+   * Сейчас происходит редирект на Keycloak сервер для авторизации 
+   * https://www.keycloak.org/docs/latest/securing_apps/index.html#_javascript_adapter
+   */
+  keycloak.init({
+    onLoad: 'login-required'
+
+});
+
   //let auth = await keycloak.init({onLoad: "check-sso"});
-  console.log('asd', keycloak.subject);
+  console.log("keycloak authenticated: ",keycloak.authenticated);
 
   /*
   keycloak.init().then(function(authenticated) {
