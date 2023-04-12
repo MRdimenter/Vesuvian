@@ -29,11 +29,13 @@ async function initKeycloak() {
    * Необходимо посмотреть в документации как можно это сделать с помощью ввода логина и пароля
    * Сейчас происходит редирект на Keycloak сервер для авторизации 
    * https://www.keycloak.org/docs/latest/securing_apps/index.html#_javascript_adapter
+   * 
+   * todo: надо будет раскоментировать и подумать как инициализировать его с помощью логина и пароля 
    */
-  keycloak.init({
-    onLoad: 'login-required'
+//   keycloak.init({
+//     onLoad: 'login-required'
 
-});
+// });
 
   //let auth = await keycloak.init({onLoad: "check-sso"});
   console.log("keycloak authenticated: ",keycloak.authenticated);
