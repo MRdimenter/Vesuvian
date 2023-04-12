@@ -23,7 +23,7 @@ import java.util.List;
 @Configuration
 // включает механизм защиты адресов, которые настраиваются в SecurityFilterChain
 @EnableWebSecurity
-// включение механизом для защиты методов по ролям
+// включение механизмов для защиты методов по ролям
 @EnableMethodSecurity
 // исключаем авто кофигурацию подключения к БД
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class})
