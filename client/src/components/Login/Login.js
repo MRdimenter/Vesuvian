@@ -4,16 +4,54 @@ import './login.css';
 import {KEYCLOAK_URL} from '../../common/constants/OAuth2Constants'
 import { postOAuth2 } from '../../common/utils/fetchWrapper';
 
+
 import Keycloak from "keycloak-js";
 
 //TODO - сообщение о неверном логине или пароле
 console.log('login: ', window.location, '!');
 
+
+
+  /**
+   * Функция для получения тестового набора данных от бекенд сервера по access_token 
+   * 
+   * https://www.keycloak.org/docs/latest/securing_apps/index.html#_javascript_adapter
+   */
+  const getTestDataFromResourceServer = (access_token) => {
+    const url = 'http://localhost:8090/user/test';
+
+    
+    const req = new XMLHttpRequest();
+    req.open('GET', url, true);
+    req.setRequestHeader('Accept', 'application/json');
+    req.setRequestHeader('Authorization', 'Bearer ' + access_token); // потом надо будет добавить keycloak.token
+
+    req.onreadystatechange = function () {
+        if (req.readyState == 4) {
+            if (req.status == 200) {
+                alert('Success');
+                console.log(`received data from the server: ${req.response}`)
+            } else if (req.status == 403) {
+                alert('Forbidden');
+                console.log(`received data from the server: not found`)
+            }
+        }
+    }
+
+   
+    req.send();
+  
+  };
+
+
+
 async function loginUser({username, password}) {
      const response = await postOAuth2(KEYCLOAK_URL, username, password);
      console.log(response);
      const {access_token: token} = response;
-     //console.log(token);
+     
+
+     getTestDataFromResourceServer(token);
 }
 
 async function initKeycloak() {
@@ -23,6 +61,8 @@ async function initKeycloak() {
     realm: 'dev',
     clientId: 'app-dev-client',
   });
+
+
 
   /**
    * Необходимо инициализировать keycloak что бы он начал работать
