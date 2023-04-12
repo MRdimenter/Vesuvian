@@ -29,7 +29,7 @@ import java.util.List;
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class})
 public class SpringSecurityConfig {
 
-    @Value("clientURL")
+    @Value("${clientURL}")
     private String clientURL; // клиентский URL
 
 
