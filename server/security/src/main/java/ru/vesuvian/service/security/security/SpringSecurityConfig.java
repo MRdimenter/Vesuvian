@@ -50,7 +50,7 @@ public class SpringSecurityConfig {
                 .anyRequest().authenticated() // остальной API будет доступен только аутентифицированным пользователям
                 .and()
                 .csrf().disable()  // отключаем встроенную защиту от csrf атак, используется из OAUTH2
-                .cors() // разрешаем запросы типа OPTIONS
+                .cors() // разрешаем запросы типа OPTIONS (preflight - проверочный запрос перед основным)
                 .and()
                 .oauth2ResourceServer() // влкючаем защиту OAUTH2
                 .jwt() // использует JWT для получения Access Token
