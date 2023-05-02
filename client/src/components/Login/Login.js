@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './login.css';
 
 import {KEYCLOAK_URL} from '../../common/constants/OAuth2Constants'
