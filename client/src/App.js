@@ -11,7 +11,6 @@ import { Footer } from './components/Footer/Footer';
 import { Header } from './components/Header/Header';
 import Dashboard from './components/Dashboard/Dashboard';
 import {RedirectPage} from './components/RedirectPage/RedirectPage';
-import OAuthPopup from './components/OAuthPopup/OAuthPopup';
 import OAuth2Popup from './components/OAuthPopup/OAuth2Popup'
 //import Preferences from './components/Preferences/Preferences';
 
