@@ -1,5 +1,6 @@
 package ru.vesuvian.service.security.security;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -28,10 +29,12 @@ import java.util.List;
 @EnableMethodSecurity
 // исключаем авто кофигурацию подключения к БД
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class})
+@RequiredArgsConstructor
 public class SpringSecurityConfig {
 
     @Value("${clientURL}")
     private String clientURL; // клиентский URL
+    private final OAuth2ExceptionHandler oAuth2ExceptionHandler;
 
 
     /**
@@ -57,7 +60,7 @@ public class SpringSecurityConfig {
                 .jwt() // использует JWT для получения Access Token
                 .jwtAuthenticationConverter(jwtAuthenticationConverter) // добавляем конвертер ролей из JWT в Authority
                 .and()
-                .authenticationEntryPoint(new OAuth2ExceptionHandler()); // все ошибки которые будут возникать в библиотеки OAuth2 будут обрабатываться в классе OAuth2ExceptionHandler
+                .authenticationEntryPoint(oAuth2ExceptionHandler); // все ошибки которые будут возникать в библиотеки OAuth2 будут обрабатываться в классе OAuth2ExceptionHandler
         return httpSecurity.build();
     }
 
