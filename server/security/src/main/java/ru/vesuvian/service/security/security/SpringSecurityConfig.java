@@ -14,6 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import ru.vesuvian.service.security.exception.OAuth2ExceptionHandler;
 import ru.vesuvian.service.security.utils.KCRoleConverter;
 
 import java.util.Collections;
@@ -54,8 +55,9 @@ public class SpringSecurityConfig {
                 .and()
                 .oauth2ResourceServer() // влкючаем защиту OAUTH2
                 .jwt() // использует JWT для получения Access Token
-                .jwtAuthenticationConverter(jwtAuthenticationConverter); // добавляем конвертер ролей из JWT в Authority
-
+                .jwtAuthenticationConverter(jwtAuthenticationConverter) // добавляем конвертер ролей из JWT в Authority
+                .and()
+                .authenticationEntryPoint(new OAuth2ExceptionHandler()); // все ошибки которые будут возникать в библиотеки OAuth2 будут обрабатываться в классе OAuth2ExceptionHandler
         return httpSecurity.build();
     }
 
