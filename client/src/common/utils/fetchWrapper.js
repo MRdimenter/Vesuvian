@@ -6,24 +6,17 @@ function get(path) {
 }
 
 function postOAuth2(url, username, password) {
-    const AUTH_CODE_REDIRECT_URL = 'http://localhost:3000/redirect';
-    const state = 'state123'
-    console.log(`unique string: ${state}`);
-    console.log(window.location);
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' }, //TODO in constants?
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
         body:  new URLSearchParams({
             'client_id': 'app-dev-client', // TODO in process.env?
             'username': username,
             'password': password,
             'grant_type': 'password',
-            //'state': state
-            //'redirect_uri': AUTH_CODE_REDIRECT_URL // куда auth server будет отправлять ответ (возможно передается от requestAuthCode из runTestAuthorization от "test auth 2")
           })
     };
-    //http://45.141.103.134:8282/realms/dev/protocol/openid-connect/auth?response_type=code&client_id=app-dev-client&state=state12333&scope=openid&code_challenge=ClMhdo9Zhg6BxKfzUGXSWmPKQcM_GWYH6pLU0MZ5igY&code_challenge_method=S256&redirect_uri=http://localhost:3000/redirect
-    //http://localhost:3000/redirect?state=state12333&session_state=4753f5cb-2889-4da3-a215-2536ad3e1394&code=b62eaca2-4ec5-42af-86a3-78cef9338148.4753f5cb-2889-4da3-a215-2536ad3e1394.b23b4507-b151-4d19-89f7-4c8a918fb707
+
     return fetch(url, requestOptions).then(handleResponse);
 }
 
@@ -31,7 +24,34 @@ async function handleResponse(response) {
     return await response.json();
 }
 
+/**
+ * Функция для получения тестового набора данных от бекенд сервера по access_token 
+ * 
+ * https://www.keycloak.org/docs/latest/securing_apps/index.html#_javascript_adapter
+ */
+function getTestDataFromResourceServer (access_token) { //TODO for testing
+    const url = 'http://localhost:8090/user/test';
+    const req = new XMLHttpRequest();
+
+    req.open('GET', url, true);
+    req.setRequestHeader('Accept', 'application/json');
+    req.setRequestHeader('Authorization', 'Bearer ' + access_token); // потом надо будет добавить keycloak.token
+    req.onreadystatechange = function () {
+        if (req.readyState === 4) {
+            if (req.status === 200) {
+                alert('Success');
+                console.log(`received data from the server: ${req.response}`)
+            } else if (req.status === 403) {
+                alert('Forbidden');
+                console.log(`received data from the server: not found`)
+            }
+        }
+    }
+    req.send();
+  };
+
 export {
     get,
     postOAuth2,
+    getTestDataFromResourceServer,
 };

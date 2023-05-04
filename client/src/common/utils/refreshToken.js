@@ -6,6 +6,7 @@ const REFRESH_TOKEN = 'refreshToken';
     TODO Description
 */
 function setRefreshToken(refreshToken) {
+    console.log('setaem refreshToken: ', refreshToken);
     Cookies.set('refreshToken', refreshToken);
 }
 

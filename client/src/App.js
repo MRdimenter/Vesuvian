@@ -11,7 +11,6 @@ import { Footer } from './components/Footer/Footer';
 import { Header } from './components/Header/Header';
 import Dashboard from './components/Dashboard/Dashboard';
 import {RedirectPage} from './components/RedirectPage/RedirectPage';
-import OAuth2Popup from './components/OAuthPopup/OAuth2Popup'
 //import Preferences from './components/Preferences/Preferences';
 
 
@@ -29,7 +28,6 @@ export const App = () => {
             <Route path='/dashboard' element={<Dashboard />} />
             <Route path='/login' element={<Login setToken={setToken}/>} />
             <Route path='/redirect' element={<RedirectPage />}></Route>
-            <Route element={<OAuth2Popup />} path="/callback" />
           </Routes>
         </div>
 

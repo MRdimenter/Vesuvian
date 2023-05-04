@@ -10,10 +10,8 @@ import './ButtonsList.scss';
 **/
 
 export const ButtonsList = (direction = 'row') => {
-
   const style = (direction === 'row') ? 'row' : 'column';
 
-  console.log('direction= ', direction);
   return (
     <ul className={`button-list ${style}`}>
       <li><Button label='exercise_1' /></li>
@@ -23,7 +21,5 @@ export const ButtonsList = (direction = 'row') => {
       <li><Button label='exercise_5' /></li>
     </ul>
   )
-    
-
 }
 
