@@ -1,6 +1,6 @@
 import { DARK_MODE_REDUCER } from '../constants';
 
-const initialState = false;
+const initialState = true;
 
 export default function darkModeReducer(state = initialState, action) {
   switch (action.type) {
