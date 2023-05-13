@@ -1,6 +1,3 @@
-import React, { useState } from 'react';
-import { Button } from '../Button/Button';
-
 import './ButtonsList.scss';
 
 /**
@@ -9,16 +6,17 @@ import './ButtonsList.scss';
 * <ButtonsList direction={'column'}.../>
 **/
 
-export const ButtonsList = (direction = 'row') => {
-  const style = (direction === 'row') ? 'row' : 'column';
+export const ButtonsList = ({style: {direction}, children}) => {
+  
+  const setStyle = direction ?? 'column';
 
   return (
-    <ul className={`button-list ${style}`}>
-      <li><Button label='exercise_1' /></li>
-      <li><Button label='exercise_2' /></li>
-      <li><Button label='exercise_3' /></li>
-      <li><Button label='exercise_4' /></li>
-      <li><Button label='exercise_5' /></li>
+    <ul className={`button-list ${setStyle}`}>
+      {children.map((child) => 
+              <li key={child} className="buttons-list-item">
+                  {child}
+              </li>
+          )}
     </ul>
   )
 }
