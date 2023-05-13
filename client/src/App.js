@@ -11,6 +11,7 @@ import { Footer } from './components/Footer/Footer';
 import { Header } from './components/Header/Header';
 import Dashboard from './components/Dashboard/Dashboard';
 import {RedirectPage} from './components/RedirectPage/RedirectPage';
+import { TestPanel } from './components/TestPanel/TestPanel';
 //import Preferences from './components/Preferences/Preferences';
 
 
@@ -22,6 +23,7 @@ export const App = () => {
     <BrowserRouter>
       <div className={!isDarkModeEnabled ? 'wrapper' : 'theme-dark'}>
         <Header />
+        <TestPanel/>
         <div className='main-wrapper'>
           <Routes>
             <Route path='/' element={<Main />} exact/>
