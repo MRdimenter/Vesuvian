@@ -17,9 +17,14 @@
 }
 
 .wrapper {
-  }
-  
+}
+ 
 .theme-dark {
+    @include primary();
+    background: $grey;
+}
+
+.theme-dark-green {
     @include primary();
     background: linear-gradient(135deg, $dark-green, 15%, $dark-dark-green);
 }
