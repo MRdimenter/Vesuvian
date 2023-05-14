@@ -10,6 +10,7 @@ import { Button } from '../Button/Button';
 
 import {checkRefreshTokenExist} from '../../common/utils/refreshToken';
 import { KEYCLOAK_URL } from '../../common/constants/OAuth2Constants';
+import { authenticationAction } from '../../store/actions/authenticationAction';
 
 
 export const TestPanel = () => {
@@ -84,6 +85,11 @@ export const TestPanel = () => {
     */
   }
 
+  async function authenticationTest() {
+    dispatch(authenticationAction())
+  }
+
+  
 
   return (
     <div className='test-panel'>
@@ -94,6 +100,7 @@ export const TestPanel = () => {
       <Button label='getAccessTokenByRefreshToken' action={() => getAccessTokenByRefreshToken()} />
       <Button label='Check Refresh Token' action={() => checkRefreshTokenExist()} />  
       <Button label='LogOut' action={() => logout()} />
+      <Button label='authentication test' action={() => authenticationTest()} />
     </div>
   )
 }

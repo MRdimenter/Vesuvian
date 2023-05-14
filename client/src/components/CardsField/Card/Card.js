@@ -4,6 +4,7 @@ import './card.scss'
 * TODO Description
 **/
 
+
 export const Card = ({style: {content}, children}) => {
     const setStyle = content ?? 'text';
     return (
