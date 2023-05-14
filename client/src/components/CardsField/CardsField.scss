@@ -1,13 +1,16 @@
 @import "../../common/styles/color.scss";
 
 .cards-field {
+    width: 100%;
 
+    > *:not(:first-child) {
+        margin-top: 50px;
+    }
+}
+
+.row {
     display: flex;
-    flex-direction: row;
     justify-content: space-around;
-
-    width: 500px;
-    height: 500px;
 }
 
 .column {

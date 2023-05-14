@@ -1,11 +1,14 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 
 import './button.scss';
-import { useSelector } from 'react-redux';
 
-export const Button = ({ label = 'button', link, action }) => {
-  const isDarkModeEnabled = useSelector((state) => state.DarkMode);
+/**
+* TODO Description
+**/
+
+export const Button = ({ label = 'btn', btnStyle='link', link, action }) => {
+  //const isDarkModeEnabled = useSelector((state) => state.DarkMode);
+  const setStyle = btnStyle ?? 'btn';
 
   //const setThemeDark = !isDarkModeEnabled ? '' : 'theme-dark';
   const setThemeDark = '';
@@ -14,7 +17,7 @@ export const Button = ({ label = 'button', link, action }) => {
     <Link to={link}>
       <button
         type="button"
-        className={`btn ${setThemeDark}`}
+        className={`${setStyle} ${setThemeDark}`}
         onClick={action}>
         {label}
       </button>

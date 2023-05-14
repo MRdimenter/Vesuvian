@@ -1,9 +1,15 @@
-import './Card.scss'
+import './card.scss'
 
-export const Card = () => {
+/**
+* TODO Description
+**/
+
+export const Card = ({style: {content}, children}) => {
+    const setStyle = content ?? 'text';
     return (
-        <div className='card'>
-            
+        <div className={`card ${setStyle}`} >
+            <h3>{children?.title}</h3>
+            <p>{children?.text}</p>
         </div>
     )
 }

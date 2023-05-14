@@ -2,14 +2,19 @@
 
 @mixin primary {
     padding: 10px;
-    min-height: 100vh;
+    min-height: 100%;
+    //min-height: 100vh;
+    
 
+    /*
     display: flex;
     flex-direction: column;
-
+    */
+    
     background-color: #dee7c4;
 
-    flex: 1 0 auto
+    //flex: 1 0 auto;
+    flex: 1;
 }
 
 .main-wrapper {

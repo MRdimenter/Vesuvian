@@ -1,5 +1,21 @@
 .intro-chapter {
+    width: 100%;
+    padding: 20px;
 
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    
+
+    .content {
+        width: 500px;
+        height: 200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+    }
 }
 
 .content_beautiful_picture {

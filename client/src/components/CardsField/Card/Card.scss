@@ -1,14 +1,30 @@
 @import "../../../common/styles/color.scss";
 
 .card {
-    border: 5px solid #38613e;
     border-radius: 10px;
     
-    width: 170px;
-    height: 200px;
+    width: 35vw;
+    //height: 50%;
+    height: 20vw;
+
+    padding: 20px 40px;
+
+    * {
+      margin-top: 20px;
+    }
+}
+
+.picture {
+  background: no-repeat center/80% url("../../../img/backgrounds/beautiful_picture_theme.png");
 }
 
 .theme-dark {
+  .card {
+    background-color: $light-grey;
+  }
+}
+
+.theme-dark-green {
     .card {
       background-color: #204532;
       box-shadow: 10px 5px 13px $shadow,  0px 0px 40px -7px $dark-dark-green inset;
