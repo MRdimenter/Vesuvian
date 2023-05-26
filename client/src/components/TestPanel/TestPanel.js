@@ -2,15 +2,16 @@ import './testPanel.scss';
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { darkModeAction } from '../../store/actions/darkModeAction';
 import { LoginButtons } from '../LoginButtons/LoginButtons';
 import { Button } from '../Button/Button';
 
-import {checkRefreshTokenExist} from '../../common/utils/refreshToken';
+import { updateAccessToken} from '../../common/utils/refreshToken';
 import { KEYCLOAK_URL } from '../../common/constants/OAuth2Constants';
 import { authenticationAction } from '../../store/actions/authenticationAction';
+import Cookies from 'js-cookie';
 
 
 export const TestPanel = () => {
@@ -34,7 +35,7 @@ export const TestPanel = () => {
 
   const  viewProfile = function() {
     window.location.assign('http://localhost:3000/login/');
-    };
+  };
 
   
   async function getAccessTokenByRefreshToken() {
@@ -42,7 +43,7 @@ export const TestPanel = () => {
     console.log(response);
     let {access_token} = response;
     
-    console.log('Hello access_token:', access_token);
+    console.log('Hello new access_token:', access_token);
   }
 
   function postOAuth2RefreshToken(url) {
@@ -62,21 +63,34 @@ export const TestPanel = () => {
     return await response.json();
   }
 
-  function postOAuthLogout(url) {
+  function postOAuthLogout(url, refresh_token) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
         body:  new URLSearchParams({
             'client_id': 'app-dev-client',
             //'grant_type': 'refresh_token',
-            'refresh_token': 'eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0MjdlZThjOC04NTRjLTQ3MTYtOWI1MS0xMGI4ZTcyMzFhMWMifQ.eyJleHAiOjE2ODMyMjkxMTQsImlhdCI6MTY4MzIyNzMxNCwianRpIjoiNmRjMjdlMTQtZjlhOS00NDgyLThmYjAtZDQ4NWNhM2ZkMzcwIiwiaXNzIjoiaHR0cDovLzQ1LjE0MS4xMDMuMTM0OjgyODIvcmVhbG1zL2RldiIsImF1ZCI6Imh0dHA6Ly80NS4xNDEuMTAzLjEzNDo4MjgyL3JlYWxtcy9kZXYiLCJzdWIiOiI2YzJjOWZiNi0zMzAxLTQzNTUtYTVhMi1iN2U4OWUxMTZmNzciLCJ0eXAiOiJSZWZyZXNoIiwiYXpwIjoiYXBwLWRldi1jbGllbnQiLCJzZXNzaW9uX3N0YXRlIjoiYzU1YWU2MTYtZDc2Zi00OWQyLTgyYzQtY2Q3ZjE3MDFmMWJiIiwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwic2lkIjoiYzU1YWU2MTYtZDc2Zi00OWQyLTgyYzQtY2Q3ZjE3MDFmMWJiIn0.mb-maakwaJKLcitaxKyDCGKvDlNecnq2lxN6TbMXQLo',
+            'refresh_token': refresh_token,
           })
     };
-    return fetch(url, requestOptions).then(handleResponse);
+    return fetch(url, requestOptions);
   }
 
+  const REFRESH_TOKEN = 'refreshToken';
+
+  function getRefreshTokenFromCookie() {
+    return Cookies.get(REFRESH_TOKEN) || null;
+  }
+
+  
+
   async function logout() {
-    const response = await postOAuthLogout('http://45.141.103.134:8282/realms/dev/protocol/openid-connect/logout'); // нормальный ответ 204
+    const refresh_token = getRefreshTokenFromCookie();
+    const response = await postOAuthLogout('http://45.141.103.134:8282/realms/dev/protocol/openid-connect/logout', refresh_token); // нормальный ответ 204
+    console.log(response.status === 204); // TODO добавить логику для выхода пользователя при положительном ответе (ну там очистить всё нужно)
+    clearCookies();
+    localStorage.clear(); // удалить всё.
+
     /*
     console.log(response);
     let {access_token} = response;
@@ -86,10 +100,19 @@ export const TestPanel = () => {
   }
 
   async function authenticationTest() {
-    dispatch(authenticationAction())
+    dispatch(authenticationAction(true))
   }
 
-  
+  const isAuthenticated = useSelector((state) => state.isAuth);
+
+  function readCookies() {
+    console.log('Cookies: ', document.cookie);
+  }
+
+  function clearCookies() {
+    Cookies.remove('refreshToken');
+  }
+
 
   return (
     <div className='test-panel'>
@@ -98,9 +121,13 @@ export const TestPanel = () => {
       <Button label='fetch' action={runFetch} />
       <Button label='Login' action={viewProfile} />
       <Button label='getAccessTokenByRefreshToken' action={() => getAccessTokenByRefreshToken()} />
-      <Button label='Check Refresh Token' action={() => checkRefreshTokenExist()} />  
+      <Button label='Check Refresh Token' action={() => updateAccessToken()} />  
       <Button label='LogOut' action={() => logout()} />
       <Button label='authentication test' action={() => authenticationTest()} />
+      <Button label='read Cookies' action={() => readCookies()} />
+      <Button label='Clear Cookies' action={() => clearCookies()} />
+      
+      <div className= {isAuthenticated ? 'auth' : 'notAuth'} >authenticated</div>
     </div>
   )
 }

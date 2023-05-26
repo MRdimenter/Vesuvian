@@ -17,12 +17,51 @@ function postOAuth2(url, username, password) {
           })
     };
 
+    /*
+    fetch(url, requestOptions)
+        .then((res) => {
+            if (res.status >= 200 && res.status < 300) {
+                return res;
+            } else {
+                let error = new Error(res.statusText);
+                error.response = res;
+                throw error
+            }
+        })
+        .then((res) => {
+            if (res.headers['content-type'] !== 'application/json') {
+                let error = new Error('Некорректный ответ от сервера');
+                error.response = res;
+                throw error
+            }
+            return res;
+        })
+        .then(res => res.json())
+        .then(data => console.log('+', data))
+        .catch((e) => {
+            console.log('Error: ' + e.message);
+            console.log(e.response);
+        });
+    */
     return fetch(url, requestOptions).then(handleResponse);
 }
 
 async function handleResponse(response) {
     return await response.json();
 }
+
+function postOAuth2RefreshToken(url, refresh_token) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+        body:  new URLSearchParams({
+            'client_id': 'app-dev-client',
+            'grant_type': 'refresh_token',
+            'refresh_token': refresh_token,
+          })
+    };
+    return fetch(url, requestOptions).then(handleResponse);
+  }
 
 /**
  * Функция для получения тестового набора данных от бекенд сервера по access_token 
@@ -54,4 +93,5 @@ export {
     get,
     postOAuth2,
     getTestDataFromResourceServer,
+    postOAuth2RefreshToken,
 };

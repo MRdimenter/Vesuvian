@@ -5,7 +5,7 @@ const initialState = false;
 export default function authenticationReducer(state = initialState, action) {
   switch (action.type) {
     case 'AUTH':
-      return true;
+      return action.payload;
     default:
       return state;
   }
