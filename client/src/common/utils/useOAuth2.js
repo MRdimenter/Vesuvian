@@ -1,80 +1,43 @@
-// useOAuth2.js
-import { useCallback, useState } from 'react'; 
+import Cookies from "js-cookie";
+import { KEYCLOAK_URL, REFRESH_TOKEN } from "../constants/OAuth2Constants";
+import { postOAuth2AccessTokenByRefreshToken, postOAuth2RefreshToken } from "./fetchWrapper";
 
-const OAUTH_STATE_KEY = 'react-use-oauth2-state-key';
-const POPUP_HEIGHT = 700;
-const POPUP_WIDTH = 600;
+async function updateAccessTokenByRefreshToken() {
+    const refresh_token = getRefreshTokenFromCookie();
+    let access_token = '';
 
-// https://medium.com/@dazcyril/generating-cryptographic-random-state-in-javascript-in-the-browser-c538b3daae50
-const generateState = () => {
-	const validChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-	let array = new Uint8Array(40);
-	window.crypto.getRandomValues(array);
-	array = array.map((x) => validChars.codePointAt(x % validChars.length));
-	const randomState = String.fromCharCode.apply(null, array);
-	return randomState;
-};
+    if (refresh_token) {
+        try {
+            const response = await postOAuth2AccessTokenByRefreshToken(KEYCLOAK_URL, refresh_token);
+            access_token = await response.access_token;
+        } catch (error) {
+            console.log(error); // TODO подумать как обрабатывать ошибки (ну типа вывести страницу ошибок "Упс")
+        }
+    }
+    localStorage.setItem('access_token', access_token);
+    return access_token;
+}
 
-// function initValues() в курсе
-const saveState = (state) => {
-	sessionStorage.setItem(OAUTH_STATE_KEY, state);
-};
 
-const removeState = () => {
-	sessionStorage.removeItem(OAUTH_STATE_KEY);
-};
+function getRefreshTokenFromCookie() {
+    return Cookies.get(REFRESH_TOKEN) || null;
+}
 
-const openPopup = (url) => {
-	// To fix issues with window.screen in multi-monitor setups, the easier option is to
-	// center the pop-up over the parent window.
-	const top = window.outerHeight / 2 + window.screenY - POPUP_HEIGHT / 2;
-	const left = window.outerWidth / 2 + window.screenX - POPUP_WIDTH / 2;
-	return window.open(
-		url,
-		'OAuth2 Popup',
-		`height=${POPUP_HEIGHT},width=${POPUP_WIDTH},top=${top},left=${left}`
-	);
-};
+/*
+    TODO Description
+*/
+function setRefreshToken(refreshToken) {
+    console.log('записываем в cookie refreshToken: ', refreshToken);
+    Cookies.set(REFRESH_TOKEN, refreshToken);
+}
 
-const closePopup = (popupRef) => {
-	popupRef.current?.close();
-};
+function updateAccessToken() { // переименовать в updateAccessToken() (ну наконец-то разобрался в определении функциональности действия!)
+    console.log('refreshToken in cookies', !!Cookies.get(REFRESH_TOKEN));
+    return !!Cookies.get(REFRESH_TOKEN);
+}
 
-const enhanceAuthorizeUrl = (
-	authorizeUrl,
-	clientId,
-	redirectUri,
-	scope,
-	state
-) => {
-	return `${authorizeUrl}?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&state=${state}`;
-};
-
-const useOAuth2 = (props) => {
-  const {
-      authorizeUrl,
-      clientId,
-      redirectUri,
-      scope = '',
-    } = props;
-
-  const popupRef = useRef();
-  const [{ loading, error }, setUI] = useState({ loading: false, error: null });
-
-  const getAuth = useCallback(() => {
-      // 1. Init
-      setUI({
-        loading: true,
-        error: null,
-      });
-
-      // 2. Generate and save state
-      const state = generateState();
-      saveState(state);
-
-      // 3. Open popup
-      popupRef.current = openPopup(
-        enhanceAuthorizeUrl(authorizeUrl, clientId, redirectUri, scope, state)
-      );
-  })
+export {
+    updateAccessTokenByRefreshToken,
+    setRefreshToken,
+    updateAccessToken,
 }

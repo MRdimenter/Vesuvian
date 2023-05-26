@@ -1,17 +1,14 @@
+import Cookies from 'js-cookie';
+import { useDispatch, useSelector } from 'react-redux';
+import { darkModeAction } from '../../store/actions/darkModeAction';
+import { authenticationAction } from '../../store/actions/authenticationAction';
+import { updateAccessToken } from '../../common/utils/useOAuth2';
+import { KEYCLOAK_URL, REFRESH_TOKEN } from '../../common/constants/OAuth2Constants';
+
 import './testPanel.scss';
 
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { darkModeAction } from '../../store/actions/darkModeAction';
 import { LoginButtons } from '../LoginButtons/LoginButtons';
 import { Button } from '../Button/Button';
-
-import { updateAccessToken} from '../../common/utils/refreshToken';
-import { KEYCLOAK_URL } from '../../common/constants/OAuth2Constants';
-import { authenticationAction } from '../../store/actions/authenticationAction';
-import Cookies from 'js-cookie';
 
 
 export const TestPanel = () => {
@@ -76,13 +73,9 @@ export const TestPanel = () => {
     return fetch(url, requestOptions);
   }
 
-  const REFRESH_TOKEN = 'refreshToken';
-
   function getRefreshTokenFromCookie() {
     return Cookies.get(REFRESH_TOKEN) || null;
   }
-
-  
 
   async function logout() {
     const refresh_token = getRefreshTokenFromCookie();
@@ -113,7 +106,6 @@ export const TestPanel = () => {
     Cookies.remove('refreshToken');
   }
 
-
   return (
     <div className='test-panel'>
       <LoginButtons />
@@ -126,7 +118,7 @@ export const TestPanel = () => {
       <Button label='authentication test' action={() => authenticationTest()} />
       <Button label='read Cookies' action={() => readCookies()} />
       <Button label='Clear Cookies' action={() => clearCookies()} />
-      
+      <Button label='getAccessTokenByRefreshToken' action={() => getAccessTokenByRefreshToken()} />   
       <div className= {isAuthenticated ? 'auth' : 'notAuth'} >authenticated</div>
     </div>
   )

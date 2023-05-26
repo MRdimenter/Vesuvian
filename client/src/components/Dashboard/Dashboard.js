@@ -1,15 +1,12 @@
 import './dashboard.css'
 import React from 'react';
 
-export default function Dashboard() {
+export const Dashboard = () => {
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    
-
-    
     //getTestDataFromResourceServer(access_token);
   }
 

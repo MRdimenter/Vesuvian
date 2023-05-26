@@ -5,7 +5,6 @@ import { LoginButtons } from '../LoginButtons/LoginButtons';
 
 export const Header = () => {
 
-
   return (
     <div className='header'>
       <Link className='Logo' to={'/'}>Vesuvian :)</Link>

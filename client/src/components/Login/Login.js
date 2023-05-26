@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './login.css';
 
-import { KEYCLOAK_URL } from '../../common/constants/OAuth2Constants'
-import { getTestDataFromResourceServer, postOAuth2 } from '../../common/utils/fetchWrapper';
-import { setRefreshToken } from '../../common/utils/refreshToken';
+import { postOAuth2Login } from '../../common/utils/fetchWrapper';
 import { useDispatch } from 'react-redux';
 import { authenticationAction } from '../../store/actions/authenticationAction';
+import { setRefreshToken } from '../../common/utils/useOAuth2';
 
 //TODO - сообщение о неверном логине или пароле
 console.log('login: ', window.location, '!');
 
 
-export default function Login() {
+export const Login = () => {
   const dispatch = useDispatch();
 
   const [username, setUserName] = useState();
@@ -20,7 +19,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await postOAuth2(KEYCLOAK_URL, username, password);
+      const response = await postOAuth2Login(username, password);
       const { refresh_token } = response;
     
       if (refresh_token) {

@@ -1,3 +1,5 @@
+import { KEYCLOAK_LOGOUT_URL, KEYCLOAK_URL } from "../constants/OAuth2Constants";
+
 function get(path) {
     const requestOptions = { method: 'GET' };
     const url = `${process.env.REACT_APP_API_URL}/${path}`;
@@ -5,7 +7,7 @@ function get(path) {
     return fetch(url, requestOptions).then(handleResponse);
 }
 
-function postOAuth2(url, username, password) {
+function postOAuth2Login(username, password) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
@@ -43,8 +45,36 @@ function postOAuth2(url, username, password) {
             console.log(e.response);
         });
     */
-    return fetch(url, requestOptions).then(handleResponse);
+    return fetch(KEYCLOAK_URL, requestOptions).then(handleResponse);
 }
+
+function postOAuth2AccessTokenByRefreshToken(url, refresh_token) { // TODO перенести в useOath2.js (или того), туда импортировать констанут url и не использовать ее в аргументах 
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+        body: new URLSearchParams({
+            'client_id': 'app-dev-client',
+            'grant_type': 'refresh_token',
+            'refresh_token': refresh_token,
+        })
+    };
+
+    return fetch(url, requestOptions).then(handleResponse); // todo добавить обработчик ошибок
+}
+
+function postOAuth2Logout(refresh_token) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+        body:  new URLSearchParams({
+            'client_id': 'app-dev-client',
+            'refresh_token': refresh_token,
+          })
+    };
+    return fetch(KEYCLOAK_LOGOUT_URL, requestOptions); 
+  }
+
+
 
 async function handleResponse(response) {
     return await response.json();
@@ -91,7 +121,9 @@ function getTestDataFromResourceServer (access_token) { //TODO for testing
 
 export {
     get,
-    postOAuth2,
+    postOAuth2Login,
+    postOAuth2AccessTokenByRefreshToken,
+    postOAuth2Logout,
     getTestDataFromResourceServer,
     postOAuth2RefreshToken,
 };
