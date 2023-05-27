@@ -1,0 +1,23 @@
+.registration-wrapper {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.registration-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+        margin-top: 10px;
+    }
+
+    .registration-button-wrapper {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}

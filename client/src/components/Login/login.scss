@@ -1,0 +1,41 @@
+.login-wrapper {
+  margin-top: 30px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .login-pass-warning {
+    width: 240px;
+
+    font-size: 12px;
+    white-space: pre-line;
+  }
+
+  .login-form {
+    width: 220px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    font-size: 14px;
+
+    p {
+      margin-top: 10px;
+    }
+
+  }
+
+  .registration-wrapper {
+    width: 220px;
+
+    margin-top: 15px;
+    font-size: 12px;
+    white-space: pre-line;
+
+    .registration-button-wrapper {
+      margin-top: 10px;
+    }
+  }
+}

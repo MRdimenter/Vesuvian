@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
-import './login.css';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
+import './login.scss';
 
 import { postOAuth2Login } from '../../common/utils/fetchWrapper';
-import { useDispatch } from 'react-redux';
 import { authenticationAction } from '../../store/actions/authenticationAction';
 import { setRefreshToken } from '../../common/utils/useOAuth2';
-import { useNavigate } from 'react-router-dom';
 
 //console.log('login: ', window.location, '!');
 
 export const Login = () => {
   const dispatch = useDispatch();
-  let navigate = useNavigate();
-
+  const navigate = useNavigate();
 
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
@@ -45,17 +45,15 @@ export const Login = () => {
 
   return (
     <div className="login-wrapper">
-      <div className={isWrongCredentials ? 'block' : 'none'}>
+      <div className={`login-pass-warning ${isWrongCredentials ? 'block' : 'none'}`}>
         <p>
           Неверный логин или пароль
-          <br />
-          (если данные введены верно, пожалуйста, обратитесь к разработчикам
-          <br />
-          ...адрес почты)
+          (если данные введены верно, пожалуйста, обратитесь 
+          к разработчикам ...адрес почты)
         </p>
       </div>
       <h1>Please Log In</h1>
-      <form onSubmit={handleSubmit}>
+      <form className='login-form' onSubmit={handleSubmit}>
         <label>
           <p>Username</p>
           <input type="text" onChange={e => setUserName(e.target.value)} />
@@ -64,20 +62,18 @@ export const Login = () => {
           <p>Password</p>
           <input type="password" onChange={e => setPassword(e.target.value)} />
         </label>
-        <div>
+        <div className='login-button-wrapper'>
           <button type="submit">Submit</button>
-        </div>
-        <div>
-          <p>
-            Если вы еще не зарегистрировались,
-            <br />
-            пожалуйста, зарегистрируйтесь.
-            <br />
-            мы всегда рады новым пользователям! :)
-          </p>
-          <button>Регистрация</button>
-        </div>
+        </div>        
       </form>
+      <div className='registration-wrapper'>
+          <p>
+            Если вы еще не зарегистрировались, пожалуйста, зарегистрируйтесь. мы всегда рады новым пользователям! :)
+          </p>
+          <div className='registration-button-wrapper'>
+            <button className='registration-button'>Регистрация</button>
+          </div>
+        </div>
     </div>
   )
 }
