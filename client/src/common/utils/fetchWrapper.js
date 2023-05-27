@@ -1,4 +1,5 @@
 import { KEYCLOAK_LOGOUT_URL, KEYCLOAK_URL } from "../constants/OAuth2Constants";
+import { PasswordError } from "./PasswordError";
 
 function get(path) {
     const requestOptions = { method: 'GET' };
@@ -19,36 +20,36 @@ function postOAuth2Login(username, password) {
           })
     };
 
-    /*
-    fetch(url, requestOptions)
+
+    
+    return fetch(KEYCLOAK_URL, requestOptions)
         .then((res) => {
             if (res.status >= 200 && res.status < 300) {
                 return res;
+            } else if (res.status === 401) {
+                console.log('res.status === 401');
+                throw new Error(res.statusText);
+            } else if (res.status >= 500) {
+                console.log('(res.status >= 500)');
+                throw new Error(res.statusText);
             } else {
                 let error = new Error(res.statusText);
                 error.response = res;
+                console.log('error.response: ', error.response);
                 throw error
             }
         })
-        .then((res) => {
-            if (res.headers['content-type'] !== 'application/json') {
-                let error = new Error('Некорректный ответ от сервера');
-                error.response = res;
-                throw error
-            }
-            return res;
-        })
-        .then(res => res.json())
-        .then(data => console.log('+', data))
-        .catch((e) => {
-            console.log('Error: ' + e.message);
-            console.log(e.response);
-        });
-    */
-    return fetch(KEYCLOAK_URL, requestOptions).then(handleResponse);
+        .then(handleResponse)
+        
+        /* .catch((e) => {
+            //console.log('Error: ' + e.message);
+            console.log('Fetch Error: ' + e);
+        }); */
+        
+    //return fetch(KEYCLOAK_URL, requestOptions).then(handleResponse);
 }
 
-function postOAuth2AccessTokenByRefreshToken(url, refresh_token) { // TODO перенести в useOath2.js (или того), туда импортировать констанут url и не использовать ее в аргументах 
+function postOAuth2AccessTokenByRefreshToken(url, refresh_token) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
@@ -77,6 +78,7 @@ function postOAuth2Logout(refresh_token) {
 
 
 async function handleResponse(response) {
+    console.log('do handleResponse');
     return await response.json();
 }
 

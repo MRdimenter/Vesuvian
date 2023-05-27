@@ -1,60 +1,63 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './login.css';
 
 import { postOAuth2Login } from '../../common/utils/fetchWrapper';
 import { useDispatch } from 'react-redux';
 import { authenticationAction } from '../../store/actions/authenticationAction';
 import { setRefreshToken } from '../../common/utils/useOAuth2';
+import { useNavigate } from 'react-router-dom';
 
 //TODO - сообщение о неверном логине или пароле
 console.log('login: ', window.location, '!');
 
-
 export const Login = () => {
   const dispatch = useDispatch();
+  let navigate = useNavigate();
+
 
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
+  const [isWrongCredentials, setIsWrongCredentials] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
       const response = await postOAuth2Login(username, password);
       const { refresh_token } = response;
-    
+
       if (refresh_token) {
         setRefreshToken(refresh_token);
         dispatch(authenticationAction(true));
+        //useNavigate('/');
+        navigate("/");
       } else {
-        console.log('NE prishel', refresh_token);
+        console.log('refresh_token: ', refresh_token);
       }
-    } catch(err) {
-
-      // перехватит любую ошибку в блоке try: и в fetch, и в response.json
-      //console.log(err);
+    } catch (error) {
+      if (error.message === 'Unauthorized') {
+        console.log('123');
+        setIsWrongCredentials(true);
+      } else {
+        setIsWrongCredentials(true);
+        console.log('странная ошибка');
+      }
     }
-
-    /*
-    const response = await postOAuth2(KEYCLOAK_URL, username, password);
-    const { refresh_token } = response;
-    
-    
-
-    if (refresh_token) {
-      console.log('Yra prishel', refresh_token);
-      setRefreshToken(refresh_token);
-    } else {
-      console.log('NE prishel', refresh_token);
-    }
-
-    */
-    //getTestDataFromResourceServer(access_token);
-
-    //dispatch(authenticationAction()); //todo временно комментируем, чтобы проверить первоначальное открытие приложения
   }
+
+  useEffect(() => {
+  }, [isWrongCredentials]);
 
   return (
     <div className="login-wrapper">
+      <div className={isWrongCredentials ? 'block' : 'none'}>
+        <p>
+          Неверный логин или пароль
+          <br />
+          (если данные введены верно, пожалуйста, обратитесь к разработчикам
+          <br />
+          ...адрес почты)
+        </p>
+      </div>
       <h1>Please Log In</h1>
       <form onSubmit={handleSubmit}>
         <label>
@@ -67,6 +70,16 @@ export const Login = () => {
         </label>
         <div>
           <button type="submit">Submit</button>
+        </div>
+        <div>
+          <p>
+            Если вы еще не зарегистрировались,
+            <br />
+            пожалуйста, зарегистрируйтесь.
+            <br />
+            мы всегда рады новым пользователям! :)
+          </p>
+          <button>Регистрация</button>
         </div>
       </form>
     </div>
