@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { authenticationAction } from './store/actions/authenticationAction';
 import { updateAccessToken, updateAccessTokenByRefreshToken } from './common/utils/useOAuth2';
@@ -7,7 +7,7 @@ import { updateAccessToken, updateAccessTokenByRefreshToken } from './common/uti
 import './App.scss';
 
 import { Main } from './components/Main/Main';
-import { Login } from './components/Login/Login'; // TODO унифицировать import (где-то по дефолту, где-то без него - некрасиво как-то)
+import { Login } from './components/Login/Login';
 import { Footer } from './components/Footer/Footer';
 import { Header } from './components/Header/Header';
 import { Dashboard } from './components/Dashboard/Dashboard';

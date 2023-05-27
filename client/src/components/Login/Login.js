@@ -7,8 +7,7 @@ import { authenticationAction } from '../../store/actions/authenticationAction';
 import { setRefreshToken } from '../../common/utils/useOAuth2';
 import { useNavigate } from 'react-router-dom';
 
-//TODO - сообщение о неверном логине или пароле
-console.log('login: ', window.location, '!');
+//console.log('login: ', window.location, '!');
 
 export const Login = () => {
   const dispatch = useDispatch();
@@ -28,18 +27,15 @@ export const Login = () => {
       if (refresh_token) {
         setRefreshToken(refresh_token);
         dispatch(authenticationAction(true));
-        //useNavigate('/');
         navigate("/");
       } else {
-        console.log('refresh_token: ', refresh_token);
+        navigate("/login");
       }
     } catch (error) {
       if (error.message === 'Unauthorized') {
-        console.log('123');
         setIsWrongCredentials(true);
       } else {
         setIsWrongCredentials(true);
-        console.log('странная ошибка');
       }
     }
   }

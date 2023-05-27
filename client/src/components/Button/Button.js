@@ -7,10 +7,7 @@ import './button.scss';
 **/
 
 export const Button = ({ label = 'btn', btnStyle='link', link, action }) => {
-  //const isDarkModeEnabled = useSelector((state) => state.DarkMode);
   const setStyle = btnStyle ?? 'btn';
-
-  //const setThemeDark = !isDarkModeEnabled ? '' : 'theme-dark';
   const setThemeDark = '';
 
   return (

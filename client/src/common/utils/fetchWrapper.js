@@ -1,5 +1,4 @@
 import { KEYCLOAK_LOGOUT_URL, KEYCLOAK_URL } from "../constants/OAuth2Constants";
-import { PasswordError } from "./PasswordError";
 
 function get(path) {
     const requestOptions = { method: 'GET' };
@@ -20,22 +19,17 @@ function postOAuth2Login(username, password) {
           })
     };
 
-
-    
     return fetch(KEYCLOAK_URL, requestOptions)
         .then((res) => {
             if (res.status >= 200 && res.status < 300) {
                 return res;
             } else if (res.status === 401) {
-                console.log('res.status === 401');
                 throw new Error(res.statusText);
             } else if (res.status >= 500) {
-                console.log('(res.status >= 500)');
                 throw new Error(res.statusText);
             } else {
                 let error = new Error(res.statusText);
                 error.response = res;
-                console.log('error.response: ', error.response);
                 throw error
             }
         })
@@ -43,7 +37,6 @@ function postOAuth2Login(username, password) {
         
         /* .catch((e) => {
             //console.log('Error: ' + e.message);
-            console.log('Fetch Error: ' + e);
         }); */
         
     //return fetch(KEYCLOAK_URL, requestOptions).then(handleResponse);
@@ -78,7 +71,6 @@ function postOAuth2Logout(refresh_token) {
 
 
 async function handleResponse(response) {
-    console.log('do handleResponse');
     return await response.json();
 }
 

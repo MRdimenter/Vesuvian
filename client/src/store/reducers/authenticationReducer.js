@@ -1,10 +1,10 @@
-//import { DARK_MODE_REDUCER } from '../constants'; todo add
+import { AUTHENTICATION_STATUS } from "../constants";
 
 const initialState = false;
 
 export default function authenticationReducer(state = initialState, action) {
   switch (action.type) {
-    case 'AUTH':
+    case AUTHENTICATION_STATUS:
       return action.payload;
     default:
       return state;

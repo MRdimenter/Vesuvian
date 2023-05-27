@@ -1,11 +1,11 @@
-//import { DARK_MODE_REDUCER } from '../constants'; todo add
+import { AUTHENTICATION_STATUS } from "../constants"
 
 /*
   Description TODO
 */
 export const authenticationAction = (value) => {
   return {
-    type: 'AUTH', // TODO constant
+    type: AUTHENTICATION_STATUS, // TODO constant
     payload: value,
   }
 }

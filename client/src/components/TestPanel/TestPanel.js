@@ -80,16 +80,9 @@ export const TestPanel = () => {
   async function logout() {
     const refresh_token = getRefreshTokenFromCookie();
     const response = await postOAuthLogout('http://45.141.103.134:8282/realms/dev/protocol/openid-connect/logout', refresh_token); // нормальный ответ 204
-    console.log(response.status === 204); // TODO добавить логику для выхода пользователя при положительном ответе (ну там очистить всё нужно)
+    console.log(response.status === 204);
     clearCookies();
     localStorage.clear(); // удалить всё.
-
-    /*
-    console.log(response);
-    let {access_token} = response;
-    
-    console.log('Hello access_token:', access_token);
-    */
   }
 
   async function authenticationTest() {
