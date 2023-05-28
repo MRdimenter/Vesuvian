@@ -3,21 +3,42 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-}
 
-.registration-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    p {
-        margin-top: 10px;
-    }
-
-    .registration-button-wrapper {
-        margin-top: 10px;
+    .registration-form {
         display: flex;
         flex-direction: column;
         align-items: center;
+
+        p {
+            margin-top: 10px;
+        }
+
+        .registration-button-wrapper {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+}
+
+// for small monitors
+@media (max-width: 1224px) {
+    h1 {
+        font-size: 30px;
+    }
+
+    .registration-wrapper {
+        margin-top: 20px;
+
+        .registration-form {
+            p {
+                margin-top: 8px;
+            }
+
+            .registration-button-wrapper {
+                margin-top: 8px;
+            }
+        }
     }
 }

@@ -39,3 +39,37 @@
     }
   }
 }
+
+// for small monitors
+@media (max-width: 1224px) {
+  h1 {
+    font-size: 30px;
+  }
+
+  .login-wrapper {
+    margin-top: 20px;
+
+    .login-pass-warning {
+      font-size: 10px;
+    }
+
+    .login-form {
+      width: 220px;
+      font-size: 11px;
+
+      p {
+        margin-top: 8px;
+      }
+
+    }
+
+    .registration-wrapper {
+      margin-top: 12px;
+      font-size: 10px;
+
+      .registration-button-wrapper {
+        margin-top: 8px;
+      }
+    }
+  }
+}

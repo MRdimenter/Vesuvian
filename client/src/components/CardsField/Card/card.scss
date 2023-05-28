@@ -1,23 +1,21 @@
 @import "../../../common/styles/color.scss";
 
 
-
+// for large monitors
 .card {
-    border-radius: 10px;
-    
-    width: 35vw;
-    //height: 50%;
-    height: 20vw;
+  width: 35vw;
+  height: 20vw;
+  border-radius: 10px;
 
-    padding: 20px 40px;
+  padding: 20px 40px;
 
-    > div:first-child {
-      font-size: 20px;
-    }
+  >div:first-child {
+    font-size: 20px;
+  }
 
-    * {
-      margin-top: 20px;
-    }
+  >div:not(:first-child) {
+    margin-bottom: 20px;
+  }
 }
 
 .picture {
@@ -31,8 +29,37 @@
 }
 
 .theme-dark-green {
-    .card {
-      background-color: $light-grey;
-      box-shadow: 10px 5px 13px $shadow,  0px 0px 40px -7px $dark-dark-green inset;
+  .card {
+    background-color: $light-grey;
+    box-shadow: 10px 5px 13px $shadow, 0px 0px 40px -7px $dark-dark-green inset;
+  }
+}
+
+// for small monitors
+@media (max-width: 1224px) {
+  .card {
+    color: red;
+  }
+
+  .card {
+    width: 35vw;
+    height: 20vw;
+    border-radius: 5px;
+
+    padding: 15px 30px;
+
+    >div:first-child {
+      font-size: 15px;
     }
+
+    >div {
+      font-size: 12px;
+    }
+
+    * {
+      margin-top: 15px;
+    }
+
+    overflow: auto;
+  }
 }
