@@ -8,10 +8,11 @@ export const Main = () => {
   return (
     <div className='main'>
       <SideBar/>
-      <IntroChapter/>
+      
       <CardsField />  
     </div>
   )
 }
 
-//<CardsField />
+// <IntroChapter/>
+// <CardsField />
