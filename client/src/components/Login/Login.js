@@ -68,7 +68,7 @@ export const Login = () => {
       </form>
       <div className='registration-wrapper'>
           <p>
-            Если вы еще не зарегистрировались, пожалуйста, зарегистрируйтесь. мы всегда рады новым пользователям! :)
+            Если вы еще не зарегистрировались, пожалуйста, зарегистрируйтесь. мы всегда рады новым пользователям!
           </p>
           <div className='registration-button-wrapper'>
             <button className='registration-button'>Регистрация</button>
