@@ -15,4 +15,11 @@ spring:
           jwk-set-uri: http://45.141.103.134:8282/realms/dev/protocol/openid-connect/certs # ссылка на сертификаты authserver для проверки целостности access token
 
 
+keycloak:
+  auth-server-url: http://45.141.103.134:8282/
+  realm: dev
+  resource: app-dev-client
+  username: admin
+  password: admin
+
 clientURL: http://localhost:3000 # тестовый порт REACT
