@@ -70,7 +70,7 @@ public class SpringSecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(Collections.singletonList(clientURL)); // на этот микросервис разрешаем запросы только от clientURL
+        //corsConfiguration.setAllowedOrigins(Collections.singletonList(clientURL)); // на этот микросервис разрешаем запросы только от clientURL
         corsConfiguration.setAllowedHeaders(List.of("*")); // указываем какие заголовки мы разрешаем в запросе
         corsConfiguration.setAllowedMethods(List.of("*")); // указываем какие методы мы разрешаем в запросе (post, get, update, delete)
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
