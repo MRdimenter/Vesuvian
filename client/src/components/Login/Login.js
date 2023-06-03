@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import './login.scss';
 
 import { postOAuth2Login } from '../../common/utils/fetchWrapper';
-import { authenticationAction } from '../../store/actions/authenticationAction';
+import { authenticationAction } from '../../store/actions/authenticationActions';
 import { setRefreshToken } from '../../common/utils/useOAuth2';
 
 //console.log('login: ', window.location, '!');
@@ -14,8 +14,8 @@ export const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [username, setUserName] = useState();
-  const [password, setPassword] = useState();
+  const [username, setUserName] = useState('user');
+  const [password, setPassword] = useState('user');
   const [isWrongCredentials, setIsWrongCredentials] = useState(false);
 
   const handleSubmit = async (event) => {
@@ -56,11 +56,11 @@ export const Login = () => {
       <form className='login-form' onSubmit={handleSubmit}>
         <label>
           <p>Username</p>
-          <input type="text" onChange={e => setUserName(e.target.value)} />
+          <input type="text" onChange={e => setUserName(e.target.value)} value={username}/>
         </label>
         <label>
           <p>Password</p>
-          <input type="password" onChange={e => setPassword(e.target.value)} />
+          <input type="password" onChange={e => setPassword(e.target.value)} value={username}/>
         </label>
         <div className='login-button-wrapper'>
           <button type="submit">Submit</button>

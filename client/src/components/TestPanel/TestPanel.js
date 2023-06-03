@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { darkModeAction } from '../../store/actions/darkModeAction';
-import { authenticationAction } from '../../store/actions/authenticationAction';
+import { authenticationAction } from '../../store/actions/authenticationActions';
 import { updateAccessToken, updateAccessTokenByRefreshToken } from '../../common/utils/useOAuth2';
 import { KEYCLOAK_URL, REFRESH_TOKEN } from '../../common/constants/OAuth2Constants';
 
@@ -9,6 +9,7 @@ import './testPanel.scss';
 
 import { LoginButtons } from '../LoginButtons/LoginButtons';
 import { Button } from '../Button/Button';
+import { TestLoginButtons } from './TestLoginButtons/TestLoginButtons';
 
 
 export const TestPanel = () => {
@@ -123,7 +124,7 @@ export const TestPanel = () => {
       <Button label='Clear Cookies' action={() => clearCookies()} />
       <Button label='getAccessTokenByRefreshToken' action={() => getAccessTokenByRefreshToken()} />   
       <Button label='updateAccessTokenByRefreshToken' action={() => updateAccessTokenByRefreshToken()} />   
-      
+      <TestLoginButtons/>
     </div>
   )
 }

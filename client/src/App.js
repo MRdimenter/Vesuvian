@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { authenticationAction } from './store/actions/authenticationAction';
+import { authenticationAction } from './store/actions/authenticationActions';
 import { updateAccessToken, updateAccessTokenByRefreshToken } from './common/utils/useOAuth2';
 
 import './App.scss';
@@ -19,12 +19,17 @@ export const App = () => {
   const isDarkModeEnabled = useSelector((state) => state.DarkMode);
 
   const undateAuthenticationState = async () => {
-    const access_token = await updateAccessTokenByRefreshToken(); // пока что есть проблемка: не ясно по какой причине нет access_token (может сервер лежит), данные обработчики нужно добавить в обработку ошибок
-    if (access_token) {
-      updateAccessToken(access_token);
-      dispatch(authenticationAction(true));
-    } else {
-      dispatch(authenticationAction(false));
+    try {
+      const access_token = await updateAccessTokenByRefreshToken(); // пока что есть проблемка: не ясно по какой причине нет access_token (может сервер лежит), данные обработчики нужно добавить в обработку ошибок 
+
+      if (access_token) {
+        updateAccessToken(access_token);
+        dispatch(authenticationAction(true));
+      } else {
+        dispatch(authenticationAction(false));
+      }
+    } catch (error) {
+      // TODO что если проверка авторизации не удалась
     }
   }
 

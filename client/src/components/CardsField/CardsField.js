@@ -26,7 +26,7 @@ export const CardsField = () => {
         for (const key in content) {
             if (Object.hasOwnProperty.call(content, key)) {
                 const text = content[key];
-                resultArray.push(<div>{text}</div>)
+                resultArray.push(<div key={key}>{text}</div>)
             }
         }
         return resultArray
