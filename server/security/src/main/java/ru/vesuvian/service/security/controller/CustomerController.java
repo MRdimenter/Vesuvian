@@ -3,17 +3,17 @@ package ru.vesuvian.service.security.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.vesuvian.service.security.model.User;
-import ru.vesuvian.service.security.service.UserService;
+import ru.vesuvian.service.security.model.Customer;
+import ru.vesuvian.service.security.service.CustomerService;
 
 @RestController
 @RequestMapping("api/v1/users")
 @Slf4j
-public class UserController {
-    UserService userService;
+public class CustomerController {
+    CustomerService customerService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
     }
 
     @GetMapping("/test")
@@ -24,12 +24,12 @@ public class UserController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public void createUser(@RequestBody User user) {
-        log.info(user.getUsername());
-        log.info(user.getFirstName());
-        log.info(user.getLastName());
-        log.info(user.getEmail());
+    public void createUser(@RequestBody Customer customer) {
+        log.info(customer.getUsername());
+        log.info(customer.getFirstName());
+        log.info(customer.getLastName());
+        log.info(customer.getEmail());
 
-        userService.createUser(user);
+        customerService.createCustomer(customer);
     }
 }
