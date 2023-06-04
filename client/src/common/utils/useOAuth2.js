@@ -15,11 +15,9 @@ async function updateAccessTokenByRefreshToken() {
     if (refresh_token) {
         try {
             const response = await postOAuth2AccessTokenByRefreshToken(KEYCLOAK_URL, refresh_token);
-            //console.log('response.error_description: ', response.error_description); // Token is not active - в случае просроченного refresh_token
-            //console.log(response); // access_token, refresh_token and other description
             access_token = await response.access_token;
         } catch (error) {
-            console.log(error); // TODO подумать как обрабатывать ошибки (ну типа вывести страницу ошибок "Упс")
+            console.log(error);
             return null;
         }
     }

@@ -18,7 +18,7 @@ async function logout(dispatch) {
 const RegistrationButtons = ({dispatch}) => {
   return (
     <>
-      <Button btnStyle='link' label='Регистрироваться' link={'/dashboard'} />
+      <Button btnStyle='link' label='Регистрироваться' link={'/registrationForm'} />
       <Button btnStyle='link' label='Вход' link={'/login'} />
     </>
   )

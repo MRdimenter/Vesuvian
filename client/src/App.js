@@ -10,9 +10,10 @@ import { Main } from './components/Main/Main';
 import { Login } from './components/Login/Login';
 import { Footer } from './components/Footer/Footer';
 import { Header } from './components/Header/Header';
-import { Dashboard } from './components/Dashboard/Dashboard';
+import { RegistrationForm } from './components/RegistrationForm/RegistrationForm';
 import { RedirectPage } from './components/RedirectPage/RedirectPage';
 import { TestPanel } from './components/TestPanel/TestPanel';
+import { ErrorPage } from './components/ErrorPage/ErrorPage';
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -46,9 +47,10 @@ export const App = () => {
         <div className='main-wrapper'>
           <Routes>
             <Route path='/' element={<Main />} exact />
-            <Route path='/dashboard' element={<Dashboard />} />
+            <Route path='/registrationForm' element={<RegistrationForm />} />
             <Route path='/login' element={<Login />} />
             <Route path='/redirect' element={<RedirectPage />}></Route>
+            <Route path='/errorPage' element={<ErrorPage />}></Route>
           </Routes>
         </div>
       </div>

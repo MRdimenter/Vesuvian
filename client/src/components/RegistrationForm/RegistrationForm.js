@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { authenticationStateAction } from '../../store/actions/authenticationActions';
 
-import './dashboard.scss'
+import './registrationForm.scss'
 
-export const Dashboard = () => {  //TODO rename
+export const RegistrationForm = () => {  //TODO rename
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {

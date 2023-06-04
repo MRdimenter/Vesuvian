@@ -35,7 +35,7 @@ export const CardsField = () => {
     return (
         <div className='cards-field'>
             <div className={`row ${isAuthenticated ? 'none' : 'auth'}`}>
-                <Card style={{}}>{getElements(cardContentIntro)}<Button label='Зарегистрироваться' link={'/dashboard'} /></Card>
+                <Card style={{}}>{getElements(cardContentIntro)}<Button label='Зарегистрироваться' link={'/registrationForm'} /></Card>
                 <img src={logo} className="content_beautiful_picture" alt="content_beautiful_picture"></img>
             </div>
             

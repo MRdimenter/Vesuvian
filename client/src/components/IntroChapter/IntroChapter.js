@@ -14,7 +14,7 @@ export const IntroChapter = () => {
                     понятия и термины, связанные с вашими учебными
                     предметами. (текст поверх баннера)
                 </p>
-                <Button label='Зарегистрироваться' link={'/dashboard'} />
+                <Button label='Зарегистрироваться' link={'/registrationForm'} />
             </div>
             <img src={logo} className="content_beautiful_picture" alt="content_beautiful_picture"></img>
         </section>
