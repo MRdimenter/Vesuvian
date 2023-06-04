@@ -4,12 +4,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.vesuvian.service.security.model.User;
+import ru.vesuvian.service.security.service.UserService;
 
 @RestController
 @RequestMapping("api/v1/users")
 @Slf4j
 public class UserController {
+    UserService userService;
 
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/test")
     public String getTestData() {
@@ -25,5 +30,6 @@ public class UserController {
         log.info(user.getLastName());
         log.info(user.getEmail());
 
+        userService.createUser(user);
     }
 }
