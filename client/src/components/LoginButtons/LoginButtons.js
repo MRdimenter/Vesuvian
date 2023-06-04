@@ -32,11 +32,18 @@ async function logout(dispatch) {
 }
 
 export const LoginButtons = () => {
-  const isAuthenticated = useSelector((state) => state.isAuth);
+  let content;
+  const {AUTH_STATUS: isAuthenticated, AUTH_REQUEST_STATUS: isAuthenticationVerified} = useSelector((state) => state.isAuth);
+
+  if (isAuthenticationVerified) {
+    content = isAuthenticated ? <LogOutButton /> : <RegistrationButtons />;
+  } else {
+    content = null;
+  }
 
   return (
     <div className='loginButtons'>
-      {!isAuthenticated ? <RegistrationButtons /> : <LogOutButton />}
+      {content}
     </div>
   )
 }

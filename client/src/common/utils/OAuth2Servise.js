@@ -3,7 +3,6 @@ import { REFRESH_TOKEN } from "../constants/OAuth2Constants";
 import { postOAuth2Login, postOAuth2Logout } from "./OAuth2FetchWrapper";
 import { setRefreshToken } from "./useOAuth2";
 
-
 export class OAuth2Servise {
     _refreshToken = Cookies.get(REFRESH_TOKEN) || null;
 
@@ -15,7 +14,7 @@ export class OAuth2Servise {
         const response = await postOAuth2Logout(this._refreshToken); // нормальный ответ 204
 
         if (response.status === 204) {
-        console.log('response from postOAuth2Logout is ok'); // TODO решил пока что оставить, пока не решу как обрабатывать ошибки
+            console.log('response from postOAuth2Logout is ok'); // TODO решил пока что оставить, пока не решу как обрабатывать ошибки
         }
 
         Cookies.remove(REFRESH_TOKEN);
@@ -25,6 +24,7 @@ export class OAuth2Servise {
         try {
             const response = await postOAuth2Login(username, password);
             const { refresh_token } = response;
+
             if (refresh_token) {
                 setRefreshToken(refresh_token);
                 return true;
@@ -37,6 +37,6 @@ export class OAuth2Servise {
             } else {
                 throw new Error();
             }
-          }
+        }
     }
 }

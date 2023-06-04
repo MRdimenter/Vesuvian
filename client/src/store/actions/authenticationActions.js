@@ -10,14 +10,6 @@ const authenticationAction = (value) => {
   }
 }
 
-const authenticationRequestAction = (value) => {
-  return {
-    type: AUTHENTICATION_STATUS.AUTH_REQUEST_STATUS,
-    payload: value,
-  }
-}
-
 export {
   authenticationAction,
-  authenticationRequestAction,
 }

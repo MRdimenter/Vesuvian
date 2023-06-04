@@ -6,7 +6,6 @@ import { authenticationReducer, authenticationRequestReducer } from './authentic
 const reducers = combineReducers({
   DarkMode: darkModeReducer,
   isAuth: authenticationReducer,
-  isAuthLoading: authenticationRequestReducer,
 })
 
 export default reducers;
