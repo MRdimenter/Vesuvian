@@ -7,7 +7,7 @@ import ru.vesuvian.service.security.model.Customer;
 import ru.vesuvian.service.security.service.CustomerService;
 
 @RestController
-@RequestMapping("api/v1/users")
+@RequestMapping("api/v1/customers")
 @Slf4j
 public class CustomerController {
     CustomerService customerService;
@@ -22,7 +22,7 @@ public class CustomerController {
         return "test data";
     }
 
-    @PostMapping()
+    @PostMapping("/create`")
     @ResponseStatus(HttpStatus.CREATED)
     public void createUser(@RequestBody Customer customer) {
         log.info(customer.getUsername());
