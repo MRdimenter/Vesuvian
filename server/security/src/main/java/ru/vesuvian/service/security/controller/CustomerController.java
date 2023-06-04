@@ -22,7 +22,7 @@ public class CustomerController {
         return "test data";
     }
 
-    @PostMapping("/create`")
+    @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public void createUser(@RequestBody Customer customer) {
         log.info(customer.getUsername());
