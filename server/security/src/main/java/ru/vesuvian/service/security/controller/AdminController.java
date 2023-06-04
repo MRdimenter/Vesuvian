@@ -14,5 +14,4 @@ public class AdminController {
      return "test data";
  }
 
-
 }
