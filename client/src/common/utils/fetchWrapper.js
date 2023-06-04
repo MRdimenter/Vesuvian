@@ -1,45 +1,8 @@
-import { KEYCLOAK_LOGOUT_URL, KEYCLOAK_URL } from "../constants/OAuth2Constants";
-
 function get(path) {
     const requestOptions = { method: 'GET' };
     const url = `${process.env.REACT_APP_API_URL}/${path}`;
 
     return fetch(url, requestOptions).then(handleResponse);
-}
-
-function postOAuth2Login(username, password) {
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-        body:  new URLSearchParams({
-            'client_id': 'app-dev-client', // TODO in process.env?
-            'username': username,
-            'password': password,
-            'grant_type': 'password',
-          })
-    };
-
-    return fetch(KEYCLOAK_URL, requestOptions)
-        .then((res) => {
-            if (res.status >= 200 && res.status < 300) {
-                return res;
-            } else if (res.status === 401) {
-                throw new Error(res.statusText);
-            } else if (res.status >= 500) {
-                throw new Error(res.statusText);
-            } else {
-                let error = new Error(res.statusText);
-                error.response = res;
-                throw error
-            }
-        })
-        .then(handleResponse)
-        
-        /* .catch((e) => {
-            //console.log('Error: ' + e.message);
-        }); */
-        
-    //return fetch(KEYCLOAK_URL, requestOptions).then(handleResponse);
 }
 
 function postOAuth2AccessTokenByRefreshToken(url, refresh_token) {
@@ -103,7 +66,6 @@ function getTestDataFromResourceServer (access_token) { //TODO for testing
 
 export {
     get,
-    postOAuth2Login,
     postOAuth2AccessTokenByRefreshToken,
     getTestDataFromResourceServer,
     postOAuth2RefreshToken,

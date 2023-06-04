@@ -4,9 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 import './login.scss';
 
-import { postOAuth2Login } from '../../common/utils/fetchWrapper';
 import { authenticationAction } from '../../store/actions/authenticationActions';
-import { setRefreshToken } from '../../common/utils/useOAuth2';
+import { OAuth2Servise } from '../../common/utils/OAuth2Servise';
 
 //console.log('login: ', window.location, '!');
 
@@ -20,21 +19,18 @@ export const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const response = await postOAuth2Login(username, password);
-      const { refresh_token } = response;
+    const oAuth2Servise = new OAuth2Servise();
 
-      if (refresh_token) {
-        setRefreshToken(refresh_token);
+    try {
+      const response = await oAuth2Servise.OAuth2Login(username, password);
+      if (response) {
         dispatch(authenticationAction(true));
         navigate("/");
       } else {
         navigate("/login");
       }
     } catch (error) {
-      if (error.message === 'Unauthorized') {
-        setIsWrongCredentials(true);
-      } else {
+      if (error.message === '401') {
         setIsWrongCredentials(true);
       }
     }
@@ -60,7 +56,7 @@ export const Login = () => {
         </label>
         <label>
           <p>Password</p>
-          <input type="password" onChange={e => setPassword(e.target.value)} value={username}/>
+          <input type="password" onChange={e => setPassword(e.target.value)} value={password}/>
         </label>
         <div className='login-button-wrapper'>
           <button type="submit">Submit</button>
