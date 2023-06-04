@@ -1,4 +1,4 @@
-package ru.vesuvian.service.security.security;
+package ru.vesuvian.service.security.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +18,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import ru.vesuvian.service.security.exception.OAuth2ExceptionHandler;
 import ru.vesuvian.service.security.utils.KCRoleConverter;
 
-import java.util.Collections;
 import java.util.List;
 
 // помечаем класс как конфиг для Spring
