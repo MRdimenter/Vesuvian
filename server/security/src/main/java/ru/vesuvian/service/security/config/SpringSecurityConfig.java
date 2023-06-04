@@ -18,6 +18,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import ru.vesuvian.service.security.exception.OAuth2ExceptionHandler;
 import ru.vesuvian.service.security.utils.KCRoleConverter;
 
+import javax.ws.rs.HttpMethod;
 import java.util.List;
 
 // помечаем класс как конфиг для Spring
@@ -48,8 +49,9 @@ public class SpringSecurityConfig {
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(new KCRoleConverter());
 
         httpSecurity.authorizeHttpRequests()
+                .requestMatchers(HttpMethod.POST,"/api/v1/customers/create").permitAll()
+                .requestMatchers("/api/v1/customers/*").hasRole("user")
                 .requestMatchers("/admin/*").hasRole("admin") //CRUD для работы с пользователем
-                .requestMatchers("/user/*").hasRole("user")
                 .anyRequest().authenticated() // остальной API будет доступен только аутентифицированным пользователям
                 .and()
                 .csrf().disable()  // отключаем встроенную защиту от csrf атак, используется из OAUTH2
@@ -62,6 +64,8 @@ public class SpringSecurityConfig {
                 .authenticationEntryPoint(oAuth2ExceptionHandler); // все ошибки которые будут возникать в библиотеки OAuth2 будут обрабатываться в классе OAuth2ExceptionHandler
         return httpSecurity.build();
     }
+
+
 
     /**
      * Задаем настройки с каких конкретно сайтов мы можем получать запросы
