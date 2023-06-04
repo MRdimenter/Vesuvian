@@ -1,13 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
-import Cookies from 'js-cookie';
 
 import './loginButtons.scss';
 
-import { authenticationAction } from '../../store/actions/authenticationActions'; // изменить на абсолютные пути @...
-import { postOAuth2Logout } from '../../common/utils/fetchWrapper';
-import { REFRESH_TOKEN } from '../../common/constants/OAuth2Constants';
-
+import { authenticationAction } from '../../store/actions/authenticationActions';
 import { Button } from '../Button/Button';
+import { OAuth2Servise } from '../../common/utils/OAuth2Servise';
 
 const RegistrationButtons = () => {
   return (
@@ -27,14 +24,9 @@ const LogOutButton = () => {
 }
 
 async function logout(dispatch) {
-  const refresh_token = Cookies.get(REFRESH_TOKEN) || null;
+  const oAuth2Servise = new OAuth2Servise();
 
-  const response = await postOAuth2Logout(refresh_token); // нормальный ответ 204
-  if (response.status === 204) {
-    console.log('response from postOAuth2Logout is ok'); // TODO решил пока что оставить, пока не решу как обрабатывать ошибки
-  }
-
-  Cookies.remove(REFRESH_TOKEN);
+  oAuth2Servise.OAuth2LogOut();
   localStorage.clear();
   dispatch(authenticationAction(false));
 }
