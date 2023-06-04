@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import './login.scss';
 
-import { authenticationAction } from '../../store/actions/authenticationActions';
+import { authenticationAction, authenticationStateAction } from '../../store/actions/authenticationActions';
 import { OAuth2Servise } from '../../common/utils/OAuth2Servise';
 
 //console.log('login: ', window.location, '!');
@@ -40,6 +40,15 @@ export const Login = () => {
   useEffect(() => {
   }, [isWrongCredentials]);
 
+  
+  useEffect(() => {
+    dispatch(authenticationStateAction(false));
+    // componentWillUnmount
+    return () => {
+      dispatch(authenticationStateAction(true));
+    }
+  }, [dispatch]);
+  
   return (
     <div className="login-wrapper">
       <div className={`login-pass-warning ${isWrongCredentials ? 'block' : 'none'}`}>

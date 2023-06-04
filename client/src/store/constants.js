@@ -3,5 +3,6 @@ export const DARK_MODE_REDUCER = {
 }
 
 export const AUTHENTICATION_STATUS = {
-  AUTH_STATUS: 'AUTH',
+  authStatus: 'AUTH',
+  AUTH_STATE: 'STATE',
 }

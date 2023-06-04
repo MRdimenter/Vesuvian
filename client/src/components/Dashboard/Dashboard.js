@@ -1,11 +1,24 @@
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { authenticationStateAction } from '../../store/actions/authenticationActions';
+
 import './dashboard.scss'
 
 export const Dashboard = () => {  //TODO rename
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     //getTestDataFromResourceServer(access_token);
   }
+
+  useEffect(() => {
+    dispatch(authenticationStateAction(false));
+    // componentWillUnmount
+    return () => {
+      dispatch(authenticationStateAction(true));
+    }
+  }, [dispatch]);
 
   return (
     <div className="registration-wrapper">

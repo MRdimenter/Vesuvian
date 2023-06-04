@@ -1,16 +1,22 @@
 import { AUTHENTICATION_STATUS } from "../constants";
 
 const initialState = {
-  AUTH_STATUS: false,
-  AUTH_REQUEST_STATUS: false,
+  authStatus: false,
+  authState: false, // todo rename auth_state: false
 }
 
 const authenticationReducer = (state = initialState, action) => {
   switch (action.type) {
-    case AUTHENTICATION_STATUS.AUTH_STATUS:
+    case AUTHENTICATION_STATUS.authStatus:
       return {
-        AUTH_STATUS: action.payload,
-        AUTH_REQUEST_STATUS: true,
+        ...state,
+        authStatus: action.payload,
+        authState: true,
+      }
+    case AUTHENTICATION_STATUS.AUTH_STATE:
+      return {
+        ...state,
+        authState: action.payload,
       }
     default:
       return state;
@@ -18,6 +24,5 @@ const authenticationReducer = (state = initialState, action) => {
 }
 
 export {
-  authenticationReducer,
-  
+  authenticationReducer, 
 }
