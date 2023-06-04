@@ -117,6 +117,7 @@ export const TestPanel = () => {
   return (
     <div className='test-panel'>
       <LoginButtons />
+      <Button btnStyle='link' label='ErrorPage' link={'/errorPage'} />
       <Button label='DarkMode' action={onChangeTheme} />
       <Button label='getAccessTokenByRefreshToken' action={() => getAccessTokenByRefreshToken()} />
       <Button label='Check Refresh Token' action={() => updateAccessToken()} />  

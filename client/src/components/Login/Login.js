@@ -32,8 +32,9 @@ export const Login = () => {
     } catch (error) {
       if (error.message === '401') {
         setIsWrongCredentials(true);
+      } else {
+        navigate("/errorPage");
       }
-      //todo 404 + ErrorPage
     }
   }
 
