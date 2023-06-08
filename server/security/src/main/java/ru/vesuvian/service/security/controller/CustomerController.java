@@ -1,10 +1,15 @@
 package ru.vesuvian.service.security.controller;
 
+import jakarta.validation.constraints.Min;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.vesuvian.service.security.model.Customer;
+import ru.vesuvian.service.security.dto.CustomerRegistrationDto;
+import ru.vesuvian.service.security.dto.CustomerRepresentationDto;
 import ru.vesuvian.service.security.service.CustomerService;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/customers")
@@ -22,14 +27,15 @@ public class CustomerController {
         return "test data";
     }
 
+    @GetMapping()
+    public List<CustomerRepresentationDto> getCustomers(@RequestParam(required = false) @Min(1) Integer page) {
+        return customerService.getCustomers(Optional.ofNullable(page));
+    }
+
+
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createUser(@RequestBody Customer customer) {
-        log.info(customer.getUsername());
-        log.info(customer.getFirstName());
-        log.info(customer.getLastName());
-        log.info(customer.getEmail());
-
+    public void createUser(@RequestBody CustomerRegistrationDto customer) {
         customerService.createCustomer(customer);
     }
 }
