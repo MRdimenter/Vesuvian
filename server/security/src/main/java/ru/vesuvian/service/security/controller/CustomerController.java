@@ -1,6 +1,7 @@
 package ru.vesuvian.service.security.controller;
 
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,11 @@ public class CustomerController {
     @GetMapping()
     public List<CustomerRepresentationDto> getCustomers(@RequestParam(required = false) @Min(1) Integer page) {
         return customerService.getCustomers(Optional.ofNullable(page));
+    }
+
+    @GetMapping("/{id}")
+    public CustomerRepresentationDto getCustomer(@PathVariable @NotBlank String id) {
+        return customerService.getCustomerById(id);
     }
 
 
