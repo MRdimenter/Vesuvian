@@ -56,6 +56,15 @@ public class CustomerService {
         );
     }
 
+    public CustomerRepresentationDto getCustomerById(String id) {
+        return customerMapping.mapUserRepresentationToDto(
+                keycloak.realm(keycloakPropsConfig.getRealm())
+                        .users()
+                        .get(id)
+                        .toRepresentation()
+        );
+    }
+
     public void createCustomer(CustomerRegistrationDto customer) {
         var realmResource = keycloak.realm(keycloakPropsConfig.getRealm());
         var credential = createPasswordCredentials(customer.getPassword());
