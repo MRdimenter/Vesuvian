@@ -1,4 +1,4 @@
-package ru.vesuvian.service.security.model;
+package ru.vesuvian.service.security.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Customer {
+public class CustomerDto {
     private String username;
     private String firstName;
     private String lastName;
