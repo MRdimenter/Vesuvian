@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @Setter
 @Configuration
 @ConfigurationProperties(
-        value = "keycloak",
+        value = "keycloak.authorization",
         //locations = "classpath:keycloak.properties",
         ignoreUnknownFields = false
         //prefix = "keycloak"
