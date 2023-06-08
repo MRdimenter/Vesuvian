@@ -14,4 +14,8 @@ public class CustomerMapping {
                 .map(CustomerRepresentationDto::fromUserRepresentation)
                 .collect(Collectors.toList());
     }
+
+    public CustomerRepresentationDto mapUserRepresentationToDto(UserRepresentation userRepresentation) {
+        return CustomerRepresentationDto.fromUserRepresentation(userRepresentation);
+    }
 }
