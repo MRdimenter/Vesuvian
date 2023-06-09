@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.keycloak.admin.client.CreatedResponseUtil;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.UserResource;
+import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
@@ -16,10 +17,14 @@ import ru.vesuvian.service.security.dto.CustomerRepresentationDto;
 import ru.vesuvian.service.security.utils.KeycloakRoles;
 import ru.vesuvian.service.security.utils.mapping.CustomerMapping;
 
+import ru.vesuvian.service.security.exception.NotFoundException;
+
 import javax.ws.rs.core.Response;
+import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
 
 @Service
 @Slf4j
@@ -57,14 +62,18 @@ public class CustomerService {
     }
 
     public CustomerRepresentationDto getCustomerById(String id) {
-        return customerMapping.mapUserRepresentationToDto(
-                keycloak.realm(keycloakPropsConfig.getRealm())
-                        .users()
-                        .get(id)
-                        .toRepresentation()
-        );
-    }
+        try {
+            var usersResource = keycloak.realm(keycloakPropsConfig.getRealm()).users();
+            var userRepresentation = usersResource.get(id).toRepresentation();
 
+            return CustomerRepresentationDto.fromUserRepresentation(userRepresentation);
+        } catch (javax.ws.rs.NotFoundException e) {
+            var errorMsg = String.format("User with id %s not found", id);
+            throw new NotFoundException(errorMsg);
+        }
+
+    }
+    
     public void createCustomer(CustomerRegistrationDto customer) {
         var realmResource = keycloak.realm(keycloakPropsConfig.getRealm());
         var credential = createPasswordCredentials(customer.getPassword());
@@ -74,7 +83,7 @@ public class CustomerService {
         userRepresentation.setFirstName(customer.getFirstName());
         userRepresentation.setLastName(customer.getLastName());
         userRepresentation.setEmail(customer.getEmail());
-        userRepresentation.setEmailVerified(true);
+        // userRepresentation.setEmailVerified(true);
         userRepresentation.setCredentials(Collections.singletonList(credential));
 
         userRepresentation.setEnabled(true);
