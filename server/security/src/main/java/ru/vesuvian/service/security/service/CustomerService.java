@@ -73,7 +73,7 @@ public class CustomerService {
         }
 
     }
-    
+
     public void createCustomer(CustomerRegistrationDto customer) {
         var realmResource = keycloak.realm(keycloakPropsConfig.getRealm());
         var credential = createPasswordCredentials(customer.getPassword());
