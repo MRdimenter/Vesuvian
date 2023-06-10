@@ -8,6 +8,7 @@ import { authenticationAction, authenticationStateAction } from '../../store/act
 import { OAuth2Servise } from '../../common/utils/OAuth2Servise';
 
 //console.log('login: ', window.location, '!');
+// TODO refactor like registration form
 
 export const Login = () => {
   const dispatch = useDispatch();
