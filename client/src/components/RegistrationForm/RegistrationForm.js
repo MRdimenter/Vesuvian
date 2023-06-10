@@ -27,62 +27,96 @@ const RegistrationForm = () => {
   const [password, setPassword] = useState('servertest');
   const [confirmPassword, setConfirmPassword] = useState('servertest');
   //const [isInputsValidated, setIsInputsValidated] = useState(false);
-  const [isInputsValidated, setIsInputsValidated] = useState(true);
-  
+  //const [isInputsValidated, setIsInputsValidated] = useState(true);
+  // TODO перенесение курсора на первый (если не единственный) невалидный input
+
   const handleInputChange = (e) => {
     const { id, value } = e.target;
-    if (id === "firstName") {
-      setFirstName(value);
+    switch (id) {
+      case "firstName":
+        setFirstName(value);
+        break;
+      case "lastName":
+        setLastName(value);
+        break;
+      case "email":
+        setEmail(value);
+        break;
+      case "username":
+        setUsername(value);
+        break;
+      case "password":
+        setPassword(value);
+        break;
+      case "confirmPassword":
+        setConfirmPassword(value);
+        break;
+      default:
+        break;
     }
-    if (id === "lastName") {
-      setLastName(value);
-    }
-    if (id === "email") {
-      setEmail(value);
-    }
-    if (id === "password") {
-      setPassword(value);
-    }
-    if (id === "confirmPassword") {
-      setConfirmPassword(value);
-    }
-    if (id === "username")
-      setUsername(value);
   }
 
-  const inputValidation = (event) => {
-    console.log('noBlur');
-    const { id, value } = event.target;
-    if (id === "firstName") {
-      if (validator.isEmpty(firstName)) {
-        event.target.className = event.target.className.concat(' warn')  
+  function clearWarn(event) {
+    event.target.className = event.target.className.replace(' warn', '');
+  }
+
+  function isInputValid(id, value) {
+    if (validator.isEmpty(value)) {
+      return false;
+    } else {
+      switch (id) {
+        case "email":
+          return validator.isEmail(value) ? true : false;
+        case "confirmPassword":
+          return (password === confirmPassword) ? true : false;
+        default:
+          break;
       }
     }
+
+    return true;
   }
 
+  function inputValidation(event) {
+    const { id, value } = event.target;
 
-  const handleSubmit = async () => { //TODO заблокировать пока не будут выполнены все проверки (возможно через состояние)
-
-    //e.preventDefault();
-    //getTestDataFromResourceServer(access_token);
-    // TODO вынести всё в функцию валидации формы
-    if (!validator.isEmail(email)) {
-      console.log("You did not enter email") //todo состояние для неверно введенного мейла
+    if (isInputValid(id, value)) {
+      return;
+    } else {
+      event.target.className = event.target.className.concat(' warn');
     }
-    if (password !== confirmPassword) {
-      console.log("Repeated password incorrectly") //todo состояние для неверно введенного подтвержденного пароля (можно предупреждение через switch обернуть)
-    }
+  }
 
-    const credentials = {
-      "firstName": firstName,
-      "lastName": lastName, 
-      "email": email, 
-      "enabled": true, 
-      "username": username, 
-      "password": password
-     }
-    //TODO add validator.isEmpty()
-    if (isInputsValidated) {
+  function isInputsValid(e) {
+    for (const element of e.target.elements) {
+      if (element.className.includes('warn')) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  const handleSubmit = async (e) => { //TODO заблокировать пока не будут выполнены все проверки (возможно через состояние)
+    e.preventDefault();
+
+    /*
+    if (isInputsValid(e)) {
+      console.log('fetch');
+    } else {
+      console.log('no fetch');
+    }
+    */
+    
+    if (isInputsValid(e)) {
+      const credentials = {
+        "firstName": firstName,
+        "lastName": lastName,
+        "email": email,
+        "enabled": true,
+        "username": username,
+        "password": password
+      }
+
       try {
         const response = await post(REGISTR_URL_PATH, credentials)
         console.log('response: ', response);
@@ -92,7 +126,7 @@ const RegistrationForm = () => {
     } else {
       //TODO предупреждение что не все поля заполнены верно
     }
-    
+
   }
 
   useEffect(() => {
@@ -103,50 +137,76 @@ const RegistrationForm = () => {
     }
   }, [dispatch]);
 
-  return (
-    <div className="form">
-      <div className="form-body">
+  return (  // TODO copypast (static html)
+    <div className="registration-wrapper">
+      <form className="registration-form" onSubmit={handleSubmit}>
         <div className="username">
           <label className="form__label" htmlFor="firstName">First Name </label>
-          <input  className="form__input" 
-                  type="text" value={firstName} 
-                  onChange={(e) => handleInputChange(e)} 
-                  id="firstName" 
-                  placeholder="First Name"
-                  onBlur={e => inputValidation(e)} />
+          <input className="form__input"
+            id="firstName"
+            type="text"
+            value={firstName}
+            onChange={(e) => handleInputChange(e)}
+            onFocus={e => clearWarn(e)}
+            onBlur={e => inputValidation(e)} />
         </div>
         <div className="lastname">
           <label className="form__label" htmlFor="lastName">Last Name </label>
-          <input type="text" name="" id="lastName" value={lastName} className="form__input" onChange={(e) => handleInputChange(e)} placeholder="LastName" />
+          <input className="form__input"
+            id="lastName"
+            type="text"
+            value={lastName}
+            onChange={(e) => handleInputChange(e)}
+            onFocus={e => clearWarn(e)}
+            onBlur={e => inputValidation(e)} />
         </div>
         <div className="email">
           <label className="form__label" htmlFor="email">Email </label>
-          <input type="email" id="email" className="form__input" value={email} onChange={(e) => handleInputChange(e)} placeholder="Email" />
+          <input className="form__input"
+            id="email"
+            type="email"
+            value={email}
+            onChange={(e) => handleInputChange(e)}
+            onFocus={e => clearWarn(e)}
+            onBlur={e => inputValidation(e)} />
         </div>
         <div className="username">
           <label className="form__label" htmlFor="username">Username </label>
-          <input type="text" name="" id="username" value={username} className="form__input" onChange={(e) => handleInputChange(e)} placeholder="LastName" />
+          <input className="form__input"
+            id="username"
+            type="text"
+            value={username}
+            onChange={(e) => handleInputChange(e)}
+            onFocus={e => clearWarn(e)}
+            onBlur={e => inputValidation(e)} />
         </div>
         <div className="password">
           <label className="form__label" htmlFor="password">Password </label>
-          <input className="form__input" type="password" id="password" value={password} onChange={(e) => handleInputChange(e)} placeholder="Password" />
+          <input className="form__input"
+            id="password"
+            type="password"
+            value={password}
+            onChange={(e) => handleInputChange(e)}
+            onFocus={e => clearWarn(e)}
+            onBlur={e => inputValidation(e)} />
         </div>
         <div className="confirm-password">
           <label className="form__label" htmlFor="confirmPassword">Confirm Password </label>
-          <input  className="form__input" 
-                  type="password" 
-                  id="confirmPassword"
-                  value={confirmPassword}
-                  onChange={(e) => handleInputChange(e)}
-                  placeholder="Confirm Password"
-                  onBlur={e => inputValidation(e)} />
+          <input className="form__input"
+            id="confirmPassword"
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => handleInputChange(e)}
+            onFocus={e => clearWarn(e)}
+            onBlur={e => inputValidation(e)} />
         </div>
-      </div>
-      <div className="footer">
-        <button onClick={() => handleSubmit()} type="submit" className="btn">
-                Register
-        </button>
-      </div>
+        <div className="registration-button-wrapper">
+          <button type="submit" className="btn">
+            Register
+          </button>
+        </div>
+      </form>
+
     </div>
   )
 }
