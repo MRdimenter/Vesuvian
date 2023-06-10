@@ -1,8 +1,44 @@
+import { BASE_URL } from "../constants/urlConstants";
+
 function get(path) {
     const requestOptions = { method: 'GET' };
     const url = `${process.env.REACT_APP_API_URL}/${path}`;
 
     return fetch(url, requestOptions).then(handleResponse);
+}
+
+function post(path, body) {
+    const requestOptions = {
+        method: 'POST',
+        //mode: 'no-cors',
+        headers: {
+            /*
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'User-Agent': 'PostmanRuntime/7.32.2',
+            'Host': 'http://localhost:3000/registrationForm',
+            'Content-Length': '0'
+            */
+            'Content-Type': 'application/json',
+            'Content-Length': String(new TextEncoder().encode(body).length),
+            'Host': 'example.com',
+            'User-Agent': 'Mozilla/5.0',
+            'Accept': 'application/json',
+            'Accept-Encoding': 'gzip, deflate',
+            'Connection': 'keep-alive'
+        },
+        body: {
+            "firstName": "seraasdveartest",
+            "lastName": "seraasdvaertest",
+            "email": "servaasdaertest@test.com",
+            "enabled": "true",
+            "username": "seraaasdvertest",
+            "password": "seraaasdvertest"
+        }
+    };
+    const url = `${BASE_URL}/${path}`;
+
+    return fetch(url, requestOptions)//.then(handleResponse);
 }
 
 function postOAuth2AccessTokenByRefreshToken(url, refresh_token) {
@@ -16,7 +52,7 @@ function postOAuth2AccessTokenByRefreshToken(url, refresh_token) {
         })
     };
 
-    return fetch(url, requestOptions).then(handleResponse); // todo добавить обработчик ошибок
+    return fetch('http://45.141.103.134:8090/api/v1/customers/create', requestOptions).then(handleResponse); // todo добавить обработчик ошибок
 }
 
 
@@ -29,21 +65,21 @@ function postOAuth2RefreshToken(url, refresh_token) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-        body:  new URLSearchParams({
+        body: new URLSearchParams({
             'client_id': 'app-dev-client',
             'grant_type': 'refresh_token',
             'refresh_token': refresh_token,
-          })
+        })
     };
     return fetch(url, requestOptions).then(handleResponse);
-  }
+}
 
 /**
  * Функция для получения тестового набора данных от бекенд сервера по access_token 
  * 
  * https://www.keycloak.org/docs/latest/securing_apps/index.html#_javascript_adapter
  */
-function getTestDataFromResourceServer (access_token) { //TODO for testing
+function getTestDataFromResourceServer(access_token) { //TODO for testing
     const url = 'http://localhost:8090/user/test';
     const req = new XMLHttpRequest();
 
@@ -62,10 +98,11 @@ function getTestDataFromResourceServer (access_token) { //TODO for testing
         }
     }
     req.send();
-  };
+};
 
 export {
     get,
+    post,
     postOAuth2AccessTokenByRefreshToken,
     getTestDataFromResourceServer,
     postOAuth2RefreshToken,
