@@ -21,20 +21,20 @@ function post(path, body) {
             */
             'Content-Type': 'application/json',
             'Content-Length': String(new TextEncoder().encode(body).length),
-            'Host': 'example.com',
+            'Host': 'localhost:8090',
             'User-Agent': 'Mozilla/5.0',
-            'Accept': 'application/json',
-            'Accept-Encoding': 'gzip, deflate',
-            'Connection': 'keep-alive'
+            'Accept': '*/*',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Connection': 'keep-alive',
         },
-        body: {
-            "firstName": "seraasdveartest",
-            "lastName": "seraasdvaertest",
-            "email": "servaasdaertest@test.com",
+        body: JSON.stringify( {
+            "firstName": "nbvcxz",
+            "lastName": "nbvcxz",
+            "email": "nbvcxz@test.com",
             "enabled": "true",
-            "username": "seraaasdvertest",
-            "password": "seraaasdvertest"
-        }
+            "username": "nbvcxz",
+            "password": "nbvcxz"
+        })
     };
     const url = `${BASE_URL}/${path}`;
 
