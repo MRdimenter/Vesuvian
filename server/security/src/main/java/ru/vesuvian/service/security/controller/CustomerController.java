@@ -4,7 +4,6 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ru.vesuvian.service.security.dto.CustomerRegistrationDto;
 import ru.vesuvian.service.security.dto.CustomerRepresentationDto;
@@ -36,10 +35,15 @@ public class CustomerController {
 
     @GetMapping("/{id}")
     public CustomerRepresentationDto getCustomer(@PathVariable @NotBlank String id) {
-        log.info("get name: " + SecurityContextHolder.getContext().getAuthentication().getName());
         return customerService.getCustomerById(id);
     }
 
+    @GetMapping("/me")
+    public CustomerRepresentationDto getMe() {
+        return customerService.getMe();
+    }
+
+    
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
