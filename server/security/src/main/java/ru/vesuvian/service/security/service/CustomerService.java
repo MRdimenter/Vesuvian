@@ -66,7 +66,6 @@ public class CustomerService {
 
     }
 
-
     public void createCustomer(CustomerRegistrationDto customer) {
 
         var realmResource = keycloakCustomerManager.getRealmResource();
