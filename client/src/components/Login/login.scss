@@ -38,6 +38,10 @@
       margin-top: 10px;
     }
   }
+
+  .warn {
+    background-color: rgb(250, 200, 200);
+}
 }
 
 // for small monitors
@@ -60,7 +64,6 @@
       p {
         margin-top: 8px;
       }
-
     }
 
     .registration-wrapper {

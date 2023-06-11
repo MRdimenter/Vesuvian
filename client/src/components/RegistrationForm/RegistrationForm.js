@@ -4,10 +4,22 @@ import { authenticationStateAction } from '../../store/actions/authenticationAct
 import validator from 'validator';
 
 import './registrationForm.scss'
-import { post } from '../../common/utils/fetchWrapper';
+import { postRegistration } from '../../common/utils/fetchWrapper';
 import { REGISTR_URL_PATH } from '../../common/constants/urlConstants';
 
 //TODO возможно стоит добавит проверку не при отправке формы, а при потери фокуса с input (с неболшим замечанием что что-то не так, а не громким "ЧТО-ТО ПОШЛО НЕ ТАК")
+
+const WarningMessageInput = () => {
+  return <div className='waning-message'>
+      <p>Неверно заполнены поля для регистрации</p>
+    </div>
+}
+
+const WarningMessageUnoccupiedEmail = () => {
+  return <div className='waning-message'>
+      <p>Указанный email или Username уже зарегестрированы</p>
+    </div>
+}
 
 const RegistrationForm = () => {
   const dispatch = useDispatch();
@@ -26,9 +38,9 @@ const RegistrationForm = () => {
   const [username, setUsername] = useState('servertest');
   const [password, setPassword] = useState('servertest');
   const [confirmPassword, setConfirmPassword] = useState('servertest');
-  //const [isInputsValidated, setIsInputsValidated] = useState(false);
-  //const [isInputsValidated, setIsInputsValidated] = useState(true);
-  // TODO перенесение курсора на первый (если не единственный) невалидный input
+  const [isInputsValidated, setIsInputsValidated] = useState(false);
+
+  const [isUnoccupiedEmail, setIsUnoccupiedEmail] = useState(true);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -96,7 +108,7 @@ const RegistrationForm = () => {
     return true;
   }
 
-  const handleSubmit = async (e) => { //TODO заблокировать пока не будут выполнены все проверки (возможно через состояние)
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     /*
@@ -108,6 +120,8 @@ const RegistrationForm = () => {
     */
     
     if (isInputsValid(e)) {
+      setIsInputsValidated(true);
+      
       const credentials = {
         "firstName": firstName,
         "lastName": lastName,
@@ -118,15 +132,18 @@ const RegistrationForm = () => {
       }
 
       try {
-        const response = await post(REGISTR_URL_PATH, credentials)
+        const response = await postRegistration(REGISTR_URL_PATH, credentials)
         console.log('response: ', response);
+        console.log('response.status: ', response.status);
+        if (response.status === 409) {
+          setIsUnoccupiedEmail(false);
+        }
       } catch (error) {
         console.log('error: ', error);
       }
     } else {
-      //TODO предупреждение что не все поля заполнены верно
+      setIsInputsValidated(false);
     }
-
   }
 
   useEffect(() => {
@@ -137,68 +154,70 @@ const RegistrationForm = () => {
     }
   }, [dispatch]);
 
-  return (  // TODO copypast (static html)
+  return (
     <div className="registration-wrapper">
+      {isUnoccupiedEmail ? null : <WarningMessageUnoccupiedEmail />}
+      
       <form className="registration-form" onSubmit={handleSubmit}>
         <div className="username">
-          <label className="form__label" htmlFor="firstName">First Name </label>
-          <input className="form__input"
+          <label className="form-label" htmlFor="firstName">First Name </label>
+          <input className="form-input"
             id="firstName"
             type="text"
             value={firstName}
             onChange={(e) => handleInputChange(e)}
-            onFocus={e => clearWarn(e)}
-            onBlur={e => inputValidation(e)} />
+            onFocus={(e) => clearWarn(e)}
+            onBlur={(e) => inputValidation(e)} />
         </div>
         <div className="lastname">
-          <label className="form__label" htmlFor="lastName">Last Name </label>
-          <input className="form__input"
+          <label className="form-label" htmlFor="lastName">Last Name </label>
+          <input className="form-input"
             id="lastName"
             type="text"
             value={lastName}
             onChange={(e) => handleInputChange(e)}
-            onFocus={e => clearWarn(e)}
-            onBlur={e => inputValidation(e)} />
+            onFocus={(e) => clearWarn(e)}
+            onBlur={(e) => inputValidation(e)} />
         </div>
         <div className="email">
-          <label className="form__label" htmlFor="email">Email </label>
-          <input className="form__input"
+          <label className="form-label" htmlFor="email">Email </label>
+          <input className="form-input"
             id="email"
             type="email"
             value={email}
             onChange={(e) => handleInputChange(e)}
-            onFocus={e => clearWarn(e)}
-            onBlur={e => inputValidation(e)} />
+            onFocus={(e) => clearWarn(e)}
+            onBlur={(e) => inputValidation(e)} />
         </div>
         <div className="username">
-          <label className="form__label" htmlFor="username">Username </label>
-          <input className="form__input"
+          <label className="form-label" htmlFor="username">Username </label>
+          <input className="form-input"
             id="username"
             type="text"
             value={username}
             onChange={(e) => handleInputChange(e)}
-            onFocus={e => clearWarn(e)}
-            onBlur={e => inputValidation(e)} />
+            onFocus={(e) => clearWarn(e)}
+            onBlur={(e) => inputValidation(e)} />
         </div>
         <div className="password">
-          <label className="form__label" htmlFor="password">Password </label>
-          <input className="form__input"
+          <label className="form-label" htmlFor="password">Password </label>
+          <input className="form-input"
             id="password"
             type="password"
             value={password}
             onChange={(e) => handleInputChange(e)}
-            onFocus={e => clearWarn(e)}
-            onBlur={e => inputValidation(e)} />
+            onFocus={(e) => clearWarn(e)}
+            onBlur={(e) => inputValidation(e)} />
         </div>
         <div className="confirm-password">
-          <label className="form__label" htmlFor="confirmPassword">Confirm Password </label>
-          <input className="form__input"
+          <label className="form-label" htmlFor="confirmPassword">Confirm Password </label>
+          <input className="form-input"
             id="confirmPassword"
             type="password"
             value={confirmPassword}
             onChange={(e) => handleInputChange(e)}
-            onFocus={e => clearWarn(e)}
-            onBlur={e => inputValidation(e)} />
+            onFocus={(e) => clearWarn(e)}
+            onBlur={(e) => inputValidation(e)} />
         </div>
         <div className="registration-button-wrapper">
           <button type="submit" className="btn">
@@ -206,7 +225,7 @@ const RegistrationForm = () => {
           </button>
         </div>
       </form>
-
+      {isInputsValidated ? null : <WarningMessageInput />}
     </div>
   )
 }

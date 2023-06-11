@@ -7,7 +7,7 @@ function get(path) {
     return fetch(url, requestOptions).then(handleResponse);
 }
 
-function post(path, body) {
+function postRegistration(path, body) {
     const requestOptions = {
         method: 'POST',
         //mode: 'no-cors',
@@ -27,14 +27,7 @@ function post(path, body) {
             'Accept-Encoding': 'gzip, deflate, br',
             'Connection': 'keep-alive',
         },
-        body: JSON.stringify( {
-            "firstName": "zxczxczx435345",
-            "lastName": "zxczxczx435345",
-            "email": "zxczxczx435345@test.com",
-            "enabled": "true",
-            "username": "zxczxczx435345",
-            "password": "zxczxczx435345"
-        })
+        body: JSON.stringify(body)
     };
     const url = `${BASE_URL}/${path}`;
 
@@ -52,7 +45,7 @@ function postOAuth2AccessTokenByRefreshToken(url, refresh_token) {
         })
     };
 
-    return fetch('http://45.141.103.134:8090/api/v1/customers/create', requestOptions).then(handleResponse); // todo добавить обработчик ошибок
+    return fetch(url, requestOptions).then(handleResponse); // todo добавить обработчик ошибок
 }
 
 
@@ -102,7 +95,7 @@ function getTestDataFromResourceServer(access_token) { //TODO for testing
 
 export {
     get,
-    post,
+    postRegistration,
     postOAuth2AccessTokenByRefreshToken,
     getTestDataFromResourceServer,
     postOAuth2RefreshToken,
