@@ -28,12 +28,12 @@ function post(path, body) {
             'Connection': 'keep-alive',
         },
         body: JSON.stringify( {
-            "firstName": "nbvcxz",
-            "lastName": "nbvcxz",
-            "email": "nbvcxz@test.com",
+            "firstName": "zxczxczx435345",
+            "lastName": "zxczxczx435345",
+            "email": "zxczxczx435345@test.com",
             "enabled": "true",
-            "username": "nbvcxz",
-            "password": "nbvcxz"
+            "username": "zxczxczx435345",
+            "password": "zxczxczx435345"
         })
     };
     const url = `${BASE_URL}/${path}`;
