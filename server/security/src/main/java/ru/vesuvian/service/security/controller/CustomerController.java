@@ -43,7 +43,7 @@ public class CustomerController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createUser(@RequestBody CustomerRegistrationDto customer) {
+    public void createCustomer(@RequestBody CustomerRegistrationDto customer) {
         customerService.createCustomer(customer);
     }
 }
