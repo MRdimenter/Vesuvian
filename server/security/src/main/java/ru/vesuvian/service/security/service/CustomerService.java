@@ -4,6 +4,7 @@ package ru.vesuvian.service.security.service;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.admin.client.Keycloak;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ru.vesuvian.service.security.config.KeycloakPropsConfig;
 import ru.vesuvian.service.security.dto.CustomerRegistrationDto;
@@ -64,6 +65,14 @@ public class CustomerService {
             throw new NotFoundException(errorMsg);
         }
 
+    }
+
+    public CustomerRepresentationDto getMe() {
+        var id = SecurityContextHolder.getContext().getAuthentication().getName();
+        var usersResource = keycloak.realm(keycloakPropsConfig.getRealm()).users();
+        var userRepresentation = usersResource.get(id).toRepresentation();
+
+        return CustomerRepresentationDto.fromUserRepresentation(userRepresentation);
     }
 
     public void createCustomer(CustomerRegistrationDto customer) {
