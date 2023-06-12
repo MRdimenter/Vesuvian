@@ -36,7 +36,7 @@ jobs:
           context: server/security
           dockerfile: Dockerfile
           push: true
-          tags: ghcr.io/mrdimenter/customer-service:latest
+          tags: mrdimenter/customer-service:latest
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
