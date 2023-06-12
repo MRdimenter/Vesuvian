@@ -58,12 +58,9 @@ jobs:
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
           docker pull ghcr.io/mrdimenter/customer:latest
           
-          # Get the container id
-          CONTAINER_ID=$(docker ps -aqf "name=customer")
-  
           # Check if the container is running
-          if [ "$CONTAINER_ID" ]; then
-          docker rm -f $CONTAINER_ID
+          if [ "$(docker ps -aq -f name=customer)" ]; then
+          docker rm -f customer
           fi
           
           # Remove old Docker images with <none> tags
