@@ -22,7 +22,8 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: server/security
+          dockerfile: Dockerfile
           push: true
           tags: ghcr.io/vesuvian/customer-service:latest
 
