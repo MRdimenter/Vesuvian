@@ -57,7 +57,14 @@ jobs:
         run: |
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
           docker pull ghcr.io/mrdimenter/customer:latest
+          
+          # Check if the container is running
+          if [ "$(docker ps -q -f name=customer)" ]; then
           docker stop customer
           docker rm customer
-          docker run -d --name customer -p 8090:8090 ghcr.io/vesuvian/customer:latest
+          fi
+          
+          # Remove old Docker images with <none> tag
+          docker rmi $(docker images -f "dangling=true" -q)
+          docker run -d --name customer -p 8080:8080 ghcr.io/mrdimenter/customer:latest
           "
