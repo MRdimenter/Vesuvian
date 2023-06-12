@@ -48,6 +48,7 @@ public class CustomerController {
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public void createCustomer(@RequestBody CustomerRegistrationDto customer) {
+        log.info("docker test");
         customerService.createCustomer(customer);
     }
 }
