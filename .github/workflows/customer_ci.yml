@@ -60,10 +60,10 @@ jobs:
           
           # Check if the container is running
           echo "Checking if the container 'customer' exists..."
-          # if [ "$(docker ps -aq -f name=customer)" ]; then
+          
           echo "Container 'customer' is running. It will be stopped and removed..."
           sudo docker rm customer --force
-          #          fi
+
           
           # Remove old Docker images with <none> tags
           docker rmi -f $(docker images -f "dangling=true" -q)
