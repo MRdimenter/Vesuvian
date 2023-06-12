@@ -36,7 +36,7 @@ jobs:
           context: server/security
           dockerfile: Dockerfile
           push: true
-          tags: mrdimenter/customer-service:latest
+          tags: ghcr.io/mrdimenter/customer:latest
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -44,10 +44,10 @@ jobs:
       - name: Deploy to remote
         run: |
           ssh -o "StrictHostKeyChecking=no" ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
-          docker pull ghcr.io/vesuvian/customer-service:latest
-          docker stop customer-service
-          docker rm customer-service
-          docker run -d --name customer-service -p 8080:8080 ghcr.io/vesuvian/customer-service:latest
+          docker pull ghcr.io/vesuvian/customer:latest
+          docker stop customer
+          docker rm customer
+          docker run -d --name customer -p 8080:8080 ghcr.io/vesuvian/customer:latest
           "
         env:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
