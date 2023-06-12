@@ -59,7 +59,7 @@ jobs:
           docker pull ghcr.io/mrdimenter/customer:latest
           
           # Check if the container is running
-          if [ "$(docker ps -q -f name=customer)" ]; then
+          if [ "$(docker ps -aq -f name=customer)" ]; then
           docker stop customer
           docker rm customer
           fi
