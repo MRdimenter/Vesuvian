@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout codes
+      - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Set up QEMU
@@ -49,7 +49,7 @@ jobs:
 
       - name: Deploy to remote
         run: |
-          ssh -o "StrictHostKeyChecking=no" ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+          ssh -o "StrictHostKeyChecking=no" ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
           docker pull ghcr.io/mrdimenter/customer:latest
           docker stop customer
           docker rm customer
