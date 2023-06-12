@@ -59,8 +59,5 @@ jobs:
           docker pull ghcr.io/mrdimenter/customer:latest
           docker stop customer
           docker rm customer
-          docker run -d --name customer -p 8080:8080 ghcr.io/vesuvian/customer:latest
+          docker run -d --name customer -p 8090:8090 ghcr.io/vesuvian/customer:latest
           "
-#        env:
-#          SSH_HOST: ${{ secrets.SSH_HOST }}
-#          SSH_USER: ${{ secrets.SSH_USER }}
