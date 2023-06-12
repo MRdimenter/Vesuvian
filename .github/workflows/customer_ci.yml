@@ -64,7 +64,7 @@ jobs:
           # Check if the container is running
           if [ "$CONTAINER_ID" ]; then
           docker stop $CONTAINER_ID
-          docker rm $CONTAINER_ID
+          docker rm -f  $CONTAINER_ID
           fi
           
           # Remove old Docker images with <none> tags
