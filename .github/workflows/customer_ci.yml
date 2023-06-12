@@ -67,7 +67,7 @@ jobs:
           docker rm $CONTAINER_ID
           fi
           
-          # Remove old Docker images with <none> tag
+          # Remove old Docker images with <none> tags
           docker rmi -f $(docker images -f "dangling=true" -q)
           docker run -d --name customer -p 8090:8090 ghcr.io/mrdimenter/customer:latest
           "
