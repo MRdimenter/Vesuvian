@@ -60,7 +60,7 @@ jobs:
           
           # Check if the container is running
           if [ "$(docker ps -aq -f name=customer)" ]; then
-          docker rm -f customer
+          sudo docker rm customer --force
           fi
           
           # Remove old Docker images with <none> tags
