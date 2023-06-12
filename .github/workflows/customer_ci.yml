@@ -63,11 +63,10 @@ jobs:
   
           # Check if the container is running
           if [ "$CONTAINER_ID" ]; then
-          docker stop $CONTAINER_ID
-          docker rm -f  $CONTAINER_ID
+          docker rm -f $CONTAINER_ID
           fi
           
           # Remove old Docker images with <none> tags
-          docker rmi -f $(docker images -f "dangling=true" -q)
           docker run -d --name customer -p 8090:8090 ghcr.io/mrdimenter/customer:latest
+          docker rmi -f $(docker images -f "dangling=true" -q)
           "
