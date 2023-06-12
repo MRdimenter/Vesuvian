@@ -47,7 +47,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
-      - name: install ssh keys
+      - name: Install ssh keys
         run: |
           install -m 600 -D /dev/null ~/.ssh/id_rsa
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
@@ -59,10 +59,11 @@ jobs:
           docker pull ghcr.io/mrdimenter/customer:latest
           
           # Check if the container is running
-          if [ "$(docker ps -aq -f name=customer)" ]; then
+          echo "Checking if the container 'customer' exists..."
+#          if [ "$(docker ps -aq -f name=customer)" ]; then
           echo "Container 'customer' is running. It will be stopped and removed..."
           sudo docker rm customer --force
-          fi
+#          fi
           
           # Remove old Docker images with <none> tags
           docker rmi -f $(docker images -f "dangling=true" -q)
