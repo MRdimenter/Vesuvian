@@ -1,4 +1,5 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/mrdimenter/vesuvian/badge/main)](https://www.codefactor.io/repository/github/mrdimenter/vesuvian/overview/main)
+[![customer-ci](https://github.com/mrdimenter/vesuvian/actions/workflows/customer_ci.yml/badge.svg)](https://github.com/mrdimenter/vesuvian/actions/workflows/customer_ci.yml/badge.svg)
 # Проект Vesuvian <img src="https://i.ibb.co/QpMVQZF/123.png" alt="MarineGEO circle logo" style="height: 25px; width:25x;"/>
 
 
