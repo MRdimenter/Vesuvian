@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
         ignoreUnknownFields = false
         //prefix = "keycloak"
 )
-public class KeycloakPropsConfig {
+public class KeycloakDevelopersPropsConfig implements KeycloakPropsConfig {
     private String authServerUrl;
     private String realm;
     private String resource;
