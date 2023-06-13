@@ -7,7 +7,7 @@
         <groupId>ru.vesuvian</groupId>
         <artifactId>Vesuvian</artifactId>
         <version>1.0</version>
-        <relativePath>../../../Vesuvian</relativePath>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
 
     <artifactId>security</artifactId>
@@ -58,9 +58,9 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                <mainClass>ru.vesuvian.service.security.SecurityApplication</mainClass>
-                <layout>JAR</layout>
-            </configuration>
+                    <mainClass>ru.vesuvian.service.security.SecurityApplication</mainClass>
+                    <layout>JAR</layout>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
