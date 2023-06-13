@@ -24,7 +24,6 @@ public class CustomerController {
 
     @GetMapping("/test")
     public String getTestData() {
-        log.info("Sent response with test data");
         return "test data";
     }
 
@@ -42,8 +41,6 @@ public class CustomerController {
     public CustomerRepresentationDto getMe() {
         return customerService.getMe();
     }
-
-    
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
