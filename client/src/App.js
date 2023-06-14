@@ -7,13 +7,14 @@ import { updateAccessToken, updateAccessTokenByRefreshToken } from './common/uti
 import './App.scss';
 
 import { Main } from './components/Main/Main';
-import { Login } from './components/Login/Login';
+
 import { Footer } from './components/Footer/Footer';
 import { Header } from './components/Header/Header';
-import { RegistrationForm } from './components/RegistrationForm/RegistrationForm';
 import { RedirectPage } from './components/RedirectPage/RedirectPage';
 import { TestPanel } from './components/TestPanel/TestPanel';
 import { ErrorPage } from './components/ErrorPage/ErrorPage';
+import { Login } from './components/Forms/Login/Login';
+import { RegistrationForm } from './components/Forms/RegistrationForm/RegistrationForm';
 
 export const App = () => {
   const dispatch = useDispatch();
