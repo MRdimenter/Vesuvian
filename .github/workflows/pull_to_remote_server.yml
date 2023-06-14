@@ -1,3 +1,4 @@
+name: Pull to remote server
 on:
   push:
     branches:

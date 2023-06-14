@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
     <name>Vesuvian</name>
     <modules>
-        <module>server/security</module>
+        <module>server/customer</module>
     </modules>
 
     <properties>
