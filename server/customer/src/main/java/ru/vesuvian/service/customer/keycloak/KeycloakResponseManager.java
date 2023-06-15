@@ -3,10 +3,12 @@ package ru.vesuvian.service.customer.keycloak;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.admin.client.CreatedResponseUtil;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import ru.vesuvian.service.customer.config.KeycloakPropsConfig;
 import ru.vesuvian.service.customer.error.ErrorCode;
 import ru.vesuvian.service.customer.exception.UserExistsException;
+import ru.vesuvian.service.customer.exception.UserRightsViolationException;
 import ru.vesuvian.service.customer.utils.KeycloakRoles;
 
 import javax.ws.rs.core.Response;
@@ -24,6 +26,13 @@ public class KeycloakResponseManager {
         }
     }
 
+    public void handleValidateUserAuthentication(String providedUsername, String authenticatedUsername) {
+        if (!providedUsername.toLowerCase().equals(authenticatedUsername)) {
+            log.error("Attempt to update user with mismatched ID: " + providedUsername);
+            throw new UserRightsViolationException("The provided user ID does not match the authenticated user");
+        }
+    }
+
     public void logCustomerCreation(Response response) {
         log.info("realm: " + keycloakPropsConfig.getRealm());
         log.info("status: " + response.getStatus());
@@ -31,7 +40,11 @@ public class KeycloakResponseManager {
         log.info("customer id: " + CreatedResponseUtil.getCreatedId(response));
     }
 
-    public String getUserId(Response response) {
+    public String getUserIdFromClient(Response response) {
         return CreatedResponseUtil.getCreatedId(response);
+    }
+
+    public String getUserIdFromSpringSecurity() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }
