@@ -1,4 +1,5 @@
 const WrongCredentialWarning = () => {
+  return (
     <div>
         <p>
           Неверный логин или пароль
@@ -6,6 +7,7 @@ const WrongCredentialWarning = () => {
           к разработчикам ...адрес почты)
         </p>
       </div>
+  )
 }
 
 export {

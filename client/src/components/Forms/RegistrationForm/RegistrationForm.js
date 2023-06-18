@@ -9,15 +9,8 @@ import { WarningMessageUnoccupiedEmail } from './WarningMessageUnoccupiedEmail';
 import { postRegistration } from '../../../common/utils/fetchWrapper';
 import { REGISTR_URL_PATH } from '../../../common/constants/urlConstants';
 import { useNavigate } from 'react-router-dom';
-
-function isInputsValid(e) {
-  for (const element of e.target.elements) {
-    if (element.className.includes('warn')) {
-      return false;
-    }
-  }
-  return true;
-}
+import { Button } from '../../Button/Button';
+import { RegistrationFormFooter } from './RegistrationFormFooter';
 
 const RegistrationForm = () => {
   const dispatch = useDispatch();
@@ -36,24 +29,35 @@ const RegistrationForm = () => {
   const [username, setUsername] = useState('servertest');
   const [password, setPassword] = useState('servertest');
   const [confirmPassword, setConfirmPassword] = useState('servertest');
+  
   const [isIncorrectInputs, setIsIncorrectInputs] = useState(false);
   const [isOccupiedEmail, setIsOccupiedEmail] = useState(false);
+  const [validationData, setValidationData] = useState({});
+
+  const handleValidationChange = (inputId, isValid) => {
+    setValidationData((prevData) => ({
+      ...prevData,
+      [inputId]: isValid,
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-/*
-    if (isInputsValid(e)) {
-      console.log('fetch');
-      setIsInputsNotValidated(true);
-    } else {
-      console.log('no fetch');
-      setIsInputsNotValidated(false);
-    }
-    
-*/
-    if (isInputsValid(e)) {
-      setIsIncorrectInputs(false);
+    const isFormValid = Object.values(validationData).every((isValid) => isValid);
+    /*
+        if (isInputsValid(e)) {
+          console.log('fetch');
+          setIsInputsNotValidated(true);
+        } else {
+          console.log('no fetch');
+          setIsInputsNotValidated(false);
+        }
+        
+    */
+    setIsIncorrectInputs(false);
+    setIsOccupiedEmail(false);
 
+    if (isFormValid) {
       const credentials = {
         "firstName": firstName,
         "lastName": lastName,
@@ -79,7 +83,7 @@ const RegistrationForm = () => {
     } else {
       console.log('else');
       setIsIncorrectInputs(true);
-    }   
+    }
   }
 
   useEffect(() => {
@@ -94,17 +98,18 @@ const RegistrationForm = () => {
     <div className="registration-wrapper">
       {isOccupiedEmail && <WarningMessageUnoccupiedEmail />}
       <form className="registration-form" onSubmit={handleSubmit}>
-        <InputBox className="firstName" labelContent="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
-        <InputBox className="lastName" labelContent="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
-        <InputBox className="email" type="email" labelContent="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-        <InputBox className="username" labelContent="Username" value={username} onChange={(e) => setUsername(e.target.value)}/>
-        <InputBox className="password" type="password" labelContent="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-        <InputBox className="confirmPassword" type="password" labelContent="Confirm Password" value={confirmPassword} 
-                  onChange={(e) => setConfirmPassword(e.target.value)} password={password}/>
+        <InputBox className="firstName" labelContent="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} onValidationChange={handleValidationChange} />
+        <InputBox className="lastName" labelContent="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} onValidationChange={handleValidationChange} />
+        <InputBox className="email" type="email" labelContent="Email" value={email} onChange={(e) => setEmail(e.target.value)} onValidationChange={handleValidationChange} />
+        <InputBox className="username" labelContent="Username" value={username} onChange={(e) => setUsername(e.target.value)} onValidationChange={handleValidationChange} />
+        <InputBox className="password" type="password" labelContent="Password" value={password} onChange={(e) => setPassword(e.target.value)} onValidationChange={handleValidationChange} />
+        <InputBox className="confirmPassword" type="password" labelContent="Confirm Password" value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)} password={password} onValidationChange={handleValidationChange} />
         <div className="registration-button-wrapper">
-          <button type="submit" className="btn">Register</button>
+          <Button btnStyle='link' label='Register' action={handleSubmit} />
         </div>
       </form>
+      <RegistrationFormFooter />
       {isIncorrectInputs && <WarningMessageInput />}
     </div>
   )

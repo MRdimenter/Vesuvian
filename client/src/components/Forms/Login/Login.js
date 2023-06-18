@@ -10,28 +10,32 @@ import { InputBox } from '../InputBox';
 import { WrongCredentialWarning } from './WrongCredentialWarning';
 import { LoginFooter } from './LoginFooter';
 import { WarningMessage } from './WarningMessage';
+import { Button } from '../../Button/Button';
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState('user');
-  const [password, setPassword] = useState('user');
+  const [username, setUsername] = useState('user'); // TODO default state user for testing
+  const [password, setPassword] = useState('user'); // TODO default state user for testing
+  
   const [isWrongCredentials, setIsWrongCredentials] = useState(false);
   const [isInputsValidated, setIsInputsValidated] = useState(false);
+  const [validationData, setValidationData] = useState({});
 
-  function isInputsValid(e) {
-    for (const element of e.target.elements) {
-      if (element.className.includes('warn')) {
-        return false;
-      }
-    }
-    return true;
-  }
+
+  const handleValidationChange = (inputId, isValid) => {
+    setValidationData((prevData) => ({
+      ...prevData,
+      [inputId]: isValid,
+    }));
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const isFormValid = Object.values(validationData).every((isValid) => isValid);
     const oAuth2Servise = new OAuth2Servise();
+
     /*
         if (isInputsValid(event)) {
           console.log('fetch');
@@ -39,8 +43,11 @@ const Login = () => {
           console.log('no fetch');
         }
     */
-    if (isInputsValid(event)) {
-      setIsInputsValidated(true);
+    setIsInputsValidated(false);
+    setIsWrongCredentials(false);
+
+    if (isFormValid) {
+
 
       try {
         const response = await oAuth2Servise.OAuth2Login(username, password);
@@ -58,12 +65,10 @@ const Login = () => {
         }
       }
     } else {
-      setIsInputsValidated(false);
+      setIsInputsValidated(true);
     }
   }
 
-  useEffect(() => {
-  }, [isWrongCredentials]);
 
   useEffect(() => {
     dispatch(authenticationStateAction(false));
@@ -78,14 +83,14 @@ const Login = () => {
       {isWrongCredentials && <WrongCredentialWarning />}
       <h1>Please Log In</h1>
       <form className='login-form' onSubmit={handleSubmit}>
-        <InputBox className="username" labelContent="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-        <InputBox className="password" type="password" labelContent="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <InputBox className="username" labelContent="Username" value={username} onChange={(e) => setUsername(e.target.value)} onValidationChange={handleValidationChange} />
+        <InputBox className="password" type="password" labelContent="Password" value={password} onChange={(e) => setPassword(e.target.value)} onValidationChange={handleValidationChange} />
         <div className='login-button-wrapper'>
-          <button type="submit">Submit</button>
+          <Button btnStyle='link' label='Вход' action={handleSubmit} />
         </div>
       </form>
-      <LoginFooter/>
-      {isInputsValidated ? null : <WarningMessage />}
+      <LoginFooter />
+      {isInputsValidated && <WarningMessage />}
     </div>
   )
 }

@@ -1,20 +1,18 @@
+@import "../../../common/styles/color.scss";
+
 .login-wrapper {
   margin-top: 30px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  .login-pass-warning {
-    width: 240px;
-
-    font-size: 12px;
-    white-space: pre-line;
+  & div {
+    display: flex;
+    flex-direction: column;
   }
 
   .login-form {
     width: 220px;
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -24,7 +22,6 @@
     p {
       margin-top: 10px;
     }
-
   }
 
   .registration-wrapper {
@@ -40,8 +37,8 @@
   }
 
   .warn {
-    background-color: rgb(250, 200, 200);
-}
+    background-color: $warn;
+  }
 }
 
 // for small monitors

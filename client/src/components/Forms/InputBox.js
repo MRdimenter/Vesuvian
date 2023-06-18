@@ -2,7 +2,7 @@ import validator from 'validator';
 
 import './InputBox.scss'
 
-function isInputValid(id, value, password) {
+function validateInput(id, value, password) {
   if (validator.isEmpty(value)) {
     return false;
   } else {
@@ -23,17 +23,20 @@ function clearWarn(event) {
   event.target.className = event.target.className.replace(' warn', '');
 }
 
-function inputValidation(event, password) {
+function inputValidation(event, password, onValidationChange) {
   const { id, value } = event.target;
+  const isInputValid = validateInput(id, value, password);
 
-  if (isInputValid(id, value, password)) {
+  onValidationChange(id, isInputValid);
+
+  if (isInputValid) {
     return;
   } else {
     event.target.className = event.target.className.concat(' warn');
   }
 }
 
-const InputBox = ({ type = "text", className, labelContent, value, onChange, password='' }) => {
+const InputBox = ({ type = "text", className, labelContent, value, onChange, password='', onValidationChange}) => {
   return (
     <div className={`InputBox ${className}`}>
       <label className="form-label" htmlFor={className}>{labelContent}</label>
@@ -43,7 +46,7 @@ const InputBox = ({ type = "text", className, labelContent, value, onChange, pas
         value={value}
         onChange={(e) => onChange(e)}
         onFocus={(e) => clearWarn(e)}
-        onBlur={(e) => inputValidation(e, password)} />
+        onBlur={(e) => inputValidation(e, password, onValidationChange)} />
     </div>
   )
 }
