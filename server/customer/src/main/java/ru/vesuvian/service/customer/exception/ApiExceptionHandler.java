@@ -32,4 +32,13 @@ public class ApiExceptionHandler {
 
         return new ResponseEntity<>(apiException, status);
     }
+
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(UserRightsViolationException.class)
+    public ResponseEntity<Object> handleUserRightsViolationException(UserRightsViolationException e) {
+        var status = HttpStatus.FORBIDDEN;
+        var apiException = new ApiException(e.getMessage(), status, ZonedDateTime.now());
+
+        return new ResponseEntity<>(apiException, status);
+    }
 }

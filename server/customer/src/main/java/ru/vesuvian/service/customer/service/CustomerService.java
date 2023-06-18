@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ru.vesuvian.service.customer.dto.CustomerRegistrationDto;
 import ru.vesuvian.service.customer.dto.CustomerRepresentationDto;
+import ru.vesuvian.service.customer.dto.CustomerUpdateDto;
 import ru.vesuvian.service.customer.exception.NotFoundException;
 import ru.vesuvian.service.customer.keycloak.*;
 import ru.vesuvian.service.customer.utils.KeycloakRoles;
@@ -80,12 +81,30 @@ public class CustomerService {
         var response = createUserFactory.createUser(realmResource, userRepresentation);
         responseManager.handleUserCreationResponse(response);
 
-        var userId = responseManager.getUserId(response);
+        var userId = responseManager.getUserIdFromClient(response);
         var userResource = userResourceManager.getUserResource(realmResource, userId);
 
         roleManager.assignRole(realmResource, userResource, KeycloakRoles.USER);
 
         responseManager.logCustomerCreation(response);
+    }
+
+
+    public void updateCustomer(CustomerUpdateDto customerDto) {
+        String authenticatedUserId = responseManager.getUserIdFromSpringSecurity();
+
+        var realmResource = realmResourceManager.getRealmResource();
+        var usersResource = userResourceManager.getUsersResource(realmResource);
+        var authenticatedUser = usersResource.get(authenticatedUserId).toRepresentation();
+
+        responseManager.handleValidateUserAuthentication(customerDto.username(), authenticatedUser.getUsername());
+
+        authenticatedUser.setFirstName(customerDto.firstName());
+        authenticatedUser.setLastName(customerDto.lastName());
+        authenticatedUser.setEmail(customerDto.email());
+
+        var userResource = userResourceManager.getUserResource(realmResource, authenticatedUserId);
+        userResource.update(authenticatedUser);
     }
 
 
