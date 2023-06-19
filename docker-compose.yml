@@ -53,7 +53,7 @@ services:
     environment:
      # - BASE_URL= /swagger-ui
       - BASE_URL=/swagger-ui
-      - URL=http://localhost:8090/v3/api-docs
+      - URL=http://45.141.103.134:8090/v3/api-docs
       - OAUTH_CLIENT_ID=swagger-ui
       - OAUTH_CLIENT_SECRET=ZoistP5MrGPQdSBfC9kdmPJC1OEhqgCx
       - OAUTH_REALM=dev
