@@ -1,0 +1,40 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0.0",
+    "title": "Customer Service API",
+    "description": "Customer API documentation"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8090",
+      "description": "Development server"
+    }
+  ],
+  "paths": {
+    "/api/v1/customers": {
+
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "oauth2": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "http://45.141.103.134:8282/realms/dev/protocol/openid-connect/auth",
+            "tokenUrl": "http://45.141.103.134:8282/realms/dev/protocol/openid-connect/token",
+            "scopes": {
+              "openid": "openid"
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "oauth2": ["openid"]
+    }
+  ]
+}

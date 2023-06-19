@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
@@ -49,9 +50,14 @@ public class SpringSecurityConfig {
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(new KCRoleConverter());
 
         httpSecurity.authorizeHttpRequests()
+                .requestMatchers("/swagger-ui/**").permitAll() // or hasRole, hasAnyRole, hasAuthority, hasAnyAuthority as per your requirement
+                .requestMatchers("/swagger-resources/**").permitAll()
+                .requestMatchers("/api/v1/customers/**").permitAll()
+                .requestMatchers("/v3/api-docs/**").permitAll()
+                .requestMatchers("/webjars/**").permitAll()
                 .requestMatchers(HttpMethod.POST,"/api/v1/customers/create").permitAll()
                 //.requestMatchers(HttpMethod.GET,"/api/v1/customers/{page}").permitAll()
-                .requestMatchers("/api/v1/customers/*").hasRole("user")
+             //   .requestMatchers("/api/v1/customers/*").hasRole("user")
                 .requestMatchers("/admin/*").hasRole("admin") //CRUD для работы с пользователем
                 .anyRequest().authenticated() // остальной API будет доступен только аутентифицированным пользователям
                 .and()
@@ -64,6 +70,11 @@ public class SpringSecurityConfig {
                 .and()
                 .authenticationEntryPoint(oAuth2ExceptionHandler); // все ошибки которые будут возникать в библиотеки OAuth2 будут обрабатываться в классе OAuth2ExceptionHandler
         return httpSecurity.build();
+    }
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return web -> web.ignoring().requestMatchers("/swagger-ui", "/swagger-ui/**", "/error", "/v3/api-docs/**", "/swagger-ui.html");
     }
 
 

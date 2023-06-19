@@ -6,7 +6,7 @@ server:
 
 spring:
   application:
-    name: security
+    name: customer
   security:
 
     oauth2:
@@ -16,6 +16,9 @@ spring:
 
 
 keycloak:
+
+  auth-server-url: http://45.141.103.134:8282
+  realm: dev
   authorization:
     auth-server-url: http://45.141.103.134:8282
     realm: dev
@@ -26,3 +29,42 @@ keycloak:
     number-of-posts-per-page: 10
 
 clientURL: http://localhost:3000 # тестовый порт REACT
+
+
+## swagger-ui custom path
+#springdoc:
+#  swagger-ui:
+#    path: /swagger-ui
+#    oauth:
+#      #use-pkce-with-authorization-code-grant: true
+#      client-id: swagger-ui
+#  packagesToScan: ru.vesuvian.service.customer
+#  oauthflow:
+#    #authorization-url: http://45.141.103.134:8282/realms/dev/protocol/openid-connect/auth
+#    token-url: http://45.141.103.134:8282/realms/dev/protocol/openid-connect/token
+
+#paths:
+#  /api/v1/customers:
+#    get:
+#      security:
+#          - swagger-ui:
+#            - read_access
+#securitySchemes:
+#  swagger-ui:
+#    type: oauth2
+#    flows:
+#      implicit:
+#        authorizationUrl: http://45.141.103.134:8282/realms/dev/protocol/openid-connect/auth
+#        scopes:
+#          read_access: read data
+#          write_access: modify data
+
+#keycloak:
+#  auth-server-url: http://localhost:8080/auth
+#  realm: dev
+
+springdoc:
+  swagger-ui:
+    oauth:
+      client-id: swagger-ui
+      app-name: swagger-ui
