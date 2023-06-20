@@ -1,0 +1,10 @@
+.waning-message {
+    font-size: 14px;
+  }
+
+// for small monitors
+@media (max-width: 1224px) {
+    .waning-message {
+        font-size: 10px;
+      }
+  }

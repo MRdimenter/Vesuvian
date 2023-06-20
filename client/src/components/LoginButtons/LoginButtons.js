@@ -32,7 +32,7 @@ const LogOutButton = ({dispatch}) => {
 
 export const LoginButtons = () => {
   const dispatch = useDispatch();
-
+  
   let content;
   const {authStatus: isAuthenticated, authState: isAuthenticationVerified} = useSelector((state) => {
     return state.isAuth
@@ -45,7 +45,6 @@ export const LoginButtons = () => {
   }
 
   useEffect(() => {
-
   }, [isAuthenticated])
 
   return (

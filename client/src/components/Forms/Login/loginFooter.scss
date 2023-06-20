@@ -1,0 +1,25 @@
+.login-footer {
+    margin-top: 15px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    font-size: 12px;
+    white-space: pre-line;
+
+    .registration-button-wrapper {
+      margin-top: 10px;
+    }
+
+    p {
+        margin-top: 10px;
+      }
+}
+
+// for small monitors
+@media (max-width: 1224px) {
+    p {
+        margin-top: 8px;
+      }
+}

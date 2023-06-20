@@ -10,6 +10,7 @@ import './testPanel.scss';
 import { LoginButtons } from '../LoginButtons/LoginButtons';
 import { Button } from '../Button/Button';
 import { TestLoginButtons } from './TestLoginButtons/TestLoginButtons';
+import { get, getString } from '../../common/utils/fetchWrapper';
 
 
 export const TestPanel = () => {
@@ -19,21 +20,6 @@ export const TestPanel = () => {
   const onChangeTheme = () => {
     dispatch(darkModeAction());
   }
-
-  const runFetch = () => {
-    fetch('https://swapi.dev/api/people/1')
-      .then((response) => {
-        console.log('Got Response', response.status);
-        return response.json();
-      })
-      .then((body) => {
-        console.log(body);
-      })
-  }
-
-  const  viewProfile = function() {
-    window.location.assign('http://localhost:3000/login/');
-  };
 
   
   async function getAccessTokenByRefreshToken() {
@@ -57,20 +43,6 @@ export const TestPanel = () => {
     return fetch(url, requestOptions).then(handleResponse);
   }
 
-  function postOAuth2AccessTokenByRefreshToken(url) {
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-        body: new URLSearchParams({
-            'client_id': 'app-dev-client',
-            'grant_type': 'refresh_token',
-            'refresh_token': 'eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0MjdlZThjOC04NTRjLTQ3MTYtOWI1MS0xMGI4ZTcyMzFhMWMifQ.eyJleHAiOjE2ODMyMjkxMTQsImlhdCI6MTY4MzIyNzMxNCwianRpIjoiNmRjMjdlMTQtZjlhOS00NDgyLThmYjAtZDQ4NWNhM2ZkMzcwIiwiaXNzIjoiaHR0cDovLzQ1LjE0MS4xMDMuMTM0OjgyODIvcmVhbG1zL2RldiIsImF1ZCI6Imh0dHA6Ly80NS4xNDEuMTAzLjEzNDo4MjgyL3JlYWxtcy9kZXYiLCJzdWIiOiI2YzJjOWZiNi0zMzAxLTQzNTUtYTVhMi1iN2U4OWUxMTZmNzciLCJ0eXAiOiJSZWZyZXNoIiwiYXpwIjoiYXBwLWRldi1jbGllbnQiLCJzZXNzaW9uX3N0YXRlIjoiYzU1YWU2MTYtZDc2Zi00OWQyLTgyYzQtY2Q3ZjE3MDFmMWJiIiwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwic2lkIjoiYzU1YWU2MTYtZDc2Zi00OWQyLTgyYzQtY2Q3ZjE3MDFmMWJiIn0.mb-maakwaJKLcitaxKyDCGKvDlNecnq2lxN6TbMXQLo',
-        })
-    };
-
-    return fetch(url, requestOptions).then(handleResponse); // todo добавить обработчик ошибок
-}
-
   async function handleResponse(response) {
     return await response.json();
   }
@@ -88,24 +60,6 @@ export const TestPanel = () => {
     return fetch(url, requestOptions);
   }
 
-  function getRefreshTokenFromCookie() {
-    return Cookies.get(REFRESH_TOKEN) || null;
-  }
-
-  async function logout() {
-    const refresh_token = getRefreshTokenFromCookie();
-    const response = await postOAuthLogout('http://45.141.103.134:8282/realms/dev/protocol/openid-connect/logout', refresh_token); // нормальный ответ 204
-    console.log(response.status === 204);
-    clearCookies();
-    localStorage.clear(); // удалить всё.
-  }
-
-  async function authenticationTest() {
-    dispatch(authenticationAction(true))
-  }
-
-  const isAuthenticated = useSelector((state) => state.isAuth);
-
   function readCookies() {
     console.log('Cookies: ', document.cookie);
   }
@@ -114,17 +68,35 @@ export const TestPanel = () => {
     Cookies.remove('refreshToken');
   }
 
+  async function getTestString() {
+    let url = 'api/v1/customers/me';
+    url = 'api/v1/customers/test';
+    
+    let response = await getString(url);
+    console.log(response);
+  }
+
+  async function getDataMe() {
+    let url = 'api/v1/customers/me';
+    
+    let response = await get(url);
+    console.log(response);
+  }
+
   return (
     <div className='test-panel'>
       <LoginButtons />
       <Button btnStyle='link' label='ErrorPage' link={'/errorPage'} />
       <Button label='DarkMode' action={onChangeTheme} />
       <Button label='getAccessTokenByRefreshToken' action={() => getAccessTokenByRefreshToken()} />
-      <Button label='Check Refresh Token' action={() => updateAccessToken()} />  
+      <Button label='Check Refresh Token' action={() => updateAccessToken()} />
       <Button label='read Cookies' action={() => readCookies()} />
       <Button label='Clear Cookies' action={() => clearCookies()} />
-      <Button label='getAccessTokenByRefreshToken' action={() => getAccessTokenByRefreshToken()} />   
-      <Button label='updateAccessTokenByRefreshToken' action={() => updateAccessTokenByRefreshToken()} />   
+      <Button label='getAccessTokenByRefreshToken' action={() => getAccessTokenByRefreshToken()} />
+      <Button label='updateAccessTokenByRefreshToken' action={() => updateAccessTokenByRefreshToken()} />
+      
+      <Button label='getTestString' action={() => getTestString()} />
+      <Button label='APIme' action={() => getDataMe()} />
       <TestLoginButtons/>
     </div>
   )

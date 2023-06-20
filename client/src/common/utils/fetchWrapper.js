@@ -2,9 +2,16 @@ import { BASE_URL } from "../constants/urlConstants";
 
 function get(path) {
     const requestOptions = { method: 'GET' };
-    const url = `${process.env.REACT_APP_API_URL}/${path}`;
+    const url = `${BASE_URL}/${path}`;
 
     return fetch(url, requestOptions).then(handleResponse);
+}
+
+function getString(path) {
+    const requestOptions = { method: 'GET' };
+    const url = `${BASE_URL}/${path}`;
+
+    return fetch(url, requestOptions).then(handleResponseString);
 }
 
 function postRegistration(path, body) {
@@ -54,6 +61,10 @@ async function handleResponse(response) {
     return await response.json();
 }
 
+async function handleResponseString(response) {
+    return await response.text();
+}
+
 function postOAuth2RefreshToken(url, refresh_token) {
     const requestOptions = {
         method: 'POST',
@@ -95,6 +106,7 @@ function getTestDataFromResourceServer(access_token) { //TODO for testing
 
 export {
     get,
+    getString,
     postRegistration,
     postOAuth2AccessTokenByRefreshToken,
     getTestDataFromResourceServer,

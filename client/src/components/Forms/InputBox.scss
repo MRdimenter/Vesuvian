@@ -1,8 +1,25 @@
+@import "../../common/styles/color.scss";
+
 .InputBox {
-    font-size: 14px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
 
-    p {
-      margin-top: 10px;
-    }
+  font-size: 14px;
 
+  p {
+    margin-top: 10px;
   }
+
+  .warn {
+    background-color: $warn;
+  }
+}
+
+// for small monitors
+@media (max-width: 1224px) {
+
+  .InputBox {
+    margin-top: 8px;
+  }
+}
