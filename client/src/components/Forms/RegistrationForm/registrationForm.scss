@@ -7,19 +7,6 @@
     align-items: center;
 
     .registration-form {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-
-        & div {
-            display: flex;
-            flex-direction: column;
-        }
-
-        label {
-            margin-top: 10px;
-        }
-
         .registration-button-wrapper {
             margin-top: 10px;
             display: flex;
@@ -27,26 +14,14 @@
             align-items: center;
         }
     }
-
-    .warn {
-        background-color: $warn;
-    }
 }
 
 // for small monitors
 @media (max-width: 1224px) {
-    h1 {
-        font-size: 30px;
-    }
-
     .registration-wrapper {
         margin-top: 20px;
 
         .registration-form {
-            label {
-                margin-top: 8px;
-            }
-
             .registration-button-wrapper {
                 margin-top: 8px;
             }

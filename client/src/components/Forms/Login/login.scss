@@ -2,42 +2,27 @@
 
 .login-wrapper {
   margin-top: 30px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  & div {
-    display: flex;
-    flex-direction: column;
+  .login-form-wrapper {
+    margin-top: 15px;
+    width: 220px;
+    
+    font-size: 12px;
+    white-space: pre-line;
   }
 
   .login-form {
     width: 220px;
+    
     display: flex;
     flex-direction: column;
     align-items: center;
 
     font-size: 14px;
-
-    p {
-      margin-top: 10px;
-    }
-  }
-
-  .registration-wrapper {
-    width: 220px;
-
-    margin-top: 15px;
-    font-size: 12px;
-    white-space: pre-line;
-
-    .registration-button-wrapper {
-      margin-top: 10px;
-    }
-  }
-
-  .warn {
-    background-color: $warn;
   }
 }
 
@@ -50,26 +35,9 @@
   .login-wrapper {
     margin-top: 20px;
 
-    .login-pass-warning {
-      font-size: 10px;
-    }
-
     .login-form {
       width: 220px;
       font-size: 11px;
-
-      p {
-        margin-top: 8px;
-      }
-    }
-
-    .registration-wrapper {
-      margin-top: 12px;
-      font-size: 10px;
-
-      .registration-button-wrapper {
-        margin-top: 8px;
-      }
     }
   }
 }

@@ -1,6 +1,8 @@
+import './wrongCredentialWarning.scss';
+
 const WrongCredentialWarning = () => {
   return (
-    <div>
+    <div className="wrong-credential-warn">
         <p>
           Неверный логин или пароль
           (если данные введены верно, пожалуйста, обратитесь 

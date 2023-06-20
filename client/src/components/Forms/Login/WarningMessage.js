@@ -1,3 +1,5 @@
+import './warningMessage.scss';
+
 const WarningMessage = () => {
     return (
         <div className='waning-message'>

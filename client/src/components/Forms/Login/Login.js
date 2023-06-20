@@ -18,7 +18,7 @@ const Login = () => {
 
   const [username, setUsername] = useState('user'); // TODO default state user for testing
   const [password, setPassword] = useState('user'); // TODO default state user for testing
-  
+
   const [isWrongCredentials, setIsWrongCredentials] = useState(false);
   const [isInputsValidated, setIsInputsValidated] = useState(false);
   const [validationData, setValidationData] = useState({});
@@ -80,17 +80,19 @@ const Login = () => {
 
   return (
     <div className="login-wrapper">
-      {isWrongCredentials && <WrongCredentialWarning />}
-      <h1>Please Log In</h1>
-      <form className='login-form' onSubmit={handleSubmit}>
-        <InputBox className="username" labelContent="Username" value={username} onChange={(e) => setUsername(e.target.value)} onValidationChange={handleValidationChange} />
-        <InputBox className="password" type="password" labelContent="Password" value={password} onChange={(e) => setPassword(e.target.value)} onValidationChange={handleValidationChange} />
-        <div className='login-button-wrapper'>
-          <Button btnStyle='link' label='Вход' action={handleSubmit} />
-        </div>
-      </form>
-      <LoginFooter />
-      {isInputsValidated && <WarningMessage />}
+      <div className='login-form-wrapper'>
+        {isWrongCredentials && <WrongCredentialWarning />}
+        <h1>Please Log In</h1>
+        <form className='login-form' onSubmit={handleSubmit}>
+          <InputBox className="username" labelContent="Username" value={username} onChange={(e) => setUsername(e.target.value)} onValidationChange={handleValidationChange} />
+          <InputBox className="password" type="password" labelContent="Password" value={password} onChange={(e) => setPassword(e.target.value)} onValidationChange={handleValidationChange} />
+          <div className='login-button-wrapper'>
+            <Button btnStyle='link' label='Вход' action={handleSubmit} />
+          </div>
+        </form>
+        <LoginFooter />
+        {isInputsValidated && <WarningMessage />}
+      </div>
     </div>
   )
 }
