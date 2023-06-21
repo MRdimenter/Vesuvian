@@ -46,25 +46,28 @@ services:
       retries: 3
       timeout: 5s
 
-  swagger-ui:
-    image: swaggerapi/swagger-ui:v5.0.0
+
+  eureka-server:
+    image: ghcr.io/mrdimenter/eureka-server:latest
+    container_name: eureka
     ports:
-      - "8080:8080"
-    environment:
-     # - BASE_URL= /swagger-ui
-      - BASE_URL=/swagger-ui
-      - URL=http://45.141.103.134:8090/v3/api-docs
-      - OAUTH_CLIENT_ID=swagger-ui
-      - OAUTH_CLIENT_SECRET=ZoistP5MrGPQdSBfC9kdmPJC1OEhqgCx
-      - OAUTH_REALM=dev
-      - OAUTH_SERVER_URL=http://45.141.103.134:8282/auth/
-     # - OAUTH_SCOPES=read,write
-      - OAUTH_APP_NAME= myapp
-    #  - SWAGGER_JSON=/app/swagger.yml
+      - "8761:8761"
     networks:
-        - vesuvian-network
-#    volumes:
-#      - ./config:/app
+      - vesuvian-network
+
+
+  apigateway:
+    image: latest:latest
+    container_name: ghcr.io/mrdimenter/apigateway:latest
+    ports:
+      - "8083:8083"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+    depends_on:
+      - eureka-server
+    networks:
+      - vesuvian-network
+
 networks:
   vesuvian-network:
     driver: bridge

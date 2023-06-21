@@ -11,6 +11,8 @@
     <name>Vesuvian</name>
     <modules>
         <module>server/customer</module>
+        <module>server/eureka-server</module>
+        <module>server/apigateway</module>
     </modules>
 
     <properties>
@@ -19,6 +21,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.boot.maven.plugin.version>3.0.3</spring.boot.maven.plugin.version>
         <spring.boot.dependencies.version>3.0.3 </spring.boot.dependencies.version>
+        <spring.cloud-version>2022.0.1</spring.cloud-version>
     </properties>
 
     <dependencyManagement>
@@ -30,7 +33,16 @@
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
-        </dependencies>
+
+        <!-- Spring cloud for service registration and discovery-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-dependencies</artifactId>
+            <version>${spring.cloud-version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
     </dependencyManagement>
 
     <dependencies>
