@@ -57,8 +57,8 @@ services:
 
 
   apigateway:
-    image: latest:latest
-    container_name: ghcr.io/mrdimenter/apigateway:latest
+    image: ghcr.io/mrdimenter/apigateway:latest
+    container_name: apigateway
     ports:
       - "8083:8083"
     environment:
