@@ -55,12 +55,23 @@ services:
     networks:
       - vesuvian-network
 
-
   apigateway:
     image: ghcr.io/mrdimenter/apigateway:latest
     container_name: apigateway
     ports:
       - "8083:8083"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+    depends_on:
+      - eureka-server
+    networks:
+      - vesuvian-network
+
+  customer:
+    image: ghcr.io/mrdimenter/customer:latest
+    container_name: customer
+    ports:
+      - "8090:8090"
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
     depends_on:
