@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 
-import { KEYCLOAK_URL, REFRESH_TOKEN } from "../constants/OAuth2Constants";
+import { ACCESS_TOKEN, KEYCLOAK_URL, REFRESH_TOKEN } from "../constants/OAuth2Constants";
 import { postOAuth2AccessTokenByRefreshToken } from "./fetchWrapper";
 
 /*
@@ -8,6 +8,9 @@ import { postOAuth2AccessTokenByRefreshToken } from "./fetchWrapper";
     Устанавливает: в localStorage access_token
     Возвращает: access_token или null(если не удалось обновить)
 */
+
+// TODO in class
+// TODO function getAccessToken
 async function updateAccessTokenByRefreshToken() {
     const refresh_token = getRefreshTokenFromCookie();
     let access_token = '';
@@ -34,12 +37,16 @@ function setRefreshToken(refreshToken) {
     Cookies.set(REFRESH_TOKEN, refreshToken);
 }
 
-function updateAccessToken() { // переименовать в updateAccessToken() (ну наконец-то разобрался в определении функциональности действия!)
-    return !!Cookies.get(REFRESH_TOKEN);
+function setAccessToken(accessToken) {
+    localStorage.setItem(ACCESS_TOKEN, accessToken)
+}
+function getAccessToken() {
+    return localStorage.getItem(ACCESS_TOKEN)
 }
 
 export {
     updateAccessTokenByRefreshToken,
     setRefreshToken,
-    updateAccessToken,
+    setAccessToken,
+    getAccessToken,
 }

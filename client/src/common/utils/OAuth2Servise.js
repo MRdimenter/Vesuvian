@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import { REFRESH_TOKEN } from "../constants/OAuth2Constants";
 import { postOAuth2Login, postOAuth2Logout } from "./OAuth2FetchWrapper";
-import { setRefreshToken } from "./useOAuth2";
+import { setAccessToken, setRefreshToken } from "./useOAuth2";
 
 export class OAuth2Servise {
     _refreshToken = Cookies.get(REFRESH_TOKEN) || null;
@@ -23,10 +23,11 @@ export class OAuth2Servise {
     async OAuth2Login(username, password) {
         try {
             const response = await postOAuth2Login(username, password);
-            const { refresh_token } = response;
+            const { refresh_token, access_token } = response;
 
-            if (refresh_token) {
+            if (refresh_token && access_token) {
                 setRefreshToken(refresh_token);
+                setAccessToken(access_token);
                 return true;
             } else {
                 return false;

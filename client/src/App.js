@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { authenticationAction } from './store/actions/authenticationActions';
-import { updateAccessToken, updateAccessTokenByRefreshToken } from './common/utils/useOAuth2';
+import { setAccessToken, updateAccessTokenByRefreshToken } from './common/utils/useOAuth2';
 
 import './App.scss';
 
@@ -25,7 +25,7 @@ export const App = () => {
       const access_token = await updateAccessTokenByRefreshToken(); // пока что есть проблемка: не ясно по какой причине нет access_token (может сервер лежит), данные обработчики нужно добавить в обработку ошибок 
 
       if (access_token) {
-        updateAccessToken(access_token);
+        setAccessToken(access_token);
         dispatch(authenticationAction(true));
       } else {
         dispatch(authenticationAction(false));

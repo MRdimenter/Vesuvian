@@ -47,8 +47,6 @@ const Login = () => {
     setIsWrongCredentials(false);
 
     if (isFormValid) {
-
-
       try {
         const response = await oAuth2Servise.OAuth2Login(username, password);
         if (response) {

@@ -72,6 +72,7 @@ const RegistrationForm = () => {
         //console.log('response: ', response);
         //console.log('response.status: ', response.status);
         if (response.status === 201) {
+          // TODO переход на страничку "Пользователь {username} успешно зарегестрирован", кнопка перехода на login
           navigate("/login");
         }
         if (response.status === 409) {
