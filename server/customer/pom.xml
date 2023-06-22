@@ -15,7 +15,7 @@
     <description>customer service</description>
 
     <properties>
-        <start-class>ru.vesuvian.service.customer.SecurityApplication</start-class>
+        <start-class>ru.vesuvian.service.customer.CustomerApplication</start-class>
         <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -66,7 +66,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>ru.vesuvian.service.customer.SecurityApplication</mainClass>
+                    <mainClass>ru.vesuvian.service.customer.CustomerApplication</mainClass>
                     <layout>JAR</layout>
                 </configuration>
                 <executions>
