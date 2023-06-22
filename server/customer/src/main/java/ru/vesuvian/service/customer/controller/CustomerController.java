@@ -25,56 +25,29 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/customers")
-@Slf4j
 @Tag(name = "Customer", description = "The Customer API")
 public class CustomerController {
-    CustomerService customerService;
-
+    final CustomerService customerService;
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
 
 
-    @Operation(
-            summary = "View a list of available customers",
-            description = "View a list of available customers"
-    )
+    @Operation(summary = "View a list of available customers", description = "View a list of available customers")
     @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "Successful operation",
-                    content = @Content(
-                            array = @ArraySchema(
-                                    schema = @Schema(implementation = CustomerRepresentationDto.class)
-                            )
-                    )
-            ),
-            @ApiResponse(
-                    responseCode = "401",
-                    description = "Unauthorized - Invalid credentials provided",
-                    content = @Content
-            ),
-            @ApiResponse(
-                    responseCode = "403",
-                    description = "Forbidden - You're not allowed to access this resource",
-                    content = @Content
-            ),
-            @ApiResponse(
-                    responseCode = "409",
-                    description = "Conflict - The request could not be completed due to a conflict with the current state of the resource",
-                    content = @Content
-            )
+            @ApiResponse(responseCode = "200", description = "Successful operation",
+                    content = @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = CustomerRepresentationDto.class)))),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid credentials provided"),
+            @ApiResponse(responseCode = "403", description = "Forbidden - You're not allowed to access this resource"),
+            @ApiResponse(responseCode = "409", description = "Conflict - The request could not be completed due to a conflict with the current state of the resource")
     })
     @GetMapping()
     public List<CustomerRepresentationDto> getCustomers(
-            @Parameter(
-                    description = "Page for displaying a list of clients",
-                    name = "page"
-            )
+            @Parameter(description = "Page for displaying a list of clients", name = "page")
             @RequestParam(required = false, defaultValue = "1")
             @Min(1)
-            int page
-    ) {
+            int page) {
         return customerService.getCustomers(page);
     }
 
