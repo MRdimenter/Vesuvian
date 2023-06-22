@@ -57,12 +57,17 @@ jobs:
         run: |
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
           docker pull ghcr.io/mrdimenter/customer:latest
-          
+
           # Check if the container is running
           echo "Checking if the container 'customer' exists..."
-          
+
           echo "Container 'customer' is running. It will be stopped and removed..."
           docker rm customer --force
           
-          docker run -d --name customer -p 8090:8090 ghcr.io/mrdimenter/customer:latest
+           # Check if the docker compose is running
+          echo "Checking if the docker compose for 'customer' exists..."
+
+          echo "Docker compose for 'customer' is running. It will be stopped and removed..."
+          cd /home/vesuvian
+          docker compose up -d --no-deps --force-recreate customer
           "

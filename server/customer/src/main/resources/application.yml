@@ -8,7 +8,6 @@ spring:
   application:
     name: customer
   security:
-
     oauth2:
       resource-server:
         jwt:
@@ -16,9 +15,12 @@ spring:
 
 
 keycloak:
-
-  auth-server-url: http://45.141.103.134:8282
   realm: dev
+  auth-server-url: http://45.141.103.134:8282/auth
+  resource: swagger-ui
+  credentials:
+    secret: ZoistP5MrGPQdSBfC9kdmPJC1OEhqgCx
+
   authorization:
     auth-server-url: http://45.141.103.134:8282
     realm: dev
@@ -31,40 +33,23 @@ keycloak:
 clientURL: http://localhost:3000 # тестовый порт REACT
 
 
-## swagger-ui custom path
-#springdoc:
-#  swagger-ui:
-#    path: /swagger-ui
-#    oauth:
-#      #use-pkce-with-authorization-code-grant: true
-#      client-id: swagger-ui
-#  packagesToScan: ru.vesuvian.service.customer
-#  oauthflow:
-#    #authorization-url: http://45.141.103.134:8282/realms/dev/protocol/openid-connect/auth
-#    token-url: http://45.141.103.134:8282/realms/dev/protocol/openid-connect/token
 
-#paths:
-#  /api/v1/customers:
-#    get:
-#      security:
-#          - swagger-ui:
-#            - read_access
-#securitySchemes:
-#  swagger-ui:
-#    type: oauth2
-#    flows:
-#      implicit:
-#        authorizationUrl: http://45.141.103.134:8282/realms/dev/protocol/openid-connect/auth
-#        scopes:
-#          read_access: read data
-#          write_access: modify data
-
-#keycloak:
-#  auth-server-url: http://localhost:8080/auth
-#  realm: dev
 
 springdoc:
   swagger-ui:
     oauth:
       client-id: swagger-ui
       app-name: swagger-ui
+#    url: /swagger/v1/customers
+#  api-docs:
+#    path: /swagger/v1/customers
+
+
+
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka/

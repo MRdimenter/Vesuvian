@@ -1,11 +1,6 @@
 package ru.vesuvian.service.customer.controller;
 
 
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
-import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
-import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.extern.slf4j.Slf4j;
@@ -29,13 +24,8 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @GetMapping("/test")
-    public String getTestData() {
-        return "test data";
-    }
-
     @GetMapping()
-    public List<CustomerRepresentationDto> getCustomers( @RequestParam(required = false) @Min(1) Integer page) {
+    public List<CustomerRepresentationDto> getCustomers(@RequestParam(required = false) @Min(1) Integer page) {
         return customerService.getCustomers(Optional.ofNullable(page));
     }
 

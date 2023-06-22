@@ -49,20 +49,17 @@ public class SpringSecurityConfig {
         // подключаем конвертер ролей
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(new KCRoleConverter());
 
-        httpSecurity.authorizeHttpRequests()
+        httpSecurity
+                .authorizeHttpRequests()
                 .requestMatchers("/swagger-ui/**").permitAll() // or hasRole, hasAnyRole, hasAuthority, hasAnyAuthority as per your requirement
                 .requestMatchers("/swagger-resources/**").permitAll()
-                .requestMatchers("/api/v1/customers/**").permitAll()
-                .requestMatchers("/v3/api-docs/**").permitAll()
                 .requestMatchers("/webjars/**").permitAll()
-                .requestMatchers(HttpMethod.POST,"/api/v1/customers/create").permitAll()
-                //.requestMatchers(HttpMethod.GET,"/api/v1/customers/{page}").permitAll()
-             //   .requestMatchers("/api/v1/customers/*").hasRole("user")
-                .requestMatchers("/admin/*").hasRole("admin") //CRUD для работы с пользователем
+                .requestMatchers(HttpMethod.POST, "/api/v1/customers/create").permitAll()
+                .requestMatchers("/api/v1/customers/*").hasRole("user")
                 .anyRequest().authenticated() // остальной API будет доступен только аутентифицированным пользователям
                 .and()
                 .csrf().disable()  // отключаем встроенную защиту от csrf атак, используется из OAUTH2
-                  .cors() // разрешаем запросы типа OPTIONS (preflight - проверочный запрос перед основным)
+                .cors() // разрешаем запросы типа OPTIONS (preflight - проверочный запрос перед основным)
                 .and()
                 .oauth2ResourceServer() // влкючаем защиту OAUTH2
                 .jwt() // использует JWT для получения Access Token
@@ -74,9 +71,8 @@ public class SpringSecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> web.ignoring().requestMatchers("/swagger-ui", "/swagger-ui/**", "/error", "/v3/api-docs/**", "/swagger-ui.html");
+        return web -> web.ignoring().requestMatchers("/swagger-ui", "/swagger-ui/**", "/error", "/v3/api-docs/**", "/swagger-ui.html", "/swagger/v1/customers");
     }
-
 
 
     /**
@@ -85,9 +81,7 @@ public class SpringSecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-//        corsConfiguration.setAllowedOrigins(Collections.singletonList(clientURL)); // на этот микросервис разрешаем запросы только от clientURL
         corsConfiguration.setAllowedOrigins(List.of("*")); // на этот микросервис разрешаем запросы только от clientURL
-
         corsConfiguration.setAllowedHeaders(List.of("*")); // указываем какие заголовки мы разрешаем в запросе
         corsConfiguration.setAllowedMethods(List.of("*")); // указываем какие методы мы разрешаем в запросе (post, get, update, delete)
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
