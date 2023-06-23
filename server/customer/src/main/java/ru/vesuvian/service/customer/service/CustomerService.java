@@ -33,8 +33,9 @@ public class CustomerService {
     @Value("${keycloak.configuration.number-of-posts-per-page}")
     private int NUMBER_OF_POSTS_PER_PAGE;
 
-    public List<CustomerRepresentationDto> getCustomers(Optional<Integer> page) {
-        return page.map(this::getPagedCustomers)
+    public List<CustomerRepresentationDto> getCustomers(Integer page) {
+        Optional<Integer> optionalPage = Optional.ofNullable(page);
+        return optionalPage.map(this::getPagedCustomers)
                 .orElseGet(this::getAllCustomers);
     }
 
