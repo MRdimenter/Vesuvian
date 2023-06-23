@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import { Button } from "../Button/Button"
 
 const ReLoginPage = () => {
@@ -11,12 +12,18 @@ const ReLoginPage = () => {
         textAlign: 'center',
         paddingTop: '200px',
         color: 'red',
+
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
     }
 
     return (
         <div style={styles}>
-            Oops! Please Login!
+            <h3>Oops! Please Login!</h3>
             <Button btnStyle='btn' label='Вход' link={'/login'} />
+            <h3>Вернуться на главную</h3>
+            <Link className='Back' to={'/'}>Vesuvian :)</Link>
         </div>
     )
 }

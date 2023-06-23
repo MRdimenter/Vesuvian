@@ -16,6 +16,7 @@ import { ErrorPage } from './components/ErrorPage/ErrorPage';
 import { Login } from './components/Forms/Login/Login';
 import { RegistrationForm } from './components/Forms/RegistrationForm/RegistrationForm';
 import { ReLoginPage } from './components/ErrorPage/ReLoginPage';
+import { ListItem } from './components/ItemList/ItemList';
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -54,6 +55,7 @@ export const App = () => {
             <Route path='/redirect' element={<RedirectPage />}></Route>
             <Route path='/errorPage' element={<ErrorPage />}></Route>
             <Route path='/reLoginPage' element={<ReLoginPage />}></Route>
+            <Route path='/listItem' element={<ListItem />}></Route>
           </Routes>
         </div>
       </div>

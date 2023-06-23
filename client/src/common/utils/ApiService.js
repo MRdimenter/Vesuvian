@@ -14,7 +14,8 @@ class ApiService {
 
     async getResourseByAuth(path) {
         const url = `${BASE_URL}/${path}`;
-        const accessToken = getAccessToken();
+        let accessToken = getAccessToken();
+        //let accessToken = 'asd';
 
         const requestOptions = {
             method: 'GET',
@@ -43,7 +44,7 @@ class ApiService {
                 //console.log('accessToken', accessToken);
                 try {
                     accessToken = await this.oauthService.updateAccessTokenByRefreshToken(); // Вызов метода обновления access token из OAuth2Service
-                    return this.getResourse(path, accessToken); // Повторный вызов метода getAllCustomers с обновленным access token    
+                    return this.getResourseByAuth(path); // Повторный вызов метода getAllCustomers с обновленным access token    
                 } catch (error) {
                     console.log('updateAccessTokenByRefreshToken error: ', error);
                     throw error;
@@ -64,15 +65,21 @@ class ApiService {
         //return await fetch(url, requestOptions);
     }
 
-    async getAllCustomers() {
+    withPage = async (get, path, page) => {
+        const modifiedPath = page ? `${path}?page=${page}` : path;
+        return get(modifiedPath);
+    }
+
+    async getAllCustomers(page) {
+        console.log('page=', page);
+        //page = 1;
         try {
-            const response = await this.getResourseByAuth(CUSTOMERS_URL);
+            const response = await this.withPage(this.getResourseByAuth.bind(this), CUSTOMERS_URL, page)
             return response;
         } catch (error) {
             console.log('необработанная ошибка', error);
             throw error; // Пробросываем ошибку для обработки её компонентом, вызывающим метод getAllCustomers
         }
-
     }
 
 

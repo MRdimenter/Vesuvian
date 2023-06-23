@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import { useDispatch } from 'react-redux';
 import { darkModeAction } from '../../store/actions/darkModeAction';
-import { getAccessToken, updateAccessTokenByRefreshToken } from '../../common/utils/useOAuth2';
+import { getAccessToken, setWrongAccessToken, updateAccessTokenByRefreshToken } from '../../common/utils/useOAuth2';
 import { KEYCLOAK_URL } from '../../common/constants/OAuth2Constants';
 
 import './testPanel.scss';
@@ -25,25 +25,25 @@ export const TestPanel = () => {
     dispatch(darkModeAction());
   }
 
-  
+
   async function getAccessTokenByRefreshToken() {
     console.log('НЕ АКТУАЛЬНАЯ, т.к. refresh_token статический');
     const response = await postOAuth2RefreshToken(KEYCLOAK_URL);
     console.log(response);
-    let {access_token} = response;
-    
+    let { access_token } = response;
+
     console.log('Hello new access_token:', access_token);
   }
 
   function postOAuth2RefreshToken(url) {
     const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-        body:  new URLSearchParams({
-            'client_id': 'app-dev-client',
-            'grant_type': 'refresh_token',
-            'refresh_token': 'eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0MjdlZThjOC04NTRjLTQ3MTYtOWI1MS0xMGI4ZTcyMzFhMWMifQ.eyJleHAiOjE2ODMyMjkxMTQsImlhdCI6MTY4MzIyNzMxNCwianRpIjoiNmRjMjdlMTQtZjlhOS00NDgyLThmYjAtZDQ4NWNhM2ZkMzcwIiwiaXNzIjoiaHR0cDovLzQ1LjE0MS4xMDMuMTM0OjgyODIvcmVhbG1zL2RldiIsImF1ZCI6Imh0dHA6Ly80NS4xNDEuMTAzLjEzNDo4MjgyL3JlYWxtcy9kZXYiLCJzdWIiOiI2YzJjOWZiNi0zMzAxLTQzNTUtYTVhMi1iN2U4OWUxMTZmNzciLCJ0eXAiOiJSZWZyZXNoIiwiYXpwIjoiYXBwLWRldi1jbGllbnQiLCJzZXNzaW9uX3N0YXRlIjoiYzU1YWU2MTYtZDc2Zi00OWQyLTgyYzQtY2Q3ZjE3MDFmMWJiIiwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwic2lkIjoiYzU1YWU2MTYtZDc2Zi00OWQyLTgyYzQtY2Q3ZjE3MDFmMWJiIn0.mb-maakwaJKLcitaxKyDCGKvDlNecnq2lxN6TbMXQLo',
-          })
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+      body: new URLSearchParams({
+        'client_id': 'app-dev-client',
+        'grant_type': 'refresh_token',
+        'refresh_token': 'eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0MjdlZThjOC04NTRjLTQ3MTYtOWI1MS0xMGI4ZTcyMzFhMWMifQ.eyJleHAiOjE2ODMyMjkxMTQsImlhdCI6MTY4MzIyNzMxNCwianRpIjoiNmRjMjdlMTQtZjlhOS00NDgyLThmYjAtZDQ4NWNhM2ZkMzcwIiwiaXNzIjoiaHR0cDovLzQ1LjE0MS4xMDMuMTM0OjgyODIvcmVhbG1zL2RldiIsImF1ZCI6Imh0dHA6Ly80NS4xNDEuMTAzLjEzNDo4MjgyL3JlYWxtcy9kZXYiLCJzdWIiOiI2YzJjOWZiNi0zMzAxLTQzNTUtYTVhMi1iN2U4OWUxMTZmNzciLCJ0eXAiOiJSZWZyZXNoIiwiYXpwIjoiYXBwLWRldi1jbGllbnQiLCJzZXNzaW9uX3N0YXRlIjoiYzU1YWU2MTYtZDc2Zi00OWQyLTgyYzQtY2Q3ZjE3MDFmMWJiIiwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwic2lkIjoiYzU1YWU2MTYtZDc2Zi00OWQyLTgyYzQtY2Q3ZjE3MDFmMWJiIn0.mb-maakwaJKLcitaxKyDCGKvDlNecnq2lxN6TbMXQLo',
+      })
     };
     return fetch(url, requestOptions).then(handleResponse);
   }
@@ -63,7 +63,7 @@ export const TestPanel = () => {
   async function getTestString() {
     let url = 'api/v1/customers/me';
     //let url = 'api/v1/customers/test';
-    
+
     let response = await getString(url);
     console.log('response: ', response);
     //let response = await getTestDataFromResourceServer(url);
@@ -71,7 +71,7 @@ export const TestPanel = () => {
   }
 
   async function testDataFromResourceServer() {
-    
+
     const accessToken = getAccessToken();
 
     getTestDataFromResourceServer(accessToken)
@@ -79,7 +79,7 @@ export const TestPanel = () => {
 
   async function getDataMe() {
     let url = 'api/v1/customers/me';
-    
+
     let response = await get(url);
     console.log(response);
   }
@@ -103,28 +103,30 @@ export const TestPanel = () => {
 
   async function logout(dispatch) {
     const oAuth2Servise = new OAuth2Service();
-  
+
     oAuth2Servise.OAuth2LogOut();
     localStorage.clear();
     dispatch(authenticationAction(false));
   }
 
-  async function getAPICustomers() { //TODO refactor into clear func
-    const accessToken = getAccessToken()
-    //const accessToken = 'asd'
-
+  async function getAPICustomers(page) { //TODO refactor into clear func
     try {
-      let response = await apiService.getAllCustomers(accessToken);
+      let response = await apiService.getAllCustomers(page);
       console.log('getAPICustomers response', response);  
+
+      //apiService.getAllCustomers(page).then(res => console.log('log', res))
+
     } catch (error) {
+      console.log('ELSE error: ', error);
       if (error instanceof RefreshTokenMissingError || error instanceof BadRequestError) {
         //TODO хорошо бы указать, что не удалось обновить именно accessToken (из-за ошибки в updateAccessTokenByRefreshToken)
         //TODO ну и проверить, что это именно из-за него ошибка
+        console.log('HERE');
         logout(dispatch); // не обязательно, но желательно привести приложение в состояние LogOut
         navigate("/reLoginPage"); //TODO но лучше на страницу с предупреждением (чтобы не было неожиданностью почему так)
+      }
     }
-    }
-    
+
     /*
     apiService.getAllCustomers(accessToken).then((body) => {
       console.log(body);
@@ -148,13 +150,15 @@ export const TestPanel = () => {
       <Button label='Clear Cookies' action={() => clearCookies()} />
       <Button label='getAccessTokenFromLocalStorage' action={() => getAccessTokenFromLocalStorage()} />
       <Button label='updateAccessTokenByRefreshToken' action={() => updateAccessTokenByRefreshToken()} />
-      
+
       <Button label='getCustomers' action={() => getCustomers()} />
       <Button label='getAPICustomers' action={() => getAPICustomers()} />
+      <Button label='setWrongAccessToken' action={() => setWrongAccessToken()} />
+
       <Button label='testDataFromResourceServer' action={() => testDataFromResourceServer()} />
-      
+
       <Button label='APIme' action={() => getDataMe()} />
-      <TestLoginButtons/>
+      <TestLoginButtons />
     </div>
   )
 }

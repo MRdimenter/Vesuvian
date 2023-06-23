@@ -40,13 +40,23 @@ function setRefreshToken(refreshToken) {
 function setAccessToken(accessToken) {
     localStorage.setItem(ACCESS_TOKEN, accessToken)
 }
+
 function getAccessToken() {
     return localStorage.getItem(ACCESS_TOKEN)
 }
+
+/*
+    For to emulate an expired access token
+*/
+function setWrongAccessToken() {
+    localStorage.setItem(ACCESS_TOKEN, 'wrongAccessToken')
+}
+
 
 export {
     updateAccessTokenByRefreshToken,
     setRefreshToken,
     setAccessToken,
     getAccessToken,
+    setWrongAccessToken,
 }
