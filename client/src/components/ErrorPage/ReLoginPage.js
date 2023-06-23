@@ -1,4 +1,6 @@
-const ErrorPage = () => {
+import { Button } from "../Button/Button"
+
+const ReLoginPage = () => {
     const styles = {
         position: 'fixed',
         top: 0,
@@ -12,10 +14,13 @@ const ErrorPage = () => {
     }
 
     return (
-        <div style={styles}>Oops</div>
+        <div style={styles}>
+            Oops! Please Login!
+            <Button btnStyle='btn' label='Вход' link={'/login'} />
+        </div>
     )
 }
 
 export {
-    ErrorPage,
+    ReLoginPage,
 }

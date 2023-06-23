@@ -11,7 +11,7 @@ import { postOAuth2AccessTokenByRefreshToken } from "./fetchWrapper";
 
 // TODO in class
 // TODO function getAccessToken
-async function updateAccessTokenByRefreshToken() {
+async function updateAccessTokenByRefreshToken() {      //TODO перенести в класс OAuth2Service
     const refresh_token = getRefreshTokenFromCookie();
     let access_token = '';
 
@@ -20,7 +20,7 @@ async function updateAccessTokenByRefreshToken() {
             const response = await postOAuth2AccessTokenByRefreshToken(KEYCLOAK_URL, refresh_token);
             access_token = await response.access_token;
         } catch (error) {
-            console.log(error);
+            console.log('postOAuth2AccessTokenByRefreshToken: ', error);
             return null;
         }
     }

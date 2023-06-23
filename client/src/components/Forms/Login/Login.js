@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import './login.scss';
 
 import { authenticationAction, authenticationStateAction } from '../../../store/actions/authenticationActions';
-import { OAuth2Servise } from '../../../common/utils/OAuth2Servise';
+import { OAuth2Service } from '../../../common/utils/OAuth2Service';
 import { InputBox } from '../InputBox';
 import { WrongCredentialWarning } from './WrongCredentialWarning';
 import { LoginFooter } from './LoginFooter';
@@ -34,7 +34,7 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const isFormValid = Object.values(validationData).every((isValid) => isValid);
-    const oAuth2Servise = new OAuth2Servise();
+    const oAuth2Servise = new OAuth2Service();
 
     /*
         if (isInputsValid(event)) {

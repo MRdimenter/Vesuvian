@@ -15,6 +15,7 @@ import { TestPanel } from './components/TestPanel/TestPanel';
 import { ErrorPage } from './components/ErrorPage/ErrorPage';
 import { Login } from './components/Forms/Login/Login';
 import { RegistrationForm } from './components/Forms/RegistrationForm/RegistrationForm';
+import { ReLoginPage } from './components/ErrorPage/ReLoginPage';
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -52,6 +53,7 @@ export const App = () => {
             <Route path='/login' element={<Login />} />
             <Route path='/redirect' element={<RedirectPage />}></Route>
             <Route path='/errorPage' element={<ErrorPage />}></Route>
+            <Route path='/reLoginPage' element={<ReLoginPage />}></Route>
           </Routes>
         </div>
       </div>

@@ -9,12 +9,17 @@ import './testPanel.scss';
 import { LoginButtons } from '../LoginButtons/LoginButtons';
 import { Button } from '../Button/Button';
 import { TestLoginButtons } from './TestLoginButtons/TestLoginButtons';
-import { get, getString, getTestDataFromResourceServer } from '../../common/utils/fetchWrapper';
+import { get, getAuth, getString, getTestDataFromResourceServer } from '../../common/utils/fetchWrapper';
+import { ApiService } from '../../common/utils/ApiService';
+import { OAuth2Service } from '../../common/utils/OAuth2Service';
+import { BadRequestError, RefreshTokenMissingError } from '../../common/utils/Errors';
+import { useNavigate } from 'react-router-dom';
+import { authenticationAction } from '../../store/actions/authenticationActions';
 
 
 export const TestPanel = () => {
-
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onChangeTheme = () => {
     dispatch(darkModeAction());
@@ -22,6 +27,7 @@ export const TestPanel = () => {
 
   
   async function getAccessTokenByRefreshToken() {
+    console.log('НЕ АКТУАЛЬНАЯ, т.к. refresh_token статический');
     const response = await postOAuth2RefreshToken(KEYCLOAK_URL);
     console.log(response);
     let {access_token} = response;
@@ -59,13 +65,14 @@ export const TestPanel = () => {
     //let url = 'api/v1/customers/test';
     
     let response = await getString(url);
+    console.log('response: ', response);
     //let response = await getTestDataFromResourceServer(url);
     //console.log(response);
   }
 
   async function testDataFromResourceServer() {
-    const accessToken = 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJkUzZVLXFOVXFOZ1ZybnJTUGwzc0FJWko1NVliUUFRNHl2ekgzRTFyNmNNIn0.eyJleHAiOjE2ODc0MzEzMjcsImlhdCI6MTY4NzQzMTAyNywianRpIjoiZjBjODM2M2EtMmE3NS00YzE2LTgzMjktYzFjZDk0NzA0MGJkIiwiaXNzIjoiaHR0cDovLzQ1LjE0MS4xMDMuMTM0OjgyODIvcmVhbG1zL2RldiIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiI1ZDczMmM0Zi0xMzVlLTRmZGQtOTdlZS0xYjkzNDY2YzBiNzciLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJzd2FnZ2VyLXVpIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyIqIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLWRldiIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iLCJ1c2VyIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJlbWFpbCB1c2VyIHByb2ZpbGUiLCJjbGllbnRIb3N0IjoiMjEzLjIzNC4yNTIuMTEyIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtc3dhZ2dlci11aSIsImNsaWVudEFkZHJlc3MiOiIyMTMuMjM0LjI1Mi4xMTIiLCJjbGllbnRfaWQiOiJzd2FnZ2VyLXVpIn0.D3DpbCKyhxiROsryibEXcNh5ZDw6DereDm3lnfkauugsoiB6kj-xx0yvPSdcNfhhjF_VZdiSPYiukvp1PsW8-LvKtzPIfXQPUs6kLiezET8AFqESJKTSoYUqzDeZzB0BxQKbH45nB3iD-tRCtiLivvt3Q1as4SzuZGOjQytig3XeA9y_kA9ir8fqp68ezyHKTJDdH-vR12FPAOhgrxxAg2N7HXiEqalOqlVj_beU7tQX343wp_yIpTVthx4EDUVwYJ9TJ6GcR4zpX2CuFR0lCpr83mSVnXfwPkwBaa4kUaDrrUsLeq7WaE2gO9Rh9baKXd6HhmTEuEhDP_MAxJqj3Q'
-//    -H 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJkUzZVLXFOVXFOZ1ZybnJTUGwzc0FJWko1NVliUUFRNHl2ekgzRTFyNmNNIn0.eyJleHAiOjE2ODc0MzEzMjcsImlhdCI6MTY4NzQzMTAyNywianRpIjoiZjBjODM2M2EtMmE3NS00YzE2LTgzMjktYzFjZDk0NzA0MGJkIiwiaXNzIjoiaHR0cDovLzQ1LjE0MS4xMDMuMTM0OjgyODIvcmVhbG1zL2RldiIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiI1ZDczMmM0Zi0xMzVlLTRmZGQtOTdlZS0xYjkzNDY2YzBiNzciLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJzd2FnZ2VyLXVpIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyIqIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLWRldiIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iLCJ1c2VyIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJlbWFpbCB1c2VyIHByb2ZpbGUiLCJjbGllbnRIb3N0IjoiMjEzLjIzNC4yNTIuMTEyIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtc3dhZ2dlci11aSIsImNsaWVudEFkZHJlc3MiOiIyMTMuMjM0LjI1Mi4xMTIiLCJjbGllbnRfaWQiOiJzd2FnZ2VyLXVpIn0.D3DpbCKyhxiROsryibEXcNh5ZDw6DereDm3lnfkauugsoiB6kj-xx0yvPSdcNfhhjF_VZdiSPYiukvp1PsW8-LvKtzPIfXQPUs6kLiezET8AFqESJKTSoYUqzDeZzB0BxQKbH45nB3iD-tRCtiLivvt3Q1as4SzuZGOjQytig3XeA9y_kA9ir8fqp68ezyHKTJDdH-vR12FPAOhgrxxAg2N7HXiEqalOqlVj_beU7tQX343wp_yIpTVthx4EDUVwYJ9TJ6GcR4zpX2CuFR0lCpr83mSVnXfwPkwBaa4kUaDrrUsLeq7WaE2gO9Rh9baKXd6HhmTEuEhDP_MAxJqj3Q'
+    
+    const accessToken = getAccessToken();
 
     getTestDataFromResourceServer(accessToken)
   }
@@ -82,6 +89,55 @@ export const TestPanel = () => {
     console.log('accessToken: ', accessToken);
   }
 
+  async function getCustomers() { //TODO refactor into clear func
+    let url = 'api/v1/customers'
+    const accessToken = getAccessToken();
+    //console.log('accessToken: ', accessToken);
+
+    let response = await getAuth(url, accessToken);
+    console.log(response);
+  }
+
+  const oauthService = new OAuth2Service();
+  const apiService = new ApiService(oauthService);
+
+  async function logout(dispatch) {
+    const oAuth2Servise = new OAuth2Service();
+  
+    oAuth2Servise.OAuth2LogOut();
+    localStorage.clear();
+    dispatch(authenticationAction(false));
+  }
+
+  async function getAPICustomers() { //TODO refactor into clear func
+    const accessToken = getAccessToken()
+    //const accessToken = 'asd'
+
+    try {
+      let response = await apiService.getAllCustomers(accessToken);
+      console.log('getAPICustomers response', response);  
+    } catch (error) {
+      if (error instanceof RefreshTokenMissingError || error instanceof BadRequestError) {
+        //TODO хорошо бы указать, что не удалось обновить именно accessToken (из-за ошибки в updateAccessTokenByRefreshToken)
+        //TODO ну и проверить, что это именно из-за него ошибка
+        logout(dispatch); // не обязательно, но желательно привести приложение в состояние LogOut
+        navigate("/reLoginPage"); //TODO но лучше на страницу с предупреждением (чтобы не было неожиданностью почему так)
+    }
+    }
+    
+    /*
+    apiService.getAllCustomers(accessToken).then((body) => {
+      console.log(body);
+    }).catch(e => {
+      console.log(e);
+    })
+    */
+    //console.log('accessToken: ', accessToken);
+
+    //let response = await getAuth(url, accessToken);
+    //console.log(response);
+  }
+
   return (
     <div className='test-panel'>
       <LoginButtons />
@@ -93,8 +149,9 @@ export const TestPanel = () => {
       <Button label='getAccessTokenFromLocalStorage' action={() => getAccessTokenFromLocalStorage()} />
       <Button label='updateAccessTokenByRefreshToken' action={() => updateAccessTokenByRefreshToken()} />
       
-      <Button label='getTestString' action={() => getTestString()} />
-      <Button label='getTestString' action={() => testDataFromResourceServer()} />
+      <Button label='getCustomers' action={() => getCustomers()} />
+      <Button label='getAPICustomers' action={() => getAPICustomers()} />
+      <Button label='testDataFromResourceServer' action={() => testDataFromResourceServer()} />
       
       <Button label='APIme' action={() => getDataMe()} />
       <TestLoginButtons/>

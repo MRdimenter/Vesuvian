@@ -4,7 +4,7 @@ import './loginButtons.scss';
 
 import { authenticationAction } from '../../store/actions/authenticationActions';
 import { Button } from '../Button/Button';
-import { OAuth2Servise } from '../../common/utils/OAuth2Servise';
+import { OAuth2Service } from '../../common/utils/OAuth2Service';
 import { useEffect } from 'react';
 
 /*
@@ -17,8 +17,9 @@ LogOutButton выполняет выход пользователя и очищ�
 RegistrationButtons содержит кнопки для перехода к форме Регистриции или Аутентификации пользователя
 */
 
+//TODO вынести функцию (т.к. может использоваться при неудачных запросах и запросе последующей авторизации)
 async function logout(dispatch) {
-  const oAuth2Servise = new OAuth2Servise();
+  const oAuth2Servise = new OAuth2Service();
 
   oAuth2Servise.OAuth2LogOut();
   localStorage.clear();
