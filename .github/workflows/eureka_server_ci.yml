@@ -71,5 +71,3 @@ jobs:
           cd /home/vesuvian
           docker compose up -d --no-deps --force-recreate eureka
           "
-
-
