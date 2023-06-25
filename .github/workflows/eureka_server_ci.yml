@@ -39,7 +39,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
-          context: server/customer
+          context: server/eureka-server
           dockerfile: Dockerfile
           push: true
           tags: ghcr.io/mrdimenter/eureka-server:latest
