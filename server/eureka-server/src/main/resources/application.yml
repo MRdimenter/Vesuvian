@@ -8,5 +8,5 @@ eureka:
     fetch-registry: false
     register-with-eureka: false
 
-  server:
-    enableSelfPreservation: false
+#  server:
+#    enableSelfPreservation: false

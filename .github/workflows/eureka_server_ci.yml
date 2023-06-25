@@ -61,11 +61,11 @@ jobs:
           # Check if the container is running
           echo "Checking if the container 'eureka' exists..."
 
-          echo "Container 'eureka' is running. It will be stopped and removed..."
-          docker rm eureka --force
+          # echo "Container 'eureka' is running. It will be stopped and removed..."
+          # docker rm eureka --force
           
            # Check if the docker compose is running
-          echo "Checking if the docker compose for 'customer' exists..."
+          echo "Checking if the docker compose for 'eureka' exists..."
 
           echo "Docker compose for 'eureka' is running. It will be stopped and removed..."
           cd /home/vesuvian
