@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 import ru.vesuvian.service.customer.dto.CustomerRegistrationDto;
 import ru.vesuvian.service.customer.dto.CustomerRepresentationDto;
 import ru.vesuvian.service.customer.dto.CustomerUpdateDto;
+import ru.vesuvian.service.customer.dto.PageCustomerRepresentationDto;
 import ru.vesuvian.service.customer.exception.NotFoundException;
 import ru.vesuvian.service.customer.keycloak.*;
+import ru.vesuvian.service.customer.processing.CustomerProcessing;
 import ru.vesuvian.service.customer.utils.KeycloakRoles;
-import ru.vesuvian.service.customer.utils.mapping.CustomerMapping;
 
-import java.util.List;
 import java.util.Optional;
 
 
@@ -22,34 +22,38 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 public class CustomerService {
-    private final CustomerMapping customerMapping;
     private final KeycloakUserResourceManager userResourceManager;
     private final KeycloakRoleManager roleManager;
     private final KeycloakUserRepresentationFactory userRepresentationFactory;
     private final KeycloakResponseManager responseManager;
     private final KeycloakCreateUserFactory createUserFactory;
     private final KeycloakRealmResourceManager realmResourceManager;
+    private final CustomerProcessing customerProcessing;
+    @Value("${application.default.page}")
+    private int defaultPage;
+    @Value("${application.default.size}")
+    private int defaultSize;
 
-    @Value("${keycloak.configuration.number-of-posts-per-page}")
-    private int NUMBER_OF_POSTS_PER_PAGE;
-
-    public List<CustomerRepresentationDto> getCustomers(Integer page) {
-        Optional<Integer> optionalPage = Optional.ofNullable(page);
-        return optionalPage.map(this::getPagedCustomers)
-                .orElseGet(this::getAllCustomers);
+    public PageCustomerRepresentationDto getCustomers(Integer page, Integer size) {
+        int actualPage = Optional.ofNullable(page).orElse(defaultPage);
+        int actualSize = Optional.ofNullable(size).orElse(defaultSize);
+        return getPagedCustomers(actualPage, actualSize);
     }
 
-    private List<CustomerRepresentationDto> getPagedCustomers(Integer page) {
-        return customerMapping.mapUserRepresentationsToDtos(
-                userResourceManager.getUsersResource(realmResourceManager.getRealmResource())
-                        .search(null, (--page) * NUMBER_OF_POSTS_PER_PAGE, NUMBER_OF_POSTS_PER_PAGE)
-        );
-    }
+    private PageCustomerRepresentationDto getPagedCustomers(Integer page, Integer size) {
+        var realm = realmResourceManager.getRealmResource();
+        var usersResource = userResourceManager.getUsersResource(realm);
 
-    private List<CustomerRepresentationDto> getAllCustomers() {
-        return customerMapping.mapUserRepresentationsToDtos(
-                userResourceManager.getUsersResource(realmResourceManager.getRealmResource())
-                        .search(null));
+        // Вычисление общего количества страниц
+        int totalPageCount = customerProcessing.calculateTotalPageCount(usersResource.count(), size);
+
+        // Пересчитываем номер страницы, отсчет начинается с 0
+        int zeroBasedPageNumber = page - 1;
+        int offset = zeroBasedPageNumber * size;
+
+        var customersData = customerProcessing.retrieveUsersData(usersResource, offset, size);
+
+        return PageCustomerRepresentationDto.createFrom(totalPageCount, zeroBasedPageNumber, customersData);
     }
 
     public CustomerRepresentationDto getCustomerById(String id) {
