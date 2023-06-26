@@ -9,25 +9,20 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import lombok.extern.slf4j.Slf4j;
-import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.vesuvian.service.customer.dto.CustomerRegistrationDto;
 import ru.vesuvian.service.customer.dto.CustomerRepresentationDto;
 import ru.vesuvian.service.customer.dto.CustomerUpdateDto;
+import ru.vesuvian.service.customer.dto.PageCustomerRepresentationDto;
 import ru.vesuvian.service.customer.service.CustomerService;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/customers")
 @Tag(name = "Customer", description = "The Customer API")
 public class CustomerController {
     final CustomerService customerService;
+
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
@@ -37,18 +32,20 @@ public class CustomerController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful operation",
                     content = @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = CustomerRepresentationDto.class)))),
+                            array = @ArraySchema(schema = @Schema(implementation = PageCustomerRepresentationDto.class)))),
             @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid credentials provided"),
             @ApiResponse(responseCode = "403", description = "Forbidden - You're not allowed to access this resource"),
             @ApiResponse(responseCode = "409", description = "Conflict - The request could not be completed due to a conflict with the current state of the resource")
     })
     @GetMapping()
-    public List<CustomerRepresentationDto> getCustomers(
-            @Parameter(description = "Page for displaying a list of clients", name = "page")
-            @RequestParam(required = false, defaultValue = "1")
-            @Min(1)
-            int page) {
-        return customerService.getCustomers(page);
+    public PageCustomerRepresentationDto getCustomers(
+            @Parameter(description = "The page number to retrieve. Starts from 1.", name = "page")
+            @RequestParam(required = false, defaultValue = "1") int page,
+
+            @Parameter(description = "The number of customers to retrieve per page.", name = "size")
+            @RequestParam(required = false, defaultValue = "10") int size) {
+
+        return customerService.getCustomers(page, size);
     }
 
     @Operation(
