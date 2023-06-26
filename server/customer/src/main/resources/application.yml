@@ -27,12 +27,13 @@ keycloak:
     resource: app-dev-client
     username: admin
     password: admin
-  configuration:
-    number-of-posts-per-page: 10
 
 clientURL: http://localhost:3000 # тестовый порт REACT
 
-
+application:
+  default:
+    page: 10
+    size: 10
 
 
 springdoc:
@@ -45,12 +46,10 @@ springdoc:
 #    path: /swagger/v1/customers
 
 
-
-
 eureka:
   client:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://eureka-server:8761/eureka/
-    # defaultZone: http://localhost:8761/eureka/
+     # defaultZone: http://eureka-server:8761/eureka/
+     defaultZone: http://localhost:8761/eureka/
