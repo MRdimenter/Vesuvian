@@ -12,7 +12,7 @@ import { TestLoginButtons } from './TestLoginButtons/TestLoginButtons';
 import { get, getAuth, getString, getTestDataFromResourceServer } from '../../common/utils/fetchWrapper';
 import { ApiService } from '../../common/utils/ApiService';
 import { OAuth2Service } from '../../common/utils/OAuth2Service';
-import { BadRequestError, RefreshTokenMissingError } from '../../common/utils/Errors';
+import { BadRequestError, RefreshTokenMissingError } from '../../common/utils/Errors/Errors';
 import { useNavigate } from 'react-router-dom';
 import { authenticationAction } from '../../store/actions/authenticationActions';
 
@@ -24,7 +24,6 @@ export const TestPanel = () => {
   const onChangeTheme = () => {
     dispatch(darkModeAction());
   }
-
 
   async function getAccessTokenByRefreshToken() {
     console.log('НЕ АКТУАЛЬНАЯ, т.к. refresh_token статический');
@@ -58,16 +57,6 @@ export const TestPanel = () => {
 
   function clearCookies() {
     Cookies.remove('refreshToken');
-  }
-
-  async function getTestString() {
-    let url = 'api/v1/customers/me';
-    //let url = 'api/v1/customers/test';
-
-    let response = await getString(url);
-    console.log('response: ', response);
-    //let response = await getTestDataFromResourceServer(url);
-    //console.log(response);
   }
 
   async function testDataFromResourceServer() {
@@ -140,6 +129,19 @@ export const TestPanel = () => {
     //console.log(response);
   }
 
+  async function getCurrentCustomer() {
+    try {
+      let response = await apiService.getCurrentCustomer();
+      console.log('getAPICustomers response', response);  //TODO: передача данных в state приложения при авторизации пользователя (только необходимое)
+    } catch (error) {
+      if (error instanceof RefreshTokenMissingError || error instanceof BadRequestError) {
+        logout(dispatch);
+        navigate("/reLoginPage");
+      }
+    }
+  }
+
+
   return (
     <div className='test-panel'>
       <LoginButtons />
@@ -154,6 +156,8 @@ export const TestPanel = () => {
       <Button label='getCustomers' action={() => getCustomers()} />
       <Button label='getAPICustomers' action={() => getAPICustomers()} />
       <Button label='setWrongAccessToken' action={() => setWrongAccessToken()} />
+
+      <Button label='getCurrentCustomer' action={() => getCurrentCustomer()} />
 
       <Button label='testDataFromResourceServer' action={() => testDataFromResourceServer()} />
 

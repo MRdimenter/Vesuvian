@@ -26,15 +26,12 @@ function getString(path, accessToken, auth=false) {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-//            'Host': 'localhost:8090',
-//            'Origin': 'localhost:8090',
             'Accept': '/',
             'Authorization': `Bearer ${accessToken}`,
         }
     };
     //const url = `${BASE_URL}/${path}`;
     const url = 'http://45.141.103.134:8090/api/v1/customers/me'
-
 
     return fetch(url, requestOptions).then(handleResponseString).catch(e=> console.log(e));
 }
@@ -70,10 +67,8 @@ function postOAuth2AccessTokenByRefreshToken(url, refresh_token) {
         })
     };
 
-    return fetch(url, requestOptions).then(handleResponse); // todo добавить обработчик ошибок
+    return fetch(url, requestOptions).then(handleResponse);
 }
-
-
 
 async function handleResponse(response) {
     return await response.json();

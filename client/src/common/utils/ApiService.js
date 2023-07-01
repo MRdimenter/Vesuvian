@@ -74,17 +74,24 @@ class ApiService {
         console.log('page=', page);
         //page = 1;
         try {
-            const response = await this.withPage(this.getResourseByAuth.bind(this), CUSTOMERS_URL, page)
+            const response = await this.withPage(this.getResourseByAuth.bind(this), CUSTOMERS_URL, page);
             return response;
         } catch (error) {
-            console.log('необработанная ошибка', error);
+            console.log('необработанная ошибка getAllCustomers', error);
             throw error; // Пробросываем ошибку для обработки её компонентом, вызывающим метод getAllCustomers
         }
     }
 
 
-    getCurrentCustomer() {
-        return this.getResourse(CURRENT_CUSTOMER_URL);
+    async getCurrentCustomer() {
+        try {
+            const response = this.getResourseByAuth(CURRENT_CUSTOMER_URL);
+            return response;
+        } catch (error) {
+            console.log('необработанная ошибка getCurrentCustomer', error);
+            throw error; // Пробросываем ошибку для обработки её компонентом, вызывающим метод getAllCustomers
+        }
+        //return this.getResourseByAuth(CURRENT_CUSTOMER_URL);
     }
 }
 

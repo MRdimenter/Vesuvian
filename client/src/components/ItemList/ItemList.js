@@ -1,7 +1,7 @@
-import { Suspense, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { OAuth2Service } from "../../common/utils/OAuth2Service";
 import { ApiService } from "../../common/utils/ApiService";
-import { BadRequestError, RefreshTokenMissingError } from "../../common/utils/Errors";
+import { BadRequestError, RefreshTokenMissingError } from "../../common/utils/Errors/Errors";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { authenticationAction } from "../../store/actions/authenticationActions";
@@ -40,7 +40,7 @@ const ListItem = () => {
         try {
             let customersList = await apiService.getAllCustomers(page);
             //setCustomersList(customersList);
-            setTimeout(() => setCustomersList(customersList), 1000); // For testing lazy loading
+            setTimeout(() => setCustomersList(customersList), 1000); // For testing long loading
         } catch (error) {
             console.log('ELSE error: ', error);
             if (error instanceof RefreshTokenMissingError || error instanceof BadRequestError) {

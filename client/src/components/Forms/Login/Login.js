@@ -16,8 +16,8 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState('user'); // TODO default state user for testing
-  const [password, setPassword] = useState('user'); // TODO default state user for testing
+  const [username, setUsername] = useState('user'); // TODO default state 'user' for testing
+  const [password, setPassword] = useState('user'); // TODO default state 'user' for testing
 
   const [isWrongCredentials, setIsWrongCredentials] = useState(false);
   const [isInputsValidated, setIsInputsValidated] = useState(false);
@@ -35,7 +35,6 @@ const Login = () => {
     event.preventDefault();
     const isFormValid = Object.values(validationData).every((isValid) => isValid);
     const oAuth2Servise = new OAuth2Service();
-
     /*
         if (isInputsValid(event)) {
           console.log('fetch');
@@ -49,7 +48,20 @@ const Login = () => {
     if (isFormValid) {
       try {
         const response = await oAuth2Servise.OAuth2Login(username, password);
+        console.log('response: ', response);
         if (response) {
+          console.log('login response ok');
+          // Итак: что должна делать функция?
+          // сохранять данные пользователя
+          // как? 1. Запрос на сервер -> сохранение через dispatch
+          /* updateCustomerData(dispatch) {
+            const currentCustomerData = getCurrentCustomer();
+            dispatch(appendCurrentCustomerDataAction(currentCustomerData));
+          }
+          */
+
+
+
           dispatch(authenticationAction(true));
           navigate("/");
         } else {
@@ -66,7 +78,6 @@ const Login = () => {
       setIsInputsValidated(true);
     }
   }
-
 
   useEffect(() => {
     dispatch(authenticationStateAction(false));

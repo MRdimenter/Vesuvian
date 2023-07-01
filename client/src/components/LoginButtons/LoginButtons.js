@@ -6,6 +6,7 @@ import { authenticationAction } from '../../store/actions/authenticationActions'
 import { Button } from '../Button/Button';
 import { OAuth2Service } from '../../common/utils/OAuth2Service';
 import { useEffect } from 'react';
+import { UserAccountMenu } from '../Header/UserAccountMenu/UserAccountMenu';
 
 /*
 Компонент отображает кнопки для авторизации и регистрации в пользовательском интерфейсе. 
@@ -37,7 +38,8 @@ const RegistrationButtons = ({}) => {
 
 const LogOutButton = ({dispatch}) => {
   return (
-    <Button btnStyle='link' label='LogOut' link={'/'} action={() => logout(dispatch)} />
+    //<Button btnStyle='link' label='LogOut' link={'/'} action={() => logout(dispatch)} />
+    <UserAccountMenu/>
   )
 }
 
