@@ -81,8 +81,7 @@ export const TestPanel = () => {
   async function getCustomers() { //TODO refactor into clear func
     let url = 'api/v1/customers'
     const accessToken = getAccessToken();
-    //console.log('accessToken: ', accessToken);
-
+    
     let response = await getAuth(url, accessToken);
     console.log(response);
   }
@@ -115,18 +114,6 @@ export const TestPanel = () => {
         navigate("/reLoginPage"); //TODO но лучше на страницу с предупреждением (чтобы не было неожиданностью почему так)
       }
     }
-
-    /*
-    apiService.getAllCustomers(accessToken).then((body) => {
-      console.log(body);
-    }).catch(e => {
-      console.log(e);
-    })
-    */
-    //console.log('accessToken: ', accessToken);
-
-    //let response = await getAuth(url, accessToken);
-    //console.log(response);
   }
 
   async function getCurrentCustomer() {

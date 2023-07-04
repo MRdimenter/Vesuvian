@@ -9,6 +9,10 @@
   flex-wrap: wrap;
 
   padding: 15px;
+
+  > * {
+    margin-left: 10px;
+}
 }
 
 .test-panel {

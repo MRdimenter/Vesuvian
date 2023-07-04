@@ -1,12 +1,12 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import './loginButtons.scss';
-
 import { authenticationAction } from '../../store/actions/authenticationActions';
-import { Button } from '../Button/Button';
 import { OAuth2Service } from '../../common/utils/OAuth2Service';
-import { useEffect } from 'react';
+import { Button } from '../Button/Button';
 import { UserAccountMenu } from '../Header/UserAccountMenu/UserAccountMenu';
+
+import './loginButtons.scss';
 
 /*
 Компонент отображает кнопки для авторизации и регистрации в пользовательском интерфейсе. 
@@ -46,22 +46,15 @@ const LogOutButton = ({dispatch}) => {
 
 export const LoginButtons = () => {
   const dispatch = useDispatch();
-
   const {authStatus: isAuthenticated, authState: isAuthenticationVerified} = useSelector((state) => state.isAuth);
-  //const { username: userName } = useSelector((state) => state.currentCustomerData);
   
   const content = isAuthenticationVerified && (isAuthenticated ? <LogOutButton dispatch={dispatch}/> : <RegistrationButtons dispatch={dispatch}/>);
 
   useEffect(() => {
   }, [isAuthenticated])
 
-  /*
-  useEffect(() => {
-    console.log(currentCustomerData);
-  }, [currentCustomerData])
-*/
   return (
-    <div className='loginButtons'>
+    <div className='login-buttons'>
       {content}
     </div>
   )

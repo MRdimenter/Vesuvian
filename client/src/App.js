@@ -25,10 +25,10 @@ export const App = () => {
 
   const updateAuthenticationState = async () => {
     try {
-      const access_token = await updateAccessTokenByRefreshToken(); // пока что есть проблемка: не ясно по какой причине нет access_token (может сервер лежит), данные обработчики нужно добавить в обработку ошибок 
+      const accessToken = await updateAccessTokenByRefreshToken(); // пока что есть проблемка: не ясно по какой причине нет accessToken (может сервер лежит), данные обработчики нужно добавить в обработку ошибок 
 
-      if (access_token) {
-        setAccessToken(access_token);
+      if (accessToken) {
+        setAccessToken(accessToken);
         dispatch(authenticationAction(true));
       } else {
         dispatch(authenticationAction(false));
