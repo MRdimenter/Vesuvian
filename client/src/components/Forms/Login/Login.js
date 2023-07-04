@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import './login.scss';
@@ -11,6 +11,7 @@ import { WrongCredentialWarning } from './WrongCredentialWarning';
 import { LoginFooter } from './LoginFooter';
 import { WarningMessage } from './WarningMessage';
 import { Button } from '../../Button/Button';
+import { appendCurrentCustomerDataAction } from '../../../store/actions/appendCurrentCustomerDataAction';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -35,13 +36,7 @@ const Login = () => {
     event.preventDefault();
     const isFormValid = Object.values(validationData).every((isValid) => isValid);
     const oAuth2Servise = new OAuth2Service();
-    /*
-        if (isInputsValid(event)) {
-          console.log('fetch');
-        } else {
-          console.log('no fetch');
-        }
-    */
+
     setIsInputsValidated(false);
     setIsWrongCredentials(false);
 
@@ -55,13 +50,12 @@ const Login = () => {
           // сохранять данные пользователя
           // как? 1. Запрос на сервер -> сохранение через dispatch
           /* updateCustomerData(dispatch) {
-            const currentCustomerData = getCurrentCustomer();
-            dispatch(appendCurrentCustomerDataAction(currentCustomerData));
+            const currentCustomerData = getCurrentCustomer(); // а тут наблюдается асинхронная функция, для этого, видимо и нужен thunk
+            dispatch(appendCurrentCustomerDataAction(currentCustomerData)); // дык я же могу внутри Action обратиться за данными для Customer (НО зачем?)
           }
           */
 
-
-
+          dispatch(appendCurrentCustomerDataAction());
           dispatch(authenticationAction(true));
           navigate("/");
         } else {

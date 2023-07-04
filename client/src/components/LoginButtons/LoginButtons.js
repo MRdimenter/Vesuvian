@@ -39,27 +39,27 @@ const RegistrationButtons = ({}) => {
 const LogOutButton = ({dispatch}) => {
   return (
     //<Button btnStyle='link' label='LogOut' link={'/'} action={() => logout(dispatch)} />
-    <UserAccountMenu/>
+    //<UserAccountMenu userName={userName}/>
+    <UserAccountMenu />
   )
 }
 
 export const LoginButtons = () => {
   const dispatch = useDispatch();
-  
-  let content;
-  const {authStatus: isAuthenticated, authState: isAuthenticationVerified} = useSelector((state) => {
-    return state.isAuth
-  });
 
-  if (isAuthenticationVerified) {
-    content = isAuthenticated ? <LogOutButton dispatch={dispatch}/> : <RegistrationButtons dispatch={dispatch}/>;
-  } else {
-    content = null;
-  }
+  const {authStatus: isAuthenticated, authState: isAuthenticationVerified} = useSelector((state) => state.isAuth);
+  //const { username: userName } = useSelector((state) => state.currentCustomerData);
+  
+  const content = isAuthenticationVerified && (isAuthenticated ? <LogOutButton dispatch={dispatch}/> : <RegistrationButtons dispatch={dispatch}/>);
 
   useEffect(() => {
   }, [isAuthenticated])
 
+  /*
+  useEffect(() => {
+    console.log(currentCustomerData);
+  }, [currentCustomerData])
+*/
   return (
     <div className='loginButtons'>
       {content}

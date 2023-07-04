@@ -3,7 +3,7 @@ import { UserDropdown } from './UserDropdown/UserDropdown';
 import { Button } from '../../Button/Button';
 
 import './userAccountMenu.scss'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 //TODO:
 /*
@@ -13,6 +13,9 @@ import { useDispatch } from 'react-redux';
 
 const UserAccountMenu = () => { //TODO SideBar
   const dispatch = useDispatch();
+  const currentCustomerData = useSelector((state) => state.currentCustomerData);
+  //const isAuth = useSelector((state) => state.isAuth);
+  
 
   const [isOpen, setIsOpen] = useState(false);
   const [userName, setUserName] = useState('');
@@ -24,12 +27,14 @@ const UserAccountMenu = () => { //TODO SideBar
   };
 
   useEffect(() => {
-    //dispatch(authenticationAction(true));
-  }, [userName])
+    setUserName(currentCustomerData?.username)
+    console.log('currentCustomerData.username: ', currentCustomerData);
+    
+  }, [currentCustomerData])
 
   return (
     <div className="user-dropdown">
-      <Button btnStyle='link' label='?Username?' action={toggleDropdown} />
+      <Button btnStyle='link' label={userName || 'Меню'} action={toggleDropdown} />
       {accountMenu}
     </div>
   );

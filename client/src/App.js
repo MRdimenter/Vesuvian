@@ -17,12 +17,13 @@ import { Login } from './components/Forms/Login/Login';
 import { RegistrationForm } from './components/Forms/RegistrationForm/RegistrationForm';
 import { ReLoginPage } from './components/ErrorPage/ReLoginPage';
 import { ListItem } from './components/ItemList/ItemList';
+import { appendCurrentCustomerDataAction } from './store/actions/appendCurrentCustomerDataAction';
 
 export const App = () => {
   const dispatch = useDispatch();
   const isDarkModeEnabled = useSelector((state) => state.DarkMode);
 
-  const undateAuthenticationState = async () => {
+  const updateAuthenticationState = async () => {
     try {
       const access_token = await updateAccessTokenByRefreshToken(); // пока что есть проблемка: не ясно по какой причине нет access_token (может сервер лежит), данные обработчики нужно добавить в обработку ошибок 
 
@@ -39,7 +40,8 @@ export const App = () => {
   }
 
   useEffect(() => {
-    undateAuthenticationState();
+    updateAuthenticationState();
+    dispatch(appendCurrentCustomerDataAction());
   });
 
   return (

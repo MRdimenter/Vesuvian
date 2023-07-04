@@ -6,3 +6,7 @@ export const AUTHENTICATION_STATUS = {
   authStatus: 'AUTH',
   AUTH_STATE: 'STATE',
 }
+
+export const CURRENT_CUSTOMER_DATA = {
+  APPEND_DATA: 'APPEND_DATA',
+}
