@@ -89,8 +89,4 @@ export class OAuth2Service {
     localStorage.setItem(ACCESS_TOKEN, accessToken);
     return accessToken;
   }
-
-  async handleResponse(response) {
-    return await response.json();
-  }
 }

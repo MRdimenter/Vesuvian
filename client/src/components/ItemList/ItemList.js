@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { OAuth2Service } from "../../common/utils/OAuth2Service";
 import { ApiService } from "../../common/utils/ApiService";
-import { BadRequestError, RefreshTokenMissingError } from "../../common/utils/Errors/Errors";
+import { BadRequestError, RefreshTokenMissingError, ServerError } from "../../common/utils/Errors/Errors";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { authenticationAction } from "../../store/actions/authenticationActions";
@@ -35,7 +35,7 @@ const ListItem = () => {
         localStorage.clear();
         dispatch(authenticationAction(false));
     }
-
+/*
     async function getAPICustomers(page) {
         try {
             let customersList = await apiService.getAllCustomers(page);
@@ -50,6 +50,24 @@ const ListItem = () => {
             }
         }
     }
+*/
+    const getAPICustomers = useCallback(async () => {
+        try {
+            let customersList = await apiService.getAllCustomers(page);
+            //setCustomersList(customersList);
+            setTimeout(() => setCustomersList(customersList), 1000); // For testing long loading
+        } catch (error) {
+            console.log('ELSE error: ', error);
+            if (error instanceof RefreshTokenMissingError || error instanceof BadRequestError) {
+                console.log('HERE');
+                logout(dispatch); // не обязательно, но желательно привести приложение в состояние LogOut
+                navigate("/reLoginPage"); //TODO но лучше на страницу с предупреждением (чтобы не было неожиданностью почему так)
+            }
+            if (error instanceof ServerError) {
+                navigate("/errorPage");
+            }
+        }
+    }, [page])
 
     useEffect(() => {
         /*
@@ -58,7 +76,7 @@ const ListItem = () => {
         })
         */
         getAPICustomers();
-    }, []);
+    }, [getAPICustomers]);
 
     function Loading() {
         return <h2>🌀 Loading...</h2>;

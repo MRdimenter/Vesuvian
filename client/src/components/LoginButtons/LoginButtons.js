@@ -1,8 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { authenticationAction } from '../../store/actions/authenticationActions';
-import { OAuth2Service } from '../../common/utils/OAuth2Service';
 import { Button } from '../Button/Button';
 import { UserAccountMenu } from '../Header/UserAccountMenu/UserAccountMenu';
 
@@ -18,16 +16,7 @@ LogOutButton выполняет выход пользователя и очищ�
 RegistrationButtons содержит кнопки для перехода к форме Регистриции или Аутентификации пользователя
 */
 
-//TODO вынести функцию (т.к. может использоваться при неудачных запросах и запросе последующей авторизации)
-async function logout(dispatch) {
-  const oAuth2Servise = new OAuth2Service();
-
-  oAuth2Servise.OAuth2LogOut();
-  localStorage.clear();
-  dispatch(authenticationAction(false));
-}
-
-const RegistrationButtons = ({}) => {
+const RegistrationButtons = () => {
   return (
     <>
       <Button btnStyle='link' label='Регистрироваться' link={'/registrationForm'} />
@@ -36,10 +25,8 @@ const RegistrationButtons = ({}) => {
   )
 }
 
-const LogOutButton = ({dispatch}) => {
+const LogOutButton = () => {
   return (
-    //<Button btnStyle='link' label='LogOut' link={'/'} action={() => logout(dispatch)} />
-    //<UserAccountMenu userName={userName}/>
     <UserAccountMenu />
   )
 }

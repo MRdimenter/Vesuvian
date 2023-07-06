@@ -1,10 +1,6 @@
 import { BASE_URL, CURRENT_CUSTOMER_URL, CUSTOMERS_URL } from "../constants/urlConstants";
-import { getAuth } from "./fetchWrapper";
-import { getAccessToken, updateAccessTokenByRefreshToken } from "./useOAuth2";
-
-async function handleResponse(response) {
-    return await response.json();
-}
+import { ServerError } from "./Errors/Errors";
+import { getAccessToken } from "./useOAuth2";
 
 class ApiService {
     constructor(oauthService) {
@@ -32,7 +28,7 @@ class ApiService {
         /*
         TODO: 
         1. GPT узнать как лучше получать внешние (сторонние из localstorage) данные для переменных, которые понадобятся методам класса для работы
-        2. возможно по этой же причине не работает this.oauthService.updateAccessTokenByRefreshToken()
+        
         3. сдулать универсальным вызов this.getResourse(CUSTOMERS_URL, accessToken)
         */
 
@@ -51,12 +47,12 @@ class ApiService {
                 }
 
             } if (response.status === 403) {
-                throw new Error(); // TODO добавить ошибку new ForbiddenError и варианты ее обработки
+                throw new ServerError(); // TODO добавить ошибку new ForbiddenError и варианты ее обработки
             } if (response.status === 409) {
-                throw new Error(); // TODO добавить ошибку new ConflictError и варианты ее обработки
+                throw new ServerError(); // TODO добавить ошибку new ConflictError и варианты ее обработки
             } else {
                 console.log('Throw error.statusCode:', response.status);
-                throw new Error(); // Пробросить ошибку, если это не ошибка 401
+                throw new ServerError(response.status);
             }
         }
 

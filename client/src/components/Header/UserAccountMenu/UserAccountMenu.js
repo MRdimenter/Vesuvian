@@ -3,7 +3,7 @@ import { UserDropdown } from './UserDropdown/UserDropdown';
 import { Button } from '../../Button/Button';
 
 import './userAccountMenu.scss'
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 //TODO:
 /*
@@ -12,7 +12,6 @@ import { useDispatch, useSelector } from 'react-redux';
 */
 
 const UserAccountMenu = () => { //TODO SideBar
-  const dispatch = useDispatch();
   const currentCustomerData = useSelector((state) => state.currentCustomerData);
   //const isAuth = useSelector((state) => state.isAuth);
   

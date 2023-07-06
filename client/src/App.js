@@ -2,12 +2,10 @@ import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { authenticationAction } from './store/actions/authenticationActions';
-import { setAccessToken, updateAccessTokenByRefreshToken } from './common/utils/useOAuth2';
 
 import './App.scss';
 
 import { Main } from './components/Main/Main';
-
 import { Footer } from './components/Footer/Footer';
 import { Header } from './components/Header/Header';
 import { RedirectPage } from './components/RedirectPage/RedirectPage';
@@ -23,24 +21,8 @@ export const App = () => {
   const dispatch = useDispatch();
   const isDarkModeEnabled = useSelector((state) => state.DarkMode);
 
-  const updateAuthenticationState = async () => {
-    try {
-      const accessToken = await updateAccessTokenByRefreshToken(); // пока что есть проблемка: не ясно по какой причине нет accessToken (может сервер лежит), данные обработчики нужно добавить в обработку ошибок 
-
-      if (accessToken) {
-        setAccessToken(accessToken);
-        dispatch(authenticationAction(true));
-      } else {
-        dispatch(authenticationAction(false));
-      }
-    } catch (error) {
-      // TODO что если проверка авторизации не удалась
-      // authState: false и/или предупреждение, что "Аутентификация не удалась" (но можно продолжить работу без аутентификации)
-    }
-  }
-
   useEffect(() => {
-    updateAuthenticationState();
+    dispatch(authenticationAction());
     dispatch(appendCurrentCustomerDataAction());
   });
 

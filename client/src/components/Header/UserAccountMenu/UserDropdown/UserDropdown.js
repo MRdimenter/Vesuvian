@@ -10,12 +10,11 @@ async function logout(dispatch) {
   
     oAuth2Servise.OAuth2LogOut();
     localStorage.clear();
-    dispatch(authenticationAction(false));
+    dispatch(authenticationAction());
   }
 
 const UserDropdown = () => {
     const dispatch = useDispatch();
-
     return (
         <ul className="dropdown-menu">
             <li className="dropdown-item">Profile</li>

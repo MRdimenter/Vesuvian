@@ -1,20 +1,29 @@
 class RefreshTokenMissingError extends Error {
-    constructor(message) {
-      super(message);
-      this.name = "RefreshTokenMissingError";
-    }
+  constructor(message) {
+    super(message);
+    this.name = "RefreshTokenMissingError";
   }
+}
 
 class BadRequestError extends Error {
-    constructor(message) {
-      super(message);
-      this.name = "BadRequestError";
-    }
+  constructor(message) {
+    super(message);
+    this.name = "BadRequestError";
   }
+}
 
-  
+class ServerError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "ServerError";
+  }
+}
+
+
+
 
 export {
-    RefreshTokenMissingError,
-    BadRequestError,
+  RefreshTokenMissingError,
+  BadRequestError,
+  ServerError,
 }

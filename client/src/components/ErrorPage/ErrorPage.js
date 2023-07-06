@@ -1,3 +1,7 @@
+import { Link } from "react-router-dom"
+
+import './errorPage.scss'
+
 const ErrorPage = () => {
     const styles = {
         position: 'fixed',
@@ -12,7 +16,10 @@ const ErrorPage = () => {
     }
 
     return (
-        <div style={styles}>Oops</div>
+        <div className="wrapper">
+            <h1>Oops</h1>
+            <Link to={'/'}>На главную</Link>
+        </div>
     )
 }
 
