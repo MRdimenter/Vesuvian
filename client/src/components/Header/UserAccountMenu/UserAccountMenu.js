@@ -13,23 +13,19 @@ import { useSelector } from 'react-redux';
 
 const UserAccountMenu = () => { //TODO SideBar
   const currentCustomerData = useSelector((state) => state.currentCustomerData);
-  //const isAuth = useSelector((state) => state.isAuth);
-  
 
   const [isOpen, setIsOpen] = useState(false);
   const [userName, setUserName] = useState('');
-
-  const accountMenu = isOpen && <UserDropdown />;
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
   useEffect(() => {
-    setUserName(currentCustomerData?.username)
-    console.log('currentCustomerData.username: ', currentCustomerData);
-    
+    setUserName(currentCustomerData?.username)  
   }, [currentCustomerData])
+
+  const accountMenu = isOpen && <UserDropdown />;
 
   return (
     <div className="user-dropdown">
@@ -42,10 +38,3 @@ const UserAccountMenu = () => { //TODO SideBar
 export {
   UserAccountMenu,
 }
-
-/*
-<button className="user-dropdown-btn" onClick={toggleDropdown}>
-    <span className="username">Username</span>
-    <span className="arrow-icon">&#9662;</span>
-</button>
-*/

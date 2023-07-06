@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { OAuth2Service } from "../../common/utils/OAuth2Service";
 import { ApiService } from "../../common/utils/ApiService";
 import { BadRequestError, RefreshTokenMissingError, ServerError } from "../../common/utils/Errors/Errors";
@@ -11,8 +11,8 @@ const ListItem = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const oauthService = new OAuth2Service();
-    const apiService = new ApiService(oauthService);
+    
+    //const apiService = useCallback(() => new ApiService(oauthService),[oauthService]);
 
     const [customersList, setCustomersList] = useState(null);
     const [page, setPage] = useState(1);
@@ -35,31 +35,17 @@ const ListItem = () => {
         localStorage.clear();
         dispatch(authenticationAction(false));
     }
+
+    
+
 /*
-    async function getAPICustomers(page) {
-        try {
-            let customersList = await apiService.getAllCustomers(page);
-            //setCustomersList(customersList);
-            setTimeout(() => setCustomersList(customersList), 1000); // For testing long loading
-        } catch (error) {
-            console.log('ELSE error: ', error);
-            if (error instanceof RefreshTokenMissingError || error instanceof BadRequestError) {
-                console.log('HERE');
-                logout(dispatch); // не обязательно, но желательно привести приложение в состояние LogOut
-                navigate("/reLoginPage"); //TODO но лучше на страницу с предупреждением (чтобы не было неожиданностью почему так)
-            }
-        }
-    }
-*/
     const getAPICustomers = useCallback(async () => {
         try {
             let customersList = await apiService.getAllCustomers(page);
-            //setCustomersList(customersList);
+            //setCustomersList(customersList); // original (working) string
             setTimeout(() => setCustomersList(customersList), 1000); // For testing long loading
         } catch (error) {
-            console.log('ELSE error: ', error);
             if (error instanceof RefreshTokenMissingError || error instanceof BadRequestError) {
-                console.log('HERE');
                 logout(dispatch); // не обязательно, но желательно привести приложение в состояние LogOut
                 navigate("/reLoginPage"); //TODO но лучше на страницу с предупреждением (чтобы не было неожиданностью почему так)
             }
@@ -68,15 +54,30 @@ const ListItem = () => {
             }
         }
     }, [page])
-
+*/
     useEffect(() => {
-        /*
-        apiService.getAllCustomers().then((customersList) => {
-            setCustomersList(customersList)
-        })
-        */
-        getAPICustomers();
-    }, [getAPICustomers]);
+        const oauthService = new OAuth2Service();
+        const apiService = new ApiService(oauthService);
+        
+        async function getAPICustomers(page) {
+            try {
+                let customersList = await apiService.getAllCustomers(page);
+                //setCustomersList(customersList); // original (working) string
+                setTimeout(() => setCustomersList(customersList), 1000); // For testing long loading
+            } catch (error) {
+                if (error instanceof RefreshTokenMissingError || error instanceof BadRequestError) {
+                    logout(dispatch); // не обязательно, но желательно привести приложение в состояние LogOut
+                    navigate("/reLoginPage"); //TODO но лучше на страницу с предупреждением (чтобы не было неожиданностью почему так)
+                }
+                if (error instanceof ServerError) {
+                    navigate("/errorPage");
+                }
+            }
+        }
+
+        setCustomersList(null);
+        getAPICustomers(page);
+    }, [page, dispatch, navigate]);
 
     function Loading() {
         return <h2>🌀 Loading...</h2>;
@@ -86,11 +87,6 @@ const ListItem = () => {
         console.log('click');
         setPage(selectedPage);
     }
-
-    useEffect(() => {
-        setCustomersList(null);
-        getAPICustomers(page);
-    }, [page]);
 
     if (customersList) {
         const items = renderItems(customersList)
