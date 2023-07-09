@@ -44,16 +44,7 @@ const RegistrationForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const isFormValid = Object.values(validationData).every((isValid) => isValid);
-    /*
-        if (isInputsValid(e)) {
-          console.log('fetch');
-          setIsInputsNotValidated(true);
-        } else {
-          console.log('no fetch');
-          setIsInputsNotValidated(false);
-        }
-        
-    */
+    
     setIsIncorrectInputs(false);
     setIsOccupiedEmail(false);
 
@@ -69,8 +60,6 @@ const RegistrationForm = () => {
 
       try {
         const response = await postRegistration(REGISTR_URL_PATH, credentials)
-        //console.log('response: ', response);
-        //console.log('response.status: ', response.status);
         if (response.status === 201) {
           // TODO переход на страничку "Пользователь {username} успешно зарегестрирован", кнопка перехода на login
           navigate("/login");

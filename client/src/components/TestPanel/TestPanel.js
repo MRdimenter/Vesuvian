@@ -8,7 +8,6 @@ import './testPanel.scss';
 import { LoginButtons } from '../LoginButtons/LoginButtons';
 import { Button } from '../Button/Button';
 import { TestLoginButtons } from './TestLoginButtons/TestLoginButtons';
-import { get, getAuth, getTestDataFromResourceServer } from '../../common/utils/fetchWrapper';
 import { ApiService } from '../../common/utils/ApiService';
 import { OAuth2Service } from '../../common/utils/OAuth2Service';
 import { BadRequestError, RefreshTokenMissingError } from '../../common/utils/Errors/Errors';
@@ -24,7 +23,6 @@ export const TestPanel = () => {
     dispatch(darkModeAction());
   }
 
-
   function readCookies() {
     console.log('Cookies: ', document.cookie);
   }
@@ -33,29 +31,9 @@ export const TestPanel = () => {
     Cookies.remove('refreshToken');
   }
 
-  async function testDataFromResourceServer() {
-    const accessToken = getAccessToken();
-
-    getTestDataFromResourceServer(accessToken)
-  }
-
-  async function getDataMe() {
-    let url = 'api/v1/customers/me';
-    let response = await get(url);
-    console.log(response);
-  }
-
   function getAccessTokenFromLocalStorage() {
     const accessToken = getAccessToken()
     console.log('accessToken: ', accessToken);
-  }
-
-  async function getCustomers() {
-    let url = 'api/v1/customers'
-    const accessToken = getAccessToken();
-    
-    let response = await getAuth(url, accessToken);
-    console.log(response);
   }
 
   const oauthService = new OAuth2Service();
@@ -73,9 +51,7 @@ export const TestPanel = () => {
     try {
       let response = await apiService.getAllCustomers(page);
       console.log('getAPICustomers response', response);  
-
       //apiService.getAllCustomers(page).then(res => console.log('log', res))
-
     } catch (error) {
       console.log('ELSE error: ', error);
       if (error instanceof RefreshTokenMissingError || error instanceof BadRequestError) {
@@ -109,12 +85,9 @@ export const TestPanel = () => {
       <Button label='Clear Cookies' action={() => clearCookies()} />
       <Button label='getAccessTokenFromLocalStorage' action={() => getAccessTokenFromLocalStorage()} />
       <Button label='updateAccessTokenByRefreshToken' action={() => updateAccessTokenByRefreshToken()} />
-      <Button label='getCustomers' action={() => getCustomers()} />
       <Button label='getAPICustomers' action={() => getAPICustomers()} />
       <Button label='setWrongAccessToken' action={() => setWrongAccessToken()} />
       <Button label='getCurrentCustomer' action={() => getCurrentCustomer()} />
-      <Button label='testDataFromResourceServer' action={() => testDataFromResourceServer()} />
-      <Button label='APIme' action={() => getDataMe()} />
       <TestLoginButtons />
     </div>
   )

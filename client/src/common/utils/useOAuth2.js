@@ -4,18 +4,18 @@ import { ACCESS_TOKEN, KEYCLOAK_URL, REFRESH_TOKEN } from "../constants/OAuth2Co
 import { postOAuth2AccessTokenByRefreshToken } from "./fetchWrapper";
 
 /*
-    Функция обновления access_token
-    Устанавливает: в localStorage access_token
-    Возвращает: access_token или null(если не удалось обновить)
+    Модуль содержит методы работы с refresh token и access token:
+    обновление access token через keycloak
+    работа с cookies и localstorage
 */
 
-// TODO in class
-async function updateAccessTokenByRefreshToken() {      //TODO перенести в класс OAuth2Service
-    const refresh_token = getRefreshTokenFromCookie();
+// TODO in class?
+async function updateAccessTokenByRefreshToken() {      //TODO перенести в класс OAuth2Service?
+    const refreshToken = getRefreshTokenFromCookie();
 
-    if (refresh_token) {
+    if (refreshToken) {
         try {
-            const response = await postOAuth2AccessTokenByRefreshToken(KEYCLOAK_URL, refresh_token);
+            const response = await postOAuth2AccessTokenByRefreshToken(KEYCLOAK_URL, refreshToken);
             const {access_token: accessToken} = response;
             setAccessToken(accessToken);
             return accessToken;
@@ -48,7 +48,6 @@ function getAccessToken() {
 function setWrongAccessToken() {
     localStorage.setItem(ACCESS_TOKEN, 'wrongAccessToken')
 }
-
 
 export {
     updateAccessTokenByRefreshToken,
