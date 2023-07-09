@@ -13,6 +13,7 @@
         <module>server/customer</module>
         <module>server/eureka-server</module>
         <module>server/apigateway</module>
+        <module>server/imageService</module>
     </modules>
 
     <properties>
