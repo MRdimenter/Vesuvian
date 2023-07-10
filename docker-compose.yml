@@ -19,7 +19,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 256M
+          memory: 3072M
 
 #  keycloak:
 #    image: quay.io/keycloak/keycloak:21.1.1
@@ -45,28 +45,32 @@ services:
 #      interval: 30s
 #      retries: 3
 #      timeout: 5s
+
+
   keycloak:
-    image: quay.io/keycloak/keycloak:21.1.1
+    image: quay.io/keycloak/keycloak:21.1.2
     container_name: keycloak
     environment:
-      - DB_VENDOR=POSTGRES
-      - DB_ADDR=keycloak-postgres
-      - DB_PORT=5432
-      - DB_DATABASE=postgres
-      - DB_USER=postgres
-      - DB_PASSWORD=postgres
-      - KEYCLOAK_USER=admin
-      - KEYCLOAK_PASSWORD=admin
+      DB_VENDOR: POSTGRES
+      DB_ADDR: keycloak-postgres
+      DB_DATABASE: postgres
+      DB_USER: postgres
+      DB_SCHEMA: public
+      DB_PASSWORD: postgres
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
     ports:
       - "8282:8080"
     depends_on:
-      keycloak-postgres:
-        condition: service_healthy
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8080/auth" ]
-      interval: 1m30s
-      timeout: 10s
-      retries: 3
+      - keycloak-postgres
+    command:
+      - "-b"
+      - "0.0.0.0"
+      - "-Dkeycloak.migration.action=import"
+      - "-Dkeycloak.migration.provider=dir"
+      - "-Dkeycloak.migration.dir=/realms/"
+      - "-Dkeycloak.migration.strategy=IGNORE_EXISTING"
+      - "-Djboss.socket.binding.port-offset=1000"
 
   eureka-server:
     image: ghcr.io/mrdimenter/eureka-server:latest
