@@ -48,7 +48,6 @@ services:
       timeout: 5s
 
 
-
   eureka-server:
     image: ghcr.io/mrdimenter/eureka-server:latest
     container_name: eureka
