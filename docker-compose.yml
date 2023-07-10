@@ -3,6 +3,7 @@ services:
   keycloak-postgres:
     image: postgres:15.2
     container_name: keycloak_postgres_service_test
+    user: postgres
     restart: on-failure
     environment:
       POSTGRES_USER: postgres
@@ -64,13 +65,17 @@ services:
     depends_on:
       - keycloak-postgres
     command:
-      - "-b"
-      - "0.0.0.0"
       - "-Dkeycloak.migration.action=import"
       - "-Dkeycloak.migration.provider=dir"
       - "-Dkeycloak.migration.dir=/realms/"
       - "-Dkeycloak.migration.strategy=IGNORE_EXISTING"
       - "-Djboss.socket.binding.port-offset=1000"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://0.0.0.0:8080/realms/master" ]
+      start_period: 10s
+      interval: 30s
+      retries: 3
+      timeout: 5s
 
   eureka-server:
     image: ghcr.io/mrdimenter/eureka-server:latest
