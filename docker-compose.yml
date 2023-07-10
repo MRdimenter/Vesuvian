@@ -22,60 +22,32 @@ services:
         limits:
           memory: 3072M
 
-#  keycloak:
-#    image: quay.io/keycloak/keycloak:21.1.1
-#    container_name: keycloak
-#    command:
-#      - start --auto-build --db postgres --hostname-strict-https false --hostname-strict false --proxy edge --http-enabled true --import-realm --spi-user-profile-legacy-user-profile-read-only-attributes *_RES_ACCESS_MODE
-#    environment:
-#      KC_DB_URL: jdbc:postgresql://keycloak-postgres:5432/postgres
-#      KC_DB_USERNAME: postgres
-#      KC_DB_PASSWORD: postgres
-#      KC_DB_SCHEMA: public
-#      KC_FEATURES: preview
-#      KEYCLOAK_ADMIN: admin
-#      KEYCLOAK_ADMIN_PASSWORD: admin
-#    ports:
-#      - "8282:8080"
-#    depends_on:
-#      keycloak-postgres:
-#        condition: service_healthy
-#    healthcheck:
-#      test: [ "CMD", "curl", "-f", "http://0.0.0.0:8080/realms/master" ]
-#      start_period: 10s
-#      interval: 30s
-#      retries: 3
-#      timeout: 5s
-
-
   keycloak:
     image: quay.io/keycloak/keycloak:21.1.2
     container_name: keycloak
+    command:
+      - start --auto-build --db postgres --hostname-strict-https false --hostname-strict false --proxy edge --http-enabled true --import-realm --spi-user-profile-legacy-user-profile-read-only-attributes *_RES_ACCESS_MODE
     environment:
-      DB_VENDOR: POSTGRES
-      DB_ADDR: keycloak-postgres
-      DB_DATABASE: postgres
-      DB_USER: postgres
-      DB_SCHEMA: public
-      DB_PASSWORD: postgres
-      KEYCLOAK_USER: admin
-      KEYCLOAK_PASSWORD: admin
+      KC_DB_URL: jdbc:postgresql://keycloak-postgres:5432/postgres
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: postgres
+      KC_DB_SCHEMA: public
+      KC_FEATURES: preview
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
     ports:
       - "8282:8080"
     depends_on:
-      - keycloak-postgres
-    command:
-      - "-Dkeycloak.migration.action=import"
-      - "-Dkeycloak.migration.provider=dir"
-      - "-Dkeycloak.migration.dir=/realms/"
-      - "-Dkeycloak.migration.strategy=IGNORE_EXISTING"
-      - "-Djboss.socket.binding.port-offset=1000"
+      keycloak-postgres:
+        condition: service_healthy
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://0.0.0.0:8080/realms/master" ]
       start_period: 10s
       interval: 30s
       retries: 3
       timeout: 5s
+
+
 
   eureka-server:
     image: ghcr.io/mrdimenter/eureka-server:latest
