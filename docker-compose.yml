@@ -21,31 +21,52 @@ services:
         limits:
           memory: 256M
 
+#  keycloak:
+#    image: quay.io/keycloak/keycloak:21.1.1
+#    container_name: keycloak
+#    command:
+#      - start --auto-build --db postgres --hostname-strict-https false --hostname-strict false --proxy edge --http-enabled true --import-realm --spi-user-profile-legacy-user-profile-read-only-attributes *_RES_ACCESS_MODE
+#    environment:
+#      KC_DB_URL: jdbc:postgresql://keycloak-postgres:5432/postgres
+#      KC_DB_USERNAME: postgres
+#      KC_DB_PASSWORD: postgres
+#      KC_DB_SCHEMA: public
+#      KC_FEATURES: preview
+#      KEYCLOAK_ADMIN: admin
+#      KEYCLOAK_ADMIN_PASSWORD: admin
+#    ports:
+#      - "8282:8080"
+#    depends_on:
+#      keycloak-postgres:
+#        condition: service_healthy
+#    healthcheck:
+#      test: [ "CMD", "curl", "-f", "http://0.0.0.0:8080/realms/master" ]
+#      start_period: 10s
+#      interval: 30s
+#      retries: 3
+#      timeout: 5s
   keycloak:
     image: quay.io/keycloak/keycloak:21.1.1
     container_name: keycloak
-    command:
-      - start --auto-build --db postgres --hostname-strict-https false --hostname-strict false --proxy edge --http-enabled true --import-realm --spi-user-profile-legacy-user-profile-read-only-attributes *_RES_ACCESS_MODE
     environment:
-      KC_DB_URL: jdbc:postgresql://keycloak-postgres:5432/postgres
-      KC_DB_USERNAME: postgres
-      KC_DB_PASSWORD: postgres
-      KC_DB_SCHEMA: public
-      KC_FEATURES: preview
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
+      - DB_VENDOR=POSTGRES
+      - DB_ADDR=keycloak-postgres
+      - DB_PORT=5432
+      - DB_DATABASE=postgres
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
     ports:
       - "8282:8080"
     depends_on:
       keycloak-postgres:
         condition: service_healthy
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://0.0.0.0:8080/realms/master" ]
-      start_period: 10s
-      interval: 30s
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/auth" ]
+      interval: 1m30s
+      timeout: 10s
       retries: 3
-      timeout: 5s
-
 
   eureka-server:
     image: ghcr.io/mrdimenter/eureka-server:latest
@@ -74,10 +95,31 @@ services:
       - "8090:8090"
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/customers
+#      - SPRING_DATASOURCE_USERNAME=postgres
+#      - SPRING_DATASOURCE_PASSWORD=postgres
     depends_on:
       - eureka-server
     networks:
       - vesuvian-network
+
+
+#  customer-postgres:
+#    image: postgres:15.2
+#    container_name: customer_postgres_service
+#    ports:
+#      - "5435:5432"
+#    environment:
+#      - POSTGRES_DB=customers
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=postgres
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data
+#    networks:
+#      - vesuvian-network
+#
+#volumes:
+#  postgres_data:
 
 networks:
   vesuvian-network:
