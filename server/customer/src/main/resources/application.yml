@@ -11,18 +11,18 @@ spring:
     oauth2:
       resource-server:
         jwt:
-          jwk-set-uri: http://45.141.103.134:8282/realms/dev/protocol/openid-connect/certs # ссылка на сертификаты authserver для проверки целостности access token
+          jwk-set-uri: http://212.113.120.198:8282/realms/dev/protocol/openid-connect/certs # ссылка на сертификаты authserver для проверки целостности access token
 
 
 keycloak:
   realm: dev
-  auth-server-url: http://45.141.103.134:8282/auth
+  auth-server-url: http://212.113.120.198:8282/auth
   resource: swagger-ui
   credentials:
     secret: ZoistP5MrGPQdSBfC9kdmPJC1OEhqgCx
 
   authorization:
-    auth-server-url: http://45.141.103.134:8282
+    auth-server-url: http://212.113.120.198:8282
     realm: dev
     resource: app-dev-client
     username: admin
