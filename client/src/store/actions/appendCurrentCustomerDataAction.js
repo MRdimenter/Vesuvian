@@ -7,7 +7,11 @@ export const appendCurrentCustomerDataAction = () => {
   const apiService = new ApiService(oauthService);
 
   return async (dispatch) => {
-    const response = await apiService.getCurrentCustomer();
-    dispatch({type: CURRENT_CUSTOMER_DATA.APPEND_DATA, payload: response});
+    try {
+      const response = await apiService.getCurrentCustomer();
+      dispatch({type: CURRENT_CUSTOMER_DATA.APPEND_DATA, payload: response});  
+    } catch (error) {
+      dispatch({type: CURRENT_CUSTOMER_DATA.FETCH_DATA_ERROR, payload: error});
+    }
   }
 }
