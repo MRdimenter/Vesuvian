@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import { useDispatch } from 'react-redux';
 import { darkModeAction } from '../../store/actions/darkModeAction';
-import { getAccessToken, setWrongAccessToken, updateAccessTokenByRefreshToken } from '../../common/utils/useOAuth2';
+import { getAccessToken, setWrongAccessToken } from '../../common/utils/useOAuth2';
 
 import './testPanel.scss';
 
@@ -84,7 +84,6 @@ export const TestPanel = () => {
       <Button label='read Cookies' action={() => readCookies()} />
       <Button label='Clear Cookies' action={() => clearCookies()} />
       <Button label='getAccessTokenFromLocalStorage' action={() => getAccessTokenFromLocalStorage()} />
-      <Button label='updateAccessTokenByRefreshToken' action={() => updateAccessTokenByRefreshToken()} />
       <Button label='getAPICustomers' action={() => getAPICustomers()} />
       <Button label='setWrongAccessToken' action={() => setWrongAccessToken()} />
       <Button label='getCurrentCustomer' action={() => getCurrentCustomer()} />

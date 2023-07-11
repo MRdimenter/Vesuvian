@@ -1,4 +1,4 @@
-import { updateAccessTokenByRefreshToken } from "../../common/utils/useOAuth2"
+import { OAuth2Service } from "../../common/utils/OAuth2Service";
 import { AUTHENTICATION_STATUS } from "../constants"
 
 /*
@@ -6,9 +6,11 @@ import { AUTHENTICATION_STATUS } from "../constants"
 */
 
 const authenticationAction = () => {
+  const oAuth2Servise = new OAuth2Service();
+
   return async (dispatch) => {
     try {
-      const accessToken = await updateAccessTokenByRefreshToken(); // пока что есть проблемка: не ясно по какой причине нет accessToken (может сервер лежит), данные обработчики нужно добавить в обработку ошибок 
+      const accessToken = await oAuth2Servise.updateAccessTokenByRefreshToken(); // пока что есть проблемка: не ясно по какой причине нет accessToken (может сервер лежит), данные обработчики нужно добавить в обработку ошибок 
   
       if (accessToken) {
         dispatch({type: AUTHENTICATION_STATUS.authStatus, payload: true});

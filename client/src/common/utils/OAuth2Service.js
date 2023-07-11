@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import { ACCESS_TOKEN, KEYCLOAK_URL, REFRESH_TOKEN } from "../constants/OAuth2Constants";
+import { KEYCLOAK_URL, REFRESH_TOKEN } from "../constants/OAuth2Constants";
 import { postOAuth2Login, postOAuth2Logout } from "./OAuth2FetchWrapper";
 import { setAccessToken, setRefreshToken } from "./useOAuth2";
 import { BadRequestError, RefreshTokenMissingError } from "./Errors/Errors";
@@ -55,7 +55,6 @@ export class OAuth2Service {
     };
 
     const response = await fetch(url, requestOptions);
-
     if (response.status === 400) {
       throw new BadRequestError('Invalid refresh token')
     }
@@ -70,23 +69,22 @@ export class OAuth2Service {
 
   async updateAccessTokenByRefreshToken() {
     const refreshToken = this.getRefreshTokenFromCookie();
-    let accessToken = '';
 
     if (refreshToken) {
       try {
         const response = await this.postOAuth2AccessTokenByRefreshToken(KEYCLOAK_URL, refreshToken);
         if (response.status === 400) {
-          console.log('!!! Error');
+          throw new Error('postOAuth2AccessTokenByRefreshToken: ', response.status);
         }
-        accessToken = await response.access_token;
+        const {access_token: accessToken} = response;
+        setAccessToken(accessToken);
+        return accessToken;
       } catch (error) {
-        console.log('Ошибка пришла', error);
-        throw error;
+        console.log('postOAuth2AccessTokenByRefreshToken: ', error);
+        return null;
       }
     } else {
       throw new RefreshTokenMissingError("Refresh token is missing.");
     }
-    localStorage.setItem(ACCESS_TOKEN, accessToken);
-    return accessToken;
   }
 }
