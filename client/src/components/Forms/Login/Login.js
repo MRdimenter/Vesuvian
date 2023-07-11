@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import './login.scss';
 
@@ -24,7 +24,7 @@ const Login = () => {
   const [isWrongCredentials, setIsWrongCredentials] = useState(false);
   const [isInputsValidated, setIsInputsValidated] = useState(false);
   const [validationData, setValidationData] = useState({});
-  const [sendingCredentials, setSendingCredentials] = useState(false);
+  const [sendingCredentials, setSendingCredentials] = useState(true);
 
 
   const handleValidationChange = (inputId, isValid) => {
@@ -79,7 +79,6 @@ const Login = () => {
 
   return (
     <>
-      {sendingCredentials && <Modal title='Проверка логина и пароля' />}
       <div className="login-wrapper">
         <div className='login-form-wrapper'>
           {isWrongCredentials && <WrongCredentialWarning />}
@@ -95,6 +94,12 @@ const Login = () => {
           {isInputsValidated && <WarningMessage />}
         </div>
       </div>
+
+      {sendingCredentials && 
+        <Modal title='Проверка логина и пароля'>
+          <Button btnStyle='link' label='Вернуться на главную' link={'/'} />
+        </Modal>
+      }
     </>
   )
 }

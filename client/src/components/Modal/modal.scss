@@ -22,6 +22,10 @@
 }
 
 .modal-container {
+    z-index: 1;
+    position: fixed;
+    top: 150px;
+    
     min-width: 500px;
     min-height: 350px;
     border-radius: 15px;
@@ -30,6 +34,11 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+
+    * {
+        margin-top: 10px;
+    }
 }
 
 .modal-title {
