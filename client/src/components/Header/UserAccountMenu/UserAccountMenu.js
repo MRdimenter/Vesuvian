@@ -22,7 +22,7 @@ const UserAccountMenu = () => { //TODO SideBar
   };
 
   useEffect(() => {
-    setUserName(currentCustomerData?.username)  
+    setUserName(currentCustomerData?.userName)  
   }, [currentCustomerData])
 
   const accountMenu = isOpen && <UserDropdown />;

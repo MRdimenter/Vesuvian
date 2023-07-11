@@ -16,6 +16,7 @@ export class OAuth2Service {
 
     if (response.status === 204) {
       console.log('response from postOAuth2Logout is ok'); // TODO решил пока что оставить, пока не решу как обрабатывать ошибки
+      
     }
 
     Cookies.remove(REFRESH_TOKEN);

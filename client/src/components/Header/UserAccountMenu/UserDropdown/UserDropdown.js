@@ -5,10 +5,10 @@ import { Button } from '../../../Button/Button';
 
 import './userDropdown.scss'
 
-async function logout(dispatch) {
+const logout = async (dispatch) => {
     const oAuth2Servise = new OAuth2Service();
   
-    oAuth2Servise.OAuth2LogOut();
+    await oAuth2Servise.OAuth2LogOut();
     localStorage.clear();
     dispatch(authenticationAction());
   }

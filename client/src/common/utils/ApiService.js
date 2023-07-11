@@ -54,21 +54,20 @@ class ApiService {
     //return await fetch(url, requestOptions);
   }
 
-  withPage = async (get, path, page) => {
-    const modifiedPath = page ? `${path}?page=${page}` : path;
+  withPagesParams = (get, path, page, size) => {
+    const modifiedPath = `${path}?page=${page}&size=${size}`;
     return get(modifiedPath);
   }
 
-  async getAllCustomers(page) {
+  async getAllCustomers(page = 1, size = 10) {
     try {
-      const response = await this.withPage(this.getResourseByAuth.bind(this), CUSTOMERS_URL, page);
+      const response = await this.withPagesParams(this.getResourseByAuth.bind(this), CUSTOMERS_URL, page, size);
       return response;
     } catch (error) {
       console.log('необработанная ошибка getAllCustomers', error);
       throw error; // Пробросываем ошибку для обработки её компонентом, вызывающим метод getAllCustomers
     }
   }
-
 
   async getCurrentCustomer() {
     try {

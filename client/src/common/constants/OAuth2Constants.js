@@ -1,4 +1,5 @@
 const KEYCLOAK_URL = 'http://45.141.103.134:8282/realms/dev/protocol/openid-connect/token';
+const WRONG_KEYCLOAK_URL = 'http://45.141.103.134:8282/realms/dev/protocol/openid-connect/tokenasd';
 
 const KEYCLOAK_LOGOUT_URL = 'http://45.141.103.134:8282/realms/dev/protocol/openid-connect/logout';
 
@@ -13,4 +14,5 @@ export {
     REFRESH_TOKEN,
     ACCESS_TOKEN,
     WRONG_URL,
+    WRONG_KEYCLOAK_URL,
 };

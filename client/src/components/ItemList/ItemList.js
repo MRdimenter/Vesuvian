@@ -54,16 +54,25 @@ const ListItem = () => {
       }, [page])
   */
   useEffect(() => {
+    console.log('useEffect');
     const oauthService = new OAuth2Service();
     const apiService = new ApiService(oauthService);
 
-    async function getAPICustomers(page) {
+    async function getAPICustomers(currentPage) {
+      console.log('&&&&&&');
       try {
-        let customersList = await apiService.getAllCustomers(page);
-        //setCustomersList(customersList); // original (working) string
-        setTimeout(() => setCustomersList(customersList), 1000); // For testing long loading
+        const response = await apiService.getAllCustomers(currentPage);
+        const { pages, page, customers} = response;
+        if (Array.isArray(customers)) {
+          setCustomersList(customers); // !!! original (working) string
+          //setTimeout(() => setCustomersList(customers), 1000); // For testing long loading   
+        } else {
+          throw new Error('Неверные данные');
+        }
+        
       } catch (error) {
         if (error instanceof RefreshTokenMissingError || error instanceof BadRequestError) {
+          console.log('!!!!!!!!!!!');
           logout(dispatch); // не обязательно, но желательно привести приложение в состояние LogOut
           navigate("/reLoginPage"); //TODO но лучше на страницу с предупреждением (чтобы не было неожиданностью почему так)
         }
@@ -72,6 +81,8 @@ const ListItem = () => {
         }
       }
     }
+
+    console.log('here');
 
     setCustomersList(null);
     getAPICustomers(page);
@@ -91,11 +102,11 @@ const ListItem = () => {
 
     return (
       <div>
+        <Button btnStyle='btn' label='1' action={e => handleSubmit(e.target.textContent)} />
+        <Button btnStyle='btn' label='2' action={e => handleSubmit(e.target.textContent)} />
         <ul>
           {items}
         </ul>
-        <Button btnStyle='btn' label='1' action={e => handleSubmit(e.target.textContent)} />
-        <Button btnStyle='btn' label='2' action={e => handleSubmit(e.target.textContent)} />
       </div>
     )
 

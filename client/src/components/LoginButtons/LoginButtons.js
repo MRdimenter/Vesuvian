@@ -25,17 +25,11 @@ const RegistrationButtons = () => {
   )
 }
 
-const LogOutButton = () => {
-  return (
-    <UserAccountMenu />
-  )
-}
-
 export const LoginButtons = () => {
   const dispatch = useDispatch();
   const {authStatus: isAuthenticated, authState: isAuthenticationVerified} = useSelector((state) => state.isAuth);
   
-  const content = isAuthenticationVerified && (isAuthenticated ? <LogOutButton dispatch={dispatch}/> : <RegistrationButtons dispatch={dispatch}/>);
+  const content = isAuthenticationVerified && (isAuthenticated ? <UserAccountMenu /> : <RegistrationButtons dispatch={dispatch}/>);
 
   useEffect(() => {
   }, [isAuthenticated])

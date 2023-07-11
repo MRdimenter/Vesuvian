@@ -6,18 +6,20 @@ import { AUTHENTICATION_STATUS } from "../constants"
 */
 
 const authenticationAction = () => {
+  console.log('try authenticationAction');
   const oAuth2Servise = new OAuth2Service();
 
   return async (dispatch) => {
     try {
       const accessToken = await oAuth2Servise.updateAccessTokenByRefreshToken(); // пока что есть проблемка: не ясно по какой причине нет accessToken (может сервер лежит), данные обработчики нужно добавить в обработку ошибок 
-  
+      //console.log('???????accessToken: ', accessToken);
       if (accessToken) {
         dispatch({type: AUTHENTICATION_STATUS.authStatus, payload: true});
       } else {
         dispatch({type: AUTHENTICATION_STATUS.authStatus, payload: false});
       }
     } catch (error) {
+      console.log('!!!!!!!!!!!!!!!!!!!!!!!!');
       dispatch({type: AUTHENTICATION_STATUS.authStatus, payload: false});
     }
   }

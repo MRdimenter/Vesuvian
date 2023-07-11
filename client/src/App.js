@@ -14,14 +14,23 @@ import { ErrorPage } from './components/ErrorPage/ErrorPage';
 import { Login } from './components/Forms/Login/Login';
 import { RegistrationForm } from './components/Forms/RegistrationForm/RegistrationForm';
 import { ReLoginPage } from './components/ErrorPage/ReLoginPage';
-import { ListItem } from './components/ItemList/ItemList';
 import { appendCurrentCustomerDataAction } from './store/actions/appendCurrentCustomerDataAction';
+import { CustomersPage } from './components/CustomersPage/CustomersPage';
+
+// TODO тестить на 3G:
+// форма логин остается открытой после нажатия на кнопку Вход -> добавить компонент "входим в аккаунт"
+// после откючения формы Логин кнопки Зарегестрироваться/вход активны и есть возможность снова нажать на Вход -> 
+// решение: состояние аунтентификаци (типа лоадинг), в это время компоненты, которые зависят от состояния аутентификации должны ожидать результата!
+// после нажатия на кнопку LogOut тоже непонятная пауза -> нужно активнее закрывать это поле
+// TODO прыгает высота хедера
+// TODO Login - долго ждет ответа - непонятно что происходит - ощущение, что на кнопку не нажали
 
 export const App = () => {
   const dispatch = useDispatch();
   const isDarkModeEnabled = useSelector((state) => state.DarkMode);
 
   useEffect(() => {
+    //TODO обсудить как обрабатывать ошибку: на работу не влияет, но ошибка в консоле выглядит не очень (она как бы ожидаемая)
     dispatch(authenticationAction());
     dispatch(appendCurrentCustomerDataAction());
   });
@@ -39,7 +48,7 @@ export const App = () => {
             <Route path='/redirect' element={<RedirectPage />}></Route>
             <Route path='/errorPage' element={<ErrorPage />}></Route>
             <Route path='/reLoginPage' element={<ReLoginPage />}></Route>
-            <Route path='/listItem' element={<ListItem />}></Route>
+            <Route path='/listItem' element={<CustomersPage />}></Route>
           </Routes>
         </div>
       </div>

@@ -56,7 +56,7 @@ const Login = () => {
           */
 
           dispatch(appendCurrentCustomerDataAction());
-          dispatch(authenticationAction(true));
+          dispatch(authenticationAction());
           navigate("/");
         } else {
           navigate("/login");
