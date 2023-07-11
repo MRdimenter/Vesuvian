@@ -37,10 +37,10 @@ export const App = () => {
 
   return (
     <BrowserRouter>
-      <div className={!isDarkModeEnabled ? 'wrapper' : 'theme-dark'}>
+      <div className={`main-wrapper ${!isDarkModeEnabled ? 'wrapper' : 'theme-dark'}`}>
         <Header />
         <TestPanel />
-        <div className='main-wrapper'>
+        <div className='main-container'>
           <Routes>
             <Route path='/' element={<Main />} exact />
             <Route path='/registrationForm' element={<RegistrationForm />} />
@@ -51,8 +51,8 @@ export const App = () => {
             <Route path='/listItem' element={<CustomersPage />}></Route>
           </Routes>
         </div>
+        <Footer />
       </div>
-      <Footer />
     </BrowserRouter>
   );
 }
