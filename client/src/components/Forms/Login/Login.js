@@ -24,7 +24,7 @@ const Login = () => {
   const [isWrongCredentials, setIsWrongCredentials] = useState(false);
   const [isInputsValidated, setIsInputsValidated] = useState(false);
   const [validationData, setValidationData] = useState({});
-  const [sendingCredentials, setSendingCredentials] = useState(true);
+  const [sendingCredentials, setSendingCredentials] = useState(false);
 
 
   const handleValidationChange = (inputId, isValid) => {

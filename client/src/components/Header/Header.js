@@ -1,7 +1,7 @@
-import './header.scss';
-
 import { Link } from 'react-router-dom';
 import { LoginButtons } from '../LoginButtons/LoginButtons';
+
+import './header.scss';
 
 export const Header = () => {
 

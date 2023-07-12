@@ -2,6 +2,7 @@
 
 @mixin primary {
   //border-radius: 50vh;
+  min-height: 50px;
   background-color: orange;
 
   display: flex;
