@@ -16,7 +16,6 @@ export class OAuth2Service {
 
     if (response.status === 204) {
       console.log('response from postOAuth2Logout is ok'); // TODO решил пока что оставить, пока не решу как обрабатывать ошибки
-      
     }
 
     Cookies.remove(REFRESH_TOKEN);
@@ -82,7 +81,7 @@ export class OAuth2Service {
         return accessToken;
       } catch (error) {
         console.log('postOAuth2AccessTokenByRefreshToken: ', error);
-        return null;
+        return error;
       }
     } else {
       throw new RefreshTokenMissingError("Refresh token is missing.");

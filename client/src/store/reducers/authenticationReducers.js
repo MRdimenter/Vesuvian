@@ -7,7 +7,7 @@ const initialState = {
 
 const authenticationReducer = (state = initialState, action) => {
   switch (action.type) {
-    case AUTHENTICATION_STATUS.authStatus:
+    case AUTHENTICATION_STATUS.AUTH_STATUS:
       return {
         ...state,
         authStatus: action.payload,

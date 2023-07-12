@@ -11,16 +11,18 @@ const authenticationAction = () => {
 
   return async (dispatch) => {
     try {
+      dispatch(authenticationStateAction(false));
       const accessToken = await oAuth2Servise.updateAccessTokenByRefreshToken(); // пока что есть проблемка: не ясно по какой причине нет accessToken (может сервер лежит), данные обработчики нужно добавить в обработку ошибок 
-      //console.log('???????accessToken: ', accessToken);
       if (accessToken) {
-        dispatch({type: AUTHENTICATION_STATUS.authStatus, payload: true});
+        dispatch({type: AUTHENTICATION_STATUS.AUTH_STATUS, payload: true});
       } else {
-        dispatch({type: AUTHENTICATION_STATUS.authStatus, payload: false});
+        dispatch({type: AUTHENTICATION_STATUS.AUTH_STATUS, payload: false});
       }
     } catch (error) {
       console.log('!!!!!!!!!!!!!!!!!!!!!!!!');
-      dispatch({type: AUTHENTICATION_STATUS.authStatus, payload: false});
+      dispatch({type: AUTHENTICATION_STATUS.AUTH_STATUS, payload: false});
+    } finally {
+      dispatch(authenticationStateAction(true));
     }
   }
 }
