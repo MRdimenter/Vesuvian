@@ -1,0 +1,10 @@
+server:
+  port: 8095
+  ssl:
+    enabled: false # настройка для Spring что бы он использовал SSL
+
+
+spring:
+  application:
+    name: imageService
+

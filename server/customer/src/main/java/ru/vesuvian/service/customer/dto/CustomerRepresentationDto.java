@@ -8,7 +8,7 @@ import java.util.TimeZone;
 
 public record CustomerRepresentationDto(
         String id,
-        String username,
+        String userName,
         String firstName,
         String lastName,
         String email,
@@ -17,8 +17,13 @@ public record CustomerRepresentationDto(
     public static CustomerRepresentationDto fromUserRepresentation(UserRepresentation userRepresentation) {
         LocalDateTime createdTimestamp = LocalDateTime.ofInstant(Instant.ofEpochMilli(userRepresentation.getCreatedTimestamp()), TimeZone.getDefault().toZoneId());
 
-        return new CustomerRepresentationDto(userRepresentation.getId(), userRepresentation.getUsername(),
-                userRepresentation.getEmail(), userRepresentation.getFirstName(), userRepresentation.getLastName(), createdTimestamp);
+        return new CustomerRepresentationDto(
+                userRepresentation.getId(),
+                userRepresentation.getUsername(),
+                userRepresentation.getFirstName(),
+                userRepresentation.getLastName(),
+                userRepresentation.getEmail(),
+                createdTimestamp);
     }
 
 }

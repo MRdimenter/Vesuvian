@@ -3,6 +3,7 @@ services:
   keycloak-postgres:
     image: postgres:15.2
     container_name: keycloak_postgres_service_test
+    user: postgres
     restart: on-failure
     environment:
       POSTGRES_USER: postgres
@@ -19,10 +20,10 @@ services:
     deploy:
       resources:
         limits:
-          memory: 256M
+          memory: 3072M
 
   keycloak:
-    image: quay.io/keycloak/keycloak:21.1.1
+    image: quay.io/keycloak/keycloak:21.1.2
     container_name: keycloak
     command:
       - start --auto-build --db postgres --hostname-strict-https false --hostname-strict false --proxy edge --http-enabled true --import-realm --spi-user-profile-legacy-user-profile-read-only-attributes *_RES_ACCESS_MODE
@@ -74,10 +75,31 @@ services:
       - "8090:8090"
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/customers
+#      - SPRING_DATASOURCE_USERNAME=postgres
+#      - SPRING_DATASOURCE_PASSWORD=postgres
     depends_on:
       - eureka-server
     networks:
       - vesuvian-network
+
+
+#  customer-postgres:
+#    image: postgres:15.2
+#    container_name: customer_postgres_service
+#    ports:
+#      - "5435:5432"
+#    environment:
+#      - POSTGRES_DB=customers
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=postgres
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data
+#    networks:
+#      - vesuvian-network
+#
+#volumes:
+#  postgres_data:
 
 networks:
   vesuvian-network:

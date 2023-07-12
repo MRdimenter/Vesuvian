@@ -68,6 +68,6 @@ jobs:
           echo "Checking if the docker compose for 'eureka' exists..."
 
           echo "Docker compose for 'eureka' is running. It will be stopped and removed..."
-          cd /home/vesuvian
+          cd home/vesuvian
           docker compose up -d --no-deps --force-recreate eureka-server
           "
