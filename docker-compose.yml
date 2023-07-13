@@ -103,6 +103,7 @@ services:
 volumes:
   postgres_data:
 
+
 networks:
   vesuvian-network:
     driver: bridge
