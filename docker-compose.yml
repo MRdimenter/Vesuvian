@@ -5,6 +5,8 @@ services:
     container_name: keycloak_postgres_service_test
     user: postgres
     restart: on-failure
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -26,7 +28,7 @@ services:
     image: quay.io/keycloak/keycloak:21.1.2
     container_name: keycloak
     command:
-      - start --auto-build --db postgres --hostname-strict-https false --hostname-strict false --proxy edge --http-enabled true --import-realm --spi-user-profile-legacy-user-profile-read-only-attributes *_RES_ACCESS_MODE
+      - start --auto-build --db postgres --hostname-strict-https false --hostname-strict false --proxy edge --http-enabled true --spi-user-profile-legacy-user-profile-read-only-attributes *_RES_ACCESS_MODE
     environment:
       KC_DB_URL: jdbc:postgresql://keycloak-postgres:5432/postgres
       KC_DB_USERNAME: postgres
@@ -75,9 +77,9 @@ services:
       - "8090:8090"
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
-#      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/customers
-#      - SPRING_DATASOURCE_USERNAME=postgres
-#      - SPRING_DATASOURCE_PASSWORD=postgres
+    #        - SPRING_DATASOURCE_URL=jdbc:postgresql://customer-postgres:5432/customers
+    #        - SPRING_DATASOURCE_USERNAME=postgres
+    #        - SPRING_DATASOURCE_PASSWORD=postgres
     depends_on:
       - eureka-server
     networks:
@@ -97,9 +99,9 @@ services:
 #      - postgres_data:/var/lib/postgresql/data
 #    networks:
 #      - vesuvian-network
-#
-#volumes:
-#  postgres_data:
+
+volumes:
+  postgres_data:
 
 networks:
   vesuvian-network:
