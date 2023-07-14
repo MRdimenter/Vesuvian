@@ -12,6 +12,19 @@ spring:
       resource-server:
         jwt:
           jwk-set-uri: http://212.113.120.198:8282/realms/dev/protocol/openid-connect/certs # ссылка на сертификаты authserver для проверки целостности access token
+  datasource:
+    url: jdbc:postgresql://customer-postgres:5432/customers
+#   url: jdbc:postgresql://localhost:5435/customers
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      format_sql: true
+      show-sql: true
 
 
 keycloak:

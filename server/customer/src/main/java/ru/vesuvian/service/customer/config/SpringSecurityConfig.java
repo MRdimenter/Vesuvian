@@ -29,7 +29,7 @@ import java.util.List;
 // включение механизмов для защиты методов по ролям
 @EnableMethodSecurity
 // исключаем авто кофигурацию подключения к БД
-@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class})
+//@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class})
 @RequiredArgsConstructor
 public class SpringSecurityConfig {
 

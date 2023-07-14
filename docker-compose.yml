@@ -77,32 +77,32 @@ services:
       - "8090:8090"
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
-    #        - SPRING_DATASOURCE_URL=jdbc:postgresql://customer-postgres:5432/customers
-    #        - SPRING_DATASOURCE_USERNAME=postgres
-    #        - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://customer-postgres:5432/customers
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
     depends_on:
       - eureka-server
     networks:
       - vesuvian-network
 
 
-#  customer-postgres:
-#    image: postgres:15.2
-#    container_name: customer_postgres_service
-#    ports:
-#      - "5435:5432"
-#    environment:
-#      - POSTGRES_DB=customers
-#      - POSTGRES_USER=postgres
-#      - POSTGRES_PASSWORD=postgres
-#    volumes:
-#      - postgres_data:/var/lib/postgresql/data
-#    networks:
-#      - vesuvian-network
+  customer-postgres:
+    image: postgres:15.2
+    container_name: customer_postgres_service
+    ports:
+      - "5435:5432"
+    environment:
+      - POSTGRES_DB=customers
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres_customer:/var/lib/postgresql/data
+    networks:
+      - vesuvian-network
 
 volumes:
   postgres_data:
-
+  postgres_customer:
 
 networks:
   vesuvian-network:
