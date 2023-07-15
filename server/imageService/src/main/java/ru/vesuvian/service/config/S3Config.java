@@ -31,32 +31,14 @@ public class S3Config {
     public AmazonS3 s3client() {
         AWSCredentials credentials = new BasicAWSCredentials(accessKeyId, secretAccessKey);
 
-        AmazonS3 s3 =  AmazonS3ClientBuilder.standard()
+
+        return AmazonS3ClientBuilder.standard()
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
                 .withEndpointConfiguration(
                         new AmazonS3ClientBuilder.EndpointConfiguration(
-                                "storage.yandexcloud.net","ru-central1"
+                                "storage.yandexcloud.net", "ru-central1"
                         )
                 )
                 .build();
-
-        ListObjectsRequest listObjectsRequest = new ListObjectsRequest().withBucketName("vesuvian-images");
-        ObjectListing objectListing;
-
-        do {
-            objectListing = s3.listObjects(listObjectsRequest);
-            for (S3ObjectSummary objectSummary : objectListing.getObjectSummaries()) {
-                System.out.println(" - " + objectSummary.getKey() + "  " +
-                        "(size = " + objectSummary.getSize() + ")");
-
-                // Загрузите и обработайте каждое изображение, используя s3.getObject(...)
-            }
-            listObjectsRequest.setMarker(objectListing.getNextMarker());
-        } while (objectListing.isTruncated());
-
-         //       log.info(s3.getBucketAcl("vesuvian-images").);
-        log.info(s3.getRegionName());
-
-        return s3;
     }
 }

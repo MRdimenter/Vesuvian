@@ -8,3 +8,10 @@ spring:
   application:
     name: imageService
 
+
+yandex-cloud:
+  bucket-name: vesuvian-images
+  buckets:
+    vesuvian-images:
+      client:
+        design-elements: client/design-elements/
