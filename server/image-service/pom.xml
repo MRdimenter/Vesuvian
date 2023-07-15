@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>image-service</artifactId>
-    <name>imageService</name>
+    <name>image-service</name>
     <description>image service</description>
 
     <properties>
