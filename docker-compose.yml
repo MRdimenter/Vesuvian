@@ -6,7 +6,7 @@ services:
     user: postgres
     restart: on-failure
     volumes:
-      - vesuvian_postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -96,7 +96,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:
-      - vesuvian_postgres_customer:/var/lib/postgresql/data
+      - postgres_customer:/var/lib/postgresql/data
     networks:
       - vesuvian-network
 
