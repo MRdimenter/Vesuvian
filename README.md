@@ -2,6 +2,7 @@
 [![customer-ci](https://github.com/mrdimenter/vesuvian/actions/workflows/customer_ci.yml/badge.svg)](https://github.com/mrdimenter/vesuvian/actions/workflows/customer_ci.yml/badge.svg)
 [![eureka-ci](https://github.com/mrdimenter/vesuvian/actions/workflows/eureka_server_ci.yml/badge.svg)](https://github.com/mrdimenter/vesuvian/actions/workflows/eureka_server_ci.yml/badge.svg)
 [![apigateway_ci](https://github.com/mrdimenter/vesuvian/actions/workflows/apigateway_ci.yml/badge.svg)](https://github.com/mrdimenter/vesuvian/actions/workflows/apigateway_ci.yml/badge.svg)
+[![image-service-ci](https://github.com/mrdimenter/vesuvian/actions/workflows/image_service_ci.yml/badge.svg)](https://github.com/mrdimenter/vesuvian/actions/workflows/image_service_ci.yml/badge.svg)
 
 # Проект Vesuvian <img src="https://i.ibb.co/QpMVQZF/123.png" alt="MarineGEO circle logo" style="height: 25px; width:25x;"/>
 
