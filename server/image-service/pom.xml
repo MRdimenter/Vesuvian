@@ -10,7 +10,7 @@
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <artifactId>imageService</artifactId>
+    <artifactId>image-service</artifactId>
     <name>imageService</name>
     <description>image service</description>
 
