@@ -28,7 +28,7 @@ services:
     image: quay.io/keycloak/keycloak:21.1.2
     container_name: keycloak
     command:
-      - start --auto-build --db postgres --hostname-strict-https false --hostname-strict false --proxy edge --http-enabled true --spi-user-profile-legacy-user-profile-read-only-attributes *_RES_ACCESS_MODE
+      - start --optimized --db postgres --hostname-strict-https false --hostname-strict false --proxy edge --http-enabled true --spi-user-profile-legacy-user-profile-read-only-attributes *_RES_ACCESS_MODE
     environment:
       KC_DB_URL: jdbc:postgresql://keycloak-postgres:5432/postgres
       KC_DB_USERNAME: postgres
