@@ -1,4 +1,4 @@
-name: Apigateway CI
+name: apigateway CI
 
 on:
   push:
