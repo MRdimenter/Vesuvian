@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ImageService {
+public class DesignElementsService {
     final AmazonS3 s3client;
     @Value("${yandex-cloud.bucket-name}")
     String bucketName;
