@@ -1,4 +1,4 @@
-name: Customer CI
+name: customer CI
 
 on:
   push:
