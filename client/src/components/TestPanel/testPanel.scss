@@ -1,8 +1,6 @@
 @import "../../common/styles/color.scss";
 
 @mixin primary {
-  //border-radius: 50vh;
-  background-color: orange;
 
   display: flex;
   align-items: center;
@@ -17,6 +15,8 @@
 
 .test-panel {
   @include primary();
+  border: 1px solid green;
+  display: none;
 }
 
 .theme-dark {

@@ -1,25 +1,26 @@
 @import "../../common/styles/color.scss";
 
 @mixin primary {
-  //border-radius: 50vh;
-  min-height: 50px;
-  background-color: orange;
+  min-height: 80px;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  padding: 15px;
+  padding: 0 50px;
 }
 
 .header {
   @include primary();
+  font-family: Nirmala UI;
+  font-size: 40px;
+  font-weight: 400;
+  letter-spacing: 0em;
 }
 
 .theme-dark {
   .header {
     border-radius: 2vh;
-    background: $light-grey;
+    //background: $light-grey;
   }
 }
 

@@ -1,5 +1,18 @@
 @import "./common/styles/color.scss";
 
+@font-face {
+  font-family: 'Nirmala-UI';
+  font-style: normal;
+  //src: local('Rubik-Bold'), url(../public/fonts/Rubik-Bold.ttf);
+  src: local('Nirmala-UI'), url(../public/fonts/Nirmala-UI.ttf) format('ttf');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  src: local('Inter'), url(../public/fonts/Inter.ttf) format('ttf');
+}
+
 * {
     padding: 0;
     margin: 0;

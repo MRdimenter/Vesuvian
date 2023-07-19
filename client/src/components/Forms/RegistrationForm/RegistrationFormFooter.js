@@ -5,7 +5,7 @@ const RegistrationFormFooter = () => {
         <div className='registration-wrapper'>
             <p>Если Вы уже зарегистрировались, пожалуйста, авторизуйтесь</p>
             <div className='registration-button-wrapper'>
-                <Button btnStyle='link' label='Вход' link={'/login'} />
+                <Button btnStyle='link' label='ВХОД' link={'/login'} />
             </div>
         </div>
     )

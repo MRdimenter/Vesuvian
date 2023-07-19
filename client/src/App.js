@@ -36,7 +36,7 @@ export const App = () => {
 
   return (
     <BrowserRouter>
-      <div className={`main-wrapper ${!isDarkModeEnabled ? 'wrapper' : 'theme-dark'}`}>
+      <div className={`main-wrapper`}>
         <Header />
         <TestPanel />
         <div className='main-container'>
@@ -56,3 +56,4 @@ export const App = () => {
   );
 }
 
+//<div className={`main-wrapper ${!isDarkModeEnabled ? 'wrapper' : 'theme-dark'}`}></div>
