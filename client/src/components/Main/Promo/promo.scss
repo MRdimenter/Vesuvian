@@ -1,0 +1,77 @@
+.promo-wrapper {
+  width: 100%;
+}
+
+.promo-header {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.promo-header-content {
+  margin: auto;
+  width: 100%;
+  height: 584px;
+
+  padding: 0 100px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.promo-header-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.justify-left {
+  align-items: start;
+}
+
+.justify-right {
+  align-items: end;
+}
+
+.flex-column-justify-left {
+  justify-content: flex-start;
+}
+
+.flex-column-justify-right {
+  justify-content: flex-end;
+}
+
+.promo-offers {
+}
+
+.promo-offer {
+  margin-top: 100px;
+  padding-bottom: 50px;
+  height: 300px;
+  padding-left: 50px;
+  padding-right: 50px;
+
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+}
+
+.promo-offer-column {
+  width: 50%;
+  display: flex;
+}
+
+.promo-offer-text-column {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+// временно, пока нет изображений с сервера
+.promo-offer-picture {
+  max-width: 500px;
+  max-height: 286px;
+}

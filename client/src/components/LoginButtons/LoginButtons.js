@@ -19,8 +19,8 @@ RegistrationButtons содержит кнопки для перехода к ф�
 const RegistrationButtons = () => {
   return (
     <>
-      <Button btnStyle='link' label='Регистрироваться' link={'/registrationForm'} />
-      <Button btnStyle='link' label='Вход' link={'/login'} />
+      <Button btnStyle='link' label='ВХОД' link={'/login'} />
+      <Button btnStyle='btn' label='РЕГИСТРАЦИЯ' link={'/registrationForm'} />
     </>
   )
 }

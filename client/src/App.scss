@@ -2,7 +2,6 @@
 
 @mixin primary {
     min-height: 100vh;    
-
     background-color: #dee7c4;
 
     flex: 1;
@@ -11,8 +10,11 @@
 .main-wrapper {
     position: relative;
     min-height: 100vh;
+    padding: 10px 0;
     display: flex;
     flex-direction: column;
+
+    background: linear-gradient(0deg, $dark-dark-green, 15%, $dark-green);
 
     .main-container {
         min-height: 100%;
@@ -20,14 +22,4 @@
 
         flex-grow: 1;
     }
-}
- 
-.theme-dark {
-    @include primary();
-    background: $grey;
-}
-
-.theme-dark-green {
-    @include primary();
-    background: linear-gradient(135deg, $dark-green, 15%, $dark-dark-green);
 }

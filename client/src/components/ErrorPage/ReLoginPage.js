@@ -21,7 +21,7 @@ const ReLoginPage = () => {
     return (
         <div style={styles}>
             <h3>Oops! Please Login!</h3>
-            <Button btnStyle='btn' label='Вход' link={'/login'} />
+            <Button btnStyle='btn' label='ВХОД' link={'/login'} />
             <h3>Вернуться на главную</h3>
             <Link className='Back' to={'/'}>Vesuvian :)</Link>
         </div>
