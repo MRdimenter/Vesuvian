@@ -2,12 +2,13 @@ import { Link } from 'react-router-dom';
 
 import '../../common/styles/text.scss'
 import './button.scss';
+import { Icon } from '../Icon/Icon';
 
 /**
 * TODO Description
 **/
 
-export const Button = ({ label = 'btn', btnStyle='link', link, action }) => {
+const Button = ({ label = 'btn', btnStyle='link', link, action }) => {
   const setStyle = `btn-link-font ${btnStyle ?? 'btn'}`;
   const setThemeDark = '';
 
@@ -23,3 +24,15 @@ export const Button = ({ label = 'btn', btnStyle='link', link, action }) => {
   )
 }
 
+const IconButton = ({ iconName, width='20', height='20', onClick }) => {
+  return (
+    <button onClick={onClick} className="icon-button" type="button">
+      <Icon iconName={iconName} width={width} height={height} />
+    </button>
+  )
+}
+
+export {
+  Button,
+  IconButton,
+}

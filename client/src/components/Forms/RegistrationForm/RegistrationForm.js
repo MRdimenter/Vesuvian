@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { authenticationStateAction } from '../../../store/actions/authenticationActions';
 
-import './registrationForm.scss'
-import { InputBox } from '../InputBox';
+import { InputBox, PasswordInputBox } from '../InputBox';
 import { WarningMessageInput } from './WarningMessageInput';
 import { WarningMessageUnoccupiedEmail } from './WarningMessageUnoccupiedEmail';
 import { postRegistration } from '../../../common/utils/fetchWrapper';
@@ -11,6 +10,8 @@ import { REGISTR_URL_PATH } from '../../../common/constants/urlConstants';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../Button/Button';
 import { RegistrationFormFooter } from './RegistrationFormFooter';
+
+import './registrationForm.scss'
 
 const RegistrationForm = () => {
   const dispatch = useDispatch();
@@ -33,6 +34,13 @@ const RegistrationForm = () => {
   const [isIncorrectInputs, setIsIncorrectInputs] = useState(false);
   const [isOccupiedEmail, setIsOccupiedEmail] = useState(false);
   const [validationData, setValidationData] = useState({});
+
+  const firstNameHitnText = `Имя должно содержать только буквы, пробелы и дефисы \n Имя должно содержать от 2 до 50 символов`;
+  const lastNameHitnText = `Фамилия должна содержать только буквы, пробелы и дефисы \n Фамилия должна содержать от 2 до 50 символов`;
+  const emailNameHitnText = `Максимальная длина email-адреса составляет 254 символа`;
+  const usernameNameHitnText = `Никнейм должен содержать только буквы, цифры и знак подчеркивания \n Никнейм должен содержать от 4 до 20 символов`;
+  const passwordNameHitnText = `Пароль должен содержать от 8 до 128 символов \n Пароль должен содержать хотя бы одну прописную букву, одну строчную букву, одну цифру и один специальный символ`
+  const confirmPasswordNameHitnText =`Значение поля "Введите пароль повторно" должно совпадать с введённым ранее паролем`;
 
   const handleValidationChange = (inputId, isValid) => {
     setValidationData((prevData) => ({
@@ -72,6 +80,7 @@ const RegistrationForm = () => {
       }
     } else {
       console.log('else');
+      console.log(validationData);
       setIsIncorrectInputs(true);
     }
   }
@@ -88,15 +97,27 @@ const RegistrationForm = () => {
     <div className="registration-wrapper">
       {isOccupiedEmail && <WarningMessageUnoccupiedEmail />}
       <form className="registration-form" onSubmit={handleSubmit}>
-        <InputBox className="firstName" labelContent="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} onValidationChange={handleValidationChange} />
-        <InputBox className="lastName" labelContent="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} onValidationChange={handleValidationChange} />
-        <InputBox className="email" type="email" labelContent="Email" value={email} onChange={(e) => setEmail(e.target.value)} onValidationChange={handleValidationChange} />
-        <InputBox className="username" labelContent="Username" value={username} onChange={(e) => setUsername(e.target.value)} onValidationChange={handleValidationChange} />
-        <InputBox className="password" type="password" labelContent="Password" value={password} onChange={(e) => setPassword(e.target.value)} onValidationChange={handleValidationChange} />
-        <InputBox className="confirmPassword" type="password" labelContent="Confirm Password" value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)} password={password} onValidationChange={handleValidationChange} />
+        <InputBox className="firstName" labelContent="Имя" necessary={true} value={firstName} 
+                  onChange={(e) => setFirstName(e.target.value)} onValidationChange={handleValidationChange} 
+                  hitnText={firstNameHitnText}/>
+        <InputBox className="lastName" labelContent="Фамилия" value={lastName} 
+                  onChange={(e) => setLastName(e.target.value)} onValidationChange={handleValidationChange}
+                  hitnText={lastNameHitnText}/>
+        <InputBox className="email" type="email" labelContent="Email" necessary={true} value={email} 
+                  onChange={(e) => setEmail(e.target.value)} onValidationChange={handleValidationChange}
+                  hitnText={emailNameHitnText}/>
+        <InputBox className="username" labelContent="Никнейм" necessary={true} value={username} 
+                  onChange={(e) => setUsername(e.target.value)} onValidationChange={handleValidationChange}
+                  hitnText={usernameNameHitnText}/>
+        <PasswordInputBox className="password" labelContent="Пароль" necessary={true} value={password} 
+                          onChange={setPassword} onValidationChange={handleValidationChange}
+                          hitnText={passwordNameHitnText}/>
+        <PasswordInputBox className="confirmPassword" labelContent="Введите пароль повторно" necessary={true} value={confirmPassword}
+                          onChange={setConfirmPassword} password={password} onValidationChange={handleValidationChange} 
+                          hitnText={confirmPasswordNameHitnText}/>
+        <p><span style={{ color: 'red' }}>*</span>- поля обязательные для заполнения</p>
         <div className="registration-button-wrapper">
-          <Button btnStyle='link' label='Register' action={handleSubmit} />
+          <Button btnStyle='link' label='Регистрация' action={handleSubmit} />
         </div>
       </form>
       <RegistrationFormFooter />
@@ -108,3 +129,11 @@ const RegistrationForm = () => {
 export {
   RegistrationForm,
 }
+
+/*
+<EyePasswordButton passwordType={passwordType} onClick={passwordTypeToggle}/>
+        <InputBox className="password" type={passwordType} labelContent="Пароль" necessary={true} value={password} onChange={(e) => setPassword(e.target.value)} onValidationChange={handleValidationChange} />
+        <EyePasswordButton passwordType={passwordType} onClick={passwordTypeToggle}/>
+        <InputBox className="confirmPassword" type="password" labelContent="Введите пароль повторно" necessary={true} value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)} password={password} onValidationChange={handleValidationChange} />
+*/
