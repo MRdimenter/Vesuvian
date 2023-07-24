@@ -20,14 +20,14 @@ function validateInput(id, value, password) {
       return (validator.isLength(value, { min: 4, max: 20 }) && value.match(usernameExp));
     case "password":
       const strongPasswordOptions = {
-        minLength: 4,
+        minLength: 8,
         minLowercase: 1,
         minUppercase: 1,
         minNumbers: 1,
         minSymbols: 1,
         returnScore: false,
       }
-      return validator.isStrongPassword(value, strongPasswordOptions);
+      return (validator.isStrongPassword(value, strongPasswordOptions) && (value.length <= 128));
     case "confirmPassword":
       return (password === value);
     default:
