@@ -23,17 +23,11 @@ import ru.vesuvian.service.customer.service.CustomerService;
 @Tag(name = "Customer", description = "The Customer API")
 public class CustomerController {
     final CustomerService customerService;
-    @Value("${keycloak.authorization.password}")
-    String example;
-
-    @Value("${KEYCLOAK_USER_ADMIN_PASSWORD}")
-    String example2;
-
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
 
-
+    
     @Operation(summary = "View a list of available customers", description = "View a list of available customers")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful operation",
@@ -134,15 +128,5 @@ public class CustomerController {
             @RequestBody CustomerUpdateDto customerRegistrationDto
     ) {
         customerService.updateCustomer(customerRegistrationDto);
-    }
-
-    @GetMapping("/test")
-    public String test() {
-        return example;
-    }
-
-    @GetMapping("test2")
-    public String test2() {
-        return example2;
     }
 }
