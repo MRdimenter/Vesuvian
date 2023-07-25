@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.vesuvian.service.customer.dto.CustomerRegistrationDto;
@@ -22,6 +23,11 @@ import ru.vesuvian.service.customer.service.CustomerService;
 @Tag(name = "Customer", description = "The Customer API")
 public class CustomerController {
     final CustomerService customerService;
+    @Value("${keycloak.authorization.password}")
+    String example;
+
+    @Value("${KEYCLOAK_USER_ADMIN_PASSWORD}")
+    String example2;
 
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
@@ -128,5 +134,15 @@ public class CustomerController {
             @RequestBody CustomerUpdateDto customerRegistrationDto
     ) {
         customerService.updateCustomer(customerRegistrationDto);
+    }
+
+    @GetMapping("/test")
+    public String test() {
+        return example;
+    }
+
+    @GetMapping("test2")
+    public String test2() {
+        return example2;
     }
 }
