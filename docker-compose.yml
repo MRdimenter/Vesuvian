@@ -9,7 +9,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: ${KEYCLOAK_POSTGRES_PASSWORD}
       POSTGRES_DB: postgres
     healthcheck:
       test: pg_isready -d postgres
@@ -32,11 +32,11 @@ services:
     environment:
       KC_DB_URL: jdbc:postgresql://keycloak-postgres:5432/postgres
       KC_DB_USERNAME: postgres
-      KC_DB_PASSWORD: postgres
+      KC_DB_PASSWORD: ${KEYCLOAK_POSTGRES_PASSWORD}
       KC_DB_SCHEMA: public
       KC_FEATURES: preview
       KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
     ports:
       - "8282:8080"
     depends_on:
@@ -79,7 +79,7 @@ services:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
       - SPRING_DATASOURCE_URL=jdbc:postgresql://customer-postgres:5432/customers
       - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_DATASOURCE_PASSWORD=${CUSTOMER_POSTGRES_PASSWORD}
     depends_on:
       - eureka-server
     networks:
@@ -94,7 +94,7 @@ services:
     environment:
       - POSTGRES_DB=customers
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_PASSWORD=${CUSTOMER_POSTGRES_PASSWORD}
     volumes:
       - postgres_customer:/var/lib/postgresql/data
     networks:
@@ -107,6 +107,13 @@ services:
       - "8095:8095"
     networks:
       - vesuvian-network
+
+#  rabbitmq:
+#    image: rabbitmq:3.12.2-management-alpine
+#    container_name: rabbitmq
+#    ports:
+#      - 5672:5672 # Для коннекта с микросервисами
+#      - 15672:15672 # Админ панель
 
 volumes:
   postgres_data:
