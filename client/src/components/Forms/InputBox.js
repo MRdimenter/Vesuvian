@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { IconButton } from '../Button/Button';
 
 import './InputBox.scss';
+import { Icon } from '../Icon/Icon';
 
 function validateInput(id, value, password) {
   var alphaExp = /^[a-zA-Zа-яА-Я-\s]+$/;
@@ -66,7 +67,7 @@ const InputBox = ({ type = "text", className, labelContent, necessary, value, on
     <div className={`inputBox ${className}`}>
       <div className='inputBox-header'>
         <label className="form-label" htmlFor={className}>{labelContent} {necessary && star}</label>
-        <IconButton iconName={'interrogation-mark'} width='12' height='12' onClick={inputHintToggle}/>
+        <IconButton iconName={'interrogation-mark-in-circle'} width='12' height='12' onClick={inputHintToggle}/>
       </div>
       {showInputHint && <pre className='input-hint small-small-text'>{ hitnText }</pre>}
       <input className="form-input"
@@ -101,7 +102,17 @@ const PasswordInputBox = ({ className, labelContent, necessary, value, onChange,
   )
 }
 
+const SearchInput = () => {
+  return (
+    <div className="search-input">
+      <Icon iconName='loupe' width="25" height="25" />
+      <input type='text'  className='search-input-field btn-link-font' placeholder='Поиск'></input>
+    </div>
+  )
+}
+
 export {
   InputBox,
   PasswordInputBox,
+  SearchInput,
 }

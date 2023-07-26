@@ -16,6 +16,7 @@ import { RegistrationForm } from './components/Forms/RegistrationForm/Registrati
 import { ReLoginPage } from './components/ErrorPage/ReLoginPage';
 import { appendCurrentCustomerDataAction } from './store/actions/appendCurrentCustomerDataAction';
 import { CustomersPage } from './components/CustomersPage/CustomersPage';
+import { Cards, CardsPage } from './components/CardsPage/CardsPage';
 
 // TODO тестить на 3G:
 // форма логин остается открытой после нажатия на кнопку Вход -> добавить компонент "входим в аккаунт"
@@ -48,6 +49,7 @@ export const App = () => {
             <Route path='/errorPage' element={<ErrorPage />}></Route>
             <Route path='/reLoginPage' element={<ReLoginPage />}></Route>
             <Route path='/listItem' element={<CustomersPage />}></Route>
+            <Route path='/cards' element={<CardsPage />}></Route>
           </Routes>
         </div>
         <Footer />

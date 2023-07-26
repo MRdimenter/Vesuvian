@@ -1,15 +1,16 @@
-import { Link } from 'react-router-dom';
-
 import '../../common/styles/text.scss'
-import './button.scss';
+
+import { Link } from 'react-router-dom';
 import { Icon } from '../Icon/Icon';
+
+import './button.scss';
 
 /**
 * TODO Description
 **/
 
 const Button = ({ label = 'btn', btnStyle='link', link, action }) => {
-  const setStyle = `btn-link-font ${btnStyle ?? 'btn'}`;
+  const setStyle = `btn-link-font btn-link-font ${btnStyle ?? 'btn'}`;
   const setThemeDark = '';
 
   return (
@@ -24,9 +25,9 @@ const Button = ({ label = 'btn', btnStyle='link', link, action }) => {
   )
 }
 
-const IconButton = ({ iconName, width='20', height='20', onClick }) => {
+const IconButton = ({ iconName, width='20', height='20', onClick, disabled }) => {
   return (
-    <button onClick={onClick} className="icon-button" type="button">
+    <button onClick={onClick} className="icon-button" type="button" disabled={disabled}>
       <Icon iconName={iconName} width={width} height={height} />
     </button>
   )

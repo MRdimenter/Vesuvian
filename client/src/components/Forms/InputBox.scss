@@ -37,6 +37,30 @@
   }
 }
 
+.search-input {
+  margin-left: 50px;
+  width: 280px;
+  height: 40px;
+  border-radius: 7px;
+
+  background-color: $btn-green;
+
+  padding: 10px;
+  display: inline-flex;
+  align-items: center;
+
+  .search-input-field {
+    margin-left: 10px;
+    width: 300px;
+    border: 0;
+    background: transparent;
+  }
+
+  .search-input-field:focus {
+    outline: none;
+  }
+}
+
 // for small monitors
 @media (max-width: 1224px) {
 

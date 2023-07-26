@@ -1,15 +1,14 @@
+import { IconButton } from '../Button/Button'
+import './selectBar.scss'
+
 const SelectBar = ({currentPage, totalPages, handlePrevPage, handleNextPage}) => {
     return (
         <div className="pagination-buttons">
-            <button className="btn btn-primary" onClick={handlePrevPage} disabled={currentPage === 1} >
-                Предыдущая страница
-            </button>
-            <span className="mx-2">
-                Страница {currentPage} из {totalPages}
+            <IconButton iconName={'left-arrow'} width='50' height='50' onClick={handlePrevPage} disabled={currentPage === 1} />
+            <span className="small-text">
+                {currentPage}/{totalPages}
             </span>
-            <button className="btn btn-primary" onClick={handleNextPage} disabled={currentPage === totalPages} >
-                Следующая страница
-            </button>
+            <IconButton iconName={'right-arrow'} width='50' height='50' onClick={handleNextPage} disabled={currentPage === totalPages} />
         </div>
     )
 }

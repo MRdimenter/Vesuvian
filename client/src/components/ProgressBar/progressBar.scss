@@ -1,0 +1,53 @@
+@import '../../common/styles/color.scss';
+
+.progress-bar {
+  position: relative;
+  margin-top: 30px;
+
+  progress {
+    border: 0;
+    width: 1143px;
+    height: 25px;
+    border-radius: 10px;
+  
+    -moz-transform: scale(-1, -1);
+    -o-transform: scale(-1, -1);
+    -webkit-transform: scale(-1, -1);
+    transform: scale(-1, -1);
+  }
+  
+  progress::-webkit-progress-bar {
+    border: 0;
+    width: 1143px;
+    height: 25px;
+    border-radius: 10px;
+  
+    //background: $white-green;
+    background: linear-gradient(90deg, rgba(82, 170, 122) 0%, rgba(82, 170, 122, 0.54) 100%);
+  }
+  
+  progress::-webkit-progress-value {
+    border: 0;
+    width: 1143px;
+    height: 25px;
+    border-radius: 10px 0px 0px 10px;
+  
+    //background: linear-gradient(90deg, $light-light-green 0%, $white-green 150%);
+    background: $btn-green;
+  }
+  
+  progress::-moz-progress-bar {
+    border: 0;
+    width: 1143px;
+    height: 25px;
+    border-radius: 10px;
+  }
+
+  span {
+    color: white;
+    position: absolute;
+//    left: 50%;
+    margin-top: 4px;
+    margin-left: -20px;
+  }
+}

@@ -11,17 +11,6 @@
 
 .header {
   @include primary();
-  font-family: Nirmala UI;
-  font-size: 40px;
-  font-weight: 400;
-  letter-spacing: 0em;
-}
-
-.theme-dark {
-  .header {
-    border-radius: 2vh;
-    //background: $light-grey;
-  }
 }
 
 .Logo {
@@ -31,16 +20,21 @@
   font-size: 24px;
 }
 
-.theme-dark-green {
-  .header {
-    background-color: #204532;
-    box-shadow: 10px 5px 13px $shadow,  0px 0px 40px -7px $dark-dark-green inset;
+.header-nav {
+  flex-grow: 2;
+  
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  .customer-list {
+    margin-right: 20px;
   }
 }
 
-.Logo-green {
-  margin-left: 30px;
-  text-decoration: none;
-  color: #63ba5b;
-  font-size: 24px;
+.theme-dark {
+  .header {
+    border-radius: 2vh;
+    //background: $light-grey;
+  }
 }

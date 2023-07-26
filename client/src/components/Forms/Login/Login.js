@@ -19,7 +19,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [username, setUsername] = useState('user'); // TODO default state 'user' for testing
-  const [password, setPassword] = useState('user'); // TODO default state 'user' for testing
+  const [password, setPassword] = useState('useruserA1!'); // TODO default state 'user' for testing
 
   const [isWrongCredentials, setIsWrongCredentials] = useState(false);
   const [isInputsValidated, setIsInputsValidated] = useState(false);
