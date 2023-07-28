@@ -1,0 +1,26 @@
+.gui-switch { 
+  display: flex;
+  align-items: center;
+  gap: 2ch;
+  justify-content: space-between;
+}
+
+.gui-switch > input {
+  appearance: none;
+
+  //inline-size: 5px;
+  //block-size: 5px;
+  //padding: 5px;
+
+  //flex-shrink: 0;
+  //display: grid;
+  //align-items: center;
+  //grid: 1fr / 1fr;
+}
+
+.gui-switch > input::before {
+  content: "";
+  grid-area: 5;
+  inline-size: 5px;
+  block-size: 5px;
+}
