@@ -7,6 +7,7 @@
         <groupId>ru.vesuvian</groupId>
         <artifactId>Vesuvian</artifactId>
         <version>1.0</version>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
 
     <artifactId>amqp</artifactId>
@@ -17,4 +18,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+    </dependencies>
 </project>
