@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DropDown } from '../../../../DropDown/DropDown';
 import { ToggleSwitch } from '../../../../ToggleSwitch/ToggleSwitch ';
 import { IconButton } from '../../../../Button/Button';
@@ -6,16 +6,20 @@ import { IconButton } from '../../../../Button/Button';
 import './settingsDropDown.scss'
 
 const SettingsDropDown = ({ onChange }) => {
+  const [settingsToggle, setSettingsToggle] = useState(true);
   const [checked, setChecked] = useState(false);
-  const [settingsToggle, setSettingsToggle] = useState(false);
 
+  //<IconButton iconName={'gear-wheel'} width='30' height='30' onClick={() => setSettingsToggle((prev) => !prev)} />
   return (
-    <div className='settings-drop-down'>
-      <IconButton iconName={'gear-wheel'} width='30' height='30' onClick={() => setSettingsToggle((prev) => !prev)} />
+    <div className='settings-drop-down-wrapper'>
+      <div className="settings-toggle">
+        <IconButton iconName={'gear-wheel'} width='30' height='30' onClick={() => setSettingsToggle((prev) => !prev)} />
+      </div>
+      
       {
         settingsToggle ?
-        <div className='drop-down'>
-          <DropDown width={280} height={200} top={0} paddingTop={40}>
+        <div className='settings-drop-down'>
+          <DropDown width={280} padding={15} top={0} paddingTop={40}>
             <ul className='settings-list'>
               <li className='settings-list-item'>
                 Развернуть карточки

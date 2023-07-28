@@ -1,9 +1,10 @@
 import './dropDown.scss';
 
-const DropDown = ({width, height, paddingTop, children}) => {
+const DropDown = ({width, padding, paddingTop, children}) => {
   const dropDownStyles = {
     width: `${width}px`,
-    height: `${height}px`,
+    minHeight: '20px',
+    padding: `${padding}px`,
     borderRadius: '10px',
 
     color: 'black',

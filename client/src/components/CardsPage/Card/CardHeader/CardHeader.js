@@ -3,6 +3,7 @@ import { IconButton } from '../../../Button/Button';
 import { SettingsDropDown } from './SettingsDropDown/SettingsDropDown';
 
 import './cardHeader.scss';
+import { DescriptionDropDown } from './DescriptionDropDown/DescriptionDropDown';
 
 const CardHeader = () => {
   const [checked, setChecked] = useState(false);
@@ -18,7 +19,7 @@ const CardHeader = () => {
   return (
     <div className="card-header">
       <SettingsDropDown />
-      <IconButton iconName={'interrogation-mark'} width='30' height='30' onClick={inputHintToggle} />
+      <DescriptionDropDown />
     </div>
   )
 }
