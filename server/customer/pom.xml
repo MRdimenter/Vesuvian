@@ -77,6 +77,18 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- Rabbit MQ configuration -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+        <!-- Advanced message queuing protocol -->
+        <dependency>
+            <groupId>ru.vesuvian</groupId>
+            <artifactId>amqp</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>
