@@ -1,4 +1,4 @@
-package ru.vesuvian.config;
+package ru.vesuvian.amqp;
 
 import lombok.AllArgsConstructor;
 import org.springframework.amqp.core.AmqpTemplate;
