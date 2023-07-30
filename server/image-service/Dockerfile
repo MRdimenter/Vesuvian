@@ -12,7 +12,7 @@ ARG JAR_FILE=target/image-service-1.0.jar
 # Set the environment variables
 ENV AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
 ENV AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-
+ENV RABBITMQ_USER_ADMIN_PASSWORD=$RABBITMQ_USER_ADMIN_PASSWORD
 # Add the jar file to the container
 ADD ${JAR_FILE} app.jar
 
