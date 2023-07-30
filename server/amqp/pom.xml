@@ -11,6 +11,7 @@
     </parent>
 
     <artifactId>amqp</artifactId>
+    <packaging>jar</packaging>
 
     <properties>
         <maven.compiler.source>19</maven.compiler.source>

@@ -25,6 +25,10 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
+      - name: Build amqp with Maven
+        working-directory: ./amqp
+        run: mvn -B install --file pom.xml
+
       - name: Build with Maven
         working-directory: ./    # set working directory to project root
         run: mvn -B package --file pom.xml
