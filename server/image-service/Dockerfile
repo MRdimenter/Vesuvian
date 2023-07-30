@@ -7,6 +7,7 @@ EXPOSE 8095
 # Add the following build arguments
 ARG AWS_ACCESS_KEY_ID
 ARG AWS_SECRET_ACCESS_KEY
+ARG RABBITMQ_USER_ADMIN_PASSWORD
 ARG JAR_FILE=target/image-service-1.0.jar
 
 # Set the environment variables
