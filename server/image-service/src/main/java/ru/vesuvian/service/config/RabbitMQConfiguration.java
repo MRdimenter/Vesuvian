@@ -12,23 +12,23 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @Getter
 public class RabbitMQConfiguration {
-    @Value("${rabbitmq.exchanges.internal}")
-    private String internalExchange;
+    @Value("${rabbitmq.exchanges.customer-events}")
+    private String customerEventsExchange;
 
-    @Value("${rabbitmq.queues.notification}")
-    private String notificationQueue;
+    @Value("${rabbitmq.queues.image-service-new-customer}")
+    private String newCustomerQueue;
 
-    @Value("${rabbitmq.routing-keys.internal-notification}")
-    private String internalNotificationRoutingKeys;
+    @Value("${rabbitmq.routing-keys.new-customer-event}")
+    private String newCustomerEventRoutingKeys;
 
     @Bean
     public TopicExchange internalTopicExchange() {
-        return new TopicExchange(this.internalExchange);
+        return new TopicExchange(this.customerEventsExchange);
     }
 
     @Bean
     public Queue notificationQueue() {
-        return new Queue(this.notificationQueue);
+        return new Queue(this.newCustomerQueue);
     }
 
     @Bean
@@ -36,6 +36,6 @@ public class RabbitMQConfiguration {
         return BindingBuilder
                 .bind(notificationQueue())
                 .to(internalTopicExchange())
-                .with(this.internalNotificationRoutingKeys);
+                .with(this.newCustomerEventRoutingKeys);
     }
 }

@@ -1,18 +1,43 @@
+# Server configuration
 server:
   port: 8095
   ssl:
     enabled: false # настройка для Spring что бы он использовал SSL
 
-
+# Spring configuration
 spring:
   application:
     name: imageService
   config:
     import: optional:file:.env[.properties]
+  rabbitmq:
+    addresses: rabbitmq:5672
+    #addresses: localhost:5672
+    username: admin
+    password: ${RABBITMQ_USER_ADMIN_PASSWORD}
 
+# Yandex cloud configuration
 yandex-cloud:
   bucket-name: vesuvian-images
   buckets:
     vesuvian-images:
       client:
         design-elements: client/design-elements/
+
+# Eureka configuration
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka/
+      #defaultZone: http://localhost:8761/eureka/
+
+# RabbitMQ configuration
+rabbitmq:
+  exchanges:
+    customer-events: customer.events.exchange
+  queues:
+    image-service-new-customer: image.service.new-customer.queue
+  routing-keys:
+    new-customer-event: new.customer.event

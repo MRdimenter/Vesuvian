@@ -18,7 +18,6 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/images/design_elements")
 public class DesignElementsController {
-
     private final DesignElementsService imageService;
 
     public DesignElementsController(DesignElementsService imageService) {

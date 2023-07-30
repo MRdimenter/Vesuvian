@@ -8,6 +8,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import ru.vesuvian.amqp.RabbitMQMessageProducer;
 import ru.vesuvian.service.customer.dto.CustomerRegistrationDto;
 import ru.vesuvian.service.customer.dto.CustomerRepresentationDto;
 import ru.vesuvian.service.customer.dto.CustomerUpdateDto;
@@ -25,7 +26,7 @@ import java.util.Optional;
 public class CustomerService {
     final KeycloakCustomerService keycloakCustomerService;
     final PostgresCustomerService postgresCustomerService;
-
+    final RabbitMQMessageProducer rabbitMQMessageProducer;
     @Value("${application.default.page}")
     int defaultPage;
     @Value("${application.default.size}")
@@ -49,7 +50,10 @@ public class CustomerService {
     public void createCustomer(CustomerRegistrationDto customer) {
         String userId = keycloakCustomerService.createCustomerInKeycloak(customer);
         postgresCustomerService.saveCustomerInDatabase(customer, userId);
-
+        rabbitMQMessageProducer.publish(
+                customer,
+                "customer.events.exchange",
+                "new.customer.event");
     }
 
     public void updateCustomer(CustomerUpdateDto customerDto) {

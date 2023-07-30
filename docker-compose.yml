@@ -85,7 +85,6 @@ services:
     networks:
       - vesuvian-network
 
-
   customer-postgres:
     image: postgres:15.2
     container_name: customer_postgres_service
@@ -108,16 +107,37 @@ services:
     networks:
       - vesuvian-network
 
-#  rabbitmq:
-#    image: rabbitmq:3.12.2-management-alpine
-#    container_name: rabbitmq
+#  image-postgres:
+#    image: postgres:15.2
+#    container_name: image_postgres_service
 #    ports:
-#      - 5672:5672 # Для коннекта с микросервисами
-#      - 15672:15672 # Админ панель
+#      - "5430:5432"
+#    environment:
+#      - POSTGRES_DB=image
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=${CUSTOMER_POSTGRES_PASSWORD}
+#    volumes:
+#      - postgres_image:/var/lib/postgresql/data
+#    networks:
+#      - vesuvian-network
+
+  rabbitmq:
+    image: rabbitmq:3.12.2-management-alpine
+    container_name: rabbitmq
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq/mnesia
+    ports:
+      - 5672:5672 # connect to microservices
+      - 15672:15672 # admin panel
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_USER_ADMIN_PASSWORD}
+
 
 volumes:
   postgres_data:
   postgres_customer:
+  rabbitmq:
 
 networks:
   vesuvian-network:
