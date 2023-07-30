@@ -7,7 +7,7 @@ import ru.vesuvian.service.service.AvatarProfileService;
 
 @Component
 @AllArgsConstructor
-public class ImageConsumer {
+public class Consumer {
     private final AvatarProfileService avatarProfileService;
 
     @RabbitListener(queues = "${rabbitmq.queues.image-service-new-customer}")
