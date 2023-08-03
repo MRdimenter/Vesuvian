@@ -67,6 +67,14 @@ eureka:
      defaultZone: http://eureka-server:8761/eureka/
      #defaultZone: http://localhost:8761/eureka/
 
+# RabbitMQ configuration
+rabbitmq:
+  exchanges:
+    customer-events: customer.events.exchange
+  queues:
+    image-service-new-customer: image.service.new-customer.queue
+  routing-keys:
+    new-customer-event: new.customer.event
 
 application:
   default:

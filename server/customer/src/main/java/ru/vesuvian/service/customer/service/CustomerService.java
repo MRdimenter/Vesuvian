@@ -8,11 +8,13 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import ru.vesuvian.amqp.message.CustomerUUID;
-import ru.vesuvian.amqp.RabbitMQMessageProducer;
-import ru.vesuvian.service.customer.dto.*;
+import ru.vesuvian.service.customer.dto.CustomerRegistrationDto;
+import ru.vesuvian.service.customer.dto.CustomerRepresentationDto;
+import ru.vesuvian.service.customer.dto.CustomerUpdateDto;
+import ru.vesuvian.service.customer.dto.PageCustomerRepresentationDto;
 import ru.vesuvian.service.customer.keycloak.KeycloakCustomerService;
 import ru.vesuvian.service.customer.postgres.PostgresCustomerService;
+import ru.vesuvian.service.customer.rabbitmq.CustomerRegistrationEventPublisher;
 
 import java.util.Optional;
 
@@ -24,7 +26,7 @@ import java.util.Optional;
 public class CustomerService {
     final KeycloakCustomerService keycloakCustomerService;
     final PostgresCustomerService postgresCustomerService;
-    final RabbitMQMessageProducer rabbitMQMessageProducer;
+    final CustomerRegistrationEventPublisher customerRegistrationEventPublisher;
     @Value("${application.default.page}")
     int defaultPage;
     @Value("${application.default.size}")
@@ -48,14 +50,7 @@ public class CustomerService {
     public void createCustomer(CustomerRegistrationDto customer) {
         String customerUUID = keycloakCustomerService.createCustomerInKeycloak(customer);
         postgresCustomerService.saveCustomerInDatabase(customer, customerUUID);
-
-        rabbitMQMessageProducer.publish(
-                CustomerUUID
-                        .builder()
-                        .UUID(customerUUID)
-                        .build(),
-                "customer.events.exchange",
-                "new.customer.event");
+        customerRegistrationEventPublisher.publishRegistrationEvent(customerUUID);
     }
 
     public void updateCustomer(CustomerUpdateDto customerDto) {
