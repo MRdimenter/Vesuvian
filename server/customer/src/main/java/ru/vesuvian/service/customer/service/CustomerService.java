@@ -8,11 +8,9 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import ru.vesuvian.amqp.objects.CustomerUUID;
 import ru.vesuvian.amqp.RabbitMQMessageProducer;
-import ru.vesuvian.service.customer.dto.CustomerRegistrationDto;
-import ru.vesuvian.service.customer.dto.CustomerRepresentationDto;
-import ru.vesuvian.service.customer.dto.CustomerUpdateDto;
-import ru.vesuvian.service.customer.dto.PageCustomerRepresentationDto;
+import ru.vesuvian.service.customer.dto.*;
 import ru.vesuvian.service.customer.keycloak.KeycloakCustomerService;
 import ru.vesuvian.service.customer.postgres.PostgresCustomerService;
 
@@ -48,10 +46,11 @@ public class CustomerService {
 
     @Transactional
     public void createCustomer(CustomerRegistrationDto customer) {
-        String userId = keycloakCustomerService.createCustomerInKeycloak(customer);
-        postgresCustomerService.saveCustomerInDatabase(customer, userId);
+        String customerUUID = keycloakCustomerService.createCustomerInKeycloak(customer);
+        postgresCustomerService.saveCustomerInDatabase(customer, customerUUID);
+
         rabbitMQMessageProducer.publish(
-                customer,
+                new CustomerUUID(customerUUID),
                 "customer.events.exchange",
                 "new.customer.event");
     }

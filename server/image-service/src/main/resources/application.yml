@@ -10,6 +10,19 @@ spring:
     name: imageService
   config:
     import: optional:file:.env[.properties]
+  datasource:
+    url: jdbc:postgresql://images-postgres:5430/images
+    #url: jdbc:postgresql://localhost:5430/images
+    username: postgres
+    password: ${IMAGES_POSTGRES_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      format_sql: true
+      show-sql: true
   rabbitmq:
     addresses: rabbitmq:5672
     #addresses: localhost:5672
