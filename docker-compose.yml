@@ -111,7 +111,7 @@ services:
     image: postgres:15.2
     container_name: images_postgres_service
     ports:
-      - "5430:5432"
+      - "5435:5430"
     environment:
       - POSTGRES_DB=images
       - POSTGRES_USER=postgres
