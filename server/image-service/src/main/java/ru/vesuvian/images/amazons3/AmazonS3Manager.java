@@ -1,4 +1,4 @@
-package ru.vesuvian.service.amazons3;
+package ru.vesuvian.images.amazons3;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;

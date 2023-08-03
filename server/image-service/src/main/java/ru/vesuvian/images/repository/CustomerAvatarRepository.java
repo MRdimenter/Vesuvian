@@ -1,9 +1,9 @@
-package ru.vesuvian.service.repository;
+package ru.vesuvian.images.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import ru.vesuvian.service.entity.CustomerAvatar;
+import ru.vesuvian.images.entity.CustomerAvatar;
 
 import java.util.Optional;
 

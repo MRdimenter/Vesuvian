@@ -1,4 +1,4 @@
-package ru.vesuvian.service.controller;
+package ru.vesuvian.images.controller;
 
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.vesuvian.service.service.AvatarProfileService;
+import ru.vesuvian.images.service.AvatarProfileService;
 
 @Tag(name = "Customer Avatar Controller", description = "Controller for handling user avatars")
 @RestController

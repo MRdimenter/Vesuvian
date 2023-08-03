@@ -1,4 +1,4 @@
-package ru.vesuvian.service.config;
+package ru.vesuvian.images.config;
 
 import lombok.Getter;
 import org.springframework.amqp.core.Binding;

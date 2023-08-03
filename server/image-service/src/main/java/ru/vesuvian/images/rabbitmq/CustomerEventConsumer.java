@@ -1,10 +1,10 @@
-package ru.vesuvian.service.rabbitmq;
+package ru.vesuvian.images.rabbitmq;
 
 import lombok.AllArgsConstructor;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 import ru.vesuvian.amqp.objects.CustomerUUID;
-import ru.vesuvian.service.service.AvatarProfileService;
+import ru.vesuvian.images.service.AvatarProfileService;
 
 @Component
 @AllArgsConstructor

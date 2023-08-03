@@ -1,4 +1,4 @@
-package ru.vesuvian.service.service;
+package ru.vesuvian.images.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import lombok.AccessLevel;
@@ -7,7 +7,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
-import ru.vesuvian.service.amazons3.AmazonS3Manager;
+import ru.vesuvian.images.amazons3.AmazonS3Manager;
 
 import java.util.List;
 

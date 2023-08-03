@@ -1,4 +1,4 @@
-package ru.vesuvian.service.entity;
+package ru.vesuvian.images.entity;
 
 
 import jakarta.persistence.*;

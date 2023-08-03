@@ -1,4 +1,4 @@
-package ru.vesuvian.service.config;
+package ru.vesuvian.images.config;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;

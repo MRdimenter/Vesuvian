@@ -15,7 +15,7 @@
     <description>image service</description>
 
     <properties>
-        <start-class>ru.vesuvian.service.ImageApplication</start-class>
+        <start-class>ru.vesuvian.images.ImageApplication</start-class>
         <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -74,7 +74,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>ru.vesuvian.service.ImageApplication</mainClass>
+                    <mainClass>ru.vesuvian.images.ImageApplication</mainClass>
                     <layout>JAR</layout>
                 </configuration>
                 <executions>
