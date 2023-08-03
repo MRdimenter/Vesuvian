@@ -1,89 +1,89 @@
 version: "3.9"
 services:
-#  keycloak-postgres:
-#    image: postgres:15.2
-#    container_name: keycloak_postgres_service_test
-#    user: postgres
-#    restart: on-failure
-#    volumes:
-#      - postgres_data:/var/lib/postgresql/data
-#    environment:
-#      POSTGRES_USER: postgres
-#      POSTGRES_PASSWORD: ${KEYCLOAK_POSTGRES_PASSWORD}
-#      POSTGRES_DB: postgres
-#    healthcheck:
-#      test: pg_isready -d postgres
-#      interval: 10s
-#      timeout: 5s
-#      retries: 3
-#      start_period: 5s
-#    ports:
-#      - "5432:5432"
-#    deploy:
-#      resources:
-#        limits:
-#          memory: 3072M
-#
-#  keycloak:
-#    image: quay.io/keycloak/keycloak:21.1.2
-#    container_name: keycloak
-#    command:
-#      - start --db postgres --hostname-strict-https false --hostname-strict false --proxy edge --http-enabled true --spi-user-profile-legacy-user-profile-read-only-attributes *_RES_ACCESS_MODE
-#    environment:
-#      KC_DB_URL: jdbc:postgresql://keycloak-postgres:5432/postgres
-#      KC_DB_USERNAME: postgres
-#      KC_DB_PASSWORD: ${KEYCLOAK_POSTGRES_PASSWORD}
-#      KC_DB_SCHEMA: public
-#      KC_FEATURES: preview
-#      KEYCLOAK_ADMIN: admin
-#      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
-#    ports:
-#      - "8282:8080"
-#    depends_on:
-#      keycloak-postgres:
-#        condition: service_healthy
-#    healthcheck:
-#      test: [ "CMD", "curl", "-f", "http://0.0.0.0:8080/realms/master" ]
-#      start_period: 10s
-#      interval: 30s
-#      retries: 3
-#      timeout: 5s
-#
-#
-#  eureka-server:
-#    image: ghcr.io/mrdimenter/eureka-server:latest
-#    container_name: eureka
-#    ports:
-#      - "8761:8761"
-#    networks:
-#      - vesuvian-network
-#
-#  apigateway:
-#    image: ghcr.io/mrdimenter/apigateway:latest
-#    container_name: apigateway
-#    ports:
-#      - "8083:8083"
-#    environment:
-#      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
-#    depends_on:
-#      - eureka-server
-#    networks:
-#      - vesuvian-network
-#
-#  customer:
-#    image: ghcr.io/mrdimenter/customer:latest
-#    container_name: customer
-#    ports:
-#      - "8090:8090"
-#    environment:
-#      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
-#      - SPRING_DATASOURCE_URL=jdbc:postgresql://customer-postgres:5432/customers
-#      - SPRING_DATASOURCE_USERNAME=postgres
-#      - SPRING_DATASOURCE_PASSWORD=${CUSTOMER_POSTGRES_PASSWORD}
-#    depends_on:
-#      - eureka-server
-#    networks:
-#      - vesuvian-network
+  keycloak-postgres:
+    image: postgres:15.2
+    container_name: keycloak_postgres_service_test
+    user: postgres
+    restart: on-failure
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${KEYCLOAK_POSTGRES_PASSWORD}
+      POSTGRES_DB: postgres
+    healthcheck:
+      test: pg_isready -d postgres
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    ports:
+      - "5432:5432"
+    deploy:
+      resources:
+        limits:
+          memory: 3072M
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:21.1.2
+    container_name: keycloak
+    command:
+      - start --db postgres --hostname-strict-https false --hostname-strict false --proxy edge --http-enabled true --spi-user-profile-legacy-user-profile-read-only-attributes *_RES_ACCESS_MODE
+    environment:
+      KC_DB_URL: jdbc:postgresql://keycloak-postgres:5432/postgres
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: ${KEYCLOAK_POSTGRES_PASSWORD}
+      KC_DB_SCHEMA: public
+      KC_FEATURES: preview
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+    ports:
+      - "8282:8080"
+    depends_on:
+      keycloak-postgres:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://0.0.0.0:8080/realms/master" ]
+      start_period: 10s
+      interval: 30s
+      retries: 3
+      timeout: 5s
+
+
+  eureka-server:
+    image: ghcr.io/mrdimenter/eureka-server:latest
+    container_name: eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - vesuvian-network
+
+  apigateway:
+    image: ghcr.io/mrdimenter/apigateway:latest
+    container_name: apigateway
+    ports:
+      - "8083:8083"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+    depends_on:
+      - eureka-server
+    networks:
+      - vesuvian-network
+
+  customer:
+    image: ghcr.io/mrdimenter/customer:latest
+    container_name: customer
+    ports:
+      - "8090:8090"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://customer-postgres:5432/customers
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=${CUSTOMER_POSTGRES_PASSWORD}
+    depends_on:
+      - eureka-server
+    networks:
+      - vesuvian-network
 
   customer-postgres:
     image: postgres:15.2
@@ -99,13 +99,13 @@ services:
     networks:
       - vesuvian-network
 
-#  image-service:
-#    image: ghcr.io/mrdimenter/image-service:latest
-#    container_name: image-service
-#    ports:
-#      - "8095:8095"
-#    networks:
-#      - vesuvian-network
+  image-service:
+    image: ghcr.io/mrdimenter/image-service:latest
+    container_name: image-service
+    ports:
+      - "8095:8095"
+    networks:
+      - vesuvian-network
 
   images-postgres:
     image: postgres:15.2
