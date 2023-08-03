@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import ru.vesuvian.amqp.objects.CustomerUUID;
+import ru.vesuvian.amqp.message.CustomerUUID;
 import ru.vesuvian.amqp.RabbitMQMessageProducer;
 import ru.vesuvian.service.customer.dto.*;
 import ru.vesuvian.service.customer.keycloak.KeycloakCustomerService;
@@ -50,7 +50,10 @@ public class CustomerService {
         postgresCustomerService.saveCustomerInDatabase(customer, customerUUID);
 
         rabbitMQMessageProducer.publish(
-                new CustomerUUID(customerUUID),
+                CustomerUUID
+                        .builder()
+                        .UUID(customerUUID)
+                        .build(),
                 "customer.events.exchange",
                 "new.customer.event");
     }
