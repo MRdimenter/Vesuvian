@@ -11,7 +11,7 @@ spring:
   config:
     import: optional:file:.env[.properties]
   datasource:
-    url: jdbc:postgresql://images-postgres:5430/images
+    url: jdbc:postgresql://images-postgres:5432/images
     #url: jdbc:postgresql://localhost:5430/images
     username: postgres
     password: ${IMAGES_POSTGRES_PASSWORD}
