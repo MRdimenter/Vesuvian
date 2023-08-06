@@ -1,17 +1,26 @@
-import { useEffect, useState } from 'react';
-import { SelectBar } from '../CustomersPage/SelectBar';
-import { Card } from './Card/Card';
+import { useState } from 'react';
 import { CardsPageHeader } from './CardsPageHeader/CardsPageHeader';
-import { CongratulationMessage } from './CongratulationMessage/CongratulationMessage.';
+import { CardsPageContent } from './CardsPageContent/CardsPageContent';
 
 import './cardsPage.scss';
 
-const content = 'Hello';
 const cardsInCollection = 3;
+const collectionInfo = {
+  cardsInCollection: 3,
+}
+
+//TODO: временная заглушка
+const content = {
+  frontSide: {
+    text: 'Hello'
+  },
+  backSide: {
+    text: 'Привет'
+  }
+}
 
 const CardsPage = () => {
   const [currentPage, setCurrentPage] = useState(2);
-  const [isComleteCollection, setIsComleteCollection] = useState(false);
 
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
@@ -21,36 +30,12 @@ const CardsPage = () => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, cardsInCollection));
   };
 
-  useEffect(() => {
-    if (currentPage === cardsInCollection) {
-      setIsComleteCollection(true);
-    }
-  },[currentPage])
-
   return (
     <div className='cards-page'>
-      <CardsPageHeader currentPage={currentPage} cardsInCollection={cardsInCollection} />
+      <CardsPageHeader currentPage={currentPage} cardsInCollection={collectionInfo.cardsInCollection} />
       <div className="cards-page-body">
-        {
-          !isComleteCollection ? <>
-            <Card content={content}
-                  currentPage={currentPage}
-                  pages={cardsInCollection}
-                  setCurrentPage={setCurrentPage}
-                  perPage={1} />
-            <div className='select-bar'>
-              <SelectBar  currentPage={currentPage}
-                          totalPages={cardsInCollection}
-                          handlePrevPage={handlePrevPage}
-                          handleNextPage={handleNextPage} />
-            </div>
-          </> : 
-          <CongratulationMessage />
-        }
-
+        <CardsPageContent content={content} collectionInfo={collectionInfo} currentPage={currentPage} handlePrevPage={handlePrevPage} handleNextPage={handleNextPage} />
       </div>
-      
-      
     </div>
   )
 }

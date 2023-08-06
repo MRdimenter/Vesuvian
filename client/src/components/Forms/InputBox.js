@@ -7,8 +7,8 @@ import { Icon } from '../Icon/Icon';
 import './InputBox.scss';
 
 function validateInput(id, value, password) {
-  var alphaExp = /^[a-zA-Zа-яА-Я-\s]+$/;
-  var usernameExp = /^[a-zA-Zа-яА-Я1-9_]+$/;
+  const alphaExp = /^[a-zA-Zа-яА-Я-\s]+$/;
+  const usernameExp = /^[a-zA-Z1-9_]+$/;
 
   switch (id) {
     case "firstName":

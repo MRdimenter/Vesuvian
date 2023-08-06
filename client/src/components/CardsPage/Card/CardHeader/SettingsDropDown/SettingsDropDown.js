@@ -1,23 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { DropDown } from '../../../../DropDown/DropDown';
 import { ToggleSwitch } from '../../../../ToggleSwitch/ToggleSwitch ';
 import { IconButton } from '../../../../Button/Button';
 
 import './settingsDropDown.scss'
 
-const SettingsDropDown = ({ onChange }) => {
-  const [settingsToggle, setSettingsToggle] = useState(true);
+const SettingsDropDown = () => {
+  const [settingsShow, setSettingsShow] = useState(false);
   const [checked, setChecked] = useState(false);
+  
+  const settingsToggle = (e) => {
+    e.stopPropagation();
+    setSettingsShow((prev) => !prev);
+  };
 
-  //<IconButton iconName={'gear-wheel'} width='30' height='30' onClick={() => setSettingsToggle((prev) => !prev)} />
   return (
     <div className='settings-drop-down-wrapper'>
       <div className="settings-toggle">
-        <IconButton iconName={'gear-wheel'} width='30' height='30' onClick={() => setSettingsToggle((prev) => !prev)} />
+        <IconButton iconName={'gear-wheel'} width='30' height='30' onClick={(e) => settingsToggle(e)} />
       </div>
       
       {
-        settingsToggle ?
+        settingsShow ?
         <div className='settings-drop-down'>
           <DropDown width={280} padding={15} top={0} paddingTop={40}>
             <ul className='settings-list'>
