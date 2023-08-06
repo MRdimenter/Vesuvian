@@ -1,6 +1,5 @@
-package ru.vesuvian.service.service;
+package ru.vesuvian.images.service;
 
-import com.amazonaws.services.s3.model.*;
 import org.springframework.beans.factory.annotation.Value;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -8,10 +7,9 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
-import ru.vesuvian.service.amazons3.AmazonS3Manager;
+import ru.vesuvian.images.amazons3.AmazonS3Manager;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -27,7 +25,7 @@ public class DesignElementsService {
     }
 
     public Resource getDesignElementByKey(String folder, String fileName) {
-        return amazonS3Manager.getElementByKey(getFullPathDesignElements(folder), fileName);
+        return amazonS3Manager.getElementByPathAndFileName(getFullPathDesignElements(folder), fileName);
     }
 
     public String getFullPathDesignElements(String folder) {

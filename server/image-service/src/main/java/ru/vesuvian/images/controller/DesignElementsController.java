@@ -1,4 +1,4 @@
-package ru.vesuvian.service.controller;
+package ru.vesuvian.images.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -11,14 +11,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.vesuvian.service.service.DesignElementsService;
+import ru.vesuvian.images.service.DesignElementsService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/images/design_elements")
 public class DesignElementsController {
-
     private final DesignElementsService imageService;
 
     public DesignElementsController(DesignElementsService imageService) {

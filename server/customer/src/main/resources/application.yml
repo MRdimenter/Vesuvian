@@ -1,9 +1,10 @@
+# Server configuration
 server:
   port: 8090
   ssl:
     enabled: false # настройка для Spring что бы он использовал SSL
 
-
+# Spring configuration
 spring:
   application:
     name: customer
@@ -16,7 +17,7 @@ spring:
           jwk-set-uri: http://212.113.120.198:8282/realms/dev/protocol/openid-connect/certs # ссылка на сертификаты authserver для проверки целостности access token
   datasource:
     url: jdbc:postgresql://customer-postgres:5432/customers
-#   url: jdbc:postgresql://localhost:5435/customers
+    #url: jdbc:postgresql://localhost:5435/customers
     username: postgres
     password: ${CUSTOMER_POSTGRES_PASSWORD}
   jpa:
@@ -27,8 +28,13 @@ spring:
       dialect: org.hibernate.dialect.PostgreSQLDialect
       format_sql: true
       show-sql: true
+  rabbitmq:
+    addresses: rabbitmq:5672
+    #addresses: localhost:5672
+    username: admin
+    password: ${RABBITMQ_USER_ADMIN_PASSWORD}
 
-
+# Keycloak configuration
 keycloak:
   realm: dev
   auth-server-url: http://212.113.120.198:8282/auth
@@ -42,12 +48,7 @@ keycloak:
 
 clientURL: http://localhost:3000 # тестовый порт REACT
 
-application:
-  default:
-    page: 10
-    size: 10
-
-
+# Swagger configuration
 springdoc:
   swagger-ui:
     oauth:
@@ -57,7 +58,7 @@ springdoc:
 #  api-docs:
 #    path: /swagger/v1/customers
 
-
+# Eureka configuration
 eureka:
   client:
     fetch-registry: true
@@ -65,3 +66,17 @@ eureka:
     service-url:
      defaultZone: http://eureka-server:8761/eureka/
      #defaultZone: http://localhost:8761/eureka/
+
+# RabbitMQ configuration
+rabbitmq:
+  exchanges:
+    customer-events: customer.events.exchange
+  queues:
+    image-service-new-customer: image.service.new-customer.queue
+  routing-keys:
+    new-customer-event: new.customer.event
+
+application:
+  default:
+    page: 10
+    size: 10

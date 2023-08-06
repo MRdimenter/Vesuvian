@@ -14,6 +14,7 @@ import ru.vesuvian.service.customer.dto.CustomerUpdateDto;
 import ru.vesuvian.service.customer.dto.PageCustomerRepresentationDto;
 import ru.vesuvian.service.customer.keycloak.KeycloakCustomerService;
 import ru.vesuvian.service.customer.postgres.PostgresCustomerService;
+import ru.vesuvian.service.customer.rabbitmq.CustomerRegistrationEventPublisher;
 
 import java.util.Optional;
 
@@ -25,7 +26,7 @@ import java.util.Optional;
 public class CustomerService {
     final KeycloakCustomerService keycloakCustomerService;
     final PostgresCustomerService postgresCustomerService;
-
+    final CustomerRegistrationEventPublisher customerRegistrationEventPublisher;
     @Value("${application.default.page}")
     int defaultPage;
     @Value("${application.default.size}")
@@ -47,9 +48,9 @@ public class CustomerService {
 
     @Transactional
     public void createCustomer(CustomerRegistrationDto customer) {
-        String userId = keycloakCustomerService.createCustomerInKeycloak(customer);
-        postgresCustomerService.saveCustomerInDatabase(customer, userId);
-
+        String customerUUID = keycloakCustomerService.createCustomerInKeycloak(customer);
+        postgresCustomerService.saveCustomerInDatabase(customer, customerUUID);
+        customerRegistrationEventPublisher.publishRegistrationEvent(customerUUID);
     }
 
     public void updateCustomer(CustomerUpdateDto customerDto) {
