@@ -2,13 +2,13 @@ import validator from 'validator';
 import { EyePasswordButton } from './RegistrationForm/EyePasswordButton/EyePasswordButton';
 import { useState } from 'react';
 import { IconButton } from '../Button/Button';
-
-import './InputBox.scss';
 import { Icon } from '../Icon/Icon';
 
+import './InputBox.scss';
+
 function validateInput(id, value, password) {
-  var alphaExp = /^[a-zA-Zа-яА-Я-\s]+$/;
-  var usernameExp = /^[a-zA-Zа-яА-Я1-9_]+$/;
+  const alphaExp = /^[a-zA-Zа-яА-Я-\s]+$/;
+  const usernameExp = /^[a-zA-Z1-9_]+$/;
 
   switch (id) {
     case "firstName":
@@ -97,8 +97,7 @@ const PasswordInputBox = ({ className, labelContent, necessary, value, onChange,
       <EyePasswordButton passwordType={passwordType} onClick={passwordTypeToggle}/>
       <InputBox className={className} type={passwordType} labelContent={labelContent} necessary={necessary} value={value} 
         onChange={(e) => onChange(e.target.value)} password={password} onValidationChange={onValidationChange} hitnText={hitnText} />
-    </>
-    
+    </>   
   )
 }
 

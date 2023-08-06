@@ -1,0 +1,26 @@
+.settings-drop-down-wrapper {
+  //position: absolute;
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+
+  .settings-toggle {
+    z-index: 1;
+  }
+}
+
+.settings-drop-down {
+  z-index: 0;
+  position: absolute;
+  top: 0px;
+}
+
+.settings-list {
+  margin-top: 15px;
+
+  .settings-list-item {
+    margin-top: 5px;
+    display: flex;
+    justify-content: space-between;
+  }
+}

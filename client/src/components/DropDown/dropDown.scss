@@ -1,0 +1,13 @@
+@import '../../common/styles/color.scss';
+
+.drop-down {
+  //position: absolute;
+  margin-top: -5px;
+  margin-left: -5px;
+
+  background-color: $light-blue;
+
+  .drop-down-content {
+    //margin-top: 10px;
+  }
+}
