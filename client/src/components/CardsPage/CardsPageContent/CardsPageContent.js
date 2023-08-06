@@ -10,6 +10,7 @@ const CardsPageContent = ({ content, collectionInfo, currentPage, handlePrevPage
   const [isComleteCollection, setIsComleteCollection] = useState(false);
 
   const cardSideToggle = () => {
+    console.log('cardSideToggle');
     if (side === 'front-side') {
       setSide('back-side');
     } else {
@@ -23,18 +24,18 @@ const CardsPageContent = ({ content, collectionInfo, currentPage, handlePrevPage
     }
   }, [currentPage, collectionInfo])
 
-  const flipedStyle = (side === 'front-side') && 'fliped';
+  const flipedStyle = (side === 'back-side') && 'fliped';
 
   return (
     <>
       {
         !isComleteCollection ? <>
-          <div class="flip-card">
-            <div class={`flip-card-inner ${flipedStyle}`}>
-              <div class="flip-card-front">
+          <div className="flip-card">
+            <div className={`flip-card-inner ${flipedStyle}`}>
+              <div className="flip-card-front">
                 <Card content={content.frontSide.text} side={'front-side'} onClick={cardSideToggle} />
               </div>
-              <div class="flip-card-back">
+              <div className="flip-card-back">
                 <Card content={content.backSide.text} side={'back-side'} onClick={cardSideToggle} />
               </div>
             </div>
