@@ -121,6 +121,14 @@ services:
     networks:
       - vesuvian-network
 
+  collection-manager-service:
+    image: ghcr.io/mrdimenter/collection-manager-service:latest
+    container_name: collection-manager-service
+    ports:
+      - "8099:8099"
+    networks:
+      - vesuvian-network
+
   collection-manager-postgres:
     image: postgres:15.2
     container_name: collection_manager_postgres_service
