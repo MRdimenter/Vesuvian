@@ -1,0 +1,28 @@
+# Server configuration
+server:
+  port: 8099
+  ssl:
+    enabled: false # настройка для Spring что бы он использовал SSL
+
+# Spring configuration
+spring:
+  application:
+    name: collection-manager-service
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    #url: jdbc:postgresql:// collection-manager-postgres:5445/collections
+    url: jdbc:postgresql://localhost:5445/collections
+    username: postgres
+    password: ${COLLECTION_MANAGER_POSTGRES_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    properties:
+      hibernate:
+      dialect: org.hibernate.dialect.PostgreSQL15Dialect
+      format_sql: true
+      enhancer:
+        enableLazyInitialization: true
+    show_sql: true

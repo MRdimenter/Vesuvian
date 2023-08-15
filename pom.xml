@@ -15,6 +15,7 @@
         <module>server/apigateway</module>
         <module>server/image-service</module>
         <module>server/amqp</module>
+        <module>server/collection-manager-service</module>
     </modules>
 
     <properties>
