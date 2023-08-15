@@ -11,7 +11,7 @@ spring:
   config:
     import: optional:file:.env[.properties]
   datasource:
-    url: jdbc:postgresql://collection-manager-postgres:5445/collections
+    url: jdbc:postgresql://collection-manager-postgres:5432/collections
     #url: jdbc:postgresql://localhost:5445/collections
     username: postgres
     password: ${COLLECTION_MANAGER_POSTGRES_PASSWORD}
