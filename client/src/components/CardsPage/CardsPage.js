@@ -10,7 +10,7 @@ const collectionInfo = {
 }
 
 //TODO: временная заглушка
-const content = {
+const content_last = {
   frontSide: {
     text: 'Hello'
   },
@@ -18,6 +18,28 @@ const content = {
     text: 'Привет'
   }
 }
+
+const request = {
+  "term": "Term 1", // термин
+  "definition": "Definition 1", //определение
+  "hint": "Hint 1", //подсказка
+  "imageURL": "http://example.com/image1.jpg" //url картинки если она присутствует, проверка на null  
+}
+
+const getContent = (request) => {
+  return {
+    frontSide: {
+      text: request.term,
+    },
+    backSide: {
+      text: request.definition,
+    },
+    hint: request.hint,
+    imageURL: request.imageURL && null,
+  }
+}
+
+const content = getContent(request);
 
 const CardsPage = () => {
   const [currentPage, setCurrentPage] = useState(2);

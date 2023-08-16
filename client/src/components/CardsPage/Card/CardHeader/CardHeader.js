@@ -3,11 +3,11 @@ import { DescriptionDropDown } from './DescriptionDropDown/DescriptionDropDown';
 
 import './cardHeader.scss';
 
-const CardHeader = () => {
+const CardHeader = ({hint}) => {
   return (
     <div className="card-header">
       <SettingsDropDown />
-      <DescriptionDropDown />
+      <DescriptionDropDown hint={hint}/>
     </div>
   )
 }

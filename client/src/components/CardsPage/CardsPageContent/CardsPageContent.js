@@ -33,10 +33,10 @@ const CardsPageContent = ({ content, collectionInfo, currentPage, handlePrevPage
           <div className="flip-card">
             <div className={`flip-card-inner ${flipedStyle}`}>
               <div className="flip-card-front">
-                <Card content={content.frontSide.text} side={'front-side'} onClick={cardSideToggle} />
+                <Card side={'front-side'} onClick={cardSideToggle} content={content.frontSide.text} hint={content.hint} />
               </div>
               <div className="flip-card-back">
-                <Card content={content.backSide.text} side={'back-side'} onClick={cardSideToggle} />
+                <Card side={'back-side'} onClick={cardSideToggle} content={content.backSide.text} />
               </div>
             </div>
           </div>
