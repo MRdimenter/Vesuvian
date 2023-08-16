@@ -13,7 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CollectionCreateDTO {
-    private String creatorCustomerId;
+//    private String creatorCustomerId;
     private String collectionName;
     private Boolean isPublic;
     private String description;

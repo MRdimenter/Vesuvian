@@ -10,6 +10,11 @@ spring:
     name: collection-manager-service
   config:
     import: optional:file:.env[.properties]
+  security:
+    oauth2:
+      resource-server:
+        jwt:
+          jwk-set-uri: http://212.113.120.198:8282/realms/dev/protocol/openid-connect/certs # ссылка на сертификаты authserver для проверки целостности access token
   datasource:
     url: jdbc:postgresql://collection-manager-postgres:5432/collections
     #url: jdbc:postgresql://localhost:5445/collections
@@ -26,3 +31,24 @@ spring:
       enhancer:
         enableLazyInitialization: true
     show_sql: true
+
+# Keycloak configuration
+keycloak:
+  realm: dev
+  auth-server-url: http://212.113.120.198:8282/auth
+  authorization:
+    auth-server-url: http://212.113.120.198:8282
+    realm: dev
+    resource: collection-manager-client
+    username: admin
+    password: ${KEYCLOAK_USER_ADMIN_PASSWORD}
+
+# React client
+clientURL: http://localhost:3000
+
+# Swagger configuration
+springdoc:
+  swagger-ui:
+    oauth:
+      client-id: swagger-ui
+      app-name: swagger-ui

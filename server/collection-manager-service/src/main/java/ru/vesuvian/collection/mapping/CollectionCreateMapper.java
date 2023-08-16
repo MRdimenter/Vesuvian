@@ -4,11 +4,13 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ru.vesuvian.collection.dto.create.CollectionCreateDTO;
 import ru.vesuvian.collection.entity.Card;
 import ru.vesuvian.collection.entity.Collection;
 import ru.vesuvian.collection.dto.create.CardCreateDTO;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -17,13 +19,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CollectionCreateMapper {
-    public Collection toEntity(CollectionCreateDTO collectionDto) {
+    public Collection toEntity(CollectionCreateDTO collectionDto, String customerUUID) {
         if (collectionDto == null) {
             return null;
         }
 
         Collection collection = new Collection();
-        collection.setCreatorCustomerId(collectionDto.getCreatorCustomerId());
+        collection.setCreatorCustomerId(customerUUID);
         collection.setCollectionName(collectionDto.getCollectionName());
         collection.setIsPublic(collectionDto.getIsPublic());
         collection.setDescription(collectionDto.getDescription());
@@ -51,5 +53,6 @@ public class CollectionCreateMapper {
 
         return card;
     }
+
 
 }
