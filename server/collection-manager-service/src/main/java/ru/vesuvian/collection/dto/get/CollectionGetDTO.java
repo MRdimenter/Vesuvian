@@ -27,7 +27,7 @@ public class CollectionGetDTO {
     private Long collectionId;
 
     @Schema(description = "Collection creator ID")
-    @JsonProperty("creator_customer_id")
+    @JsonProperty("collection_creator")
     private String creatorCustomerId;
 
     @Schema(description = "Collection name")
