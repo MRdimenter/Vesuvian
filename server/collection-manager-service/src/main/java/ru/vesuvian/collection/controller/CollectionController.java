@@ -12,7 +12,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import ru.vesuvian.collection.dto.create.CollectionCreateDTO;
+import ru.vesuvian.collection.dto.create.CollectionCreateDto;
 import ru.vesuvian.collection.dto.get.CollectionGetDTO;
 import ru.vesuvian.collection.enums.Privacy;
 import ru.vesuvian.collection.service.CollectionService;
@@ -37,8 +37,8 @@ public class CollectionController {
     public void createCollection(
             @RequestBody
             @Parameter(description = "Collection data to be created", required = true,
-                    content = @Content(schema = @Schema(implementation = CollectionCreateDTO.class)))
-            CollectionCreateDTO newCollection) {
+                    content = @Content(schema = @Schema(implementation = CollectionCreateDto.class)))
+            CollectionCreateDto newCollection) {
 
         log.info(SecurityContextHolder.getContext().getAuthentication().getName());
         collectionService.createCollection(newCollection);

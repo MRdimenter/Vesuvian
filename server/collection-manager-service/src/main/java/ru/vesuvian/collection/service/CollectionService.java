@@ -7,7 +7,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import ru.vesuvian.collection.dto.create.CollectionCreateDTO;
+import ru.vesuvian.collection.dto.create.CollectionCreateDto;
 import ru.vesuvian.collection.dto.get.CollectionGetDTO;
 import ru.vesuvian.collection.entity.CustomerCollection;
 import ru.vesuvian.collection.entity.Tag;
@@ -35,7 +35,7 @@ public class CollectionService {
 
 
     @Transactional
-    public void createCollection(CollectionCreateDTO collectionCreateDTO) {
+    public void createCollection(CollectionCreateDto collectionCreateDTO) {
         String customerUUID = getUserIdFromSpringSecurity();
         var collection = collectionCreateMapper.toEntity(collectionCreateDTO, customerUUID);
 
