@@ -49,26 +49,26 @@ public class CollectionController {
             description = "Retrieve a list of collections for a given customer ID")
     public List<CollectionGetDTO> getCollectionsByCustomerId(
             @RequestParam
-            @Parameter(description = "ID of the customer", name = "customerId", required = true, example = "12345")
-            String customerId,
+            @Parameter(description = "UUID of the customer", name = "customer_id", required = true, example = "12345")
+            String customer_id,
 
             @RequestParam(required = false, defaultValue = "ALL")
-            @Parameter(description = "Privacy filter", name = "privacy", required = false, example = "ALL",
-                    schema = @Schema(type = "string", allowableValues = {"ALL", "PUBLIC", "PRIVATE"}))
+            @Parameter(description = "Privacy filter", name = "privacy", required = false, example = "all",
+                    schema = @Schema(type = "string", allowableValues = {"all", "public", "private"}))
             Privacy privacy) {
 
         log.info("Privacy: {}", privacy);
-        return collectionService.getCollectionsByCustomerId(customerId, privacy);
+        return collectionService.getCollectionsByCustomerId(customer_id, privacy);
     }
 
-    @GetMapping("/{collectionId}")
+    @GetMapping("/{collection_id}")
     @Operation(summary = "Get collection by collection ID",
             description = "Retrieve a specific collection based on its ID")
     public CollectionGetDTO getCollectionByCollectionId(
             @PathVariable
             @Parameter(description = "ID of the collection to be retrieved", name = "collectionId" , required = true, example = "789")
-            Long collectionId) {
+            Long collection_id) {
 
-        return collectionService.getCustomerCollectionByCollectionId(collectionId);
+        return collectionService.getCustomerCollectionByCollectionId(collection_id);
     }
 }
