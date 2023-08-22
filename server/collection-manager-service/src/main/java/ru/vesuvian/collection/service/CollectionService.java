@@ -35,7 +35,6 @@ public class CollectionService {
     final TagRepository tagRepository;
     final AuthenticatedCustomerResolver authenticatedCustomerResolver;
 
-
     @Transactional
     public void createCollection(CollectionCreateDto collectionCreateDTO) {
         String customerUUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
@@ -100,6 +99,16 @@ public class CollectionService {
                 .get();
 
         return collectionGetMapper.mapToDTO(customerCollection.getCollection());
+
+    }
+
+    public List<CollectionGetDto> getCurrentUserCollections(Privacy privacy) {
+        String customerUUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
+        List<CustomerCollection> customerCollections = customerCollectionRepository.findByCustomerIdWithCollections(customerUUID);
+        return customerCollections.stream()
+                .map(customerCollection -> collectionGetMapper.mapToDTO(customerCollection.getCollection()))
+                .filter(collectionGetDTO -> filterPrivacySetting(privacy, collectionGetDTO.getIsPublic()))
+                .collect(Collectors.toList());
 
     }
 }
