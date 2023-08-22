@@ -10,6 +10,8 @@ import ru.vesuvian.collection.dto.create.CardCreateDto;
 import ru.vesuvian.collection.dto.get.CardGetDto;
 import ru.vesuvian.collection.entity.Card;
 import ru.vesuvian.collection.entity.Collection;
+import ru.vesuvian.collection.exception.CollectionNotFoundException;
+import ru.vesuvian.collection.exception.UnauthorizedAccessException;
 import ru.vesuvian.collection.mapping.CardGetMapper;
 import ru.vesuvian.collection.mapping.CollectionCreateMapper;
 import ru.vesuvian.collection.repository.CardRepository;
@@ -17,6 +19,7 @@ import ru.vesuvian.collection.repository.CollectionRepository;
 import ru.vesuvian.collection.security.AuthenticatedCustomerResolver;
 
 import javax.ws.rs.NotFoundException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,38 +35,43 @@ public class CardService {
     final CollectionCreateMapper collectionCreateMapper;
 
     public List<CardGetDto> getCardsByCollectionId(Long collectionId) {
-        String customerId = authenticatedCustomerResolver.getAuthenticatedCustomerId();
-        List<Card> cardList = cardRepository
-                .findCardsByCollectionIdAndCustomerId(collectionId, customerId)
-                .orElseThrow(NotFoundException::new); //todo добавить необходимое исключение
-
+        var customerId = authenticatedCustomerResolver.getAuthenticatedCustomerId();
+        var cardList = retrieveCardsByCollectionIdAndCustomerId(collectionId, customerId);
         return cardList.stream()
                 .map(cardGetMapper::mapCardsToDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
-
-    //todo подумать над тем как можно оптимизировать данные метод, рефакторинг
-    @Transactional
+    @Transactional()
     public void createCardByCollectionId(Long collectionId, CardCreateDto cardCreateDto) {
         String customerId = authenticatedCustomerResolver.getAuthenticatedCustomerId();
-
-        //todo добавить корректные исключения
-        Collection collection = collectionRepository.findById(collectionId)
-                .orElseThrow(() -> new RuntimeException("Collection not found"));
-
-        // Проверить, является ли пользователь создателем коллекции
-        //todo добавить корректные исключения
-        if (!collection.getCreatorCustomerId().equals(customerId)) {
-            throw new RuntimeException("The customer does not have permission to add cards to this collection");
-        }
-
-        Card card = collectionCreateMapper.toCardEntity(cardCreateDto);
-
+        var collection = findCollectionByIdAndCustomerId(collectionId, customerId);
+        var card = collectionCreateMapper.toCardEntity(cardCreateDto);
+        updateCollectionDetails(collection);
         card.setCollection(collection);
         cardRepository.save(card);
     }
 
+    private List<Card> retrieveCardsByCollectionIdAndCustomerId(Long collectionId, String customerId) {
+        return cardRepository.findCardsByCollectionIdAndCustomerId(collectionId, customerId)
+                .orElseThrow(() -> new CollectionNotFoundException("Collection with ID " + collectionId + " not found"));
+    }
+
+    private Collection findCollectionByIdAndCustomerId(Long collectionId, String customerId) {
+        var collection = collectionRepository.findById(collectionId)
+                .orElseThrow(() -> new CollectionNotFoundException("Collection with ID " + collectionId + " not found"));
+
+        if (!collection.getCreatorCustomerId().equals(customerId)) {
+            throw new UnauthorizedAccessException("The customer does not have permission to add cards to this collection");
+        }
+
+        return collection;
+    }
+
+    private void updateCollectionDetails(Collection collection) {
+        collection.setModifiedDate(LocalDateTime.now());
+        collection.setNumberOfCards(collection.getNumberOfCards() + 1);
+    }
 
 
 }
