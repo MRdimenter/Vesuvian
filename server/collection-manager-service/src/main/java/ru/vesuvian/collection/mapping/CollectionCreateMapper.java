@@ -43,7 +43,7 @@ public class CollectionCreateMapper {
         return collection;
     }
 
-    private Card toCardEntity(CardCreateDto dto) {
+    public Card toCardEntity(CardCreateDto dto) {
         Card card = new Card();
         card.setTerm(dto.getTerm());
         card.setDefinition(dto.getDefinition());

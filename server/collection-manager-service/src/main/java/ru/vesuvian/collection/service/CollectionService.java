@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ru.vesuvian.collection.dto.create.CollectionCreateDto;
-import ru.vesuvian.collection.dto.get.CollectionGetDTO;
+import ru.vesuvian.collection.dto.get.CollectionGetDto;
 import ru.vesuvian.collection.entity.CustomerCollection;
 import ru.vesuvian.collection.entity.Tag;
 import ru.vesuvian.collection.enums.Privacy;
@@ -17,6 +17,7 @@ import ru.vesuvian.collection.mapping.CollectionGetMapper;
 import ru.vesuvian.collection.repository.CollectionRepository;
 import ru.vesuvian.collection.repository.CustomerCollectionRepository;
 import ru.vesuvian.collection.repository.TagRepository;
+import ru.vesuvian.collection.security.AuthenticatedCustomerResolver;
 
 import java.util.List;
 import java.util.Set;
@@ -27,16 +28,17 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CollectionService {
-    private final CollectionRepository collectionRepository;
-    private final CollectionCreateMapper collectionCreateMapper;
-    private final CustomerCollectionRepository customerCollectionRepository;
-    private final CollectionGetMapper collectionGetMapper;
-    private final TagRepository tagRepository;
+    final CollectionRepository collectionRepository;
+    final CollectionCreateMapper collectionCreateMapper;
+    final CustomerCollectionRepository customerCollectionRepository;
+    final CollectionGetMapper collectionGetMapper;
+    final TagRepository tagRepository;
+    final AuthenticatedCustomerResolver authenticatedCustomerResolver;
 
 
     @Transactional
     public void createCollection(CollectionCreateDto collectionCreateDTO) {
-        String customerUUID = getUserIdFromSpringSecurity();
+        String customerUUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
         var collection = collectionCreateMapper.toEntity(collectionCreateDTO, customerUUID);
 
 
@@ -68,7 +70,7 @@ public class CollectionService {
     }
 
 
-    public List<CollectionGetDTO> getCollectionsByCustomerId(String customerId, Privacy privacy) {
+    public List<CollectionGetDto> getCollectionsByCustomerId(String customerId, Privacy privacy) {
 
         List<CustomerCollection> customerCollections = customerCollectionRepository.findByCustomerIdWithCollections(customerId);
         return customerCollections.stream()
@@ -79,6 +81,7 @@ public class CollectionService {
 
     }
 
+    //todo перенести метод в другое место
     private boolean filterPrivacySetting(Privacy privacy, boolean value) {
         return switch (privacy) {
             case ALL -> true;
@@ -87,8 +90,8 @@ public class CollectionService {
         };
     }
 
-    public CollectionGetDTO getCustomerCollectionByCollectionId(Long collectionId) {
-        String customerUUID = getUserIdFromSpringSecurity();
+    public CollectionGetDto getCustomerCollectionByCollectionId(Long collectionId) {
+        String customerUUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
         CustomerCollection customerCollection = customerCollectionRepository.
                 findByCustomerIdAndCollectionId(
                         customerUUID,
@@ -99,13 +102,4 @@ public class CollectionService {
         return collectionGetMapper.mapToDTO(customerCollection.getCollection());
 
     }
-
-    //todo пернести метод в другое место
-    private String getUserIdFromSpringSecurity() {
-        return SecurityContextHolder.getContext().getAuthentication().getName();
-    }
-
-//      public Card getCard(Long collectionID) {
-//        return cardRepository.findById(collectionID).get();
-//    }
 }

@@ -6,21 +6,18 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.vesuvian.collection.dto.create.CardCreateDto;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(
-        name = "CollectionGetDTO",
+        name = "CollectionGetDto",
         description = "Collection object"
 )
-public class CollectionGetDTO {
+public class CollectionGetDto {
 
     @Schema(description = "Collection ID")
     @JsonProperty("collection_id")

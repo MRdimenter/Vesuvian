@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import ru.vesuvian.collection.dto.get.CollectionGetDTO;
+import ru.vesuvian.collection.dto.get.CollectionGetDto;
 import ru.vesuvian.collection.entity.Collection;
 
 @Component
@@ -15,8 +15,8 @@ import ru.vesuvian.collection.entity.Collection;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CollectionGetMapper {
 
-    public CollectionGetDTO mapToDTO(Collection collection) {
-        return CollectionGetDTO.builder()
+    public CollectionGetDto mapToDTO(Collection collection) {
+        return CollectionGetDto.builder()
                 .collectionId(collection.getCollectionId())
                 .collectionName(collection.getCollectionName())
                 .creatorCustomerId(collection.getCreatorCustomerId())

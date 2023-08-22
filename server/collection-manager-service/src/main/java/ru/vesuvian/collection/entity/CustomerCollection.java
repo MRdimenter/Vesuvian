@@ -11,7 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "customer_collections")
+@Table(name = "customer_collections",
+        indexes = {
+                @Index(name = "index_customer_id", columnList = "customer_id"),
+                @Index(name = "index_collection_id", columnList = "collection_id")
+        })
 @IdClass(CustomerCollectionId.class)
 public class CustomerCollection {
 

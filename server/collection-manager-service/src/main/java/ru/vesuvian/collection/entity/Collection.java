@@ -15,7 +15,11 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "collections")
+@Table(name = "collections",
+        indexes = {
+                @Index(name = "index_collections_collection_id", columnList = "collection_id"),
+                @Index(name = "index_collections_creator_customer_id", columnList = "creator_customer_id")
+        })
 @EqualsAndHashCode(exclude = {"cards", "customerCollections"})
 @ToString(exclude = {"cards", "customerCollections"})
 public class Collection {

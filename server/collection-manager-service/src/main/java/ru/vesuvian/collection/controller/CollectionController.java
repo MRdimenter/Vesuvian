@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ru.vesuvian.collection.dto.create.CollectionCreateDto;
-import ru.vesuvian.collection.dto.get.CollectionGetDTO;
+import ru.vesuvian.collection.dto.get.CollectionGetDto;
 import ru.vesuvian.collection.enums.Privacy;
 import ru.vesuvian.collection.service.CollectionService;
 
@@ -47,10 +47,10 @@ public class CollectionController {
     @GetMapping
     @Operation(summary = "Get collections by customer ID",
             description = "Retrieve a list of collections for a given customer ID")
-    public List<CollectionGetDTO> getCollectionsByCustomerId(
+    public List<CollectionGetDto> getCollectionsByCustomerId(
             @RequestParam
-            @Parameter(description = "UUID of the customer", name = "customer_id", required = true, example = "12345")
-            String customer_id,
+            @Parameter(description = "UUID of the customer", name = "customerId", required = true, example = "12345")
+            String customerId,
 
             @RequestParam(required = false, defaultValue = "ALL")
             @Parameter(description = "Privacy filter", name = "privacy", required = false, example = "all",
@@ -58,17 +58,17 @@ public class CollectionController {
             Privacy privacy) {
 
         log.info("Privacy: {}", privacy);
-        return collectionService.getCollectionsByCustomerId(customer_id, privacy);
+        return collectionService.getCollectionsByCustomerId(customerId, privacy);
     }
 
-    @GetMapping("/{collection_id}")
+    @GetMapping("/{collectionId}")
     @Operation(summary = "Get collection by collection ID",
             description = "Retrieve a specific collection based on its ID")
-    public CollectionGetDTO getCollectionByCollectionId(
+    public CollectionGetDto getCollectionByCollectionId(
             @PathVariable
             @Parameter(description = "ID of the collection to be retrieved", name = "collectionId" , required = true, example = "789")
-            Long collection_id) {
+            Long collectionId) {
 
-        return collectionService.getCustomerCollectionByCollectionId(collection_id);
+        return collectionService.getCustomerCollectionByCollectionId(collectionId);
     }
 }
