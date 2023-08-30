@@ -6,9 +6,12 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.vesuvian.collection.dto.create.CollectionCreateDto;
+import ru.vesuvian.collection.dto.create.TagCreateDto;
 import ru.vesuvian.collection.entity.Card;
 import ru.vesuvian.collection.entity.Collection;
 import ru.vesuvian.collection.dto.create.CardCreateDto;
+import ru.vesuvian.collection.entity.Tag;
+import ru.vesuvian.collection.repository.TagRepository;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -18,6 +21,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CollectionCreateMapper {
+    final TagRepository tagRepository;
+
     public Collection toEntity(CollectionCreateDto collectionDto, String customerUUID) {
         if (collectionDto == null) {
             return null;
@@ -40,6 +45,14 @@ public class CollectionCreateMapper {
             collection.setCards(cards);
         }
 
+        // Обработка тегов
+        if (collectionDto.getTags() != null && !collectionDto.getTags().isEmpty()) {
+            Set<Tag> tags = collectionDto.getTags().stream()
+                    .map(this::toTagEntity)
+                    .collect(Collectors.toSet());
+            collection.setTags(tags);
+        }
+
         return collection;
     }
 
@@ -53,5 +66,12 @@ public class CollectionCreateMapper {
         return card;
     }
 
+    public Tag toTagEntity(TagCreateDto dto) {
+        return tagRepository.findByNameExcludingCollections(dto.getTagName()).orElseGet(() -> {
+            Tag newTag = new Tag();
+            newTag.setTagName(dto.getTagName());
+            return tagRepository.save(newTag);
+        });
+    }
 
 }

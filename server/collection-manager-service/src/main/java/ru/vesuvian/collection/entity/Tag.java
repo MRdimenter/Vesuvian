@@ -15,6 +15,12 @@ import java.util.Set;
 @Entity
 @Table(name = "tags")
 public class Tag {
+
+    public Tag(Long tagId, String tagName) {
+        this.tagId = tagId;
+        this.tagName = tagName;
+    }
+
     @Id
     @SequenceGenerator(
             name = "tags_sequence",
@@ -30,6 +36,6 @@ public class Tag {
     @Column(name = "tag_name")
     private String tagName;
 
-    @ManyToMany(mappedBy = "tags")
+    @ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)
     private Set<Collection> collections;
 }

@@ -37,5 +37,5 @@ public class CollectionCreateDto {
 
     @Schema(description = "Array of tags")
     @JsonProperty("tags")
-    private Set<String> tags;
+    private Set<TagCreateDto> tags;
 }

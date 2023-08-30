@@ -10,7 +10,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ru.vesuvian.collection.dto.create.CollectionCreateDto;
 import ru.vesuvian.collection.dto.get.CollectionGetDto;
@@ -40,15 +39,15 @@ public class CollectionController {
             @Parameter(description = "Collection data to be created", required = true,
                     content = @Content(schema = @Schema(implementation = CollectionCreateDto.class)))
             CollectionCreateDto newCollection) {
-
-        log.info(SecurityContextHolder.getContext().getAuthentication().getName());
+            log.info(newCollection.toString());
+            log.info("WORK");
         collectionService.createCollection(newCollection);
     }
 
     @GetMapping
     @Operation(summary = "Get collections by customer ID",
             description = "Retrieve a list of collections for a given customer ID")
-    public List<CollectionGetDto> getCollectionsByCustomerId(
+    public List<CollectionGetDto> getAnyCollectionsByCustomerId(
             @RequestParam
             @Parameter(description = "UUID of the customer", name = "customerId", required = true, example = "12345")
             String customerId,
@@ -58,27 +57,26 @@ public class CollectionController {
                     schema = @Schema(type = "string", allowableValues = {"all", "public", "private"}))
             Privacy privacy) {
 
-        log.info("Privacy: {}", privacy);
-        return collectionService.getCollectionsByCustomerId(customerId, privacy);
+        return collectionService.getAnyCollectionsByCustomerId(customerId, privacy);
     }
 
     @GetMapping("/{collectionId}")
     @Operation(summary = "Get collection by collection ID",
             description = "Retrieve a specific collection based on its ID")
-    public CollectionGetDto getCollectionByCollectionId(
+    public CollectionGetDto getMyCollectionById(
             @PathVariable
             @Parameter(description = "ID of the collection to be retrieved", name = "collectionId", required = true, example = "789")
             Long collectionId) {
 
-        return collectionService.getCustomerCollectionByCollectionId(collectionId);
+        return collectionService.getMyCollectionById(collectionId);
     }
 
     @GetMapping("/me")
-    public List<CollectionGetDto> getCurrentUserCollections(
+    public List<CollectionGetDto> getMyCollections(
             @RequestParam(required = false, defaultValue = "all")
             @Parameter(description = "Privacy filter", name = "privacy", required = false, example = "all",
                        schema = @Schema(type = "string", allowableValues = {"all", "public", "private"}))
             Privacy privacy) {
-        return collectionService.getCurrentUserCollections(privacy);
+        return collectionService.getMyCollections(privacy);
     }
 }
