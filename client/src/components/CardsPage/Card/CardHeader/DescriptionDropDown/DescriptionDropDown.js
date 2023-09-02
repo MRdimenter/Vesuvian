@@ -4,7 +4,7 @@ import { IconButton } from '../../../../Button/Button';
 
 import './descriptionDropDown.scss'
 
-const DescriptionDropDown = () => {
+const DescriptionDropDown = ({hint}) => {
   const [descriptionShow, setDescriptionShow] = useState(false);
   
   const descriptionToggle = (e) => {
@@ -21,7 +21,7 @@ const DescriptionDropDown = () => {
         descriptionShow ?
         <div className='description-drop-down'>
           <DropDown width={280} padding={15} top={0} paddingTop={40}>
-            <p>Первое слово при встречи</p>
+            <p>{hint}</p>
           </DropDown>
         </div> : null
       }

@@ -18,8 +18,8 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState('user'); // TODO default state 'user' for testing
-  const [password, setPassword] = useState('useruserA1!'); // TODO default state 'user' for testing
+  const [username, setUsername] = useState('testcollections'); // TODO default state 'testcollections' for testing
+  const [password, setPassword] = useState('Test!1234'); // TODO default state 'Test!1234' for testing
 
   const [isWrongCredentials, setIsWrongCredentials] = useState(false);
   const [isInputsValidated, setIsInputsValidated] = useState(false);

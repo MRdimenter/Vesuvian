@@ -8,12 +8,12 @@ import './card.scss';
 Карта имеет две стороны: side со значениями front-side(по умолчанию) и back-side
 */
 
-const Card = ({content, side, onClick}) => {
+const Card = ({content, hint, side, onClick}) => {
     const cardSide = `${side || 'front-side'}`
 
     return (
         <div className={`card ${cardSide}`} onClick={onClick}>
-            <CardHeader />
+            <CardHeader hint={hint}/>
             <CardContent content={content}/>
         </div>
     )
