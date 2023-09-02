@@ -4,9 +4,9 @@ import { CardsPageContent } from './CardsPageContent/CardsPageContent';
 
 import './cardsPage.scss';
 
-const cardsInCollection = 3;
+const cardsInCollection = 10;
 const collectionInfo = {
-  cardsInCollection: 3,
+  cardsInCollection: 10,
 }
 
 //TODO: временная заглушка
