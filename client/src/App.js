@@ -3,8 +3,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { authenticationAction } from './store/actions/authenticationActions';
 
-import './App.scss';
-
 import { Main } from './components/Main/Main';
 import { Footer } from './components/Footer/Footer';
 import { Header } from './components/Header/Header';
@@ -17,6 +15,9 @@ import { ReLoginPage } from './components/ErrorPage/ReLoginPage';
 import { appendCurrentCustomerDataAction } from './store/actions/appendCurrentCustomerDataAction';
 import { CustomersPage } from './components/CustomersPage/CustomersPage';
 import { Cards, CardsPage } from './components/CardsPage/CardsPage';
+import { CollectionsPage } from './components/CollectionsPage/CollectionsPage';
+
+import './App.scss';
 
 // TODO тестить на 3G:
 // форма логин остается открытой после нажатия на кнопку Вход -> добавить компонент "входим в аккаунт"
@@ -38,21 +39,24 @@ export const App = () => {
   return (
     <BrowserRouter>
       <div className={`main-wrapper`}>
-        <Header />
-        <TestPanel />
-        <div className='main-container'>
-          <Routes>
-            <Route path='/' element={<Main />} exact />
-            <Route path='/registrationForm' element={<RegistrationForm />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/redirect' element={<RedirectPage />}></Route>
-            <Route path='/errorPage' element={<ErrorPage />}></Route>
-            <Route path='/reLoginPage' element={<ReLoginPage />}></Route>
-            <Route path='/listItem' element={<CustomersPage />}></Route>
-            <Route path='/cards' element={<CardsPage />}></Route>
-          </Routes>
+        <div className="main">
+          <Header />
+          <TestPanel />
+          <div className='main-container'>
+            <Routes>
+              <Route path='/' element={<Main />} exact />
+              <Route path='/registrationForm' element={<RegistrationForm />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/redirect' element={<RedirectPage />}></Route>
+              <Route path='/errorPage' element={<ErrorPage />}></Route>
+              <Route path='/reLoginPage' element={<ReLoginPage />}></Route>
+              <Route path='/listItem' element={<CustomersPage />}></Route>
+              <Route path='/collectionsPage' element={<CollectionsPage />}></Route>
+              <Route path='/cards' element={<CardsPage />}></Route>
+            </Routes>
+          </div>
+          <Footer />
         </div>
-        <Footer />
       </div>
     </BrowserRouter>
   );

@@ -1,4 +1,5 @@
 import { ProgressBar } from '../../ProgressBar/ProgressBar'
+
 import './cardsPageHeader.scss'
 
 const CardsPageHeader = ({collectionName = 'Some collection', currentPage, cardsInCollection}) => {
