@@ -72,11 +72,9 @@ const Login = () => {
   useEffect(() => {
     dispatch(authenticationStateAction(false));
     // componentWillUnmount
-    /*
     return () => {
       dispatch(authenticationStateAction(true));
     }
-    */
   }, [dispatch]);
 
   return (
