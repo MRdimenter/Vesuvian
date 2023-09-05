@@ -12,7 +12,10 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.vesuvian.collection.dto.create.TagCreateDto;
+import ru.vesuvian.collection.dto.get.TagGetDto;
 import ru.vesuvian.collection.service.TagService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/{collectionId}/tags")
@@ -49,5 +52,18 @@ public class TagController {
             TagCreateDto tag
     ) {
         tagService.createTagByCollectionId(collectionId, tag);
+    }
+
+
+    @GetMapping
+    public List<TagGetDto> getTagByCollectionId(
+            @PathVariable
+            @Parameter(description = "ID of the collection to be retrieved",
+                    name = "collectionId",
+                    required = true,
+                    example = "1")
+            Long collectionId) {
+        return tagService.getTagByCollectionId(collectionId);
+
     }
 }

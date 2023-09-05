@@ -1,9 +1,7 @@
 package ru.vesuvian.collection.mapping;
 
 
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.vesuvian.collection.dto.get.CardGetDto;
@@ -14,7 +12,7 @@ import ru.vesuvian.collection.entity.Card;
 @RequiredArgsConstructor
 public class CardGetMapper {
 
-    public CardGetDto mapCardsToDto(Card card) {
+    public CardGetDto mapCardToDto(Card card) {
         return CardGetDto.builder()
                 .cardId(card.getCardId())
                 .creationDate(card.getCreationDate())
