@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import { LoginButtons } from '../LoginButtons/LoginButtons';
 import { Button } from '../Button/Button';
+import { SearchInput } from '../Forms/InputBox';
 
 import './header.scss';
-import { SearchInput } from '../Forms/InputBox';
 
 export const Header = () => {
   return (
@@ -11,7 +11,12 @@ export const Header = () => {
       <Link className='Logo' to={'/'}> <h1 className='header-1'>VESUVIAN</h1> </Link>
       <nav className='header-nav'>
         <Link className='Logo customer-list' to={'/listItem'}>Customers List</Link>
-        <Button btnStyle='btn' label='Коллекции' link={'/cards'} />
+        <div className='header-nav-button'>
+          <Button btnStyle='btn' label='Коллекции' link={'/collectionsPage'} />
+        </div>
+        <div className="header-nav-button">
+          <Button btnStyle='btn' label='+' link={'/cards'} />
+        </div>
         <SearchInput />
       </nav>
       <LoginButtons />

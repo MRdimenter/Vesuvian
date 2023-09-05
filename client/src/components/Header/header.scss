@@ -2,7 +2,7 @@
 
 @mixin primary {
   min-height: 80px;
-
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -14,7 +14,7 @@
 }
 
 .Logo {
-  margin-left: 30px;
+  //margin-left: 30px;
   text-decoration: none;
   color: $white;
   font-size: 24px;
@@ -30,6 +30,11 @@
   .customer-list {
     margin-right: 20px;
   }
+
+  .header-nav-button {
+    margin-left: 30px;
+  }
+
 }
 
 .theme-dark {
