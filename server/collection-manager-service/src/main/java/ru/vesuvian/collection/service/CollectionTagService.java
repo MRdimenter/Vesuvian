@@ -28,4 +28,9 @@ public class CollectionTagService {
                 .map(collectionTag -> collectionTag.getTag().getTagId())
                 .collect(Collectors.toSet());
     }
+
+    public boolean tagAlreadyExistsInCollection(Collection collection, Tag tag) {
+        Set<Long> existingTagIds = getExistingTagIdsInCollection(collection);
+        return existingTagIds.contains(tag.getTagId());
+    }
 }

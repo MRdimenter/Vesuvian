@@ -32,4 +32,14 @@ public class ApiExceptionHandler {
 
         return new ResponseEntity<>(apiException, status);
     }
+
+    @ExceptionHandler(TagAlreadyExistsInCollectionException.class)
+    public ResponseEntity<Object> handleUnauthorizedAccessException(TagAlreadyExistsInCollectionException e) {
+        var status = HttpStatus.CONFLICT;
+        var apiException = new ApiException(e.getMessage(), status, ZonedDateTime.now());
+
+        log.info("API Exception: Status - {}, Message - {}", status, e.getMessage());
+
+        return new ResponseEntity<>(apiException, status);
+    }
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.vesuvian.collection.dto.create.TagCreateDto;
 import ru.vesuvian.collection.entity.Collection;
 import ru.vesuvian.collection.entity.Tag;
+import ru.vesuvian.collection.exception.TagAlreadyExistsInCollectionException;
 import ru.vesuvian.collection.repository.CollectionRepository;
 import ru.vesuvian.collection.repository.TagRepository;
 import ru.vesuvian.collection.security.AuthenticatedCustomerResolver;
@@ -27,17 +28,16 @@ public class TagService {
         Collection collection = collectionAccessService.findMyCollectionByIdAndCustomerId(collectionId, customerId, true);
         collection.setModifiedDateToNow();
 
-        // Проверка наличия тега в таблице или создание
         Tag tag = findOrCreateTag(tagCreateDto.getTagName());
         tagRepository.save(tag);
 
-        var existingTagIds = collectionTagService.getExistingTagIdsInCollection(collection);
-
-        if (!existingTagIds.contains(tag.getTagId())) {
-            var collectionTag = collectionTagService.createCollectionTag(collection, tag);
-            collection.getCollectionTags().add(collectionTag);
-            collectionRepository.save(collection);
+        if (collectionTagService.tagAlreadyExistsInCollection(collection, tag)) {
+            throw new TagAlreadyExistsInCollectionException("Tag already exists in the collection.");
         }
+
+        var collectionTag = collectionTagService.createCollectionTag(collection, tag);
+        collection.getCollectionTags().add(collectionTag);
+        collectionRepository.save(collection);
 
     }
 
