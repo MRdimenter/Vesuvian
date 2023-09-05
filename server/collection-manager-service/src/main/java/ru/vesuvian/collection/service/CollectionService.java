@@ -26,16 +26,13 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CollectionService {
-    final CollectionRepository collectionRepository;
-    final CollectionCreateMapper collectionCreateMapper;
-    final CustomerCollectionRepository customerCollectionRepository;
-    final CollectionGetMapper collectionGetMapper;
-    final TagService tagService;
-    final TagRepository tagRepository;
-    final AuthenticatedCustomerResolver authenticatedCustomerResolver;
-    final PrivacyService privacyService;
+    private final CollectionRepository collectionRepository;
+    private final CollectionCreateMapper collectionCreateMapper;
+    private final CustomerCollectionRepository customerCollectionRepository;
+    private final CollectionGetMapper collectionGetMapper;
+    private final AuthenticatedCustomerResolver authenticatedCustomerResolver;
+    private final PrivacyService privacyService;
 
 
 

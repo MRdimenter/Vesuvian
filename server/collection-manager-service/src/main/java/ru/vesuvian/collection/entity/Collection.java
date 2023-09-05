@@ -2,12 +2,13 @@ package ru.vesuvian.collection.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -20,7 +21,7 @@ import java.util.Set;
                 @Index(name = "index_collections_collection_id", columnList = "collection_id"),
                 @Index(name = "index_collections_creator_customer_id", columnList = "creator_customer_id")
         })
-@EqualsAndHashCode(exclude = {"cards", "customerCollections"})
+@EqualsAndHashCode(exclude = {"cards", "customerCollections", "collectionTags"})
 @ToString(exclude = {"cards", "customerCollections"})
 public class Collection {
 
@@ -81,13 +82,24 @@ public class Collection {
             cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Card> cards;
 
-    @JsonView
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "collection_tags",
-            joinColumns = @JoinColumn(name = "collection_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id")
-    )
-    private Set<Tag> tags;
+    // Отношение один-ко-многим между Collection и CollectionTagRepository
+    @OneToMany(mappedBy = "collection",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<CollectionTag> collectionTags = new HashSet<>();
+
+
+    public void incrementNumberOfCards() {
+        if (numberOfCards == null) {
+            numberOfCards = 1;
+        } else {
+            numberOfCards++;
+        }
+    }
+
+    public void setModifiedDateToNow() {
+        modifiedDate = LocalDateTime.now(Clock.systemDefaultZone());
+    }
+
 }

@@ -22,10 +22,9 @@ import java.util.List;
 @RequestMapping("api/v1/collections")
 @RequiredArgsConstructor
 @Slf4j
-@FieldDefaults(level = AccessLevel.PRIVATE)
 @Tag(name = "Collection", description = "Collection management API")
 public class CollectionController {
-    final CollectionService collectionService;
+    private final CollectionService collectionService;
 
     @PostMapping("/create")
     @Operation(summary = "Create a new collection",

@@ -12,7 +12,6 @@ import ru.vesuvian.collection.entity.Card;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CardGetMapper {
 
     public CardGetDto mapCardsToDto(Card card) {

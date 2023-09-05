@@ -18,21 +18,20 @@ import ru.vesuvian.collection.repository.CardRepository;
 import ru.vesuvian.collection.repository.CollectionRepository;
 import ru.vesuvian.collection.security.AuthenticatedCustomerResolver;
 
-import javax.ws.rs.NotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+
 public class CardService {
-    final CardRepository cardRepository;
-    final CardGetMapper cardGetMapper;
-    final AuthenticatedCustomerResolver authenticatedCustomerResolver;
-    final CollectionRepository collectionRepository;
-    final CollectionCreateMapper collectionCreateMapper;
+    private final CardRepository cardRepository;
+    private final CardGetMapper cardGetMapper;
+    private final AuthenticatedCustomerResolver authenticatedCustomerResolver;
+    private final CollectionAccessService collectionAccessService;
+    private final CollectionCreateMapper collectionCreateMapper;
+
 
     public List<CardGetDto> getCardsByCollectionId(Long collectionId) {
         var customerId = authenticatedCustomerResolver.getAuthenticatedCustomerId();
@@ -45,9 +44,12 @@ public class CardService {
     @Transactional()
     public void createCardByCollectionId(Long collectionId, CardCreateDto cardCreateDto) {
         String customerId = authenticatedCustomerResolver.getAuthenticatedCustomerId();
-        var collection = findCollectionByIdAndCustomerId(collectionId, customerId);
+        var collection = collectionAccessService.findMyCollectionByIdAndCustomerId(collectionId, customerId);
         var card = collectionCreateMapper.toCardEntity(cardCreateDto);
-        updateCollectionDetails(collection);
+
+        collection.incrementNumberOfCards();
+        collection.setModifiedDateToNow();
+
         card.setCollection(collection);
         cardRepository.save(card);
     }
@@ -55,22 +57,6 @@ public class CardService {
     private List<Card> retrieveCardsByCollectionIdAndCustomerId(Long collectionId, String customerId) {
         return cardRepository.findCardsByCollectionIdAndCustomerId(collectionId, customerId)
                 .orElseThrow(() -> new CollectionNotFoundException("Collection with ID " + collectionId + " not found"));
-    }
-
-    private Collection findCollectionByIdAndCustomerId(Long collectionId, String customerId) {
-        var collection = collectionRepository.findById(collectionId)
-                .orElseThrow(() -> new CollectionNotFoundException("Collection with ID " + collectionId + " not found"));
-
-        if (!collection.getCreatorCustomerId().equals(customerId)) {
-            throw new UnauthorizedAccessException("The customer does not have permission to add cards to this collection");
-        }
-
-        return collection;
-    }
-
-    private void updateCollectionDetails(Collection collection) {
-        collection.setModifiedDate(LocalDateTime.now());
-        collection.setNumberOfCards(collection.getNumberOfCards() + 1);
     }
 
 

@@ -17,11 +17,10 @@ import java.util.List;
 @RequestMapping("api/v1/collections/{collectionId}/cards")
 @RequiredArgsConstructor
 @Slf4j
-@FieldDefaults(level = AccessLevel.PRIVATE)
 @Tag(name = "Card", description = "Cards management API")
 public class CardController {
 
-    final CardService cardService;
+    private final CardService cardService;
 
     @GetMapping
     public List<CardGetDto> getCardsByCollectionId(

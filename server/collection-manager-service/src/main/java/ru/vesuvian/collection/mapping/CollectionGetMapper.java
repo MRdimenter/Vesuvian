@@ -12,7 +12,6 @@ import ru.vesuvian.collection.entity.Collection;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CollectionGetMapper {
 
     public CollectionGetDto mapToDTO(Collection collection) {

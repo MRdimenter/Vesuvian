@@ -11,6 +11,12 @@ import java.util.Optional;
 @Repository
 public interface CollectionRepository extends JpaRepository<Collection, Long> {
     @Query("SELECT c FROM Collection c JOIN FETCH c.cards WHERE c.collectionId = :collectionId")
-    //@Query("SELECT c FROM Collection c LEFT JOIN FETCH c.cards cards LEFT JOIN FETCH cards.termLanguage LEFT JOIN FETCH cards.definitionLanguage WHERE c.collectionId = :collectionId")
     Collection findByIdWithCards(@Param("collectionId") Long collectionId);
+
+    @Query("SELECT c FROM Collection c " +
+            "LEFT JOIN FETCH c.collectionTags ct " +
+            "LEFT JOIN FETCH ct.tag " +
+            "WHERE c.collectionId = :collectionId")
+    Optional<Collection> findByIdWithTags(@Param("collectionId") Long collectionId);
+
 }

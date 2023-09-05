@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -36,6 +39,10 @@ public class Tag {
     @Column(name = "tag_name")
     private String tagName;
 
-    @ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)
-    private Set<Collection> collections;
+//    @ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)
+//    private Set<Collection> collections;
+
+    // Отношение один-ко-многим между Tag и CollectionTagRepository
+    @OneToMany(mappedBy = "tag", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<CollectionTag> collectionTags = new HashSet<>();
 }

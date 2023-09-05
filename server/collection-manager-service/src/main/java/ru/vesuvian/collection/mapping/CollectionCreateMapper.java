@@ -10,18 +10,19 @@ import ru.vesuvian.collection.dto.create.TagCreateDto;
 import ru.vesuvian.collection.entity.Card;
 import ru.vesuvian.collection.entity.Collection;
 import ru.vesuvian.collection.dto.create.CardCreateDto;
+import ru.vesuvian.collection.entity.CollectionTag;
 import ru.vesuvian.collection.entity.Tag;
 import ru.vesuvian.collection.repository.TagRepository;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CollectionCreateMapper {
-    final TagRepository tagRepository;
+    private final TagRepository tagRepository;
 
     public Collection toEntity(CollectionCreateDto collectionDto, String customerUUID) {
         if (collectionDto == null) {
@@ -50,7 +51,15 @@ public class CollectionCreateMapper {
             Set<Tag> tags = collectionDto.getTags().stream()
                     .map(this::toTagEntity)
                     .collect(Collectors.toSet());
-            collection.setTags(tags);
+
+            Set<CollectionTag> collectionTags = tags.stream().map(tag -> {
+                CollectionTag collectionTag = new CollectionTag();
+                collectionTag.setCollection(collection);
+                collectionTag.setTag(tag);
+                return collectionTag;
+            }).collect(Collectors.toSet());
+
+            collection.setCollectionTags(collectionTags);
         }
 
         return collection;
