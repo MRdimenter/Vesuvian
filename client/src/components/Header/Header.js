@@ -12,6 +12,9 @@ export const Header = () => {
       <nav className='header-nav'>
         <Link className='Logo customer-list' to={'/listItem'}>Customers List</Link>
         <div className='header-nav-button'>
+          <Button btnStyle='btn' label='Коллекция' link={'/collectionPage'} />
+        </div>
+        <div className='header-nav-button'>
           <Button btnStyle='btn' label='Коллекции' link={'/collectionsPage'} />
         </div>
         <div className="header-nav-button">

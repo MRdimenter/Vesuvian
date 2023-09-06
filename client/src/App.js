@@ -18,6 +18,7 @@ import { Cards, CardsPage } from './components/CardsPage/CardsPage';
 import { CollectionsPage } from './components/CollectionsPage/CollectionsPage';
 
 import './App.scss';
+import { CollectionPage } from './components/CollectionPage/CollectionPage';
 
 // TODO тестить на 3G:
 // форма логин остается открытой после нажатия на кнопку Вход -> добавить компонент "входим в аккаунт"
@@ -51,6 +52,7 @@ export const App = () => {
               <Route path='/errorPage' element={<ErrorPage />}></Route>
               <Route path='/reLoginPage' element={<ReLoginPage />}></Route>
               <Route path='/listItem' element={<CustomersPage />}></Route>
+              <Route path='/collectionPage' element={<CollectionPage />}></Route>
               <Route path='/collectionsPage' element={<CollectionsPage />}></Route>
               <Route path='/cards' element={<CardsPage />}></Route>
             </Routes>
