@@ -1,8 +1,9 @@
 
 import { Button } from '../../Button/Button';
-import './collectionPageHeader.scss';
 
-const CollectionPageHeader = () => {
+import './collectionsPageHeader.scss';
+
+const CollectionsPageHeader = () => {
   const handleSubmit = () => {
     console.log('handleSubmit');
   }
@@ -24,5 +25,5 @@ const CollectionPageHeader = () => {
 }
 
 export {
-  CollectionPageHeader,
+  CollectionsPageHeader,
 }

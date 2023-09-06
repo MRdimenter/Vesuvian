@@ -1,12 +1,8 @@
-.collections-page {
+.collection-page {
+  border: 2px solid blue;
   margin-top: 50px;
   width: 100%;
-  border: 1px solid yellow;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.collections-page *{
-  border: 1px solid green;
 }

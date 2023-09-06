@@ -1,0 +1,14 @@
+.collection-page-group {
+  width: 100%;
+  border: 1px solid blue;
+
+  .collection-cards-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .collection-card-wrapper {
+      margin-top: 39px;
+    }
+  }
+}
