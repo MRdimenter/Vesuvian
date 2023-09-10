@@ -1,3 +1,6 @@
 .collection-page-body {
-  
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 110px;
+  grid-row-gap: 70px;
 }

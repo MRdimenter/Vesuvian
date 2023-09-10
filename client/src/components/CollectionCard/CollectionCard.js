@@ -1,10 +1,10 @@
 import './collectionCard.scss';
 
-const CollectionCard = ({title}) => {
-  console.log('CollectionCard: ', title);
+const CollectionCard = ({title, backgroundStyle}) => {
+  const cardStyle = `${backgroundStyle || 'light-card-bg'}`
   return (
-    <div className="collection-card">
-      <span className='collection-card-title middle-promo'>{title}</span>
+    <div className={`collection-card ${cardStyle}`}>
+      <span className={`collection-card-title middle-promo`}>{title}</span>
     </div>
   )
 }

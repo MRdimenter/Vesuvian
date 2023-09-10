@@ -4,7 +4,7 @@ import { CardsPageContent } from './CardsPageContent/CardsPageContent';
 
 import './cardsPage.scss';
 
-const cardsInCollection = 10;
+const cardsInCollection = 2;
 const collectionInfo = {
   cardsInCollection: 10,
 }
@@ -42,7 +42,7 @@ const getContent = (request) => {
 const content = getContent(request);
 
 const CardsPage = () => {
-  const [currentPage, setCurrentPage] = useState(2);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));

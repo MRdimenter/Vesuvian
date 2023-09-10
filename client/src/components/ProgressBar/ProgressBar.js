@@ -5,7 +5,7 @@ const ProgressBar = ({currentPage, cardsInCollection}) => {
   const currentPercent = Math.floor((currentPage/cardsInCollection) * 100);
   
   const percentsStyle = {
-    right: `${100 - currentPercent}%`,
+    right: `${100 - currentPercent +0.2}%`,
     display: currentPercent < 2 ? 'none' : '',
   }
 

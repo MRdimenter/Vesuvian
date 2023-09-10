@@ -4,7 +4,6 @@
   width: 400px;
   height: 227px;
   border-radius: 10px;
-  background-color: $btn-green;
 
   display: flex;
   justify-content: center;
@@ -13,4 +12,12 @@
   .collection-card-title {
     color: black;
   }
+}
+
+.light-card-bg {
+  background-color: $btn-green;
+}
+
+.dark-card-bg {
+  background-color: $light-light-green;
 }

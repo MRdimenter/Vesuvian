@@ -25,10 +25,10 @@ const Button = ({ label = 'btn', btnStyle='link', link, action }) => {
   )
 }
 
-const IconButton = ({ iconName, width='20', height='20', onClick, disabled }) => {
+const IconButton = ({ iconName, iconFormat, width='20', height='20', onClick, disabled }) => {
   return (
     <button onClick={onClick} className="icon-button" type="button" disabled={disabled}>
-      <Icon iconName={iconName} width={width} height={height} />
+      <Icon iconName={iconName} iconFormat={iconFormat} width={width} height={height} />
     </button>
   )
 }

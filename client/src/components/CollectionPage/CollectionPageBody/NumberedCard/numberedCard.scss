@@ -1,0 +1,10 @@
+.numbered-card {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .card-number {
+    margin-top: 20px;
+  }
+}

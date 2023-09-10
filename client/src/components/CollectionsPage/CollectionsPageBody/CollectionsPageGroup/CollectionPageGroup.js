@@ -1,4 +1,5 @@
 import { CollectionCard } from '../../../CollectionCard/CollectionCard.js';
+import { Title } from '../../../Title/Title.js';
 
 import './collectionPageGroup.scss';
 
@@ -59,9 +60,7 @@ const CollectionPageGroup = ({collection}) => {
 
   return (
     <div className="collection-page-group">
-      <div className="collection-page-group-title h2-promo">
-        <span>{firstLetterOfCollectionTitle}</span>
-      </div>
+      <Title text={firstLetterOfCollectionTitle} />
       <div className='collection-cards-wrapper'>
         {getCollectionCards(collectionTitles)}
         

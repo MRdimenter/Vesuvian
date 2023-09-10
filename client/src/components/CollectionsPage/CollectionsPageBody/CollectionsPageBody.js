@@ -16,7 +16,7 @@ const getCollectionsPageGroups = (sortedCollections) => {
 
 const  CollectionsPageBody = ({sortedCollections}) => {
   return (
-    <div className="collection-page-body">
+    <div className="collections-page-body">
       {getCollectionsPageGroups(sortedCollections)}
     </div>
   )
