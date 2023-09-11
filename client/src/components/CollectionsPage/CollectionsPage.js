@@ -1,6 +1,3 @@
-
-
-
 import { CollectionsPageBody } from './CollectionsPageBody/CollectionsPageBody';
 import { CollectionsPageHeader } from './CollectionsPageHeader/CollectionsPageHeader';
 import './collectionsPage.scss';

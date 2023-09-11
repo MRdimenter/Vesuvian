@@ -1,7 +1,7 @@
-import { CollectionPageBody } from './CollectionPageBody/CollectionPageBody';
-import { CollectionPageHeader } from './CollectionPageHeader/CollectionPageHeader';
+import { CollectionEditingPageBody } from './CollectionEditingPageBody/CollectionEditingPageBody copy';
+import { CollectionEditingPageHeader } from './CollectionEditingPageHeader/CollectionEditingPageHeader';
 
-import './collectionPage.scss';
+import './collectionEditingPage.scss';
 
 const collection = [
   {
@@ -45,15 +45,15 @@ const collection = [
   },
 ]
 
-const CollectionPage = () => {
+const CollectionEditingPage = () => {
   return (
     <div className='collection-page'>
-      <CollectionPageHeader />
-      <CollectionPageBody collection={collection}/>
+      <CollectionEditingPageHeader />
+      <CollectionEditingPageBody collection={collection}/>
     </div>
   )
 }
 
 export {
-  CollectionPage,
+  CollectionEditingPage,
 }

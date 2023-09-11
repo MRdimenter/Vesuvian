@@ -3,12 +3,12 @@ import { CardTag } from '../../CardTag/CardTag';
 import { Icon } from '../../Icon/Icon';
 import { Title } from '../../Title/Title';
 
-import './collectionPageHeader.scss';
+import './collectionEditingPageHeader.scss';
 
 const collectionAuthor = '@skaipnik';
 const collectionRecentChangesDate= '09.08.2023 23:01';
 
-const CollectionPageHeader = ({ collectionTitle = 'Basic English', tags=['English'] }) => {
+const CollectionEditingPageHeader = ({ collectionTitle = 'Basic English', tags=['English'] }) => {
   const handleSubmit = () => {
     console.log('addTabClick');
   }
@@ -54,5 +54,5 @@ const CollectionPageHeader = ({ collectionTitle = 'Basic English', tags=['Englis
 }
 
 export {
-  CollectionPageHeader,
+  CollectionEditingPageHeader,
 }

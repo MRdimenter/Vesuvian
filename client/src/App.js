@@ -14,11 +14,11 @@ import { RegistrationForm } from './components/Forms/RegistrationForm/Registrati
 import { ReLoginPage } from './components/ErrorPage/ReLoginPage';
 import { appendCurrentCustomerDataAction } from './store/actions/appendCurrentCustomerDataAction';
 import { CustomersPage } from './components/CustomersPage/CustomersPage';
-import { Cards, CardsPage } from './components/CardsPage/CardsPage';
-import { CollectionsPage } from './components/CollectionsPage/CollectionsPage';
+import { CardsPage } from './components/CardsPage/CardsPage';
 
 import './App.scss';
-import { CollectionPage } from './components/CollectionPage/CollectionPage';
+import { CollectionEditingPage } from './components/CollectionEditingPage/CollectionEditingPage';
+import { CollectionsPage } from './components/CollectionsPage/CollectionsPage';
 
 // TODO тестить на 3G:
 // форма логин остается открытой после нажатия на кнопку Вход -> добавить компонент "входим в аккаунт"
@@ -52,7 +52,7 @@ export const App = () => {
               <Route path='/errorPage' element={<ErrorPage />}></Route>
               <Route path='/reLoginPage' element={<ReLoginPage />}></Route>
               <Route path='/listItem' element={<CustomersPage />}></Route>
-              <Route path='/collectionPage' element={<CollectionPage />}></Route>
+              <Route path='/collectionPage' element={<CollectionEditingPage />}></Route>
               <Route path='/collectionsPage' element={<CollectionsPage />}></Route>
               <Route path='/cards' element={<CardsPage />}></Route>
             </Routes>

@@ -1,9 +1,9 @@
 import { CollectionCard } from "../../CollectionCard/CollectionCard";
 import { NumberedCard } from "./NumberedCard/NumberedCard"
 
-import './collectionPageBody.scss';
+import './collectionEditingPageBody.scss';
 
-const CollectionPageBody = ({ collection }) => {
+const CollectionEditingPageBody = ({ collection }) => {
 
   const getCards = (collection) => {
     return (
@@ -31,5 +31,5 @@ const CollectionPageBody = ({ collection }) => {
 }
 
 export {
-  CollectionPageBody,
+  CollectionEditingPageBody,
 }
