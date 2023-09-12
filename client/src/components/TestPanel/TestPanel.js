@@ -76,9 +76,21 @@ export const TestPanel = () => {
     }
   }
 
+  async function getCurrentCustomerCollections() {
+    try {
+      let response = await apiService.getCurrentCustomerCollections();
+      console.log('getAPICustomers response', response);  //TODO: передача данных в state приложения при авторизации пользователя (только необходимое)
+    } catch (error) {
+      if (error instanceof RefreshTokenMissingError || error instanceof BadRequestError) {
+        logout(dispatch);
+        navigate("/reLoginPage");
+      }
+    }
+  }
+
   return (
     <div className='test-panel'>
-      <LoginButtons />
+      <Button label='getCurrentCustomerCollections' action={() => getCurrentCustomerCollections()} />
       <Button btnStyle='link' label='ErrorPage' link={'/errorPage'} />
       <Button label='DarkMode' action={onChangeTheme} />
       <Button label='read Cookies' action={() => readCookies()} />

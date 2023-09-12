@@ -3,41 +3,6 @@ import { Title } from '../../../Title/Title.js';
 
 import './collectionPageGroup.scss';
 
-const collections = [
-  'Basic English',
-  'Java',
-  'Countries',
-  'C++',
-  'Cinema',
-  'Cats',
-]
-
-const cardGroup = {
-  title: 'B', //todo вычислять для каждой группы
-  cardCollection: {
-    title: 'BasicEnglish',
-  }
-}
-
-function getAlfaFilterObjects(collections) {
-  const firstLetters = new Map();
-  const sortedCollections = {};
-  collections.forEach(element => {
-    firstLetters.set(element[0])
-  });
-
-  const sortedFirstLetters = Array.from(firstLetters.keys()).sort();  
-  sortedFirstLetters.forEach(letter => {
-    sortedCollections[letter] = [];
-  });
-
-  collections.forEach((collection) => {   //todo заменить collection скорее всего на collection.title
-    sortedCollections[collection[0]].push(collection);
-  })
-
-  return Object.entries(sortedCollections);
-}
-
 const getCollectionCards = (titles) => {
   return (
     <>
@@ -52,9 +17,7 @@ const getCollectionCards = (titles) => {
   )
 }
 
-
 const CollectionPageGroup = ({collection}) => {
-  console.log('collection: ', collection);
   const firstLetterOfCollectionTitle = collection[0];
   const collectionTitles = collection[1];
 

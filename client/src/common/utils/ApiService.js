@@ -1,4 +1,4 @@
-import { BASE_URL, CURRENT_CUSTOMER_URL, CUSTOMERS_URL } from "../constants/urlConstants";
+import { BASE_URL, CURRENT_CUSTOMER_COLLECTION_URL, CURRENT_CUSTOMER_URL, CUSTOMERS_URL, TEMP_BASE_PORT, TEMP_BASE_URL } from "../constants/urlConstants";
 import { ServerError } from "./Errors/Errors";
 import { getAccessToken } from "./useOAuth2";
 
@@ -14,9 +14,9 @@ class ApiService {
     this.accessToken = null;
   }
 
-  async getResourseByAuth(path) {
-    const url = `${BASE_URL}/${path}`;
-    let accessToken = getAccessToken();
+  async getResourseByAuth(baseURL, path) {
+    const url = `${baseURL}/${path}`;
+        let accessToken = getAccessToken();
 
     const requestOptions = {
       method: 'GET',
@@ -35,7 +35,7 @@ class ApiService {
         //console.log('accessToken', accessToken);
         try {
           accessToken = await this.oauthService.updateAccessTokenByRefreshToken(); // Вызов метода обновления access token из OAuth2Service
-          return this.getResourseByAuth(path); // Повторный вызов метода getAllCustomers с обновленным access token    
+          return this.getResourseByAuth(baseURL, path); // Повторный вызов метода getAllCustomers с обновленным access token    
         } catch (error) {
           console.log('updateAccessTokenByRefreshToken error: ', error);
           throw error;
@@ -54,14 +54,14 @@ class ApiService {
     //return await fetch(url, requestOptions);
   }
 
-  withPagesParams = (get, path, page, size) => {
+  withPagesParams = (get, baseURL, path, page, size) => {
     const modifiedPath = `${path}?page=${page}&size=${size}`;
-    return get(modifiedPath);
+    return get(baseURL, modifiedPath);
   }
 
   async getAllCustomers(page = 1, size = 10) {
     try {
-      const response = await this.withPagesParams(this.getResourseByAuth.bind(this), CUSTOMERS_URL, page, size);
+      const response = await this.withPagesParams(this.getResourseByAuth.bind(this), BASE_URL, CUSTOMERS_URL, page, size);
       return response;
     } catch (error) {
       console.log('необработанная ошибка getAllCustomers', error);
@@ -71,7 +71,20 @@ class ApiService {
 
   async getCurrentCustomer() {
     try {
-      const response = this.getResourseByAuth(CURRENT_CUSTOMER_URL);
+      const response = this.getResourseByAuth(BASE_URL, CURRENT_CUSTOMER_URL);
+      return response;
+    } catch (error) {
+      console.log('необработанная ошибка getCurrentCustomer', error);
+      throw error; // Пробросываем ошибку для обработки её компонентом, вызывающим метод getAllCustomers
+    }
+    //return this.getResourseByAuth(CURRENT_CUSTOMER_URL);
+  }
+
+  async getCurrentCustomerCollections() {
+    try {
+      const response = this.getResourseByAuth(TEMP_BASE_URL, CURRENT_CUSTOMER_COLLECTION_URL);
+      //const response = this.getResourseByAuthWhithTempURL(CURRENT_CUSTOMER_COLLECTION_URL);
+      console.log('response: ', response);
       return response;
     } catch (error) {
       console.log('необработанная ошибка getCurrentCustomer', error);
