@@ -24,6 +24,8 @@ public class CollectionAccessService {
         return findMyCollectionByIdAndCustomerId(collectionId, customerId, false);
     }
 
+
+    //TODO отрефакторить метод
     public Collection findMyCollectionByIdAndCustomerId(Long collectionId, String customerId, boolean fetchTags) {
         Collection collection;
         if (fetchTags) {
