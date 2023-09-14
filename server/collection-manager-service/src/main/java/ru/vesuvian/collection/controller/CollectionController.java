@@ -73,7 +73,8 @@ public class CollectionController {
             @RequestParam(required = false, defaultValue = "all")
             @Parameter(description = "Privacy filter", name = "privacy", required = false, example = "all",
                     schema = @Schema(type = "string", allowableValues = {"all", "public", "private"}))
-            Privacy privacy) {
+            Privacy privacy
+    ) {
         return collectionService.getMyCollections(privacy);
     }
 

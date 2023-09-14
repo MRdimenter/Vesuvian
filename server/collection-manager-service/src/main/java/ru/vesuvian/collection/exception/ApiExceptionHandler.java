@@ -42,4 +42,14 @@ public class ApiExceptionHandler {
 
         return new ResponseEntity<>(apiException, status);
     }
+
+    @ExceptionHandler(MaxTagsPerCollectionReachedException.class)
+    public ResponseEntity<Object> handleUnauthorizedAccessException(MaxTagsPerCollectionReachedException e) {
+        var status = HttpStatus.UNPROCESSABLE_ENTITY;
+        var apiException = new ApiException(e.getMessage(), status, ZonedDateTime.now());
+
+        log.info("API Exception: Status - {}, Message - {}", status, e.getMessage());
+
+        return new ResponseEntity<>(apiException, status);
+    }
 }

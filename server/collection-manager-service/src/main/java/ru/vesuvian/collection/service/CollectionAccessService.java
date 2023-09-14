@@ -36,6 +36,7 @@ public class CollectionAccessService {
                     .orElseThrow(() -> new CollectionNotFoundException("Collection with ID " + collectionId + " not found"));
         }
 
+        //TODO поправить исключение, может быть выброшено и при создании карточек и при обновлении коллекции
         if (!collection.getCreatorCustomerId().equals(customerId)) {
             throw new UnauthorizedAccessException("The customer does not have permission to add cards to this collection");
         }

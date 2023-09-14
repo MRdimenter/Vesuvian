@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.vesuvian.collection.entity.Collection;
 import ru.vesuvian.collection.entity.CollectionTag;
 import ru.vesuvian.collection.entity.Tag;
+import ru.vesuvian.collection.exception.TagAlreadyExistsInCollectionException;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -29,8 +30,10 @@ public class CollectionTagService {
                 .collect(Collectors.toSet());
     }
 
-    public boolean tagAlreadyExistsInCollection(Collection collection, Tag tag) {
+    public void validateTagNotInCollection(Collection collection, Tag tag) {
         Set<Long> existingTagIds = getExistingTagIdsInCollection(collection);
-        return existingTagIds.contains(tag.getTagId());
+        if (existingTagIds.contains(tag.getTagId())) {
+            throw new TagAlreadyExistsInCollectionException("Tag already exists in the collection.");
+        }
     }
 }

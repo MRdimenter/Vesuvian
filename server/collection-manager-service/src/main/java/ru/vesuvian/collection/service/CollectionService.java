@@ -68,7 +68,11 @@ public class CollectionService {
 
     public List<CollectionGetDto> getMyCollections(Privacy privacy) {
         String customerUUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
-        List<CustomerCollection> customerCollections = customerCollectionRepository.findByCustomerIdWithCollections(customerUUID);
+        List<CustomerCollection> customerCollections = customerCollectionRepository.findByCustomerIdWithCollectionsAndTags(customerUUID);
+
+       // customerCollections.get(0).getCollection().getCollectionTags().stream().forEach(collectionTag -> System.out.println(collectionTag.getTag().getTagName()));
+//        customerCollections.stream().forEach(customerCollection -> customerCollection.getCollection().getCollectionTags().stream().forEach(collectionTag -> System.out.println(collectionTag.getTag().getTagName())));
+
         return customerCollections.stream()
                 .map(customerCollection -> collectionGetMapper.mapToDTO(customerCollection.getCollection()))
                 .filter(collectionGetDTO -> privacyService.isCollectionVisibleBasedOnPrivacy(privacy, collectionGetDTO.getIsPublic()))

@@ -1,5 +1,6 @@
 package ru.vesuvian.collection.dto.get;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -55,4 +57,6 @@ public class CollectionGetDto {
     @JsonProperty("number_of_cards")
     private Integer numberOfCards;
 
+    @JsonProperty("tags")
+    private List<TagGetDto> tagGetDtoList;
 }
