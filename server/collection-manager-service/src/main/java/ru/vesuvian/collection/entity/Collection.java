@@ -68,7 +68,7 @@ public class Collection {
             columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "rating", columnDefinition = "DECIMAL(3,2)")
+    @Column(name = "rating")
     private Double rating;
 
     @Column(name = "number_of_cards")
