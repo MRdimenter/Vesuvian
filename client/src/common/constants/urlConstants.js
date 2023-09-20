@@ -10,7 +10,7 @@ const REGISTR_URL_PATH = 'api/v1/customers/create'; //TODO edit after clarificat
 const CUSTOMERS_URL = 'api/v1/customers';
 
 const CURRENT_CUSTOMER_URL = 'api/v1/customers/me';
-const CURRENT_CUSTOMER_COLLECTION_URL = 'api/v1/collections/me';
+const CURRENT_CUSTOMER_COLLECTIONS_URL = 'api/v1/collections/me';
 
 export {
     BASE_HOSTNAME,
@@ -18,7 +18,7 @@ export {
     REGISTR_URL_PATH,
     CUSTOMERS_URL,
     CURRENT_CUSTOMER_URL,
-    CURRENT_CUSTOMER_COLLECTION_URL,
+    CURRENT_CUSTOMER_COLLECTIONS_URL,
     TEMP_BASE_PORT,
     TEMP_BASE_URL,
 }

@@ -11,9 +11,10 @@ const CollectionsPageHeader = () => {
   return (
     <div className="collections-page-header">
         <div className="collections-page-header-sortby">
-          <span>Сортировка по:</span>
+          <span>Сортировка по:    </span>
           <Button btnStyle='link' label='Алфавиту' action={handleSubmit} />
-          <Button btnStyle='link' label='Времени' action={handleSubmit} />
+          <span>    </span>
+          <Button btnStyle='link' label='Дате' action={handleSubmit} />
         </div>
         <div className="collections-page-header-groupby">
           <span>Группировка по:</span>

@@ -1,4 +1,4 @@
-import { BASE_URL, CURRENT_CUSTOMER_COLLECTION_URL, CURRENT_CUSTOMER_URL, CUSTOMERS_URL, TEMP_BASE_PORT, TEMP_BASE_URL } from "../constants/urlConstants";
+import { BASE_URL, CURRENT_CUSTOMER_COLLECTIONS_URL, CURRENT_CUSTOMER_URL, CUSTOMERS_URL, TEMP_BASE_PORT, TEMP_BASE_URL } from "../constants/urlConstants";
 import { ServerError } from "./Errors/Errors";
 import { getAccessToken } from "./useOAuth2";
 
@@ -82,8 +82,19 @@ class ApiService {
 
   async getCurrentCustomerCollections() {
     try {
-      const response = this.getResourseByAuth(TEMP_BASE_URL, CURRENT_CUSTOMER_COLLECTION_URL);
-      //const response = this.getResourseByAuthWhithTempURL(CURRENT_CUSTOMER_COLLECTION_URL);
+      const response = this.getResourseByAuth(TEMP_BASE_URL, CURRENT_CUSTOMER_COLLECTIONS_URL);
+      console.log('response: ', response);
+      return response;
+    } catch (error) {
+      console.log('необработанная ошибка getCurrentCustomer', error);
+      throw error; // Пробросываем ошибку для обработки её компонентом, вызывающим метод getAllCustomers
+    }
+    //return this.getResourseByAuth(CURRENT_CUSTOMER_URL);
+  }
+
+  async getCurrentCustomerCollections() {
+    try {
+      const response = this.getResourseByAuth(TEMP_BASE_URL, CURRENT_CUSTOMER_COLLECTIONS_URL);
       console.log('response: ', response);
       return response;
     } catch (error) {

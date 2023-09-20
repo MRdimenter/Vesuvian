@@ -24,8 +24,8 @@ function getAlfaFilterObjects(collections) {
     sortedCollections[letter] = [];
   });
 
-  collections.forEach((collection) => {   //todo заменить collection скорее всего на collection.title
-    sortedCollections[collection.name[0]].push(collection.name);
+  collections.forEach((collection) => {
+    sortedCollections[collection.name[0]].push(collection);
   })
 
   return Object.entries(sortedCollections);

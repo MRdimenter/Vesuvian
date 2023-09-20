@@ -3,13 +3,15 @@ import { Title } from '../../../Title/Title.js';
 
 import './collectionPageGroup.scss';
 
-const getCollectionCards = (titles) => {
+const getCollectionCards = (firstLetterOfCollection) => {
   return (
     <>
-      {titles.map((title) => {
+      {firstLetterOfCollection.map((collection) => {
+        const collectionTitles = collection.name;
+        const collectionTags = collection.tags;
         return (
           <div className='collection-card-wrapper'>
-            <CollectionCard title={title}/>
+            <CollectionCard title={collectionTitles} tags={collectionTags}/>
           </div>
         )
       })}
@@ -19,14 +21,13 @@ const getCollectionCards = (titles) => {
 
 const CollectionPageGroup = ({collection}) => {
   const firstLetterOfCollectionTitle = collection[0];
-  const collectionTitles = collection[1];
+  const collectionsByFirstLetter = collection[1];
 
   return (
     <div className="collection-page-group">
       <Title text={firstLetterOfCollectionTitle} />
       <div className='collection-cards-wrapper'>
-        {getCollectionCards(collectionTitles)}
-        
+        {getCollectionCards(collectionsByFirstLetter)}
       </div>
       
     </div>

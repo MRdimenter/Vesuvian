@@ -4,6 +4,7 @@
   width: 400px;
   height: 227px;
   border-radius: 10px;
+  position: relative;
 
   display: flex;
   justify-content: center;
@@ -11,6 +12,19 @@
 
   .collection-card-title {
     color: black;
+  }
+
+  .collection-card-tags {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap-reverse;
+
+    .collection-card-tags-wrapper {
+      margin: 0 5px 5px 0;
+    }
   }
 }
 
