@@ -7,7 +7,11 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.vesuvian.collection.dto.get.CollectionGetDto;
+import ru.vesuvian.collection.dto.get.TagGetDto;
 import ru.vesuvian.collection.entity.Collection;
+import ru.vesuvian.collection.entity.Tag;
+
+import java.util.stream.Collectors;
 
 @Component
 @Slf4j
@@ -25,6 +29,18 @@ public class CollectionGetMapper {
                 .numberOfCards(collection.getNumberOfCards())
                 .rating(collection.getRating())
                 .createdAt(collection.getCreatedAt())
+                .tagGetDtoList(collection.getCollectionTags()
+                        .stream()
+                        .map(collectionTag -> mapToTag(collectionTag.getTag()))
+                        .collect(Collectors.toList())
+                )
+                .build();
+    }
+
+    public TagGetDto mapToTag(Tag tag) {
+        return TagGetDto.builder()
+                .tagId(tag.getTagId())
+                .tagName(tag.getTagName())
                 .build();
     }
 

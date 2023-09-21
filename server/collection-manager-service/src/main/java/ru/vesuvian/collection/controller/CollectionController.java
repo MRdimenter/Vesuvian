@@ -6,13 +6,12 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.vesuvian.collection.dto.create.CollectionCreateDto;
 import ru.vesuvian.collection.dto.get.CollectionGetDto;
+import ru.vesuvian.collection.dto.update.CollectionUpdateDto;
 import ru.vesuvian.collection.enums.Privacy;
 import ru.vesuvian.collection.service.CollectionService;
 
@@ -38,8 +37,7 @@ public class CollectionController {
             @Parameter(description = "Collection data to be created", required = true,
                     content = @Content(schema = @Schema(implementation = CollectionCreateDto.class)))
             CollectionCreateDto newCollection) {
-            log.info(newCollection.toString());
-            log.info("WORK");
+
         collectionService.createCollection(newCollection);
     }
 
@@ -74,8 +72,25 @@ public class CollectionController {
     public List<CollectionGetDto> getMyCollections(
             @RequestParam(required = false, defaultValue = "all")
             @Parameter(description = "Privacy filter", name = "privacy", required = false, example = "all",
-                       schema = @Schema(type = "string", allowableValues = {"all", "public", "private"}))
-            Privacy privacy) {
+                    schema = @Schema(type = "string", allowableValues = {"all", "public", "private"}))
+            Privacy privacy
+    ) {
         return collectionService.getMyCollections(privacy);
+    }
+
+    @PutMapping("/{collectionId}")
+    @Operation(summary = "Update collection by collection ID",
+            description = "Update a specific collection based on its ID")
+    public void updateCollectionById(
+            @PathVariable
+            @Parameter(description = "ID of the collection to be updated", name = "collectionId", required = true, example = "789")
+            Long collectionId,
+
+            @RequestBody
+            @Parameter(description = "Updated collection data", required = true,
+                    content = @Content(schema = @Schema(implementation = CollectionUpdateDto.class)))
+            CollectionUpdateDto collectionUpdateDto) {
+
+        collectionService.updateCollectionById(collectionId, collectionUpdateDto);
     }
 }

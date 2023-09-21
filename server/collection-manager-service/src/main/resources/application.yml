@@ -15,6 +15,8 @@ spring:
       resource-server:
         jwt:
           jwk-set-uri: http://212.113.120.198:8282/realms/dev/protocol/openid-connect/certs # ссылка на сертификаты authserver для проверки целостности access token
+  liquibase:
+    enabled: true
   datasource:
     url: jdbc:postgresql://collection-manager-postgres:5432/collections
     #url: jdbc:postgresql://localhost:5445/collections
@@ -22,7 +24,7 @@ spring:
     password: ${COLLECTION_MANAGER_POSTGRES_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate # заменить на none
 
     properties:
       hibernate:

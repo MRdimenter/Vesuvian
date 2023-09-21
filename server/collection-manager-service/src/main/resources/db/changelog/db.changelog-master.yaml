@@ -1,0 +1,3 @@
+databaseChangeLog: #параметр в котором находятся миграции
+  - includeAll:  # список активных миграций
+      path: db/changelog/changeset/ddl/
