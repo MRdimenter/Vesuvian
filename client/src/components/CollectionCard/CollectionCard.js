@@ -1,4 +1,5 @@
 import { CardTag } from '../CardTag/CardTag';
+
 import './collectionCard.scss';
 
 const CollectionCard = ({title, tags, backgroundStyle}) => {

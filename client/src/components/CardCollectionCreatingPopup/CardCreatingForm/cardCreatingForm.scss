@@ -1,0 +1,73 @@
+.card-creating-form {
+  margin-top: 30px;
+  width: 100%;
+  position: relative;
+
+  .two-sides-card {
+    border: 1px solid blue;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .card-params {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .hint-column {
+      width: 400px;
+      color: rgba(0, 0, 0, 0.6);
+
+      .card-hint-textarea {
+        border: 1px solid black;
+        border-radius: 7px;
+        width: 400px;
+        height: 100px;
+        background-color: inherit;
+        resize: none;
+      }
+    }
+    .collection-selection-column {
+      .collection-selection {
+        border: 1px solid black;
+        width: 400px;
+        height: 40px;
+        border-radius: 7px;
+        background-color: inherit;
+      }
+
+      .attaching-image {
+        margin-top: 18px;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        .attaching-image-text {
+          margin-left: 10px;
+        }
+    }
+
+    }
+  }
+
+  .button-submit-card-creation {
+    border: 1px solid green;
+    margin-top: 46px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hint-column {
+    width: 400px;
+  }
+
+  .collection-selection-column {
+    width: 400px;
+  }
+}

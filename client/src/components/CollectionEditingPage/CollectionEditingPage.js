@@ -45,10 +45,16 @@ const collection = [
   },
 ]
 
+const collectionTags = [
+  'English',
+  'Nature',
+  'Animals'
+]
+
 const CollectionEditingPage = () => {
   return (
     <div className='collection-page'>
-      <CollectionEditingPageHeader />
+      <CollectionEditingPageHeader tags={collectionTags}/>
       <CollectionEditingPageBody collection={collection}/>
     </div>
   )

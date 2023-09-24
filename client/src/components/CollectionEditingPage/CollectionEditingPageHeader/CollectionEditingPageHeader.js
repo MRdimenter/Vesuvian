@@ -34,7 +34,7 @@ const CollectionEditingPageHeader = ({ collectionTitle = 'Basic English', tags=[
           <Title text ={collectionTitle}/>
           <Icon iconName='globe-svg' iconFormat='svg' width="40" height="40" />
           {getTags(tags)}
-          <Button btnStyle='link' label='+добавить тег' action={handleSubmit} />
+          {tags.length < 3 && <Button btnStyle='link' label='+добавить тег' action={handleSubmit} />}
         </div>
         <div className="training-bar">
           <Button btnStyle='btn' label='Начать тренировку' link={'/cards'} />

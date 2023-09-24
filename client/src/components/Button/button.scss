@@ -28,11 +28,30 @@
   max-height: min-content;
   max-width: min-content;
   cursor: pointer;
-  color: $white;
   white-space: nowrap;
   background-color: transparent;
   background-color: transparent;
   border: none;
+}
+
+.text-color-white {
+  color: $white;
+}
+
+.text-color-black {
+  color: black;
+}
+
+.text-size-small {
+  font-size:  16px;
+}
+
+.text-size-big {
+  font-size:  20px;
+}
+
+.underlined {
+  text-decoration-style: solid;
 }
 
 .btn:hover,

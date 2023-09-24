@@ -18,7 +18,7 @@ export const Header = () => {
           <Button btnStyle='btn' label='Коллекции' link={'/collectionsPage'} />
         </div>
         <div className="header-nav-button">
-          <Button btnStyle='btn' label='+' link={'/cards'} />
+          <Button btnStyle='btn' label='+' link={'/cardCreatingPage'} />
         </div>
         <SearchInput />
       </nav>

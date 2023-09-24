@@ -1,0 +1,17 @@
+.card-collection-creating-nav {
+  border: 1px solid black;
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  .card-collection-creating-nav-buttons {
+    width: 215px;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.undelined {
+  border-bottom: 1px solid black;
+}

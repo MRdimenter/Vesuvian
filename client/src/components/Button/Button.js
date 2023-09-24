@@ -9,13 +9,23 @@ import './button.scss';
 * TODO Description
 **/
 
-const Button = ({ label = 'btn', btnStyle='link', link, action }) => {
-  const setStyle = `btn-link-font btn-link-font ${btnStyle ?? 'btn'}`;
+const Button = ({ label = 'btn', btnStyle='link', link, action, textColor='white', fontSize='normal' }) => {
+  const textColors = {
+    white: 'text-color-white',
+    black: 'text-color-black',
+  }
+  const btnLinkFont = {
+    normal: 'btn-link-font',
+    big: 'btn-link-font-big',
+  }
+
+  const setStyle = `${btnLinkFont[fontSize]} ${btnStyle ?? 'btn'} ${textColors[textColor]}`;
   const setThemeDark = '';
 
   return (
     <Link to={link} className='link-button'>
       <button
+        color={'black'}
         type="button"
         className={`${setStyle} ${setThemeDark}`}
         onClick={action}>
