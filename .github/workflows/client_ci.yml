@@ -35,7 +35,7 @@ jobs:
 
       - name: Deploy React App to remote server
         run: |
-          ssh ${{ secrets.SSH_USER }}@${{ 45.89.190.45 }} "
+          ssh ${{ secrets.SSH_USER }}@45.89.190.45"
             docker pull ghcr.io/mrdimenter/react-app-container:latest
             docker stop react-app-container || true
             docker rm react-app-container || true
