@@ -1,0 +1,43 @@
+name: React App Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push React App Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          dockerfile: Dockerfile
+          push: true
+          tags: ghcr.io/mrdimenter/react-app-container:latest
+
+      - name: Install ssh keys
+        run: |
+          install -m 600 -D /dev/null ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
+
+      - name: Deploy React App to remote server
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ 45.89.190.45 }} "
+            docker pull ghcr.io/mrdimenter/react-app-container:latest
+            docker stop react-app-container || true
+            docker rm react-app-container || true
+            docker run -d --name react-app-container -p 80:80 ghcr.io/mrdimenter/react-app-container:latest 
+          "
