@@ -38,7 +38,8 @@ jobs:
         run: |
           install -m 600 -D /dev/null ~/.ssh/id_rsa
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
+          ssh-keyscan -H 45.89.190.45 >> ~/.ssh/known_hosts
+
 
       - name: Deploy React App to remote server
         run: |
