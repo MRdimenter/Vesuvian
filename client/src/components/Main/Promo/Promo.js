@@ -29,7 +29,7 @@ const Promo = () => {
           </div>
           <div className="promo-offer-column">
             <div className='promo-offer-text-column'>
-              <h2 className='h2-promo'>Upload your learning materials</h2>
+              <h2 className='h2-promo'>Upload your learning cats</h2>
               <p className='h5-promo'>Upload all of your learning materials into your iDoRecall library. Word files, PowerPoints, PDFs, images, media hosted on YouTube, Vimeo, Soundcloud, and much more.</p>
             </div>
           </div>
