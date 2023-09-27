@@ -1,4 +1,4 @@
-import { BASE_URL, CURRENT_CUSTOMER_COLLECTIONS_URL, CURRENT_CUSTOMER_URL, CUSTOMERS_URL, TEMP_BASE_PORT, TEMP_BASE_URL } from "../constants/urlConstants";
+import { BASE_URL, COLLECTION_URL, COLLECTION_URL_TAIL, CURRENT_CUSTOMER_COLLECTIONS_URL, CURRENT_CUSTOMER_URL, CUSTOMERS_URL, TEMP_BASE_PORT, TEMP_BASE_URL } from "../constants/urlConstants";
 import { ServerError } from "./Errors/Errors";
 import { getAccessToken } from "./useOAuth2";
 
@@ -83,22 +83,23 @@ class ApiService {
   async getCurrentCustomerCollections() {
     try {
       const response = this.getResourseByAuth(TEMP_BASE_URL, CURRENT_CUSTOMER_COLLECTIONS_URL);
-      console.log('response: ', response);
+      console.log('getCurrentCustomerCollections response: ', response);
       return response;
     } catch (error) {
-      console.log('необработанная ошибка getCurrentCustomer', error);
+      console.log('необработанная ошибка getCurrentCustomerCollections', error);
       throw error; // Пробросываем ошибку для обработки её компонентом, вызывающим метод getAllCustomers
     }
     //return this.getResourseByAuth(CURRENT_CUSTOMER_URL);
   }
 
-  async getCurrentCustomerCollections() {
+  async getCollectionById(colleciotId) {
+    const fullCollectionURL = `${COLLECTION_URL}/${colleciotId}/${COLLECTION_URL_TAIL}`;
     try {
-      const response = this.getResourseByAuth(TEMP_BASE_URL, CURRENT_CUSTOMER_COLLECTIONS_URL);
-      console.log('response: ', response);
+      const response = this.getResourseByAuth(TEMP_BASE_URL, fullCollectionURL);
+      console.log('getCollectionById response: ', response);
       return response;
     } catch (error) {
-      console.log('необработанная ошибка getCurrentCustomer', error);
+      console.log('необработанная ошибка getCollectionById', error);
       throw error; // Пробросываем ошибку для обработки её компонентом, вызывающим метод getAllCustomers
     }
     //return this.getResourseByAuth(CURRENT_CUSTOMER_URL);

@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import { CollectionEditingPageBody } from './CollectionEditingPageBody/CollectionEditingPageBody copy';
 import { CollectionEditingPageHeader } from './CollectionEditingPageHeader/CollectionEditingPageHeader';
 
@@ -52,6 +53,9 @@ const collectionTags = [
 ]
 
 const CollectionEditingPage = () => {
+  //const dispatch = useDispatch();
+  const loadingCollectionData = useSelector((state) => state.collectionData.loading);
+  console.log('loadingCollectionData: ', loadingCollectionData);
   return (
     <div className='collection-page'>
       <CollectionEditingPageHeader tags={collectionTags}/>

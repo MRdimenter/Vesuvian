@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 
 import './errorPage.scss'
 
-const ErrorPage = () => {
+const ErrorPage = ({message = 'Oops'}) => {
     return (
         <div className="wrapper">
             <h1>Oops</h1>

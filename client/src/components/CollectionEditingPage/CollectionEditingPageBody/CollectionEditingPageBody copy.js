@@ -12,7 +12,7 @@ const CollectionEditingPageBody = ({ collection }) => {
           collection.map((card, index) => {
             const {term} = card;
               return (
-                <NumberedCard title={term} number={index + 1} />
+                <NumberedCard key={term + index} title={term} number={index + 1} />
               )
           })
         }

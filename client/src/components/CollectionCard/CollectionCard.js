@@ -2,7 +2,8 @@ import { CardTag } from '../CardTag/CardTag';
 
 import './collectionCard.scss';
 
-const CollectionCard = ({title, tags, backgroundStyle}) => {
+const CollectionCard = ({collection={name: null, tags: []}, onCollectionCardClick, backgroundStyle}) => {
+  const {name, tags} = collection;
   const cardStyle = `${backgroundStyle || 'light-card-bg'}`
 
   const getCardTags = (tags) => {
@@ -22,9 +23,13 @@ const CollectionCard = ({title, tags, backgroundStyle}) => {
     return null;
   }
 
+  const onCollectionCardClickHandle = () => {
+    onCollectionCardClick(collection);
+  }
+
   return (
-    <div className={`collection-card ${cardStyle}`}>
-      <span className={`collection-card-title middle-promo`}>{title}</span>
+    <div className={`collection-card ${cardStyle}`} onClick={onCollectionCardClickHandle}>
+      <span className={`collection-card-title middle-promo`}>{name}</span>
       {tags?.length && 
         <div className='collection-card-tags'>
           {getCardTags(tags)}

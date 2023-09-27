@@ -11,6 +11,8 @@ const CUSTOMERS_URL = 'api/v1/customers';
 
 const CURRENT_CUSTOMER_URL = 'api/v1/customers/me';
 const CURRENT_CUSTOMER_COLLECTIONS_URL = 'api/v1/collections/me';
+const COLLECTION_URL = 'api/v1/collections';
+const COLLECTION_URL_TAIL = 'cards';
 
 export {
     BASE_HOSTNAME,
@@ -21,4 +23,6 @@ export {
     CURRENT_CUSTOMER_COLLECTIONS_URL,
     TEMP_BASE_PORT,
     TEMP_BASE_URL,
+    COLLECTION_URL,
+    COLLECTION_URL_TAIL,
 }
