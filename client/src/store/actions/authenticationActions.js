@@ -13,6 +13,7 @@ const authenticationAction = () => {
     try {
       dispatch(authenticationStateAction(false));
       const accessToken = await oAuth2Servise.updateAccessTokenByRefreshToken(); // пока что есть проблемка: не ясно по какой причине нет accessToken (может сервер лежит), данные обработчики нужно добавить в обработку ошибок 
+      //console.log('authenticationAction accessToken: ', accessToken);
       if (accessToken) {
         dispatch({type: AUTHENTICATION_STATUS.AUTH_STATUS, payload: true});
       } else {
@@ -22,7 +23,8 @@ const authenticationAction = () => {
       console.log('!!!!!!!!!!!!!!!!!!!!!!!!');
       dispatch({type: AUTHENTICATION_STATUS.AUTH_STATUS, payload: false});
     } finally {
-      dispatch(authenticationStateAction(true));
+      console.log('!!!!!!!!!!!!!!!!!!!!!!!! finally finally finally finally');
+      //dispatch(authenticationStateAction(true)); //TODO возможно из-за finally ошибка бесконечного запроса
     }
   }
 }

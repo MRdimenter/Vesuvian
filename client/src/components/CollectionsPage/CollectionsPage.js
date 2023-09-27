@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ApiService } from '../../common/utils/ApiService';
 import { OAuth2Service } from '../../common/utils/OAuth2Service';
 import { authenticationAction } from '../../store/actions/authenticationActions';
@@ -11,6 +11,7 @@ import { CollectionsPageBody } from './CollectionsPageBody/CollectionsPageBody';
 import { CollectionsPageHeader } from './CollectionsPageHeader/CollectionsPageHeader';
 
 import './collectionsPage.scss';
+import { collectionAction } from '../../store/actions/collectionAction';
 
 function getAlfaFilterObjects(collections) {
   const firstLetters = new Map();
@@ -38,6 +39,31 @@ const CollectionsPage = () => {
   const [collectionsList, setCollectionsList] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  // для перехода на страницу коллекции
+  const [isMakeTransition, setIsMakeTransition] = useState(false);
+  const collectionDataState = useSelector((state) => state.collectionData.collectionData);
+  const loadingCollectionData = useSelector((state) => state.collectionData.loading);
+  const errorCollectionData = useSelector((state) => state.collectionData.error);
+
+
+
+  useEffect(() => {
+    if (isMakeTransition) {
+      if (collectionDataState?.length && !loadingCollectionData && !errorCollectionData) {
+        navigate('/collectionPage');
+      }
+    }
+  }, [collectionDataState, loadingCollectionData, errorCollectionData])
+
+  useEffect(() => {
+    return () => {
+      if (isMakeTransition) {
+        setIsMakeTransition(false);
+      }
+    }
+  }, [isMakeTransition])
+  //-----------------------------------
+
 
   async function logout(dispatch) {
     const oAuth2Servise = new OAuth2Service();
@@ -51,7 +77,7 @@ const CollectionsPage = () => {
     const oauthService = new OAuth2Service();
     const apiService = new ApiService(oauthService);
 
-    async function getAPICustomers() {
+    async function getAPICustomers() {  //TODO rename (злой копипаст - не изменил название функции)
       setLoading(true);
       try {
         const reponseCollectionList = await apiService.getCurrentCustomerCollections();
@@ -81,22 +107,54 @@ const CollectionsPage = () => {
     getAPICustomers();
   }, [dispatch, navigate]);
 
+  async function getCollectionById() {
+    const oauthService = new OAuth2Service();
+    const apiService = new ApiService(oauthService);
+
+    try {
+      const reponseCollectionList = await apiService.getCollectionById(5);
+      console.log('reponseCollectionList: ', reponseCollectionList);
+    } catch (error) {
+      console.log('error: ', error);
+    }
+
+  }
+
+  const onCollectionCardClick = async (collection) => {
+    const { collection_id: collectionId } = collection;
+    setIsMakeTransition(true);
+
+    //TODO задумка такая:
+    // получить данные коллекции и отправить их в с store
+    // после этого перейти на страницу коллекции и получить их там
+    // НО сперва нужно убедиться, что данные получены и находятся в store
+    // А теперь вопрос: как узнать, что collectionAction завершился успешно?
+
+    await dispatch(collectionAction(collectionId));
+    // в теории после диспатча нужно переходить на страницу коллекции
+
+
+    //getCollectionById();
+  }
+
   function Loading() {
     return <h2>🌀 Loading...</h2>;
   }
 
-  const spinner = loading ? <div className='spinner'><Loading/></div> : null;
-  const errorMessage = error ? <ErrorPage/> : null;
-  const customers = collectionsList ? <>
-      <CollectionsPageHeader />
-      <CollectionsPageBody sortedCollections={collectionsList} />
-    </> : null;
+  const spinner = (loading || loadingCollectionData) ? <div className='spinner'><Loading /></div> : null;
+  const errorMessage = error ? <ErrorPage /> : null;
+  const errorCollectionFetchingData = error ? <ErrorPage message='Не удалось загрузить коллекцию' /> : null;
+  const collections = collectionsList ? <>
+    <CollectionsPageHeader />
+    <CollectionsPageBody sortedCollections={collectionsList} onCollectionCardClick={onCollectionCardClick} />
+  </> : null;
 
   return (
     <div className='collections-page'>
       {spinner}
       {errorMessage}
-      {customers}
+      {errorCollectionFetchingData}
+      {collections}
     </div>
   )
 }

@@ -21,7 +21,7 @@ const CollectionEditingPageHeader = ({ collectionTitle = 'Basic English', tags=[
     return (
       <>
         {tags.map((tag) => {
-          return (<CardTag tagText={tag}/>)
+          return (<CardTag key={tag} tagText={tag}/>) //TODO bad key
         })}
       </>
     )
