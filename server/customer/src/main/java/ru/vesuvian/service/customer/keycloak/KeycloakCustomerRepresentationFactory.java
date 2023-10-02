@@ -11,7 +11,7 @@ import java.util.Collections;
 
 @Component
 @RequiredArgsConstructor
-public class KeycloakUserRepresentationFactory {
+public class KeycloakCustomerRepresentationFactory {
     public UserRepresentation createUserRepresentation(CustomerRegistrationDto customer) {
         var credential = createPasswordCredentials(customer.getPassword());
         var userRepresentation = new UserRepresentation();

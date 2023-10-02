@@ -7,6 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -32,7 +35,6 @@ public class Customer {
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
             generator = "customer_sequence")
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(
             name = "id",
             nullable = false,
@@ -72,4 +74,7 @@ public class Customer {
     )
     private String lastName;
 
+    @CreationTimestamp
+    @Column(name = "creation_date")
+    private LocalDateTime createdAt;
 }

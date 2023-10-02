@@ -20,13 +20,13 @@ public record PageCustomerRepresentationDto(
         Integer currentPage,
         @ArraySchema(schema = @Schema(name = "customers", description = "Customers"))
         @JsonProperty("customers")
-        List<CustomerRepresentationDto> customerRepresentationDtoList
+        List<CustomerGetDto> customerGetDtoList
 
 ) {
     public static PageCustomerRepresentationDto createFrom(
             Integer totalPages,
             Integer zeroBasedPageNumber,
-            List<CustomerRepresentationDto> customerRepresentationList) {
+            List<CustomerGetDto> customerRepresentationList) {
 
         return new PageCustomerRepresentationDto(
                 totalPages,

@@ -1,32 +1,31 @@
 package ru.vesuvian.service.customer.keycloak;
 
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import ru.vesuvian.service.customer.dto.CustomerGetDto;
 import ru.vesuvian.service.customer.dto.CustomerRegistrationDto;
-import ru.vesuvian.service.customer.dto.CustomerRepresentationDto;
 import ru.vesuvian.service.customer.dto.CustomerUpdateDto;
 import ru.vesuvian.service.customer.dto.PageCustomerRepresentationDto;
 import ru.vesuvian.service.customer.exception.NotFoundException;
 import ru.vesuvian.service.customer.processing.CustomerProcessing;
 import ru.vesuvian.service.customer.utils.KeycloakRoles;
+import ru.vesuvian.service.customer.utils.mapping.CustomerMapping;
 
 @Component
 @Slf4j
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class KeycloakCustomerService {
-    final KeycloakUserResourceManager userResourceManager;
-    final KeycloakRoleManager roleManager;
-    final KeycloakUserRepresentationFactory userRepresentationFactory;
-    final KeycloakResponseManager responseManager;
-    final KeycloakCreateUserFactory createUserFactory;
-    final KeycloakRealmResourceManager realmResourceManager;
-    final CustomerProcessing customerProcessing;
-
+    private final KeycloakCustomerResourceManager userResourceManager;
+    private final KeycloakRoleManager roleManager;
+    private final KeycloakCustomerRepresentationFactory userRepresentationFactory;
+    private final KeycloakResponseManager responseManager;
+    private final KeycloakCreateUserFactory createUserFactory;
+    private final KeycloakRealmResourceManager realmResourceManager;
+    private final CustomerProcessing customerProcessing;
+    private final CustomerMapping<UserRepresentation> customerMapping;
 
     public String createCustomerInKeycloak(CustomerRegistrationDto customer) {
         var realmResource = realmResourceManager.getRealmResource();
@@ -62,23 +61,23 @@ public class KeycloakCustomerService {
         userResource.update(authenticatedUser);
     }
 
-    public CustomerRepresentationDto getCustomerInfoFromKeycloak() {
+    public CustomerGetDto getCustomerInfoFromKeycloak() {
         var id = SecurityContextHolder.getContext().getAuthentication().getName();
         var realmResource = realmResourceManager.getRealmResource();
         var usersResource = userResourceManager.getUsersResource(realmResource);
         var userRepresentation = usersResource.get(id).toRepresentation();
 
-        return CustomerRepresentationDto.fromUserRepresentation(userRepresentation);
+        return customerMapping.mapToCustomerGetDto(userRepresentation);
     }
 
-    public CustomerRepresentationDto getCustomerByIdInKeycloak(String id) {
+    public CustomerGetDto getCustomerByIdInKeycloak(String id) {
         try {
             var realmResource = realmResourceManager.getRealmResource();
             var userResource = userResourceManager.getUsersResource(realmResource);
             var userRepresentation = userResourceManager.getUserRepresentation(userResource, id);
 
-            return CustomerRepresentationDto.fromUserRepresentation(userRepresentation);
-        } catch (javax.ws.rs.NotFoundException e) {
+            return customerMapping.mapToCustomerGetDto(userRepresentation);
+        } catch (NotFoundException e) {
             var errorMsg = String.format("User with id %s not found", id);
             throw new NotFoundException(errorMsg);
         }

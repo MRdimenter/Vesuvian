@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.vesuvian.service.customer.dto.CustomerRegistrationDto;
-import ru.vesuvian.service.customer.dto.CustomerRepresentationDto;
+import ru.vesuvian.service.customer.dto.CustomerGetDto;
 import ru.vesuvian.service.customer.dto.CustomerUpdateDto;
 import ru.vesuvian.service.customer.dto.PageCustomerRepresentationDto;
 import ru.vesuvian.service.customer.keycloak.KeycloakCustomerService;
@@ -38,11 +38,11 @@ public class CustomerService {
         return keycloakCustomerService.getPagedCustomersFromKeycloak(actualPage, actualSize);
     }
 
-    public CustomerRepresentationDto getCustomerById(String id) {
-        return keycloakCustomerService.getCustomerByIdInKeycloak(id);
+    public CustomerGetDto getCustomerById(String customerId) {
+        return postgresCustomerService.getCustomerById(customerId);
     }
 
-    public CustomerRepresentationDto getMe() {
+    public CustomerGetDto getMe() {
         return keycloakCustomerService.getCustomerInfoFromKeycloak();
     }
 

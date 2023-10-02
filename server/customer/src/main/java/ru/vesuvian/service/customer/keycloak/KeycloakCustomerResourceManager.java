@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class KeycloakUserResourceManager {
+public class KeycloakCustomerResourceManager {
 
 
     public UserRepresentation getUserRepresentation(UsersResource usersResource, String id) {
