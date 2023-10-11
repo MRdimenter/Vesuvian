@@ -1,15 +1,11 @@
 package ru.vesuvian.collection.dto.get;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import ru.vesuvian.collection.entity.Collection;
 
 import java.time.LocalDateTime;
 
@@ -22,6 +18,9 @@ import java.time.LocalDateTime;
         description = "Card object"
 )
 public class CardGetDto {
+    @Schema(description = "Card ID")
+    @JsonProperty("collection_id")
+    private Long collectionID;
 
     @Schema(description = "Card ID")
     @JsonProperty("card_id")

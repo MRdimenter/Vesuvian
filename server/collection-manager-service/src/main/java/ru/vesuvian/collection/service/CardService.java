@@ -26,12 +26,11 @@ public class CardService {
     private final CollectionAccessService collectionAccessService;
     private final CollectionCreateMapper collectionCreateMapper;
 
-
     public List<CardGetDto> getCardsByCollectionId(Long collectionId) {
         var customerId = authenticatedCustomerResolver.getAuthenticatedCustomerId();
         var cardList = retrieveCardsByCollectionIdAndCustomerId(collectionId, customerId);
         return cardList.stream()
-                .map(cardGetMapper::mapCardToDto)
+                .map(card -> cardGetMapper.mapCardToDto(card, collectionId))
                 .toList();
     }
 
@@ -52,6 +51,4 @@ public class CardService {
         return cardRepository.findCardsByCollectionIdAndCustomerId(collectionId, customerId)
                 .orElseThrow(() -> new CollectionNotFoundException("Collection with ID " + collectionId + " not found"));
     }
-
-
 }
