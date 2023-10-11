@@ -57,7 +57,7 @@ public class TagService {
         var customerId = authenticatedCustomerResolver.getAuthenticatedCustomerId();
         var tagList = retrieveTagsByCollectionIdAndCustomerId(collectionId, customerId);
         return tagList.stream()
-                .map(tagGetMapper::mapTagToDto)
+                .map(tag -> tagGetMapper.mapTagToDto(tag, collectionId))
                 .toList();
     }
 

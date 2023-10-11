@@ -11,8 +11,9 @@ import ru.vesuvian.collection.entity.Tag;
 @RequiredArgsConstructor
 public class TagGetMapper {
 
-    public TagGetDto mapTagToDto(Tag tag) {
+    public TagGetDto mapTagToDto(Tag tag, Long collectionId) {
         return TagGetDto.builder()
+                .collectionId(collectionId)
                 .tagId(tag.getTagId())
                 .tagName(tag.getTagName())
                 .build();

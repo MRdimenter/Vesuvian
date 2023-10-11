@@ -17,6 +17,9 @@ import lombok.NoArgsConstructor;
         description = "Tag object"
 )
 public class TagGetDto {
+    @Schema(description = "Collection ID")
+    @JsonProperty("collection_id")
+    private Long collectionId;
 
     @Schema(description = "Tag ID")
     @JsonProperty("id")

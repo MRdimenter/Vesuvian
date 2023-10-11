@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
         description = "Card object"
 )
 public class CardGetDto {
-    @Schema(description = "Card ID")
+    @Schema(description = "Collection ID")
     @JsonProperty("collection_id")
     private Long collectionID;
 

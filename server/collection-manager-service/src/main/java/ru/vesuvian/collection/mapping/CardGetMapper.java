@@ -12,7 +12,7 @@ import ru.vesuvian.collection.entity.Card;
 @RequiredArgsConstructor
 public class CardGetMapper {
 
-    public CardGetDto mapCardToDto(Card card, long collectionId) {
+    public CardGetDto mapCardToDto(Card card, Long collectionId) {
         return CardGetDto.builder()
                 .collectionID(collectionId)
                 .cardId(card.getCardId())
