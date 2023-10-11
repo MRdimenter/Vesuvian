@@ -12,7 +12,8 @@ public class PostgresCustomerMapping implements CustomerMapping<Customer> {
     @Override
     public CustomerGetDto mapToCustomerGetDto(Customer customer) {
         return CustomerGetDto.builder()
-                .id(customer.getUUID())
+                .id(String.valueOf(customer.getId()))
+                .UUID(customer.getUUID())
                 .email(customer.getEmail())
                 .userName(customer.getUsername())
                 .firstName(customer.getFirstName())

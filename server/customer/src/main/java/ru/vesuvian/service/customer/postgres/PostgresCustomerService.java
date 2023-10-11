@@ -2,18 +2,16 @@ package ru.vesuvian.service.customer.postgres;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
-import ru.vesuvian.service.customer.dto.CustomerRegistrationDto;
 import ru.vesuvian.service.customer.dto.CustomerGetDto;
+import ru.vesuvian.service.customer.dto.CustomerRegistrationDto;
 import ru.vesuvian.service.customer.entity.Customer;
 import ru.vesuvian.service.customer.exception.NotFoundException;
 import ru.vesuvian.service.customer.repository.CustomerRepository;
 import ru.vesuvian.service.customer.utils.mapping.CustomerMapping;
-import ru.vesuvian.service.customer.utils.mapping.KeycloakCustomerMapping;
-import ru.vesuvian.service.customer.utils.mapping.PostgresCustomerMapping;
-
-import java.util.Optional;
 
 @Component
 @Slf4j
@@ -42,4 +40,13 @@ public class PostgresCustomerService {
         return customerMapping.mapToCustomerGetDto(customer);
 
     }
+
+    public Page<CustomerGetDto> getCustomers(int pageNumber, int pageSize, long lastId) {
+        var pageable = PageRequest.of(pageNumber - 1, pageSize);
+        var customerPage = customerRepository.findAllByIdGreaterThanOrderByIdAsc(lastId, pageable);
+        var customerGetDtoList = customerMapping.mapToCustomerGetDtos(customerPage.toList());
+
+        return new PageImpl<>(customerGetDtoList, pageable, customerPage.getTotalElements());
+    }
 }
+

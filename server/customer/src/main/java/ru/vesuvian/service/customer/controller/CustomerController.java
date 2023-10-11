@@ -9,12 +9,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.vesuvian.service.customer.dto.CustomerRegistrationDto;
 import ru.vesuvian.service.customer.dto.CustomerGetDto;
+import ru.vesuvian.service.customer.dto.CustomerPaginationDto;
+import ru.vesuvian.service.customer.dto.CustomerRegistrationDto;
 import ru.vesuvian.service.customer.dto.CustomerUpdateDto;
-import ru.vesuvian.service.customer.dto.PageCustomerRepresentationDto;
 import ru.vesuvian.service.customer.service.CustomerService;
 
 @RestController
@@ -32,20 +33,23 @@ public class CustomerController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful operation",
                     content = @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = PageCustomerRepresentationDto.class)))),
+                            array = @ArraySchema(schema = @Schema(implementation = CustomerPaginationDto.class)))),
             @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid credentials provided"),
             @ApiResponse(responseCode = "403", description = "Forbidden - You're not allowed to access this resource"),
             @ApiResponse(responseCode = "409", description = "Conflict - The request could not be completed due to a conflict with the current state of the resource")
     })
     @GetMapping()
-    public PageCustomerRepresentationDto getCustomers(
+    public Page<CustomerGetDto> getCustomers(
             @Parameter(description = "The page number to retrieve. Starts from 1.", name = "page")
             @RequestParam(required = false, defaultValue = "1") int page,
 
             @Parameter(description = "The number of customers to retrieve per page.", name = "size")
-            @RequestParam(required = false, defaultValue = "10") int size) {
+            @RequestParam(required = false, defaultValue = "10") int size,
 
-        return customerService.getCustomers(page, size);
+            @Parameter(description = "The ID of the last customer from the previous page for pagination purposes. Use 0 if not applicable.", name = "lastId")
+            @RequestParam(required = false, defaultValue = "0") long lastId) {
+
+        return customerService.getCustomers(page, size, lastId);
     }
 
     @Operation(

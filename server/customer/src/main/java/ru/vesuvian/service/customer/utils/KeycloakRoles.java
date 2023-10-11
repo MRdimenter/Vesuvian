@@ -12,5 +12,4 @@ public enum KeycloakRoles {
     public String getValue() {
         return value;
     }
-
 }

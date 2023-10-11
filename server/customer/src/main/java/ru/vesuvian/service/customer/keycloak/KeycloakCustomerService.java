@@ -6,13 +6,15 @@ import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import ru.vesuvian.service.customer.dto.CustomerGetDto;
+import ru.vesuvian.service.customer.dto.CustomerPaginationDto;
 import ru.vesuvian.service.customer.dto.CustomerRegistrationDto;
 import ru.vesuvian.service.customer.dto.CustomerUpdateDto;
-import ru.vesuvian.service.customer.dto.PageCustomerRepresentationDto;
 import ru.vesuvian.service.customer.exception.NotFoundException;
 import ru.vesuvian.service.customer.processing.CustomerProcessing;
 import ru.vesuvian.service.customer.utils.KeycloakRoles;
 import ru.vesuvian.service.customer.utils.mapping.CustomerMapping;
+
+import java.util.List;
 
 @Component
 @Slf4j
@@ -83,19 +85,19 @@ public class KeycloakCustomerService {
         }
     }
 
-    public PageCustomerRepresentationDto getPagedCustomersFromKeycloak(Integer page, Integer size) {
+    public CustomerPaginationDto<List<CustomerGetDto>> getCustomers(int pageNumber, int pageSize) {
         var realm = realmResourceManager.getRealmResource();
         var usersResource = userResourceManager.getUsersResource(realm);
 
         // Вычисление общего количества страниц
-        int totalPageCount = customerProcessing.calculateTotalPageCount(usersResource.count(), size);
+        int totalPageCount = customerProcessing.calculateTotalPageCount(usersResource.count(), pageSize);
 
         // Пересчитываем номер страницы, отсчет начинается с 0
-        int zeroBasedPageNumber = page - 1;
-        int offset = zeroBasedPageNumber * size;
+        int zeroBasedPageNumber = pageNumber - 1;
+        int offset = zeroBasedPageNumber * pageSize;
 
-        var customersData = customerProcessing.retrieveUsersData(usersResource, offset, size);
+        var customersData = customerProcessing.retrieveUsersData(usersResource, offset, pageSize);
 
-        return PageCustomerRepresentationDto.createFrom(totalPageCount, zeroBasedPageNumber, customersData);
+        return CustomerPaginationDto.createFromList(totalPageCount, zeroBasedPageNumber, customersData);
     }
 }

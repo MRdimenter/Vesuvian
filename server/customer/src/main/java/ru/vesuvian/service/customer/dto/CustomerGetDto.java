@@ -13,12 +13,11 @@ import java.util.TimeZone;
 public class CustomerGetDto {
 
     private final String id;
+    private final String UUID;
     private final String userName;
     private final String firstName;
     private final String lastName;
     private final String email;
     private final LocalDateTime creationDate;
-
-
 
 }

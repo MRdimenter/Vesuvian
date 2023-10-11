@@ -2,42 +2,30 @@ package ru.vesuvian.service.customer.service;
 
 
 import jakarta.transaction.Transactional;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import ru.vesuvian.service.customer.dto.CustomerGetDto;
 import ru.vesuvian.service.customer.dto.CustomerRegistrationDto;
 import ru.vesuvian.service.customer.dto.CustomerUpdateDto;
-import ru.vesuvian.service.customer.dto.PageCustomerRepresentationDto;
 import ru.vesuvian.service.customer.keycloak.KeycloakCustomerService;
 import ru.vesuvian.service.customer.keycloak.KeycloakResponseManager;
 import ru.vesuvian.service.customer.postgres.PostgresCustomerService;
 import ru.vesuvian.service.customer.rabbitmq.CustomerRegistrationEventPublisher;
 
-import java.util.Optional;
-
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CustomerService {
-    final KeycloakCustomerService keycloakCustomerService;
-    final PostgresCustomerService postgresCustomerService;
-    final CustomerRegistrationEventPublisher customerRegistrationEventPublisher;
-    final KeycloakResponseManager keycloakResponseManager;
-    @Value("${application.default.page}")
-    int defaultPage;
-    @Value("${application.default.size}")
-    int defaultSize;
+    private final KeycloakCustomerService keycloakCustomerService;
+    private final PostgresCustomerService postgresCustomerService;
+    private final CustomerRegistrationEventPublisher customerRegistrationEventPublisher;
+    private final KeycloakResponseManager keycloakResponseManager;
 
-    public PageCustomerRepresentationDto getCustomers(Integer page, Integer size) {
-        int actualPage = Optional.ofNullable(page).orElse(defaultPage);
-        int actualSize = Optional.ofNullable(size).orElse(defaultSize);
-        return keycloakCustomerService.getPagedCustomersFromKeycloak(actualPage, actualSize);
+    public Page<CustomerGetDto> getCustomers(int page, int size, long lastId) {
+        return postgresCustomerService.getCustomers(page, size, lastId);
     }
 
     public CustomerGetDto getCustomerById(String customerId) {

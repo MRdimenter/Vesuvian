@@ -27,7 +27,7 @@ spring:
       hibernate:
       dialect: org.hibernate.dialect.PostgreSQLDialect
       format_sql: true
-      show-sql: true
+    show-sql: true
   rabbitmq:
     addresses: rabbitmq:5672
     #addresses: localhost:5672
@@ -75,8 +75,3 @@ rabbitmq:
     image-service-new-customer: image.service.new-customer.queue
   routing-keys:
     new-customer-event: new.customer.event
-
-application:
-  default:
-    page: 10
-    size: 10
