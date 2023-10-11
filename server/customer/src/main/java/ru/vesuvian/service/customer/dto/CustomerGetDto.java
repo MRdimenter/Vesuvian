@@ -11,7 +11,6 @@ import java.util.TimeZone;
 @Builder
 @Data
 public class CustomerGetDto {
-
     private final String id;
     private final String UUID;
     private final String userName;
@@ -19,5 +18,4 @@ public class CustomerGetDto {
     private final String lastName;
     private final String email;
     private final LocalDateTime creationDate;
-
 }

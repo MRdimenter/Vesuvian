@@ -19,8 +19,6 @@ import java.util.*;
 
 // ковертер данных JWT в роли Spring Security
 public class KCRoleConverter implements Converter<Jwt, Collection<GrantedAuthority>> {
-
-
     @Override
     public Collection<GrantedAuthority> convert(Jwt source) {
 

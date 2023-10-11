@@ -47,6 +47,4 @@ public class CustomerService {
     public void updateCustomer(CustomerUpdateDto customerDto) {
         keycloakCustomerService.updateCustomerInKeycloak(customerDto);
     }
-
-
 }

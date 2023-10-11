@@ -13,12 +13,9 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @RequiredArgsConstructor
 public class KeycloakCustomerResourceManager {
-
-
     public UserRepresentation getUserRepresentation(UsersResource usersResource, String id) {
         return usersResource.get(id).toRepresentation();
     }
-
 
     public UserResource getUserResource(RealmResource realmResource, String id) {
         return realmResource.users().get(id);

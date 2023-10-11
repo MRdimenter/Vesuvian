@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -20,14 +21,10 @@ import ru.vesuvian.service.customer.service.CustomerService;
 
 @RestController
 @RequestMapping("api/v1/customers")
+@RequiredArgsConstructor
 @Tag(name = "Customer", description = "The Customer API")
 public class CustomerController {
-    final CustomerService customerService;
-
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
-    }
-
+    private final CustomerService customerService;
 
     @Operation(summary = "View a list of available customers", description = "View a list of available customers")
     @ApiResponses({

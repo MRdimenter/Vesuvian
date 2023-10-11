@@ -13,7 +13,6 @@ import java.time.ZonedDateTime;
 @Slf4j
 public class ApiExceptionHandler {
 
-
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<Object> handleApiRequestException(NotFoundException e) {
         var status = HttpStatus.NOT_FOUND;

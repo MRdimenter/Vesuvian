@@ -25,5 +25,4 @@ public class KeycloakClientConfig {
                 .password(keycloakPropsConfig.getPassword())
                 .build();
     }
-
 }

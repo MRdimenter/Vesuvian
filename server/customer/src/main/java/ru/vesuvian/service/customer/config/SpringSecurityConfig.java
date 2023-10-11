@@ -37,7 +37,6 @@ public class SpringSecurityConfig {
     private String clientURL; // клиентский URL
     private final OAuth2ExceptionHandler oAuth2ExceptionHandler;
 
-
     /**
      * Создается специальный бин который отвечает за настройки запросов по HTTP
      * Spring вызывает метод автоматически
@@ -74,7 +73,6 @@ public class SpringSecurityConfig {
         return web -> web.ignoring().requestMatchers("/swagger-ui", "/swagger-ui/**", "/error", "/v3/api-docs/**", "/swagger-ui.html", "/swagger/v1/customers");
     }
 
-
     /**
      * Задаем настройки с каких конкретно сайтов мы можем получать запросы
      */
@@ -88,5 +86,4 @@ public class SpringSecurityConfig {
         source.registerCorsConfiguration("/**", corsConfiguration);
         return source;
     }
-
 }

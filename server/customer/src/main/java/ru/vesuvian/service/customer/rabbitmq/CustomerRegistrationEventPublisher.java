@@ -12,9 +12,8 @@ import ru.vesuvian.amqp.message.CustomerUUID;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CustomerRegistrationEventPublisher {
-    final RabbitMQMessageProducer rabbitMQMessageProducer;
+    private final RabbitMQMessageProducer rabbitMQMessageProducer;
     @Value("${rabbitmq.exchanges.customer-events}")
     private String customerEventsExchange;
 
