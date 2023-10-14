@@ -1,0 +1,28 @@
+.description-drop-down-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  width: 280px;
+
+  .description-toggle {
+    z-index: 1;
+  }
+}
+
+.description-drop-down {
+  z-index: 0;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  margin-left: 10px;
+
+  .description-list {
+    margin-top: 15px;
+  
+    .description-list-item {
+      margin-top: 5px;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

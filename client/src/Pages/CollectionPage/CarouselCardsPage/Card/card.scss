@@ -1,0 +1,20 @@
+@import '../../../../common/styles/color.scss';
+
+.card {
+    width: 650px;
+    height: 370px;
+    border-radius: 10px;
+    padding: 10px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.front-side {
+    background-color: $btn-green;
+}
+
+.back-side {
+    background-color: $light-light-green;
+}
+

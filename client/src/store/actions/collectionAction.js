@@ -1,4 +1,5 @@
 import { ApiService } from '../../common/utils/ApiService';
+import { BadRequestError, RefreshTokenMissingError } from '../../common/utils/Errors/Errors';
 import { OAuth2Service } from '../../common/utils/OAuth2Service';
 import { COLLECTION_DATA } from '../constants';
 
@@ -36,7 +37,12 @@ export const collectionAction = (collectionId) => {
 
       dispatch({type: COLLECTION_DATA.SET_COLLECTION_DATA, payload: collectionDataWhithCollectionId});
     } catch (error) {
+      console.log('&&&&&&&&&&&&&&&777')
       console.error('An error occurred:', error);
+      if (error instanceof RefreshTokenMissingError || error instanceof BadRequestError) {
+        console.log('(((((99999999999999');
+      }
+      throw error;
 
       // Ошибка загрузки данных, установка loading: false и сохранение ошибки
       dispatch(finishLoadingCollection());

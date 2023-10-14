@@ -8,7 +8,7 @@ const SelectBar = ({currentPage, totalPages, handlePrevPage, handleNextPage}) =>
             <span className="small-text">
                 {currentPage}/{totalPages}
             </span>
-            <IconButton iconName={'right-arrow'} width='50' height='50' onClick={handleNextPage} disabled={currentPage === totalPages} />
+            <IconButton iconName={'right-arrow'} width='50' height='50' onClick={handleNextPage} disabled={currentPage > totalPages} />
         </div>
     )
 }

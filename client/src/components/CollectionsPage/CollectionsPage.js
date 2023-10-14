@@ -50,6 +50,7 @@ const CollectionsPage = () => {
 
 
   useEffect(() => {
+    console.log('useEffect: errorCollectionData: ', errorCollectionData);
     if (isMakeTransition) {
       console.log('useEffect collectionDataState: ', collectionDataState);
       if (collectionDataState?.collectionData?.length && !loadingCollectionData && !errorCollectionData) {        
@@ -132,12 +133,9 @@ const CollectionsPage = () => {
     const { collection_id: collectionId } = collection;
     setIsMakeTransition(true);
 
-    //TODO задумка такая:
-    // получить данные коллекции и отправить их в с store
-    // после этого перейти на страницу коллекции и получить их там
-    // НО сперва нужно убедиться, что данные получены и находятся в store
-    // А теперь вопрос: как узнать, что collectionAction завершился успешно?
 
+    // TODO добавитбь проверку (tryCatch) на ошибки при dispatch(collectionAction
+    // в случае потери ключей перевести на страницу reLogin
     await dispatch(collectionAction(collectionId));
     // в теории после диспатча нужно переходить на страницу коллекции
 

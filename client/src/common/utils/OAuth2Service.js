@@ -81,7 +81,8 @@ export class OAuth2Service {
         return accessToken;
       } catch (error) {
         console.log('postOAuth2AccessTokenByRefreshToken: ', error);
-        return error;
+        //return error;
+        throw new RefreshTokenMissingError("Refresh token is missing.");
       }
     } else {
       throw new RefreshTokenMissingError("Refresh token is missing.");
