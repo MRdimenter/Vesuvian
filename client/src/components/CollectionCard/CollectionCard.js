@@ -2,7 +2,8 @@ import { CardTag } from '../CardTag/CardTag';
 
 import './collectionCard.scss';
 
-const CollectionCard = ({collection={name: null, tags: []}, onCollectionCardClick, backgroundStyle}) => {
+//TODO rename collection (используется теперь не только как карта (этикетка) коллекции, но и как экземпляр карты коллекции)
+const CollectionCard = ({collection={name: '', tags: null}, onCollectionCardClick, backgroundStyle}) => {
   const {name, tags} = collection;
   const cardStyle = `${backgroundStyle || 'light-card-bg'}`
 

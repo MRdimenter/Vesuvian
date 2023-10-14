@@ -70,6 +70,7 @@ class ApiService {
   }
 
   async getCurrentCustomer() {
+    console.log('!!!!!!!! getCurrentCustomer');
     try {
       const response = this.getResourseByAuth(BASE_URL, CURRENT_CUSTOMER_URL);
       return response;

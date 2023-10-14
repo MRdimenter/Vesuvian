@@ -7,7 +7,7 @@ const getCollectionsPageGroups = (sortedCollections, onCollectionCardClick) => {
     <>
       {sortedCollections.map((sortedCollection) => {
         return (
-          <CollectionPageGroup collection={sortedCollection} onCollectionCardClick={onCollectionCardClick}/>
+          <CollectionPageGroup key={sortedCollection[0]} collection={sortedCollection} onCollectionCardClick={onCollectionCardClick}/>
         )
       })}
     </>
