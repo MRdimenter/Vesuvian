@@ -26,11 +26,15 @@ export const collectionAction = (collectionId) => {
 
       const response = await apiService.getCollectionById(collectionId);
       console.log('collectionAction response: ', response);
+      const collectionDataWhithCollectionId = {
+        collectionId,
+        collectionData: response
+      }
 
       // Завершение загрузки данных, установка loading: false
       dispatch(finishLoadingCollection());
 
-      dispatch({type: COLLECTION_DATA.SET_COLLECTION_DATA, payload: response});  
+      dispatch({type: COLLECTION_DATA.SET_COLLECTION_DATA, payload: collectionDataWhithCollectionId});
     } catch (error) {
       console.error('An error occurred:', error);
 

@@ -12,6 +12,7 @@ import { CollectionsPageHeader } from './CollectionsPageHeader/CollectionsPageHe
 
 import './collectionsPage.scss';
 import { collectionAction } from '../../store/actions/collectionAction';
+import { LocalStorageService } from '../../common/utils/LocalStorageService';
 
 function getAlfaFilterObjects(collections) {
   const firstLetters = new Map();
@@ -36,6 +37,7 @@ const CollectionsPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+
   const [collectionsList, setCollectionsList] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -49,12 +51,17 @@ const CollectionsPage = () => {
 
   useEffect(() => {
     if (isMakeTransition) {
-      if (collectionDataState?.length && !loadingCollectionData && !errorCollectionData) {
+      console.log('useEffect collectionDataState: ', collectionDataState);
+      if (collectionDataState?.collectionData?.length && !loadingCollectionData && !errorCollectionData) {        
+        const localStorageService = new LocalStorageService('CollectionsPage');
+
+        localStorageService.setValue({collectionId: collectionDataState.collectionId});
         navigate('/collectionPage');
       }
     }
-  }, [collectionDataState, loadingCollectionData, errorCollectionData])
+  }, [isMakeTransition, navigate, collectionDataState, loadingCollectionData, errorCollectionData])
 
+  //для отмены самостотельного перехода на страницу коллекции при полученных ранее данных о коллекции
   useEffect(() => {
     return () => {
       if (isMakeTransition) {
@@ -77,10 +84,11 @@ const CollectionsPage = () => {
     const oauthService = new OAuth2Service();
     const apiService = new ApiService(oauthService);
 
-    async function getAPICustomers() {  //TODO rename (злой копипаст - не изменил название функции)
+    async function fetchCurrentCustomerCollections() {  //TODO rename (злой копипаст - не изменил название функции)
       setLoading(true);
       try {
         const reponseCollectionList = await apiService.getCurrentCustomerCollections();
+        console.log('reponseCollectionList: ', reponseCollectionList);
 
         if (reponseCollectionList) {
           const sortedCollections = getAlfaFilterObjects(reponseCollectionList);
@@ -103,8 +111,8 @@ const CollectionsPage = () => {
       }
     }
 
-    setCollectionsList(null);
-    getAPICustomers();
+    //setCollectionsList(null);
+    fetchCurrentCustomerCollections();
   }, [dispatch, navigate]);
 
   async function getCollectionById() {
