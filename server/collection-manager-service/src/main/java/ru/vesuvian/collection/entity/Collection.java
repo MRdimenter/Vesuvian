@@ -60,6 +60,7 @@ public class Collection {
             nullable = false)
     private LocalDateTime createdAt;
 
+    //TODO сделать modifiedAt
     @Column(name = "modified_date")
     private LocalDateTime modifiedDate;
 

@@ -77,4 +77,7 @@ public class Customer {
     @CreationTimestamp
     @Column(name = "creation_date")
     private LocalDateTime createdAt;
+
+    @Column(name = "modified_date")
+    private LocalDateTime modifiedAt;
 }

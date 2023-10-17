@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import ru.vesuvian.service.customer.config.KeycloakPropsConfig;
 import ru.vesuvian.service.customer.error.ErrorCode;
+import ru.vesuvian.service.customer.exception.ExceptionMessageProvider;
 import ru.vesuvian.service.customer.exception.UserExistsException;
 import ru.vesuvian.service.customer.exception.UserRightsViolationException;
 import ru.vesuvian.service.customer.utils.KeycloakRoles;
@@ -18,18 +19,19 @@ import javax.ws.rs.core.Response;
 @Slf4j
 public class KeycloakResponseManager {
     private final KeycloakPropsConfig keycloakPropsConfig;
+    private final ExceptionMessageProvider errorMsg;
 
     public void handleUserCreationResponse(Response response) {
         log.info("Response status: " + response.getStatus());
         if (response.getStatus() == ErrorCode.USER_EXISTS.getCode()) {
-            throw new UserExistsException("Such user already exists");
+            throw new UserExistsException(errorMsg.userExists());
         }
     }
 
     public void handleValidateUserAuthentication(String providedUsername, String authenticatedUsername) {
         if (!providedUsername.toLowerCase().equals(authenticatedUsername)) {
             log.error("Attempt to update user with mismatched ID: " + providedUsername);
-            throw new UserRightsViolationException("The provided user ID does not match the authenticated user");
+            throw new UserRightsViolationException(errorMsg.userRightsViolation());
         }
     }
 

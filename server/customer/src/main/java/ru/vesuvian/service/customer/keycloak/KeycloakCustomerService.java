@@ -46,20 +46,16 @@ public class KeycloakCustomerService {
         return userId;
     }
 
-    public void updateCustomerInKeycloak(CustomerUpdateDto customerDto) {
-        String authenticatedUserId = responseManager.getUserIdFromSpringSecurity();
-
+    public void updateCustomer(CustomerUpdateDto customerUpdateDto, String UUID) {
         var realmResource = realmResourceManager.getRealmResource();
         var usersResource = userResourceManager.getUsersResource(realmResource);
-        var authenticatedUser = usersResource.get(authenticatedUserId).toRepresentation();
+        var authenticatedUser = usersResource.get(UUID).toRepresentation();
 
-        responseManager.handleValidateUserAuthentication(customerDto.username(), authenticatedUser.getUsername());
+        authenticatedUser.setFirstName(customerUpdateDto.firstName());
+        authenticatedUser.setLastName(customerUpdateDto.lastName());
+        authenticatedUser.setEmail(customerUpdateDto.email());
 
-        authenticatedUser.setFirstName(customerDto.firstName());
-        authenticatedUser.setLastName(customerDto.lastName());
-        authenticatedUser.setEmail(customerDto.email());
-
-        var userResource = userResourceManager.getUserResource(realmResource, authenticatedUserId);
+        var userResource = userResourceManager.getUserResource(realmResource, UUID);
         userResource.update(authenticatedUser);
     }
 
@@ -69,7 +65,7 @@ public class KeycloakCustomerService {
         var usersResource = userResourceManager.getUsersResource(realmResource);
         var userRepresentation = usersResource.get(id).toRepresentation();
 
-        return customerMapping.mapToCustomerGetDto(userRepresentation);
+        return customerMapping.toCustomerGetDto(userRepresentation);
     }
 
     public CustomerGetDto getCustomerByIdInKeycloak(String id) {
@@ -78,7 +74,7 @@ public class KeycloakCustomerService {
             var userResource = userResourceManager.getUsersResource(realmResource);
             var userRepresentation = userResourceManager.getUserRepresentation(userResource, id);
 
-            return customerMapping.mapToCustomerGetDto(userRepresentation);
+            return customerMapping.toCustomerGetDto(userRepresentation);
         } catch (NotFoundException e) {
             var errorMsg = String.format("User with id %s not found", id);
             throw new NotFoundException(errorMsg);

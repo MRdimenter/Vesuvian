@@ -8,8 +8,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import ru.vesuvian.service.customer.dto.CustomerGetDto;
 import ru.vesuvian.service.customer.dto.CustomerRegistrationDto;
+import ru.vesuvian.service.customer.dto.CustomerUpdateDto;
 import ru.vesuvian.service.customer.entity.Customer;
-import ru.vesuvian.service.customer.exception.NotFoundException;
+import ru.vesuvian.service.customer.exception.ExceptionMessageProvider;
+import ru.vesuvian.service.customer.exception.UserNotFoundException;
 import ru.vesuvian.service.customer.repository.CustomerRepository;
 import ru.vesuvian.service.customer.utils.mapping.CustomerMapping;
 
@@ -19,10 +21,11 @@ import ru.vesuvian.service.customer.utils.mapping.CustomerMapping;
 public class PostgresCustomerService {
     private final CustomerRepository customerRepository;
     private final CustomerMapping<Customer> customerMapping;
+    private final ExceptionMessageProvider errorMsg;
 
-    public void saveCustomerInDatabase(CustomerRegistrationDto customer, String userId) {
+    public void saveCustomerInDatabase(CustomerRegistrationDto customer, String UUID) {
         customerRepository.save(Customer.builder()
-                .UUID(userId)
+                .UUID(UUID)
                 .username(customer.getUsername())
                 .firstName(customer.getFirstName())
                 .lastName(customer.getLastName())
@@ -31,22 +34,30 @@ public class PostgresCustomerService {
         );
     }
 
-    public CustomerGetDto getCustomerById(String userId) {
-        var errorMsg = String.format("User with id %s not found", userId);
-        var customer = customerRepository.findByUUID(userId)
-                .orElseThrow(() -> new NotFoundException(errorMsg));
+    public CustomerGetDto getCustomerById(String UUID) {
+        var customer = customerRepository.findByUUID(UUID)
+                .orElseThrow(() -> new UserNotFoundException(
+                        errorMsg.userNotFound(UUID)));
 
         log.info(customer.toString());
-        return customerMapping.mapToCustomerGetDto(customer);
+        return customerMapping.toCustomerGetDto(customer);
 
     }
 
     public Page<CustomerGetDto> getCustomers(int pageNumber, int pageSize, long lastId) {
         var pageable = PageRequest.of(pageNumber - 1, pageSize);
         var customerPage = customerRepository.findAllByIdGreaterThanOrderByIdAsc(lastId, pageable);
-        var customerGetDtoList = customerMapping.mapToCustomerGetDtos(customerPage.toList());
+        var customerGetDtoList = customerMapping.toCustomerGetDtos(customerPage.toList());
 
         return new PageImpl<>(customerGetDtoList, pageable, customerPage.getTotalElements());
+    }
+
+    public void updateCustomer(CustomerUpdateDto customerUpdateDto, String UUID) {
+        var customer = customerRepository.findByUUID(UUID).orElseThrow(
+                () -> new UserNotFoundException(
+                        errorMsg.userNotFound(UUID)));
+        customer = customerMapping.updateFromDto(customerUpdateDto, customer);
+        customerRepository.save(customer);
     }
 }
 

@@ -28,23 +28,25 @@ public class CustomerService {
         return postgresCustomerService.getCustomers(page, size, lastId);
     }
 
-    public CustomerGetDto getCustomerById(String customerId) {
-        return postgresCustomerService.getCustomerById(customerId);
+    public CustomerGetDto getCustomerById(String UUID) {
+        return postgresCustomerService.getCustomerById(UUID);
     }
 
     public CustomerGetDto getMe() {
-        var id = keycloakResponseManager.getUserIdFromSpringSecurity();
-        return postgresCustomerService.getCustomerById(id);
+        var UUID = keycloakResponseManager.getUserIdFromSpringSecurity();
+        return postgresCustomerService.getCustomerById(UUID);
     }
 
     @Transactional
     public void createCustomer(CustomerRegistrationDto customer) {
-        String customerUUID = keycloakCustomerService.createCustomerInKeycloak(customer);
-        postgresCustomerService.saveCustomerInDatabase(customer, customerUUID);
-        customerRegistrationEventPublisher.publishRegistrationEvent(customerUUID);
+        String UUID = keycloakCustomerService.createCustomerInKeycloak(customer);
+        postgresCustomerService.saveCustomerInDatabase(customer, UUID);
+        customerRegistrationEventPublisher.publishRegistrationEvent(UUID);
     }
 
-    public void updateCustomer(CustomerUpdateDto customerDto) {
-        keycloakCustomerService.updateCustomerInKeycloak(customerDto);
+    public void updateCustomer(CustomerUpdateDto customerUpdateDto) {
+        var UUID = keycloakResponseManager.getUserIdFromSpringSecurity();
+        postgresCustomerService.updateCustomer(customerUpdateDto, UUID);
+        keycloakCustomerService.updateCustomer(customerUpdateDto, UUID);
     }
 }

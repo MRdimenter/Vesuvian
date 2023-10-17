@@ -18,4 +18,5 @@ public class CustomerGetDto {
     private final String lastName;
     private final String email;
     private final LocalDateTime creationDate;
+    private final LocalDateTime modifiedDate;
 }

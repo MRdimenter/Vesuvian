@@ -18,6 +18,6 @@ public class CustomerProcessing {
     }
 
     public List<CustomerGetDto> retrieveUsersData(UsersResource usersResource, int offset, int limit) {
-        return keycloakCustomerMapping.mapToCustomerGetDtos(usersResource.search(null, offset, limit));
+        return keycloakCustomerMapping.toCustomerGetDtos(usersResource.search(null, offset, limit));
     }
 }

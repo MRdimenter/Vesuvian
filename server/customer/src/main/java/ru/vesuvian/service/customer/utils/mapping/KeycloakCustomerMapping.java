@@ -3,6 +3,8 @@ package ru.vesuvian.service.customer.utils.mapping;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.stereotype.Component;
 import ru.vesuvian.service.customer.dto.CustomerGetDto;
+import ru.vesuvian.service.customer.dto.CustomerUpdateDto;
+import ru.vesuvian.service.customer.entity.Customer;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -13,8 +15,8 @@ import java.util.stream.Collectors;
 @Component
 public class KeycloakCustomerMapping implements CustomerMapping<UserRepresentation> {
     @Override
-    public CustomerGetDto mapToCustomerGetDto(UserRepresentation userRepresentation) {
-        LocalDateTime createdTimestamp = LocalDateTime.ofInstant(Instant.ofEpochMilli(userRepresentation.getCreatedTimestamp()), TimeZone.getDefault().toZoneId());
+    public CustomerGetDto toCustomerGetDto(UserRepresentation userRepresentation) {
+        var createdTimestamp = LocalDateTime.ofInstant(Instant.ofEpochMilli(userRepresentation.getCreatedTimestamp()), TimeZone.getDefault().toZoneId());
 
         return CustomerGetDto.builder()
                 .id(userRepresentation.getId())
@@ -27,10 +29,21 @@ public class KeycloakCustomerMapping implements CustomerMapping<UserRepresentati
     }
 
     @Override
-    public List<CustomerGetDto> mapToCustomerGetDtos(List<UserRepresentation> userRepresentationList) {
+    public List<CustomerGetDto> toCustomerGetDtos(List<UserRepresentation> userRepresentationList) {
         return userRepresentationList.stream()
-                .map(this::mapToCustomerGetDto)
+                .map(this::toCustomerGetDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public UserRepresentation updateFromDto(CustomerUpdateDto customerUpdateDto, Customer customer) {
+        var userRepresentation = new UserRepresentation();
+        userRepresentation.setId(customer.getUUID());
+        userRepresentation.setFirstName(customerUpdateDto.firstName());
+        userRepresentation.setLastName(customerUpdateDto.lastName());
+        userRepresentation.setEmail(customerUpdateDto.email());
+
+        return userRepresentation;
     }
 
 
