@@ -20,28 +20,32 @@ import ru.vesuvian.collection.repository.CollectionRepository;
 public class CollectionAccessService {
     private final CollectionRepository collectionRepository;
 
-    public Collection findMyCollectionByIdAndCustomerId(Long collectionId, String customerId) {
-        return findMyCollectionByIdAndCustomerId(collectionId, customerId, false);
+    public Collection findCollectionByCustomerIdAndUUID(Long collectionId, String customerId) {
+        Collection collection = findCollectionById(collectionId);
+        validateCollectionAccess(collection, customerId);
+        return collection;
     }
 
-
-    //TODO отрефакторить метод
-    public Collection findMyCollectionByIdAndCustomerId(Long collectionId, String customerId, boolean fetchTags) {
-        Collection collection;
-        if (fetchTags) {
-            collection = collectionRepository.findByIdWithTags(collectionId)
-                    .orElseThrow(() -> new CollectionNotFoundException("Collection with ID " + collectionId + " not found"));
-        } else {
-            collection = collectionRepository.findById(collectionId)
-                    .orElseThrow(() -> new CollectionNotFoundException("Collection with ID " + collectionId + " not found"));
-        }
-
-        //TODO поправить исключение, может быть выброшено и при создании карточек и при обновлении коллекции
-        if (!collection.getCreatorCustomerId().equals(customerId)) {
-            throw new UnauthorizedAccessException("The customer does not have permission to add cards to this collection");
-        }
-
+    public Collection findCollectionWithTagsByCustomerIdAndUUID(Long collectionId, String customerId) {
+        Collection collection = findCollectionWithTags(collectionId);
+        validateCollectionAccess(collection, customerId);
         return collection;
+    }
+
+    private Collection findCollectionWithTags(Long collectionId) {
+        return collectionRepository.findByIdWithTags(collectionId)
+                .orElseThrow(() -> new CollectionNotFoundException("Collection with ID " + collectionId + " not found"));
+    }
+
+    private Collection findCollectionById(Long collectionId) {
+        return collectionRepository.findById(collectionId)
+                .orElseThrow(() -> new CollectionNotFoundException("Collection with ID " + collectionId + " not found"));
+    }
+
+    private void validateCollectionAccess(Collection collection, String customerId) {
+        if (!collection.getCreatorCustomerId().equals(customerId)) {
+            throw new UnauthorizedAccessException("The customer does not have permission to access this collection");
+        }
     }
 }
 

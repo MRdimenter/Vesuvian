@@ -52,4 +52,14 @@ public class ApiExceptionHandler {
 
         return new ResponseEntity<>(apiException, status);
     }
+
+    @ExceptionHandler(CardNotFoundException.class)
+    public ResponseEntity<Object> handleUnauthorizedAccessException(CardNotFoundException e) {
+        var status = HttpStatus.NOT_FOUND;
+        var apiException = new ApiException(e.getMessage(), status, ZonedDateTime.now());
+
+        log.info("API Exception: Status - {}, Message - {}", status, e.getMessage());
+
+        return new ResponseEntity<>(apiException, status);
+    }
 }

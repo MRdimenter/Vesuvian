@@ -10,8 +10,7 @@ import ru.vesuvian.collection.entity.Collection;
 import ru.vesuvian.collection.entity.Tag;
 import ru.vesuvian.collection.exception.CollectionNotFoundException;
 import ru.vesuvian.collection.exception.MaxTagsPerCollectionReachedException;
-import ru.vesuvian.collection.exception.TagAlreadyExistsInCollectionException;
-import ru.vesuvian.collection.mapping.TagGetMapper;
+import ru.vesuvian.collection.mapping.get.TagGetMapper;
 import ru.vesuvian.collection.repository.CollectionRepository;
 import ru.vesuvian.collection.repository.TagRepository;
 import ru.vesuvian.collection.security.AuthenticatedCustomerResolver;
@@ -32,7 +31,7 @@ public class TagService {
     @Transactional
     public void createTagByCollectionId(Long collectionId, TagCreateDto tagCreateDto) {
         String customerId = authenticatedCustomerResolver.getAuthenticatedCustomerId();
-        var collection = collectionAccessService.findMyCollectionByIdAndCustomerId(collectionId, customerId, true);
+        var collection = collectionAccessService.findCollectionWithTagsByCustomerIdAndUUID(collectionId, customerId);
 
         validateTagLimitPerCollection(collection);
 

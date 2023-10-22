@@ -10,9 +10,9 @@ import ru.vesuvian.collection.dto.update.CollectionUpdateDto;
 import ru.vesuvian.collection.entity.CustomerCollection;
 import ru.vesuvian.collection.enums.Privacy;
 import ru.vesuvian.collection.exception.CollectionNotFoundException;
-import ru.vesuvian.collection.mapping.CollectionCreateMapper;
-import ru.vesuvian.collection.mapping.CollectionGetMapper;
-import ru.vesuvian.collection.mapping.CollectionUpdateMapper;
+import ru.vesuvian.collection.mapping.create.CollectionCreateMapper;
+import ru.vesuvian.collection.mapping.get.CollectionGetMapper;
+import ru.vesuvian.collection.mapping.update.CollectionUpdateMapper;
 import ru.vesuvian.collection.repository.CollectionRepository;
 import ru.vesuvian.collection.repository.CustomerCollectionRepository;
 import ru.vesuvian.collection.security.AuthenticatedCustomerResolver;
@@ -67,25 +67,21 @@ public class CollectionService {
     }
 
     public List<CollectionGetDto> getMyCollections(Privacy privacy) {
-        String customerUUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
-        List<CustomerCollection> customerCollections = customerCollectionRepository.findByCustomerIdWithCollectionsAndTags(customerUUID);
-
-       // customerCollections.get(0).getCollection().getCollectionTags().stream().forEach(collectionTag -> System.out.println(collectionTag.getTag().getTagName()));
-//        customerCollections.stream().forEach(customerCollection -> customerCollection.getCollection().getCollectionTags().stream().forEach(collectionTag -> System.out.println(collectionTag.getTag().getTagName())));
+        String UUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
+        List<CustomerCollection> customerCollections = customerCollectionRepository.findByCustomerIdWithCollectionsAndTags(UUID);
 
         return customerCollections.stream()
                 .map(customerCollection -> collectionGetMapper.mapToDTO(customerCollection.getCollection()))
                 .filter(collectionGetDTO -> privacyService.isCollectionVisibleBasedOnPrivacy(privacy, collectionGetDTO.getIsPublic()))
                 .collect(Collectors.toList());
-
     }
 
     @Transactional
     public void updateCollectionById(Long collectionId, CollectionUpdateDto collectionUpdateDto) {
-        String customerUUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
-        var collection = collectionAccessService.findMyCollectionByIdAndCustomerId(collectionId, customerUUID, false);
+        String UUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
+        var collection = collectionAccessService.findCollectionByCustomerIdAndUUID(collectionId, UUID);
 
-        collectionUpdateMapper.copyAttributes(collection, collectionUpdateDto);
+        collectionUpdateMapper.updateCollection(collection, collectionUpdateDto);
         collectionRepository.save(collection);
     }
 }
