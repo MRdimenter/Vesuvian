@@ -18,7 +18,6 @@ import java.util.List;
 @Slf4j
 @Tag(name = "Card", description = "Cards management API")
 public class CardController {
-
     private final CardService cardService;
 
     @GetMapping

@@ -27,8 +27,4 @@ public class CardUpdateDto {
     @Schema(description = "Flashcard hint")
     @JsonProperty("hint")
     private String hint;
-
-    @Schema(description = "image url")
-    @JsonProperty("image_url")
-    private String imageURL;
 }
