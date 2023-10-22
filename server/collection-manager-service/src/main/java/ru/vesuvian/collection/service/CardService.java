@@ -10,9 +10,9 @@ import ru.vesuvian.collection.dto.update.CardUpdateDto;
 import ru.vesuvian.collection.entity.Card;
 import ru.vesuvian.collection.exception.CardNotFoundException;
 import ru.vesuvian.collection.exception.CollectionNotFoundException;
+import ru.vesuvian.collection.mapping.create.CollectionCreateMapper;
 import ru.vesuvian.collection.mapping.get.CardGetMapper;
 import ru.vesuvian.collection.mapping.update.CardUpdateMapper;
-import ru.vesuvian.collection.mapping.create.CollectionCreateMapper;
 import ru.vesuvian.collection.repository.CardRepository;
 import ru.vesuvian.collection.security.AuthenticatedCustomerResolver;
 
@@ -51,12 +51,19 @@ public class CardService {
         cardRepository.save(card);
     }
 
-    public void updateCardByCollectionId(Long collectionId, Long cardId, CardUpdateDto cardUpdateDto) {
+    public void updateCardByCollectionIdAndCardId(Long collectionId, Long cardId, CardUpdateDto cardUpdateDto) {
         String customerId = authenticatedCustomerResolver.getAuthenticatedCustomerId();
 
         var card = retrieveCardByCollectionIdAndCustomerIdAndCardId(collectionId, customerId, cardId);
         cardUpdateMapper.updateCard(card, cardUpdateDto);
         cardRepository.save(card);
+    }
+
+    public void deleteCardByCollectionIdAndCardId(Long collectionId, Long cardId) {
+        String customerId = authenticatedCustomerResolver.getAuthenticatedCustomerId();
+
+        var card = retrieveCardByCollectionIdAndCustomerIdAndCardId(collectionId, customerId, cardId);
+        cardRepository.deleteById(card.getCardId());
     }
 
     private List<Card> retrieveCardsByCollectionIdAndCustomerId(Long collectionId, String customerId) {

@@ -66,6 +66,23 @@ public class CardController {
             @Parameter(description = "Updated card data", required = true)
             CardUpdateDto cardUpdateDto
     ) {
-        cardService.updateCardByCollectionId(collectionId, cardId, cardUpdateDto);
+        cardService.updateCardByCollectionIdAndCardId(collectionId, cardId, cardUpdateDto);
+    }
+
+    @DeleteMapping("/{cardId}")
+    public void deleteCardByCollectionIdAndCardId(
+            @PathVariable
+            @Parameter(description = "ID of the collection where card will be delete",
+                    name = "collectionId",
+                    required = true,
+                    example = "1")
+            Long collectionId,
+            @PathVariable
+            @Parameter(description = "ID of the card to be deleted",
+                    name = "cardId",
+                    required = true,
+                    example = "2")
+            Long cardId) {
+        cardService.deleteCardByCollectionIdAndCardId(collectionId, cardId);
     }
 }
