@@ -25,7 +25,11 @@ const CollectionCard = ({collection={name: '', tags: null}, onCollectionCardClic
   }
 
   const onCollectionCardClickHandle = () => {
-    onCollectionCardClick(collection);
+    if (typeof onCollectionCardClick === 'function') {
+      onCollectionCardClick(collection); 
+    } else {
+      console.log('onCollectionCardClickHandle');
+    }
   }
 
   return (

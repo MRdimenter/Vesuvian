@@ -8,7 +8,7 @@ import './collectionEditingPageHeader.scss';
 const collectionAuthor = '@skaipnik';
 const collectionRecentChangesDate= '09.08.2023 23:01';
 
-const CollectionEditingPageHeader = ({ collectionTitle = 'Basic English', tags=['English'] }) => {
+const CollectionEditingPageHeader = ({ collectionTitle = 'Basic English', tags=['English'], onStartTraining }) => {
   const handleSubmit = () => {
     console.log('addTabClick');
   }
@@ -37,7 +37,7 @@ const CollectionEditingPageHeader = ({ collectionTitle = 'Basic English', tags=[
           {tags.length < 3 && <Button btnStyle='link' label='+добавить тег' action={handleSubmit} />}
         </div>
         <div className="training-bar">
-          <Button btnStyle='btn' label='Начать тренировку' link={'/cards'} />
+          <Button btnStyle='btn' label='Начать тренировку' action={onStartTraining} />
           <IconButton iconName={'gear-wheel-svg'} iconFormat='svg' width='30' height='30' onClick={settingsSubmit} />
         </div>
       </div>

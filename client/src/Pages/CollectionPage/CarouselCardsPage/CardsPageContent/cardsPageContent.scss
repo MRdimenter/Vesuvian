@@ -98,8 +98,8 @@
 }
 
 .previous {
-  //transform: translateX(-100vw);
-  transform: translateX(-30vw);
+  transform: translateX(-100vw);
+  // transform: translateX(-30vw); //for testing
 }
 
 .current {
@@ -107,6 +107,6 @@
 }
 
 .next {
-  // transform: translateX(100vw);
-  transform: translateX(30vw);
+  transform: translateX(100vw);
+  // transform: translateX(30vw); //for testing
 }

@@ -133,12 +133,10 @@ const CollectionsPage = () => {
     const { collection_id: collectionId } = collection;
     setIsMakeTransition(true);
 
-
     // TODO добавитбь проверку (tryCatch) на ошибки при dispatch(collectionAction
     // в случае потери ключей перевести на страницу reLogin
     await dispatch(collectionAction(collectionId));
     // в теории после диспатча нужно переходить на страницу коллекции
-
 
     //getCollectionById();
   }

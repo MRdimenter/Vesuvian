@@ -9,10 +9,10 @@ const collectionTags_1 = [
   'Animals'
 ]
 
-const CollectionEditingPage = ({collectionData}) => {
+const CollectionEditingPage = ({collectionData, onStartTraining}) => {
   return (
     <div className='collection-page'>
-      <CollectionEditingPageHeader tags={collectionTags_1} />
+      <CollectionEditingPageHeader tags={collectionTags_1} onStartTraining={onStartTraining} />
       <CollectionEditingPageBody collectionData={collectionData} />
     </div>
   )

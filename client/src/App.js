@@ -17,9 +17,8 @@ import { CustomersPage } from './components/CustomersPage/CustomersPage';
 import { CardsPage } from './components/CardsPage/CardsPage';
 
 import './App.scss';
-import { CollectionEditingPage } from './components/CollectionEditingPage/CollectionEditingPage';
 import { CollectionsPage } from './components/CollectionsPage/CollectionsPage';
-import { CardCollectionCreatingPage, CardCreatingPage } from './components/Pages/CardCollectionCreatingPage/CardCollectionCreatingPage';
+import { CardCollectionCreatingPage } from './components/Pages/CardCollectionCreatingPage/CardCollectionCreatingPage';
 import { CollectionPage } from './Pages/CollectionPage/CollectionPage';
 
 // TODO тестить на 3G:
@@ -56,7 +55,6 @@ export const App = () => {
               <Route path='/listItem' element={<CustomersPage />}></Route>
               <Route path='/collectionPage' element={<CollectionPage />}></Route>
               <Route path='/collectionsPage' element={<CollectionsPage />}></Route>
-              <Route path='/cards' element={<CardsPage />}></Route>
               <Route path='/cardCreatingPage' element={<CardCollectionCreatingPage />}></Route>
             </Routes>
           </div>
