@@ -4,6 +4,20 @@ import { CardsPageContent } from './CardsPageContent/CardsPageContent';
 
 import './cardsPage.scss';
 
+const cardsInCollection = 2;
+const collectionInfo = {
+  cardsInCollection: 10,
+}
+
+//TODO: временная заглушка
+const content_last = {
+  frontSide: {
+    text: 'Hello'
+  },
+  backSide: {
+    text: 'Привет'
+  }
+}
 
 const request = {
   "term": "Term 1", // термин
@@ -12,56 +26,42 @@ const request = {
   "imageURL": "http://example.com/image1.jpg" //url картинки если она присутствует, проверка на null  
 }
 
-const getContent = (collectionData) => {
+const getContent = (request) => {
   return {
     frontSide: {
-      text: collectionData.term,
+      text: request.term,
     },
     backSide: {
-      text: collectionData.definition,
+      text: request.definition,
     },
-    hint: collectionData.hint,
-    imageURL: collectionData.imageURL && null,
+    hint: request.hint,
+    imageURL: request.imageURL && null,
   }
 }
 
 const content = getContent(request);
 
-const CarouselCardsPage = ({collectionData}) => {
-  const collectionInfo = {
-    cardsInCollection: collectionData.length,
-  }
-
-  console.log('collectionData: ', collectionData);
-
-  const content = getContent(collectionData);
-
+const CardsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const handlePrevPage = () => {
-    setCurrentPage((prevPage) => prevPage - 1);
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
   };
 
   const handleNextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, cardsInCollection));
   };
 
   return (
     <div className='cards-page'>
       <CardsPageHeader currentPage={currentPage} cardsInCollection={collectionInfo.cardsInCollection} />
       <div className="cards-page-body">
-        <CardsPageContent
-          collectionData={collectionData}
-          content={content}
-          collectionInfo={collectionInfo}
-          currentPage={currentPage}
-          handlePrevPage={handlePrevPage}
-          handleNextPage={handleNextPage} />
+        <CardsPageContent content={content} collectionInfo={collectionInfo} currentPage={currentPage} handlePrevPage={handlePrevPage} handleNextPage={handleNextPage} />
       </div>
     </div>
   )
 }
 
 export {
-  CarouselCardsPage,
+  CardsPage,
 }
