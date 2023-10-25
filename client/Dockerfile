@@ -1,3 +1,4 @@
+# Stage 1: Build the application
 FROM node:alpine as build
 WORKDIR /app
 COPY . .
