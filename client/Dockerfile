@@ -1,4 +1,4 @@
-## Stage 1: Build the application
+# Stage 1: Build the application
 #FROM node:alpine as build
 #WORKDIR /app
 #COPY . .
@@ -29,8 +29,9 @@ RUN echo "Installing dependencies..." && npm install
 # Обновление устаревших зависимостей
 RUN echo "Updating outdated dependencies..." && npm update
 
-# Запуск сборки
-RUN echo "Building the application..." && npm run build
+# Вывод логов перед сборкой
+RUN echo "Building the application..."
+RUN npm run build --verbose
 
 # Stage 2: Create the production image
 FROM nginx:stable-alpine
