@@ -26,9 +26,6 @@ RUN npm -v
 # Установка зависимостей
 RUN echo "Installing dependencies..." && npm install
 
-# Вывод списка устаревших зависимостей
-RUN echo "Checking for outdated dependencies..." && npm outdated
-
 # Обновление устаревших зависимостей
 RUN echo "Updating outdated dependencies..." && npm update
 
