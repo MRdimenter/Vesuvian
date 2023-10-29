@@ -8,6 +8,7 @@
 [![apigateway_ci](https://github.com/mrdimenter/vesuvian/actions/workflows/apigateway_ci.yml/badge.svg)](https://github.com/mrdimenter/vesuvian/actions/workflows/apigateway_ci.yml/badge.svg)
 [![image-service-ci](https://github.com/mrdimenter/vesuvian/actions/workflows/image_service_ci.yml/badge.svg)](https://github.com/mrdimenter/vesuvian/actions/workflows/image_service_ci.yml/badge.svg)
 [![collection-manager-service-ci](https://github.com/mrdimenter/vesuvian/actions/workflows/collection_manager_service.yml/badge.svg)](https://github.com/mrdimenter/vesuvian/actions/workflows/collection_manager_service.yml/badge.svg)
+[![client-ci](https://github.com/mrdimenter/vesuvian/actions/workflows/client_ci.yml/badge.svg)](https://github.com/mrdimenter/vesuvian/actions/workflows/client_ci.yml/badge.svg)
 
 
 # Проект Vesuvian
