@@ -6,14 +6,12 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.vesuvian.collection.dto.create.TagCreateDto;
 import ru.vesuvian.collection.dto.get.TagGetDto;
-import ru.vesuvian.collection.service.TagService;
+import ru.vesuvian.collection.service.tag.TagService;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package ru.vesuvian.collection.service;
+package ru.vesuvian.collection.service.collection;
 
 
 import lombok.RequiredArgsConstructor;

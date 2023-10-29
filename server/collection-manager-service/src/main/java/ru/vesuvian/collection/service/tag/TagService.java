@@ -1,4 +1,4 @@
-package ru.vesuvian.collection.service;
+package ru.vesuvian.collection.service.tag;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +14,8 @@ import ru.vesuvian.collection.mapping.get.TagGetMapper;
 import ru.vesuvian.collection.repository.CollectionRepository;
 import ru.vesuvian.collection.repository.TagRepository;
 import ru.vesuvian.collection.security.AuthenticatedCustomerResolver;
+import ru.vesuvian.collection.service.collection.CollectionAccessService;
+import ru.vesuvian.collection.service.collection.CollectionTagService;
 
 import java.util.List;
 
@@ -28,10 +30,11 @@ public class TagService {
     private final CollectionRepository collectionRepository;
     private final TagGetMapper tagGetMapper;
 
+
     @Transactional
     public void createTagByCollectionId(Long collectionId, TagCreateDto tagCreateDto) {
         String customerId = authenticatedCustomerResolver.getAuthenticatedCustomerId();
-        var collection = collectionAccessService.findCollectionWithTagsByCustomerIdAndUUID(collectionId, customerId);
+        var collection = collectionAccessService.findCollectionWithTags(collectionId, customerId);
 
         validateTagLimitPerCollection(collection);
 

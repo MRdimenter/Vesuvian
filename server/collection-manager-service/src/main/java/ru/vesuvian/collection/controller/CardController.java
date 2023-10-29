@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.vesuvian.collection.dto.create.CardCreateDto;
 import ru.vesuvian.collection.dto.get.CardGetDto;
 import ru.vesuvian.collection.dto.update.CardUpdateDto;
-import ru.vesuvian.collection.service.CardService;
+import ru.vesuvian.collection.service.card.CardService;
 
 import java.util.List;
 

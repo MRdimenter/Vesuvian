@@ -13,7 +13,7 @@ import ru.vesuvian.collection.dto.create.CollectionCreateDto;
 import ru.vesuvian.collection.dto.get.CollectionGetDto;
 import ru.vesuvian.collection.dto.update.CollectionUpdateDto;
 import ru.vesuvian.collection.enums.Privacy;
-import ru.vesuvian.collection.service.CollectionService;
+import ru.vesuvian.collection.service.collection.CollectionService;
 
 import java.util.List;
 

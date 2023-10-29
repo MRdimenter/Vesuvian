@@ -27,7 +27,6 @@ public interface CardRepository extends JpaRepository<Card, Long> {
             "AND c.cardId = :cardId"
     )
     Optional<Card> findCardByCollectionIdAndCustomerIdAndCardId(@Param("collectionId") Long collectionId,
-                                                       @Param("customerId") String customerId,
-                                                       @Param("cardId") Long cardId);
-
+                                                                @Param("customerId") String customerId,
+                                                                @Param("cardId") Long cardId);
 }

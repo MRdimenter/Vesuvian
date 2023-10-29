@@ -1,4 +1,4 @@
-package ru.vesuvian.collection.service;
+package ru.vesuvian.collection.service.collection;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +16,7 @@ import ru.vesuvian.collection.mapping.update.CollectionUpdateMapper;
 import ru.vesuvian.collection.repository.CollectionRepository;
 import ru.vesuvian.collection.repository.CustomerCollectionRepository;
 import ru.vesuvian.collection.security.AuthenticatedCustomerResolver;
+import ru.vesuvian.collection.service.PrivacyService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -79,7 +80,7 @@ public class CollectionService {
     @Transactional
     public void updateCollectionById(Long collectionId, CollectionUpdateDto collectionUpdateDto) {
         String UUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
-        var collection = collectionAccessService.findCollectionByCustomerIdAndUUID(collectionId, UUID);
+        var collection = collectionAccessService.findCollection(collectionId, UUID);
 
         collectionUpdateMapper.updateCollection(collection, collectionUpdateDto);
         collectionRepository.save(collection);

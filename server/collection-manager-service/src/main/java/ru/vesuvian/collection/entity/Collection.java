@@ -99,6 +99,12 @@ public class Collection {
         }
     }
 
+    public void decrementNumberOfCards() {
+        if (numberOfCards != null && numberOfCards > 0) {
+            numberOfCards--;
+        }
+    }
+
     public void setModifiedDateToNow() {
         modifiedDate = LocalDateTime.now(Clock.systemDefaultZone());
     }
