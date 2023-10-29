@@ -1,9 +1,7 @@
 package ru.vesuvian.collection.mapping.get;
 
 
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.vesuvian.collection.dto.get.CollectionGetDto;
@@ -18,7 +16,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CollectionGetMapper {
 
-    public CollectionGetDto mapToDTO(Collection collection) {
+    public CollectionGetDto mapToDto(Collection collection) {
         return CollectionGetDto.builder()
                 .collectionId(collection.getCollectionId())
                 .collectionName(collection.getCollectionName())
@@ -31,14 +29,15 @@ public class CollectionGetMapper {
                 .createdAt(collection.getCreatedAt())
                 .tagGetDtoList(collection.getCollectionTags()
                         .stream()
-                        .map(collectionTag -> mapToTag(collectionTag.getTag()))
+                        .map(collectionTag -> mapToTag(collectionTag.getTag(), collection.getCollectionId()))
                         .collect(Collectors.toList())
                 )
                 .build();
     }
 
-    public TagGetDto mapToTag(Tag tag) {
+    public TagGetDto mapToTag(Tag tag, Long collectionId) {
         return TagGetDto.builder()
+                .collectionId(collectionId)
                 .tagId(tag.getTagId())
                 .tagName(tag.getTagName())
                 .build();

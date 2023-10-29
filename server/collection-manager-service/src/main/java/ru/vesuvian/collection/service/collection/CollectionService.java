@@ -53,7 +53,7 @@ public class CollectionService {
     public List<CollectionGetDto> getAnyCollectionsByCustomerId(String customerId, Privacy privacy) {
         List<CustomerCollection> customerCollections = customerCollectionRepository.findByCustomerIdWithCollections(customerId);
         return customerCollections.stream()
-                .map(customerCollection -> collectionGetMapper.mapToDTO(customerCollection.getCollection()))
+                .map(customerCollection -> collectionGetMapper.mapToDto(customerCollection.getCollection()))
                 .filter(collectionGetDTO -> privacyService.isCollectionVisibleBasedOnPrivacy(privacy, collectionGetDTO.getIsPublic()))
                 .collect(Collectors.toList());
     }
@@ -64,7 +64,7 @@ public class CollectionService {
                 .findByCustomerIdAndCollectionId(customerUUID, collectionId)
                 .orElseThrow(() -> new CollectionNotFoundException("Collection not found"));
 
-        return collectionGetMapper.mapToDTO(customerCollection.getCollection());
+        return collectionGetMapper.mapToDto(customerCollection.getCollection());
     }
 
     public List<CollectionGetDto> getMyCollections(Privacy privacy) {
@@ -72,7 +72,7 @@ public class CollectionService {
         List<CustomerCollection> customerCollections = customerCollectionRepository.findByCustomerIdWithCollectionsAndTags(UUID);
 
         return customerCollections.stream()
-                .map(customerCollection -> collectionGetMapper.mapToDTO(customerCollection.getCollection()))
+                .map(customerCollection -> collectionGetMapper.mapToDto(customerCollection.getCollection()))
                 .filter(collectionGetDTO -> privacyService.isCollectionVisibleBasedOnPrivacy(privacy, collectionGetDTO.getIsPublic()))
                 .collect(Collectors.toList());
     }
