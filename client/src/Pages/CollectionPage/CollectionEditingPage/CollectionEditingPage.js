@@ -3,16 +3,10 @@ import { CollectionEditingPageBody } from './CollectionEditingPageBody/Collectio
 
 import './collectionEditingPage.scss';
 
-const collectionTags_1 = [
-  'English',
-  'Nature',
-  'Animals'
-]
-
-const CollectionEditingPage = ({collectionData, onStartTraining}) => {
+const CollectionEditingPage = ({collectionData, collectionTags, onStartTraining}) => {
   return (
     <div className='collection-page'>
-      <CollectionEditingPageHeader tags={collectionTags_1} onStartTraining={onStartTraining} />
+      <CollectionEditingPageHeader tags={collectionTags} onStartTraining={onStartTraining} />
       <CollectionEditingPageBody collectionData={collectionData} />
     </div>
   )

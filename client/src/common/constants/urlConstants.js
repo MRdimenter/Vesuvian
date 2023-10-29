@@ -12,7 +12,10 @@ const CUSTOMERS_URL = 'api/v1/customers';
 const CURRENT_CUSTOMER_URL = 'api/v1/customers/me';
 const CURRENT_CUSTOMER_COLLECTIONS_URL = 'api/v1/collections/me';
 const COLLECTION_URL = 'api/v1/collections';
-const COLLECTION_URL_TAIL = 'cards';
+const COLLECTION_CARDS_URL_TAIL = 'cards';
+//TODO api/v1/ in its own constatnt
+const COLLECTION_TAGS_URL = 'api/v1'; // TODO будет изменён на COLLECTION_URL (после изменений на сервере)
+const COLLECTION_TAGS_URL_TAIL = 'tags';
 
 export {
     BASE_HOSTNAME,
@@ -24,5 +27,7 @@ export {
     TEMP_BASE_PORT,
     TEMP_BASE_URL,
     COLLECTION_URL,
-    COLLECTION_URL_TAIL,
+    COLLECTION_CARDS_URL_TAIL,
+    COLLECTION_TAGS_URL,
+    COLLECTION_TAGS_URL_TAIL,
 }

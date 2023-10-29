@@ -1,23 +1,29 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { collectionAction } from '../../store/actions/collectionAction';
+import { collectionAction, collectionTagsAction } from '../../store/actions/collectionAction';
 import { LocalStorageService } from '../../common/utils/LocalStorageService';
 import { CollectionEditingPage } from './CollectionEditingPage/CollectionEditingPage';
 import { CarouselCardsPage } from './CarouselCardsPage/CarouselCardsPage';
 import { RefreshTokenMissingError } from '../../common/utils/Errors/Errors';
-import { useNavigate } from 'react-router-dom';
+import { useFetcher, useNavigate } from 'react-router-dom';
 import { ErrorPage } from '../../components/ErrorPage/ErrorPage';
 
 const CollectionPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [collectionData, setcollectionData] = useState([]);
+  const [collectionTags, setcollectionTags] = useState([]);
+  const [collectionTagsFetchError, setcollectionTagsFetchError] = useState();
   const [isTraining, setIsTraining] = useState(false);
 
   //на случай потери данных о коллекции (при перезагрузке приложения)
   const collectionDataState = useSelector((state) => state.collectionData.collectionData);
   const loadingCollectionData = useSelector((state) => state.collectionData.loading);
   const errorCollectionData = useSelector((state) => state.collectionData.error);
+
+  const collectionTagsState = useSelector((state) => state.collectionTags.collectionTags);
+  const loadingCollectionTags = useSelector((state) => state.collectionTags.loading);
+  const errorCollectionTags = useSelector((state) => state.collectionTags.error);
 
   const onStartTraining = () => {
     setIsTraining(true);
@@ -32,9 +38,9 @@ const CollectionPage = () => {
       const localStorageService = new LocalStorageService('CollectionsPage');
       const collectionIdObject = localStorageService.getValue();
 
-      const handleCollectionAction = async () => {
+      const handleCollectionAction = async (collectionIdObject) => {
         try {
-          // Выполняем коллекционное действие
+          // Выполняем "коллекционное" действие
           await dispatch(collectionAction(collectionIdObject.collectionId));
         } catch (error) {
           if (error instanceof RefreshTokenMissingError) {
@@ -49,11 +55,38 @@ const CollectionPage = () => {
           }
         }
       }
+      handleCollectionAction(collectionIdObject);
 
-      handleCollectionAction();
+      const handleCollectionTagsAction = async (collectionIdObject) => {
+        const { collectionId } = collectionIdObject;
+        try {
+          await dispatch(collectionTagsAction(collectionId));
+        } catch (error) {
+          setcollectionTagsFetchError(error);
+        }
+      }
+      handleCollectionTagsAction(collectionIdObject);
+
+      // const handleCollectionDataAction = async (collectionIdObject) => {
+      //   const { collectionId } = collectionIdObject;
+      //   try {
+      //     await dispatch(collectionTagsAction(collectionId));
+      //   } catch (error) {
+      //     setcollectionTagsFetchError(error);
+      //   }
+      // }
+      // handleCollectionDataAction(collectionIdObject);
     }
-
   }, [navigate, collectionDataState, dispatch])
+
+  useEffect(() => {
+    if (collectionTagsState?.collectionTags?.length) {
+      const { collectionTags: collectionTagsObjects } = collectionTagsState;
+      const collectionTags = collectionTagsObjects.map((tagObject) => tagObject.name);
+      setcollectionTags(collectionTags);
+    }
+  }, [collectionTagsState])
+  console.log();
 
   function Loading() {
     return <h2>🌀 Loading...</h2>;
@@ -69,7 +102,7 @@ const CollectionPage = () => {
     <div className='collection-page'>
       {spinner}
       {errorMessage}
-      { isShowCollectionEditingPage && <CollectionEditingPage collectionData={collectionData} onStartTraining={onStartTraining}/> }
+      { isShowCollectionEditingPage && <CollectionEditingPage collectionData={collectionData} collectionTags={collectionTags} onStartTraining={onStartTraining}/> }
       { isShowCarouselCardsPage && <CarouselCardsPage collectionData={collectionData}/> }
     </div>
   )

@@ -65,4 +65,5 @@ export const App = () => {
   );
 }
 
-//<div className={`main-wrapper ${!isDarkModeEnabled ? 'wrapper' : 'theme-dark'}`}></div>
+//TODO при потере refreshtoken на http://localhost:3000/collectionPage не происходит редиректа на страницу авторизации
+//TODO и вообще почему такое происходит?
