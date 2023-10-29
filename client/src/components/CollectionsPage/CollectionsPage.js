@@ -112,7 +112,6 @@ const CollectionsPage = () => {
       }
     }
 
-    //setCollectionsList(null);
     fetchCurrentCustomerCollections();
   }, [dispatch, navigate]);
 

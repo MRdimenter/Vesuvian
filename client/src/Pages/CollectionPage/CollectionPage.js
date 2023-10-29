@@ -5,7 +5,7 @@ import { LocalStorageService } from '../../common/utils/LocalStorageService';
 import { CollectionEditingPage } from './CollectionEditingPage/CollectionEditingPage';
 import { CarouselCardsPage } from './CarouselCardsPage/CarouselCardsPage';
 import { RefreshTokenMissingError } from '../../common/utils/Errors/Errors';
-import { useFetcher, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ErrorPage } from '../../components/ErrorPage/ErrorPage';
 
 const CollectionPage = () => {
@@ -80,13 +80,27 @@ const CollectionPage = () => {
   }, [navigate, collectionDataState, dispatch])
 
   useEffect(() => {
+      const localStorageService = new LocalStorageService('CollectionsPage');
+      const collectionIdObject = localStorageService.getValue();
+
+      const handleCollectionTagsAction = async (collectionIdObject) => {
+        const { collectionId } = collectionIdObject;
+        try {
+          await dispatch(collectionTagsAction(collectionId));
+        } catch (error) {
+          setcollectionTagsFetchError(error);
+        }
+      }
+      handleCollectionTagsAction(collectionIdObject);
+  }, [])
+  
+  useEffect(() => {
     if (collectionTagsState?.collectionTags?.length) {
       const { collectionTags: collectionTagsObjects } = collectionTagsState;
       const collectionTags = collectionTagsObjects.map((tagObject) => tagObject.name);
       setcollectionTags(collectionTags);
     }
   }, [collectionTagsState])
-  console.log();
 
   function Loading() {
     return <h2>🌀 Loading...</h2>;
