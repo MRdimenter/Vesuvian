@@ -3,13 +3,14 @@ import { CardCollectionCreatingNav } from './CardCollectionCreatingNav/CardColle
 
 import './cardCollectionCreatingPopup.scss';
 import { CardCreatingForm } from './CardCreatingForm/CardCreatingForm';
+import { CollectionCreatingForm } from './CollectionCreatingForm/CollectionCreatingForm';
 
 const CardCollectionCreatingPopup = () => {
   const [activeCreating, setActiveCreating] = useState('collectionCreating')
 
   const popupCreatingStyles = {
     cardCreating: 'card-creating-popup',
-    collectionCreating: 'collectio-creating-popup'
+    collectionCreating: 'collection-creating-popup'
   }
 
   const isCollectionCreatingForm = activeCreating === 'collectionCreating';
@@ -18,6 +19,7 @@ const CardCollectionCreatingPopup = () => {
   return (
     <div className={popupCreatingStyles[activeCreating]}>
       <CardCollectionCreatingNav activeCreating={activeCreating} setActiveCreating={setActiveCreating} />
+      {isCollectionCreatingForm && <CollectionCreatingForm />}
       {isCardCreatingForm && <CardCreatingForm />}
     </div>
   )

@@ -16,6 +16,7 @@ const CardCreatingForm = () => {
   return (
     <form className="card-creating-form">
       <div className="two-sides-card">
+        {/* TODO light-card-bg and border */}
         <CollectionCard title='+' backgroundStyle='dark-card-bg'/>
         <CollectionCard title='+' backgroundStyle='dark-card-bg'/>
       </div>

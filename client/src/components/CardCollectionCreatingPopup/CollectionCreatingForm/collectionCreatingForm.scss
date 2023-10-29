@@ -1,0 +1,55 @@
+.collection-creating-form-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .collection-creating-form {
+    width: 341px;
+    // TODO text style
+
+    .colletion-name-label {
+      // border: 1px solid blue;
+      margin-top: 10px;
+    }
+
+    .colletion-name-input {
+      margin-top: 5px;
+      margin-bottom: 10px;
+      display: flex;
+      width: 341px;
+      padding: 9.5px 241px 13.5px 11px;
+      align-items: center;
+
+      border-radius: 7px;
+      border: 1px solid #000;
+      background: #DEF6E9;
+    }
+
+    .collection-description-textarea {
+      border: 1px solid black;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      border-radius: 7px;
+      width: 100%;
+      height: 123px;
+      background-color: inherit;
+      resize: none;
+    }
+    
+    .card-collection-creating-nav-buttons {
+      width: 215px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .adding-collection-tags {
+      margin-top: 17px;
+    }
+
+    .buttons-submit-collection-creation {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+  }
+}
