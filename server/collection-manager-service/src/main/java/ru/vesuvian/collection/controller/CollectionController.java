@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.vesuvian.collection.dto.create.CollectionCreateDto;
 import ru.vesuvian.collection.dto.get.CollectionGetDto;
@@ -26,6 +27,7 @@ public class CollectionController {
     private final CollectionService collectionService;
 
     @PostMapping("/create")
+    @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create a new collection",
             description = "Creates a new collection based on the provided data",
             responses = {
