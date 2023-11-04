@@ -29,7 +29,7 @@ public class CollectionController {
     @Operation(summary = "Create a new collection",
             description = "Creates a new collection based on the provided data",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Collection created successfully"),
+                    @ApiResponse(responseCode = "201", description = "Collection created successfully"),
                     @ApiResponse(responseCode = "400", description = "Invalid input")
             })
     public void createCollection(
