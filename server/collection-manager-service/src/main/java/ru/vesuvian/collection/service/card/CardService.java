@@ -88,7 +88,7 @@ public class CardService {
     }
 
     private List<Card> retrieveCardsByCollectionIdAndCustomerId(Long collectionId, String customerId) {
-        return cardRepository.findCardsByCollectionIdAndCustomerId(collectionId, customerId)
+        return cardRepository.findCardsByCollectionIdAndCustomerIdOrderByOrderNumber(collectionId, customerId)
                 .orElseThrow(
                         () -> new CollectionNotFoundException("Collection with ID " + collectionId + " not found")
                 );

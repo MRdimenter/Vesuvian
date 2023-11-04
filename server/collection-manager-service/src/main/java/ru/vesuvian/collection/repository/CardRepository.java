@@ -15,9 +15,10 @@ public interface CardRepository extends JpaRepository<Card, Long> {
     @Query("SELECT c FROM Card c " +
             "JOIN CustomerCollection cc ON cc.collectionId = c.collection.collectionId " +
             "WHERE c.collection.collectionId = :collectionId " +
-            "AND cc.customerId = :customerId")
-    Optional<List<Card>> findCardsByCollectionIdAndCustomerId(@Param("collectionId") Long collectionId,
-                                                              @Param("customerId") String customerId);
+            "AND cc.customerId = :customerId " +
+            "ORDER BY c.orderNumber")
+    Optional<List<Card>> findCardsByCollectionIdAndCustomerIdOrderByOrderNumber(@Param("collectionId") Long collectionId,
+                                                                                @Param("customerId") String customerId);
 
 
     @Query("SELECT c FROM Card c " +

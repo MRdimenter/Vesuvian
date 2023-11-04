@@ -57,4 +57,10 @@
 
         @Column(name = "image_url")
         private String imageURL;
+
+        @Column(name = "order_number",
+                columnDefinition = "serial",
+                insertable = false,
+                updatable = false)
+        private Integer orderNumber;
     }

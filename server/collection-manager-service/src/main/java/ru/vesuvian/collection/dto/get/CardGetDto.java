@@ -46,7 +46,11 @@ public class CardGetDto {
     @JsonProperty("modified_date")
     private LocalDateTime modifiedDate;
 
-    @Schema(description = "image url")
+    @Schema(description = "Image url")
     @JsonProperty("image_url")
     private String imageURL;
+
+    @Schema(description = "Order of cards")
+    @JsonProperty("order_number")
+    private int orderNumber;
 }

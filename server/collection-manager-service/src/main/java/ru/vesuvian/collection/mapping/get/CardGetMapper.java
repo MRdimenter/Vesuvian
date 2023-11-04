@@ -22,6 +22,7 @@ public class CardGetMapper {
                 .imageURL(card.getImageURL())
                 .modifiedDate(card.getModifiedDate())
                 .definition(card.getDefinition())
+                .orderNumber(card.getOrderNumber())
                 .build();
     }
 
