@@ -1,11 +1,23 @@
 import { useState } from 'react';
 import { Button } from '../../Button/Button';
 import { CardTag } from '../../CardTag/CardTag';
+import { InputBox } from '../../Forms/InputBox';
+import { TextArea } from '../../InputComponents/TextArea/TextArea';
+import { OAuth2Service } from '../../../common/utils/OAuth2Service';
+import { ApiService } from '../../../common/utils/ApiService';
 
 import './collectionCreatingForm.scss';
 
+
 const CollectionCreatingForm = () => {
   const [activeCreating, setActiveCreating] = useState('collectionCreating')
+  const [colletionName, setColletionName] = useState('');
+  const [collectionDescription, setCollectionDescription] = useState('');
+
+  //TODO сделать запрос через валидацию
+  const handleValidationChange = () => {
+    console.log('handleValidationChange');
+  }
 
   const openCollectionCreating = (e) => {
     console.log('e.target: ', e.nativeEvent);
@@ -35,8 +47,14 @@ const CollectionCreatingForm = () => {
     console.log('handleSubmit');
   }
 
-  const submitCollectionCreation = () => {
+  const submitCollectionCreation = async () => {
     console.log('submitCollectionCreation');
+    //TODO попробую сначала так, а потом через Action
+    const oauthService = new OAuth2Service();
+    const apiService = new ApiService(oauthService);
+
+    const response = await apiService.postCreateCollection();
+    console.log('postCreateCollection: response: ', response);
   }
 
   const submitCollectionCancel = () => {
@@ -49,10 +67,24 @@ const CollectionCreatingForm = () => {
   return (
     <div className="collection-creating-form-wrapper">
       <form className="collection-creating-form">
-        <label className='colletion-name-label' for="colletionName">Название</label>
-        <input className='colletion-name-input' type="text" id="colletionName" name="colletionName" required minlength="4" maxlength="8" size="10" />
-        <span className='small-text'>Подсказка</span>
-        <textarea className='collection-description-textarea' type="text" placeholder='Введите описание' style={{ padding: '10px 0' }} />
+
+        <InputBox 
+          className="collectionName"
+          labelContent="Название"
+          necessary={true}
+          value={colletionName} 
+          onChange={(e) => setColletionName(e.target.value)}
+          onValidationChange={handleValidationChange}
+        />
+
+        <TextArea 
+          id="collectionDescription"
+          label="Введите описание"
+          placeholder='Введите описание'
+          value={collectionDescription}
+          onChange={(e) => setCollectionDescription(e.target.value)}
+        />
+
         <div className="card-collection-creating-nav-buttons">
           <div className={`${collectionBtnStyle}`}>
             <Button btnStyle='link' label='Приватная' id='asdasd' action={openCollectionCreating} textColor='black' fontSize='big' />

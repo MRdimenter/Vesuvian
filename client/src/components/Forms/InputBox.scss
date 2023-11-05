@@ -7,11 +7,41 @@
 
   font-size: 14px;
 
+  .colletion-name-label {
+    // border: 1px solid blue;
+    margin-top: 10px;
+  }
+
+  .form-input {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    width: 341px;
+    padding: 9.5px 241px 13.5px 11px;
+    align-items: center;
+
+    border-radius: 7px;
+    border: 1px solid #000;
+    background: #DEF6E9;
+  }
+
+  .colletion-name-input {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    width: 341px;
+    padding: 9.5px 241px 13.5px 11px;
+    align-items: center;
+
+    border-radius: 7px;
+    border: 1px solid #000;
+    background: #DEF6E9;
+  }
+  
   .inputBox-header {
     display: flex;
     justify-content: space-between;
   }
-
 
   .input-hint {
     position: absolute;

@@ -6,9 +6,9 @@
   align-items: center;
 
   .card-collection-creating-nav-buttons {
-    width: 215px;
     display: flex;
     justify-content: space-between;
+    gap: 20px; //there is no gap support yet for React Native
   }
 }
 

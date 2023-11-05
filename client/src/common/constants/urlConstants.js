@@ -9,10 +9,12 @@ const REGISTR_URL_PATH = 'api/v1/customers/create'; //TODO edit after clarificat
 
 const CUSTOMERS_URL = 'api/v1/customers';
 
+//TODO возможно есть смысл объединить константы по коллекциям в общий объект
 const CURRENT_CUSTOMER_URL = 'api/v1/customers/me';
 const CURRENT_CUSTOMER_COLLECTIONS_URL = 'api/v1/collections/me';
 const COLLECTION_URL = 'api/v1/collections';
 const COLLECTION_CARDS_URL_TAIL = 'cards';
+const CREATE = 'create';
 //TODO api/v1/ in its own constatnt
 const COLLECTION_TAGS_URL = 'api/v1'; // TODO будет изменён на COLLECTION_URL (после изменений на сервере)
 const COLLECTION_TAGS_URL_TAIL = 'tags';
@@ -28,6 +30,7 @@ export {
     TEMP_BASE_URL,
     COLLECTION_URL,
     COLLECTION_CARDS_URL_TAIL,
+    CREATE,
     COLLECTION_TAGS_URL,
     COLLECTION_TAGS_URL_TAIL,
 }
