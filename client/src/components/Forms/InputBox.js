@@ -66,7 +66,7 @@ const InputBox = ({ type = "text", className, labelContent, necessary, value, on
   return (
     <div className={`inputBox ${className}`}>
       <div className='inputBox-header'>
-        <label className="form-label" htmlFor={className}>{labelContent} {necessary && star}</label>
+        <label className="form-label small-text" htmlFor={className}>{labelContent} {necessary && star}</label>
         <IconButton iconName={'interrogation-mark-in-circle'} width='12' height='12' onClick={inputHintToggle}/>
       </div>
       {showInputHint && <pre className='input-hint small-small-text'>{ hitnText }</pre>}

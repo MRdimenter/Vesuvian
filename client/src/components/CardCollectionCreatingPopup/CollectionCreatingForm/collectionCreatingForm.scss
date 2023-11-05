@@ -34,12 +34,13 @@
       height: 123px;
       background-color: inherit;
       resize: none;
+      padding: 10px 10px;
     }
     
     .card-collection-creating-nav-buttons {
-      width: 215px;
       display: flex;
-      justify-content: space-between;
+      justify-content: left;
+      gap: 20px;
     }
 
     .adding-collection-tags {
@@ -49,7 +50,10 @@
     .buttons-submit-collection-creation {
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 20px; //there is no gap support yet for React Native
+      *:not(:first-child) {
+          margin-left: 20px;
+      }
     }
   }
 }
