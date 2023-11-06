@@ -9,6 +9,7 @@ export const appendCurrentCustomerDataAction = () => {
   return async (dispatch) => {
     try {
       const response = await apiService.getCurrentCustomer();
+      console.log('getCurrentCustomer: response: ', response);
       dispatch({type: CURRENT_CUSTOMER_DATA.APPEND_DATA, payload: response});  
     } catch (error) {
       dispatch({type: CURRENT_CUSTOMER_DATA.FETCH_DATA_ERROR, payload: error});

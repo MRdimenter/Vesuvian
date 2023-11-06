@@ -25,27 +25,10 @@
 
 .card-creating-popup {
   color: black;
-  width: 876px;
-  height: 574px;
+  width: 725px;
   border-radius: 10px;
 
-  
-  padding: 30px;
+  padding: 30px 50px;
 
   background-color: $btn-green;
 }
-
-/*
-@mixin primary {
-  min-height: 80px;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 50px;
-}
-
-.header {
-  @include primary();
-}
-*/

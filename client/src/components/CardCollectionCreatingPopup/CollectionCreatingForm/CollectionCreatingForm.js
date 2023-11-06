@@ -53,7 +53,13 @@ const CollectionCreatingForm = () => {
     const oauthService = new OAuth2Service();
     const apiService = new ApiService(oauthService);
 
-    const response = await apiService.postCreateCollection();
+    const collectionData = {
+      "name": colletionName,
+      "is_public": true,
+      "description": collectionDescription,
+    }
+
+    const response = await apiService.postCreateCollection(collectionData);
     console.log('postCreateCollection: response: ', response);
   }
 
@@ -99,7 +105,7 @@ const CollectionCreatingForm = () => {
         </div>
         <div className="buttons-submit-collection-creation">
           <Button btnStyle='btn' label='Создать' action={submitCollectionCreation} />
-          <Button btnStyle='btn' label='Отмена' action={submitCollectionCancel} />
+          <Button btnStyle='btn' label='Отмена' link={'/'} />
         </div>
       </form>
     </div>

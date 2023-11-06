@@ -1,0 +1,37 @@
+.card-creating-textarea {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  // border: none;
+  border: 1px solid green($color: #000000);
+  width: 100%;
+  height: 150px;
+  background-color: inherit;
+  resize: none;
+  padding: 10px 10px;
+
+  width: 300px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none; /* Убираем границу у контейнера */
+  overflow: hidden; /* Убираем скролл у контейнера */
+}
+
+.centr-align-textarea {
+  border: none;
+  resize: none;
+  overflow: hidden;
+  text-align: center;
+  line-height: 30px;
+
+  width: 100%;
+  background-color: inherit;
+  resize: none;
+  padding: 10px 10px;
+}
+
+.centr-align-textarea:focus {
+  outline: none !important;
+  border: none;
+}

@@ -16,8 +16,11 @@ class ApiService {
 
   async getResourseByAuth(baseURL, path) {
     const url = `${baseURL}/${path}`;
+    console.log('?????? url: ', url);
     let accessToken = getAccessToken();
 
+    //TODO хороший способ оттестировать и починить рекурсию при неверном accessToken
+    // accessToken = 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0Nkx4LV9BM3hrd0lLQkIxUlBWOW9TZFFBWXVwZW5yQ0EyNHg4cDdNX2ljIn0.eyJleHAiOjE2OTkyODMzOTQsImlhdCI6MTY5OTI4MzA5NCwianRpIjoiNjEwNTZkMDQtYzk5Yi00ZmEzLTlmOTgtZTIzZDM3NWFiNmE2IiwiaXNzIjoiaHR0cDovLzIxMi4xMTMuMTIwLjE5ODo4MjgyL3JlYWxtcy9kZXYiLCJhdWQiOlsicmVhbG0tbWFuYWdlbWVudCIsImJyb2tlciIsImFjY291bnQiXSwic3ViIjoiY2Q4OGY0MjItMDA1YS00YjUzLWIzMzgtMmMwNWFmZjM4NTk3IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoic3dhZ2dlci11aSIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZGVmYXVsdC1yb2xlcy1kZXYiLCJvZmZsaW5lX2FjY2VzcyIsImFkbWluIiwidW1hX2F1dGhvcml6YXRpb24iLCJ1c2VyIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsicmVhbG0tbWFuYWdlbWVudCI6eyJyb2xlcyI6WyJ2aWV3LXJlYWxtIiwidmlldy1pZGVudGl0eS1wcm92aWRlcnMiLCJtYW5hZ2UtaWRlbnRpdHktcHJvdmlkZXJzIiwiaW1wZXJzb25hdGlvbiIsInJlYWxtLWFkbWluIiwiY3JlYXRlLWNsaWVudCIsIm1hbmFnZS11c2VycyIsInF1ZXJ5LXJlYWxtcyIsInZpZXctYXV0aG9yaXphdGlvbiIsInF1ZXJ5LWNsaWVudHMiLCJxdWVyeS11c2VycyIsIm1hbmFnZS1ldmVudHMiLCJtYW5hZ2UtcmVhbG0iLCJ2aWV3LWV2ZW50cyIsInZpZXctdXNlcnMiLCJ2aWV3LWNsaWVudHMiLCJtYW5hZ2UtYXV0aG9yaXphdGlvbiIsIm1hbmFnZS1jbGllbnRzIiwicXVlcnktZ3JvdXBzIl19LCJicm9rZXIiOnsicm9sZXMiOlsicmVhZC10b2tlbiJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsInZpZXctYXBwbGljYXRpb25zIiwidmlldy1jb25zZW50Iiwidmlldy1ncm91cHMiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsIm1hbmFnZS1jb25zZW50Iiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwiY2xpZW50SG9zdCI6IjIxMy4yMzQuMjUyLjExMiIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6ImFkbWluVGVzdCBhZG1pblRlc3QiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtc3dhZ2dlci11aSIsImdpdmVuX25hbWUiOiJhZG1pblRlc3QiLCJmYW1pbHlfbmFtZSI6ImFkbWluVGVzdCIsImNsaWVudEFkZHJlc3MiOiIyMTMuMjM0LjI1Mi4xMTIiLCJjbGllbnRfaWQiOiJzd2FnZ2VyLXVpIiwiZW1haWwiOiJhZG1pbnN3YWdnZXJAZ21haWwuY29tIn0.fF-5l3Edyebovlz6fkPfY3V9fP-THtCUv6QDd-BKt7-iZj_ooGRcDCDJ7WF65X2PggwR_p53OXjfRHx6ll7fMNAGWNE4z3bhxV-cFbeG-_p1gkrHWarBy-kVVEC8sqsnnsILstoIeRODGGBkbrQAlSmP2eeceek46tkse39RwZi7NJBc33AgpbfYJt-STwZJesDp8jr7wlwbjqVeKhxVnJ_CZK0snj1QYMyT53qRwZ43S9hTBKr4v0StJhIWplt9eZC25QPLHW7wWJYCAyY69RKKmdukM1lX1XeM_BbLSSxSSDMsPg_ulbrvaHmjJBCSt3IPijfT1bxfOMNV9rFfiQ'
     const requestOptions = {
       method: 'GET',
       headers: {
@@ -25,6 +28,7 @@ class ApiService {
         'Authorization': `Bearer ${accessToken}`,
       }
     };
+    
 
     const response = await fetch(url, requestOptions);
     if (!response.ok) {
@@ -54,7 +58,7 @@ class ApiService {
     //return await fetch(url, requestOptions);
   }
 
-  async fetchResourseByAuth(baseURL, path) {
+  async fetchResourseByAuth(baseURL, path, data) {
     const url = `${baseURL}/${path}`;
     let accessToken = getAccessToken();
 
@@ -63,36 +67,9 @@ class ApiService {
       headers: {
         'Accept': '*/*',
         'Content-Type': 'application/json',
-        // 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
         'Authorization': `Bearer ${accessToken}`
-        // 'Host': 'localhost:8099',
-        // 'User-Agent': 'Mozilla/5.0',
-        // 'Accept-Encoding': 'gzip, deflate, br'
-        // 'Connection': 'keep-alive',
       },
-      // body: new URLSearchParams({
-      //   "name": "string",
-      //   "is_public": true,
-      //   "description": "string"
-      //   // "cards": [
-      //   //   {
-      //   //     "term": "string",
-      //   //     "definition": "string",
-      //   //     "hint": "string",
-      //   //     "image_url": "string"
-      //   //   }
-      //   // ],
-      //   // "tags": [
-      //   //   {
-      //   //     "name": "string"
-      //   //   }
-      //   // ]
-      // })
-      body: JSON.stringify({
-        "name": "string",
-        "is_public": true,
-        "description": "string",
-      })
+      body: JSON.stringify(data)
     };
 
     const response = await fetch(url, requestOptions);
@@ -119,6 +96,7 @@ class ApiService {
         throw new ServerError(response.status);
       }
     }
+    //TODO реакцию на успешное или неудачное создание коллекции
     console.log(response);
     //return response.json();
     //return await fetch(url, requestOptions);
@@ -143,6 +121,7 @@ class ApiService {
     console.log('!!!!!!!! getCurrentCustomer');
     try {
       const response = this.getResourseByAuth(BASE_URL, CURRENT_CUSTOMER_URL);
+      console.log('response: ', response);
       return response;
     } catch (error) {
       console.log('необработанная ошибка getCurrentCustomer', error);
@@ -201,57 +180,27 @@ class ApiService {
     //return this.getResourseByAuth(CURRENT_CUSTOMER_URL);
   }
 
-  async fetchCreateCollection_2(baseURL, path) {
-    const url = `${baseURL}/${path}`;
-    let accessToken = getAccessToken();
-    
-    const requestOptions = {
-      method: 'POST',
-      // headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-      headers: {
-        'Accept': '*/*',
-        'Authorization': `Bearer ${accessToken}`,
-      },
-      body: new URLSearchParams({
-        "name": "string",
-        "is_public": true,
-        "description": "string",
-        "cards": [
-          {
-            "term": "string",
-            "definition": "string",
-            "hint": "string",
-            "image_url": "string"
-          }
-        ],
-        "tags": [
-          {
-            "name": "string"
-          }
-        ]
-      })
-    };
-  
-    return fetch(url, requestOptions)
-      .then((res) => {
-        if (res.status >= 200 && res.status < 300) {
-          return res.json();
-        } else if (res.status === 401) {
-          throw new Error(res.status);
-        } else if (res.status >= 500) {
-          throw new Error(res.statusText);
-        } else {
-          throw new Error();
-        }
-      })
-    //return fetch(KEYCLOAK_URL, requestOptions).then(handleResponse);
-  }
   //TODO пора бы разделять API на сущности: CustomerAPI, CollectionAPI etc.
-  async postCreateCollection() {
+  async postCreateCollection(collectionData) {
     const fullCollectionURL = `${COLLECTION_URL}/${CREATE}`;
     
     try {
-      const response = this.fetchResourseByAuth(TEMP_BASE_URL, fullCollectionURL)
+      const response = this.fetchResourseByAuth(TEMP_BASE_URL, fullCollectionURL, collectionData)
+      console.log('getCollectionById response: ', response);
+      return response;
+    } catch (error) {
+      console.log('необработанная ошибка getCollectionById', error);
+      throw error; // Пробросываем ошибку для обработки её компонентом, вызывающим метод getAllCustomers
+    }
+    //return this.getResourseByAuth(CURRENT_CUSTOMER_URL);
+  }
+
+  //TODO пора бы разделять API на сущности: CustomerAPI, CollectionAPI etc.
+  async postCreateCard(collectionId, cardData) {
+    const fullCollectionURL = `${COLLECTION_URL}/${collectionId}/${COLLECTION_CARDS_URL_TAIL}`;
+    
+    try {
+      const response = this.fetchResourseByAuth(TEMP_BASE_URL, fullCollectionURL, cardData)
       console.log('getCollectionById response: ', response);
       return response;
     } catch (error) {

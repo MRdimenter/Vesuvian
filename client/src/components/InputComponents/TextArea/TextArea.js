@@ -4,7 +4,7 @@ const TextArea = ({ id, label, placeholder, value, onChange }) => {
 
   return (
     <div>
-      <label htmlFor={id}>{label}</label>
+      <label className='small-text' htmlFor={id}>{label}</label>
       <textarea
         id={id}
         className="collection-description-textarea"

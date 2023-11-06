@@ -1,0 +1,21 @@
+@import "../../../../common/styles/color.scss";
+
+.collection-selection-select {
+  margin-top: 5px;
+  border: 1px solid black;
+  width: 100%;
+  height: 40px;
+  border-radius: 7px;
+  background-color: inherit;
+}
+
+.collection-selection-select {
+  background-color: inherit;
+}
+
+// TODO возможно придется сделать свой компонент select, чтобы красиво стилизовать
+// like CurrencyDropDownMenu
+.collection-selection-select option {
+  border-radius: 5px;
+  background-color: $btn-green;
+}

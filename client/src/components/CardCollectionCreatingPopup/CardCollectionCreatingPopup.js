@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { CardCollectionCreatingNav } from './CardCollectionCreatingNav/CardCollectionCreatingNav'
-
-import './cardCollectionCreatingPopup.scss';
 import { CardCreatingForm } from './CardCreatingForm/CardCreatingForm';
 import { CollectionCreatingForm } from './CollectionCreatingForm/CollectionCreatingForm';
+
+import './cardCollectionCreatingPopup.scss';
 
 const CardCollectionCreatingPopup = () => {
   const [activeCreating, setActiveCreating] = useState('collectionCreating')
