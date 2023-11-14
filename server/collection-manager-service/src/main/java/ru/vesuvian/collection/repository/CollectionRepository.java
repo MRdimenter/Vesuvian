@@ -1,6 +1,8 @@
 package ru.vesuvian.collection.repository;
 
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -18,4 +20,11 @@ public interface CollectionRepository extends JpaRepository<Collection, Long> {
             "LEFT JOIN FETCH ct.tag " +
             "WHERE c.collectionId = :collectionId")
     Optional<Collection> findByIdWithTags(@Param("collectionId") Long collectionId);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Collection c WHERE c.collectionId = :collectionId")
+    void deleteByCollectionId(@Param("collectionId") Long collectionId);
+
+
 }

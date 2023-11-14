@@ -13,7 +13,9 @@ import ru.vesuvian.collection.exception.CollectionNotFoundException;
 import ru.vesuvian.collection.mapping.create.CollectionCreateMapper;
 import ru.vesuvian.collection.mapping.get.CollectionGetMapper;
 import ru.vesuvian.collection.mapping.update.CollectionUpdateMapper;
+import ru.vesuvian.collection.repository.CardRepository;
 import ru.vesuvian.collection.repository.CollectionRepository;
+import ru.vesuvian.collection.repository.CollectionTagRepository;
 import ru.vesuvian.collection.repository.CustomerCollectionRepository;
 import ru.vesuvian.collection.security.AuthenticatedCustomerResolver;
 import ru.vesuvian.collection.service.PrivacyService;
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 public class CollectionService {
+    private final CollectionTagRepository collectionTagRepository;
     private final CollectionRepository collectionRepository;
     private final CollectionCreateMapper collectionCreateMapper;
     private final CustomerCollectionRepository customerCollectionRepository;
@@ -33,6 +36,7 @@ public class CollectionService {
     private final PrivacyService privacyService;
     private final CollectionAccessService collectionAccessService;
     private final CollectionUpdateMapper collectionUpdateMapper;
+    private final CardRepository cardRepository;
 
     @Transactional
     public void createCollection(CollectionCreateDto collectionCreateDTO) {
@@ -85,4 +89,16 @@ public class CollectionService {
         collectionUpdateMapper.updateCollection(collection, collectionUpdateDto);
         collectionRepository.save(collection);
     }
+
+    @Transactional
+    public void deleteCollectionById(Long collectionId) {
+        String UUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
+        collectionAccessService.findCollection(collectionId, UUID);
+
+        cardRepository.deleteByCollectionId(collectionId);
+        customerCollectionRepository.deleteByCollectionId(collectionId);
+        collectionTagRepository.deleteByCollectionId(collectionId);
+        collectionRepository.deleteByCollectionId(collectionId);
+    }
+
 }

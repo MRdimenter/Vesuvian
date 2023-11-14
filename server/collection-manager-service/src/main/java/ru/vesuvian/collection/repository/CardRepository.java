@@ -1,7 +1,9 @@
 package ru.vesuvian.collection.repository;
 
 
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -30,4 +32,10 @@ public interface CardRepository extends JpaRepository<Card, Long> {
     Optional<Card> findCardByCollectionIdAndCustomerIdAndCardId(@Param("collectionId") Long collectionId,
                                                                 @Param("customerId") String customerId,
                                                                 @Param("cardId") Long cardId);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Card c WHERE c.collection.collectionId = :collectionId")
+    void deleteByCollectionId(@Param("collectionId") Long collectionId);
+
 }
