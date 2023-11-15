@@ -4,15 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ApiService } from '../../common/utils/ApiService';
 import { OAuth2Service } from '../../common/utils/OAuth2Service';
 import { authenticationAction } from '../../store/actions/authenticationActions';
-import { BadRequestError, RefreshTokenMissingError, ServerError } from '../../common/utils/Errors/Errors';
-
-import { ErrorPage } from '../ErrorPage/ErrorPage';
-import { CollectionsPageBody } from './CollectionsPageBody/CollectionsPageBody';
-import { CollectionsPageHeader } from './CollectionsPageHeader/CollectionsPageHeader';
-
-import './collectionsPage.scss';
 import { collectionAction } from '../../store/actions/collectionAction';
 import { LocalStorageService } from '../../common/utils/LocalStorageService';
+import { BadRequestError, RefreshTokenMissingError, ServerError } from '../../common/utils/Errors/Errors';
+import { CollectionsPageBody } from './CollectionsPageBody/CollectionsPageBody';
+import { CollectionsPageHeader } from './CollectionsPageHeader/CollectionsPageHeader';
+import { ErrorPage } from '../ErrorPage/ErrorPage';
+
+import './collectionsPage.scss';
 
 function getAlfaFilterObjects(collections) {
   const firstLetters = new Map();
@@ -38,7 +37,7 @@ const CollectionsPage = () => {
   const navigate = useNavigate();
 
 
-  const [collectionsList, setCollectionsList] = useState(null);
+  const [collectionsList, setCollectionsList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   // для перехода на страницу коллекции
@@ -53,11 +52,16 @@ const CollectionsPage = () => {
     console.log('useEffect: errorCollectionData: ', errorCollectionData);
     if (isMakeTransition) {
       console.log('useEffect collectionDataState: ', collectionDataState);
-      if (collectionDataState?.collectionData?.length && !loadingCollectionData && !errorCollectionData) {        
+      if (collectionDataState?.collectionData && !loadingCollectionData && !errorCollectionData) {        
         const localStorageService = new LocalStorageService('CollectionsPage');
 
         localStorageService.setValue({collectionId: collectionDataState.collectionId});
         navigate('/collectionPage');
+      } else {
+        console.log('collectionDataState?.collectionData?.length: ', collectionDataState?.collectionData?.length);
+        console.log('collectionDataState?.collectionData: ', collectionDataState?.collectionData);
+        console.log('!loadingCollectionData: ', !loadingCollectionData);
+        console.log('!errorCollectionData: ', !errorCollectionData);
       }
     }
   }, [isMakeTransition, navigate, collectionDataState, loadingCollectionData, errorCollectionData])
@@ -147,10 +151,11 @@ const CollectionsPage = () => {
   const spinner = (loading || loadingCollectionData) ? <div className='spinner'><Loading /></div> : null;
   const errorMessage = error ? <ErrorPage /> : null;
   const errorCollectionFetchingData = error ? <ErrorPage message='Не удалось загрузить коллекцию' /> : null;
-  const collections = collectionsList ? <>
-    <CollectionsPageHeader />
-    <CollectionsPageBody sortedCollections={collectionsList} onCollectionCardClick={onCollectionCardClick} />
-  </> : null;
+  const collections = collectionsList ? 
+    <>
+      <CollectionsPageHeader />
+      <CollectionsPageBody sortedCollections={collectionsList} onCollectionCardClick={onCollectionCardClick} />
+    </> : null;
 
   return (
     <div className='collections-page'>

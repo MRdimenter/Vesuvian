@@ -2,8 +2,9 @@ import { useState } from 'react';
 
 import './collectionSelection.scss';
 
-const CollectionSelection = ({label, options, onChange}) => {
-  const [selectedValue, setSelectedValue] = useState('');
+// TODO сделать универсальный компонент
+const CollectionSelection = ({label, options, initSelectedValue, onChange}) => {
+  const [selectedValue, setSelectedValue] = useState(initSelectedValue || '');
 
   const handleSelectChange = (event) => {
     const selectedOption = event.target.value;

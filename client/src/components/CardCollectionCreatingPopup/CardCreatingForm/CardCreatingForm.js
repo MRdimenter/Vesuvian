@@ -8,24 +8,23 @@ import { Icon } from '../../Icon/Icon';
 import { TextArea } from '../../InputComponents/TextArea/TextArea';
 import { CardCreatingTextarea } from './CardCreatingTextarea/CardCreatingTextarea';
 
-import './cardCreatingForm.scss';
 import { OAuth2Service } from '../../../common/utils/OAuth2Service';
 import { ApiService } from '../../../common/utils/ApiService';
 import { CollectionSelection } from './CollectionSelection/CollectionSelection';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { BadRequestError, RefreshTokenMissingError, ServerError } from '../../../common/utils/Errors/Errors';
-import { useLogOut } from '../../../common/hooks/useLogOut';
 import { authenticationAction } from '../../../store/actions/authenticationActions';
+
+import './cardCreatingForm.scss';
 
 const CardCreatingForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const collectionCards = useSelector((state) => state.collectionData.collectionData?.collectionData);
 
-  const [frontSideCardValue, setFrontSideCardValue] = useState('')
-  const [backSideCardValue, setBackSideCardValue] = useState('')
+  const [frontSideCardValue, setFrontSideCardValue] = useState('');
+  const [backSideCardValue, setBackSideCardValue] = useState('');
   const [definitionValue, setDefinitionValue] = useState('');
-  const [collectionDescription, setCollectionDescription] = useState('')
+  const [selectedCollectionName, setSelectedCollectionName] = useState('');
   const [collectionsDataList, setCollectionsDataList] = useState([]);
 
   const attachingImage = () => {
@@ -39,17 +38,22 @@ const CardCreatingForm = () => {
   }
 
   const handleSelectChange = (value) => {
-    setDefinitionValue(value);
+    setSelectedCollectionName(value);
   };
 
+  useEffect(() => {
+    if (collectionsDataList?.length) {
+      const firstCollectionName = collectionsDataList[0].name;
+      setSelectedCollectionName(firstCollectionName);
+    }
+  }, [collectionsDataList])
+
   const submitCardCreation = async () => {
-    console.log('submitCardCreation');
     //TODO попробую сначала так, а потом через Action
     const oauthService = new OAuth2Service();
     const apiService = new ApiService(oauthService);
-
-    const response = await apiService.postCreateCard(5, cardData);
-    console.log('postCreateCard: response: ', response);
+    const collectionId = collectionsDataList.find((collection) => collection.name === selectedCollectionName).collectionId;
+    const response = await apiService.postCreateCard(collectionId, cardData);
   }
 
   async function logout(dispatch) {
@@ -68,14 +72,12 @@ const CardCreatingForm = () => {
       // setLoading(true); // TODO if Loading
       try {
         const reponseCollectionList = await apiService.getCurrentCustomerCollections();
-        console.log('reponseCollectionList: ', reponseCollectionList);
 
         if (reponseCollectionList) {
           //TODO сохранять только необходимые данные: тame и collection_id коллекции
           const collectionsDataList = reponseCollectionList.map((collection) => {
             return {collectionId: collection.collection_id, name: collection.name}
           })
-          console.log('collectionsDataList: ', collectionsDataList);
           setCollectionsDataList(collectionsDataList);
 
         } else {
@@ -129,14 +131,15 @@ const CardCreatingForm = () => {
             id="card-hint-textarea"
             label="Введите описание"
             placeholder='Введите описание'
-            value={collectionDescription}
-            onChange={(e) => setCollectionDescription(e.target.value)}
+            value={definitionValue}
+            onChange={(e) => setDefinitionValue(e.target.value)}
           />
         </div>
         <div className="collection-additional-settings-column">
           <CollectionSelection
             label='Выбрать коллекцию'
             options={options}
+            initSelectedValue={selectedCollectionName}
             onChange={handleSelectChange}
           />
 
