@@ -14,12 +14,11 @@ import { RegistrationForm } from './components/Forms/RegistrationForm/Registrati
 import { ReLoginPage } from './components/ErrorPage/ReLoginPage';
 import { appendCurrentCustomerDataAction } from './store/actions/appendCurrentCustomerDataAction';
 import { CustomersPage } from './components/CustomersPage/CustomersPage';
-import { CardsPage } from './components/CardsPage/CardsPage';
-
-import './App.scss';
 import { CollectionsPage } from './components/CollectionsPage/CollectionsPage';
 import { CardCollectionCreatingPage } from './components/Pages/CardCollectionCreatingPage/CardCollectionCreatingPage';
 import { CollectionPage } from './Pages/CollectionPage/CollectionPage';
+
+import './App.scss';
 
 // TODO тестить на 3G:
 // форма логин остается открытой после нажатия на кнопку Вход -> добавить компонент "входим в аккаунт"

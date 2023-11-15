@@ -1,3 +1,5 @@
+import { ApiService } from '../../../../common/utils/ApiService';
+import { OAuth2Service } from '../../../../common/utils/OAuth2Service';
 import { Button, IconButton } from '../../../../components/Button/Button';
 import { CardTag } from '../../../../components/CardTag/CardTag';
 import { Icon } from '../../../../components/Icon/Icon';
@@ -8,7 +10,10 @@ import './collectionEditingPageHeader.scss';
 const collectionAuthor = '@skaipnik';
 const collectionRecentChangesDate= '09.08.2023 23:01';
 
-const CollectionEditingPageHeader = ({ collectionTitle = 'Basic English', tags=['English'], onStartTraining }) => {
+const CollectionEditingPageHeader = ({ collectionTitle = 'Basic English', tags=['English'], onStartTraining, collectionId}) => {
+  const oauthService = new OAuth2Service();
+  const apiService = new ApiService(oauthService);
+
   const handleSubmit = () => {
     console.log('addTabClick');
   }
@@ -27,6 +32,11 @@ const CollectionEditingPageHeader = ({ collectionTitle = 'Basic English', tags=[
     )
   }
 
+  const deleteColletion = () => {
+    console.log('deleteColletion, collectionId: ', collectionId);
+    apiService.deleteCollection(collectionId);
+  }
+
   return (
     <div className='collection-page-header'>
       <div className="collection-page-header-top">
@@ -35,6 +45,7 @@ const CollectionEditingPageHeader = ({ collectionTitle = 'Basic English', tags=[
           <Icon iconName='globe-svg' iconFormat='svg' width="40" height="40" />
           {getTags(tags)}
           {tags.length < 3 && <Button btnStyle='link' label='+добавить тег' action={handleSubmit} />}
+          <Button btnStyle='btn' label='Удалить коллекцию' action={deleteColletion} />
         </div>
         <div className="training-bar">
           <Button btnStyle='btn' label='Начать тренировку' action={onStartTraining} />

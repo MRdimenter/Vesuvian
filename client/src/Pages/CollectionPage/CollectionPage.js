@@ -30,7 +30,7 @@ const CollectionPage = () => {
   }
 
   useEffect(() => {
-    if (collectionDataState?.collectionData?.length) {
+    if (collectionDataState?.collectionData) {
       let { collectionData } = collectionDataState;
 
       setcollectionData(collectionData);
