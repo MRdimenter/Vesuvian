@@ -14,10 +14,10 @@ public class CollectionUpdateMapper {
             return;
         }
 
-        collection.setCollectionName(updateDto.getCollectionName() != null ? updateDto.getCollectionName() : collection.getCollectionName());
+        collection.setName(updateDto.getCollectionName() != null ? updateDto.getCollectionName() : collection.getName());
         collection.setIsPublic(updateDto.getIsPublic() != null ? updateDto.getIsPublic() : collection.getIsPublic());
         collection.setDescription(updateDto.getDescription() != null ? updateDto.getDescription() : collection.getDescription());
 
-        collection.setModifiedDateToNow();
+        collection.updateModifiedDate();
     }
 }

@@ -1,11 +1,8 @@
 package ru.vesuvian.collection.mapping.create;
 
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import ru.vesuvian.collection.dto.create.CollectionCreateDto;
 import ru.vesuvian.collection.dto.create.TagCreateDto;
 import ru.vesuvian.collection.entity.Card;
@@ -15,7 +12,6 @@ import ru.vesuvian.collection.entity.CollectionTag;
 import ru.vesuvian.collection.entity.Tag;
 import ru.vesuvian.collection.repository.TagRepository;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,7 +28,7 @@ public class CollectionCreateMapper {
 
         Collection collection = new Collection();
         collection.setCreatorCustomerId(customerUUID);
-        collection.setCollectionName(collectionDto.getCollectionName());
+        collection.setName(collectionDto.getCollectionName());
         collection.setIsPublic(collectionDto.getIsPublic());
         collection.setDescription(collectionDto.getDescription());
         collection.setNumberOfCards((collectionDto.getCards() != null) ? collectionDto.getCards().size() : 0);

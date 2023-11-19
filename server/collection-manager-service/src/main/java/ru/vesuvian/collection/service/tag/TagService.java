@@ -43,7 +43,7 @@ public class TagService {
 
         var collectionTag = collectionTagService.createCollectionTag(collection, tag);
         collection.getCollectionTags().add(collectionTag);
-        collection.setModifiedDateToNow();
+        collection.updateModifiedDate();
         collectionRepository.save(collection);
     }
 

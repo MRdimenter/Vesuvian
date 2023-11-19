@@ -19,8 +19,8 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
     @Query("SELECT t FROM Tag t " +
             "JOIN CollectionTag ct ON t.tagId = ct.tag.tagId " +
             "JOIN ct.collection c " +
-            "JOIN CustomerCollection cc ON c.collectionId = cc.collection.collectionId " +
-            "WHERE cc.customerId = :customerId AND c.collectionId = :collectionId")
+            "JOIN CustomerCollection cc ON c.id = cc.collection.id " +
+            "WHERE cc.customerId = :customerId AND c.id = :collectionId")
     Optional<List<Tag>> findTagsByCustomerIdAndCollectionId(@Param("collectionId") Long collectionId,
                                                   @Param("customerId") String customerId);
 }

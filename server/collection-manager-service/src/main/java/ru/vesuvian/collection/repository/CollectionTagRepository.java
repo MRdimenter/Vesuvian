@@ -12,7 +12,7 @@ import ru.vesuvian.collection.entity.CollectionTag;
 public interface CollectionTagRepository extends JpaRepository<CollectionTag, Long> {
     @Modifying
     @Transactional
-    @Query("DELETE FROM CollectionTag ct WHERE ct.collection.collectionId = :collectionId")
+    @Query("DELETE FROM CollectionTag ct WHERE ct.collection.id = :collectionId")
     void deleteByCollectionId(@Param("collectionId") Long collectionId);
 
 

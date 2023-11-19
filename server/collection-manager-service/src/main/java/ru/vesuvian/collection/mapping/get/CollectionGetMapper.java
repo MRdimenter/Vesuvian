@@ -18,8 +18,8 @@ public class CollectionGetMapper {
 
     public CollectionGetDto mapToDto(Collection collection) {
         return CollectionGetDto.builder()
-                .collectionId(collection.getCollectionId())
-                .collectionName(collection.getCollectionName())
+                .collectionId(collection.getId())
+                .collectionName(collection.getName())
                 .creatorCustomerId(collection.getCreatorCustomerId())
                 .description(collection.getDescription())
                 .isPublic(collection.getIsPublic())
@@ -29,7 +29,7 @@ public class CollectionGetMapper {
                 .createdAt(collection.getCreatedAt())
                 .tagGetDtoList(collection.getCollectionTags()
                         .stream()
-                        .map(collectionTag -> mapToTag(collectionTag.getTag(), collection.getCollectionId()))
+                        .map(collectionTag -> mapToTag(collectionTag.getTag(), collection.getId()))
                         .collect(Collectors.toList())
                 )
                 .build();

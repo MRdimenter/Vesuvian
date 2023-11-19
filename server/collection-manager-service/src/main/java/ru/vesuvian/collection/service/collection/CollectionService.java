@@ -47,7 +47,7 @@ public class CollectionService {
 
         // Создаем и сохраняем CustomerCollection
         var customerCollection = CustomerCollection.builder()
-                .collectionId(collection.getCollectionId())
+                .collectionId(collection.getId())
                 .customerId(collection.getCreatorCustomerId())
                 .build();
 

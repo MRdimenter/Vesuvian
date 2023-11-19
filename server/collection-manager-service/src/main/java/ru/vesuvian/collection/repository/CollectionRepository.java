@@ -12,18 +12,18 @@ import java.util.Optional;
 
 @Repository
 public interface CollectionRepository extends JpaRepository<Collection, Long> {
-    @Query("SELECT c FROM Collection c JOIN FETCH c.cards card WHERE c.collectionId = :collectionId AND card.cardId = :cardId")
+    @Query("SELECT c FROM Collection c JOIN FETCH c.cards card WHERE c.id = :collectionId AND card.cardId = :cardId")
     Optional<Collection> findByIdWithCards(@Param("collectionId") Long collectionId, @Param("cardId") Long cardId);
 
     @Query("SELECT c FROM Collection c " +
             "LEFT JOIN FETCH c.collectionTags ct " +
             "LEFT JOIN FETCH ct.tag " +
-            "WHERE c.collectionId = :collectionId")
+            "WHERE c.id = :collectionId")
     Optional<Collection> findByIdWithTags(@Param("collectionId") Long collectionId);
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Collection c WHERE c.collectionId = :collectionId")
+    @Query("DELETE FROM Collection c WHERE c.id = :collectionId")
     void deleteByCollectionId(@Param("collectionId") Long collectionId);
 
 

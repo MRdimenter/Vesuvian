@@ -15,8 +15,8 @@ import java.util.Optional;
 @Repository
 public interface CardRepository extends JpaRepository<Card, Long> {
     @Query("SELECT c FROM Card c " +
-            "JOIN CustomerCollection cc ON cc.collectionId = c.collection.collectionId " +
-            "WHERE c.collection.collectionId = :collectionId " +
+            "JOIN CustomerCollection cc ON cc.collectionId = c.collection.id " +
+            "WHERE c.collection.id = :collectionId " +
             "AND cc.customerId = :customerId " +
             "ORDER BY c.orderNumber")
     Optional<List<Card>> findCardsByCollectionIdAndCustomerIdOrderByOrderNumber(@Param("collectionId") Long collectionId,
@@ -24,8 +24,8 @@ public interface CardRepository extends JpaRepository<Card, Long> {
 
 
     @Query("SELECT c FROM Card c " +
-            "JOIN CustomerCollection cc ON cc.collectionId = c.collection.collectionId " +
-            "WHERE c.collection.collectionId = :collectionId " +
+            "JOIN CustomerCollection cc ON cc.collectionId = c.collection.id " +
+            "WHERE c.collection.id = :collectionId " +
             "AND cc.customerId = :customerId " +
             "AND c.cardId = :cardId"
     )
@@ -35,7 +35,7 @@ public interface CardRepository extends JpaRepository<Card, Long> {
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Card c WHERE c.collection.collectionId = :collectionId")
+    @Query("DELETE FROM Card c WHERE c.collection.id = :collectionId")
     void deleteByCollectionId(@Param("collectionId") Long collectionId);
 
 }

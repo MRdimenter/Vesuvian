@@ -18,7 +18,7 @@ public interface CustomerCollectionRepository extends JpaRepository<CustomerColl
     @Query("SELECT cc FROM CustomerCollection cc JOIN FETCH cc.collection WHERE cc.customerId = :customerId")
     List<CustomerCollection> findByCustomerIdWithCollections(@Param("customerId") String customerId);
 
-    @Query("SELECT cc FROM CustomerCollection cc JOIN FETCH cc.collection WHERE cc.customerId = :customerId AND cc.collection.collectionId = :collectionId")
+    @Query("SELECT cc FROM CustomerCollection cc JOIN FETCH cc.collection WHERE cc.customerId = :customerId AND cc.collection.id = :collectionId")
     Optional<CustomerCollection> findByCustomerIdAndCollectionId(@Param("customerId") String customerId, @Param("collectionId") Long collectionId);
 
     @Query("SELECT cc FROM CustomerCollection cc JOIN FETCH cc.collection c LEFT JOIN FETCH c.collectionTags ct LEFT JOIN FETCH ct.tag WHERE cc.customerId = :customerId")
