@@ -6,11 +6,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.vesuvian.collection.dto.create.CardCreateDto;
-import ru.vesuvian.collection.dto.get.CardGetDto;
+import ru.vesuvian.collection.dto.get.CardListGetDto;
 import ru.vesuvian.collection.dto.update.CardUpdateDto;
 import ru.vesuvian.collection.service.card.CardService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/collections/{collectionId}/cards")
@@ -21,7 +19,7 @@ public class CardController {
     private final CardService cardService;
 
     @GetMapping
-    public List<CardGetDto> getCardsByCollectionId(
+    public CardListGetDto getCardsByCollectionId(
             @PathVariable
             @Parameter(description = "ID of the collection to be retrieved",
                     name = "collectionId",

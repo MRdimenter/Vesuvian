@@ -5,13 +5,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.vesuvian.collection.dto.create.CardCreateDto;
-import ru.vesuvian.collection.dto.get.CardGetDto;
+import ru.vesuvian.collection.dto.get.CardListGetDto;
 import ru.vesuvian.collection.dto.update.CardUpdateDto;
 import ru.vesuvian.collection.entity.Card;
 import ru.vesuvian.collection.exception.CardNotFoundException;
 import ru.vesuvian.collection.exception.CollectionNotFoundException;
 import ru.vesuvian.collection.mapping.create.CollectionCreateMapper;
 import ru.vesuvian.collection.mapping.get.CardGetMapper;
+import ru.vesuvian.collection.mapping.get.CardListGetDtoMapper;
 import ru.vesuvian.collection.mapping.update.CardUpdateMapper;
 import ru.vesuvian.collection.repository.CardRepository;
 import ru.vesuvian.collection.security.AuthenticatedCustomerResolver;
@@ -30,13 +31,16 @@ public class CardService {
     private final CollectionAccessService collectionAccessService;
     private final CollectionCreateMapper collectionCreateMapper;
     private final CardUpdateMapper cardUpdateMapper;
+    private final CardListGetDtoMapper cardListGetDtoMapper;
 
-    public List<CardGetDto> getCardsByCollectionId(Long collectionId) {
+    public CardListGetDto getCardsByCollectionId(Long collectionId) {
         var UUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
         var cardList = retrieveCardsByCollectionIdAndCustomerId(collectionId, UUID);
-        return cardList.stream()
+        var cardDtoList = cardList.stream()
                 .map(card -> cardGetMapper.mapCardToDto(card, collectionId))
                 .toList();
+
+        return cardListGetDtoMapper.mapToDto(collectionId, cardDtoList);
     }
 
     @Transactional()
