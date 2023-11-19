@@ -46,7 +46,6 @@ public class CardService {
         var card = collectionCreateMapper.toCardEntity(cardCreateDto);
 
         collection.incrementNumberOfCards();
-        collection.updateModifiedDate();
 
         card.setCollection(collection);
         cardRepository.save(card);
@@ -63,7 +62,6 @@ public class CardService {
                 );
 
         cardUpdateMapper.updateCard(card, cardUpdateDto);
-        collection.updateModifiedDate();
         card.setCollection(collection);
 
         cardRepository.save(card);
@@ -81,7 +79,6 @@ public class CardService {
                 );
 
         collection.decrementNumberOfCards();
-        collection.updateModifiedDate();
 
         collection.getCards().remove(card);
         card.setCollection(collection);

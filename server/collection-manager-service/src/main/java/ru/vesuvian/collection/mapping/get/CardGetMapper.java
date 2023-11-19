@@ -15,12 +15,12 @@ public class CardGetMapper {
     public CardGetDto mapCardToDto(Card card, Long collectionId) {
         return CardGetDto.builder()
                 .collectionID(collectionId)
-                .cardId(card.getCardId())
-                .creationDate(card.getCreationDate())
+                .cardId(card.getId())
+                .creationDate(card.getCreated_at())
                 .term(card.getTerm())
                 .hint(card.getHint())
                 .imageURL(card.getImageURL())
-                .modifiedDate(card.getModifiedDate())
+                .modifiedDate(card.getUpdated_at())
                 .definition(card.getDefinition())
                 .orderNumber(card.getOrderNumber())
                 .build();

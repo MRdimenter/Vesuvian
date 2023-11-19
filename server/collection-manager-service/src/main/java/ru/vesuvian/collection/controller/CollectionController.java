@@ -43,22 +43,6 @@ public class CollectionController {
         collectionService.createCollection(newCollection);
     }
 
-//    @GetMapping
-//    @Operation(summary = "Get collections by customer ID",
-//            description = "Retrieve a list of collections for a given customer ID")
-//    public List<CollectionGetDto> getAnyCollectionsByCustomerId(
-//            @RequestParam
-//            @Parameter(description = "UUID of the customer", name = "customerId", required = true, example = "12345")
-//            String customerId,
-//
-//            @RequestParam(required = false, defaultValue = "all")
-//            @Parameter(description = "Privacy filter", name = "privacy", required = false, example = "all",
-//                    schema = @Schema(type = "string", allowableValues = {"all", "public", "private"}))
-//            Privacy privacy) {
-//
-//        return collectionService.getAnyCollectionsByCustomerId(customerId, privacy);
-//    }
-
     @GetMapping("/{collectionId}")
     @Operation(summary = "Get collection by collection ID",
             description = "Retrieve a specific collection based on its ID")

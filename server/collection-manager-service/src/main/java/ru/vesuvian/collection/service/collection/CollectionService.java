@@ -54,14 +54,6 @@ public class CollectionService {
         customerCollectionRepository.save(customerCollection);
     }
 
-    public List<CollectionGetDto> getAnyCollectionsByCustomerId(String customerId, Privacy privacy) {
-        List<CustomerCollection> customerCollections = customerCollectionRepository.findByCustomerIdWithCollections(customerId);
-        return customerCollections.stream()
-                .map(customerCollection -> collectionGetMapper.mapToDto(customerCollection.getCollection()))
-                .filter(collectionGetDTO -> privacyService.isCollectionVisibleBasedOnPrivacy(privacy, collectionGetDTO.getIsPublic()))
-                .collect(Collectors.toList());
-    }
-
     public CollectionGetDto getMyCollectionById(Long collectionId) {
         String customerUUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
         CustomerCollection customerCollection = customerCollectionRepository

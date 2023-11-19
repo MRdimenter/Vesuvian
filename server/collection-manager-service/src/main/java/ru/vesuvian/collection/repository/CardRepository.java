@@ -27,7 +27,7 @@ public interface CardRepository extends JpaRepository<Card, Long> {
             "JOIN CustomerCollection cc ON cc.collectionId = c.collection.id " +
             "WHERE c.collection.id = :collectionId " +
             "AND cc.customerId = :customerId " +
-            "AND c.cardId = :cardId"
+            "AND c.id = :cardId"
     )
     Optional<Card> findCardByCollectionIdAndCustomerIdAndCardId(@Param("collectionId") Long collectionId,
                                                                 @Param("customerId") String customerId,

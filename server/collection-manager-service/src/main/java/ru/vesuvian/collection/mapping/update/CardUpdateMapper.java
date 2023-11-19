@@ -21,6 +21,5 @@ public class CardUpdateMapper {
         card.setDefinition(cardUpdateDto.getDefinition() != null ? cardUpdateDto.getDefinition() : card.getDefinition());
         card.setTerm(cardUpdateDto.getTerm() != null ? cardUpdateDto.getTerm() : card.getTerm());
         card.setHint(cardUpdateDto.getHint() != null ? cardUpdateDto.getHint() : card.getHint());
-        card.setModifiedDate(LocalDateTime.now(Clock.systemDefaultZone()));
     }
 }
