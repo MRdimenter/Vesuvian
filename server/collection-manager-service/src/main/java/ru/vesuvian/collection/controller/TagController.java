@@ -68,7 +68,7 @@ public class TagController {
     @DeleteMapping("/{tagId}")
     public void deleteTagByCollectionIdAndTagId(
             @PathVariable
-            @Parameter(description = "ID of the collection where card will be delete",
+            @Parameter(description = "ID of the collection where tag will be delete",
                     name = "collectionId",
                     required = true,
                     example = "1")
