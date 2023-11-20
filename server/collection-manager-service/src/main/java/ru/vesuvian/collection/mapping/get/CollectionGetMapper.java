@@ -38,8 +38,8 @@ public class CollectionGetMapper {
     public TagGetDto mapToTag(Tag tag, Long collectionId) {
         return TagGetDto.builder()
                 .collectionId(collectionId)
-                .tagId(tag.getTagId())
-                .tagName(tag.getTagName())
+                .tagId(tag.getId())
+                .tagName(tag.getName())
                 .build();
     }
 

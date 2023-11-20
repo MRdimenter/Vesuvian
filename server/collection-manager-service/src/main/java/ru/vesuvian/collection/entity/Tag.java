@@ -6,9 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -16,12 +14,15 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tags")
+@Table(name = "tags",
+        indexes = {
+                @Index(name = "idx_tag_name", columnList = "name")
+        })
 public class Tag {
 
-    public Tag(Long tagId, String tagName) {
-        this.tagId = tagId;
-        this.tagName = tagName;
+    public Tag(Long id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     @Id
@@ -33,11 +34,11 @@ public class Tag {
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
             generator = "tags_sequence")
-    @Column(name = "tag_id", nullable = false)
-    private Long tagId;
+    @Column(name = "id", nullable = false)
+    private Long id;
 
-    @Column(name = "tag_name")
-    private String tagName;
+    @Column(name = "name")
+    private String name;
 
     // Отношение один-ко-многим между Tag и CollectionTagRepository
     @OneToMany(mappedBy = "tag", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)

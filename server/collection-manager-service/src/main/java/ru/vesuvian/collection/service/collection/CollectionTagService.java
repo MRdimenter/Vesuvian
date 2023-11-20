@@ -26,13 +26,13 @@ public class CollectionTagService {
 
     public Set<Long> getExistingTagIdsInCollection(Collection collection) {
         return collection.getCollectionTags().stream()
-                .map(collectionTag -> collectionTag.getTag().getTagId())
+                .map(collectionTag -> collectionTag.getTag().getId())
                 .collect(Collectors.toSet());
     }
 
     public void validateTagNotInCollection(Collection collection, Tag tag) {
         Set<Long> existingTagIds = getExistingTagIdsInCollection(collection);
-        if (existingTagIds.contains(tag.getTagId())) {
+        if (existingTagIds.contains(tag.getId())) {
             throw new TagAlreadyExistsInCollectionException("Tag already exists in the collection.");
         }
     }

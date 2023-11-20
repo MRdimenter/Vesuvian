@@ -13,11 +13,11 @@ import java.util.Optional;
 
 @Repository
 public interface TagRepository extends JpaRepository<Tag, Long> {
-    @Query("SELECT new Tag(t.tagId, t.tagName) FROM Tag t WHERE t.tagName = :tagName")
+    @Query("SELECT new Tag(t.id, t.name) FROM Tag t WHERE t.name = :tagName")
     Optional<Tag> findByNameExcludingCollections(@Param("tagName") String tagName);
 
     @Query("SELECT t FROM Tag t " +
-            "JOIN CollectionTag ct ON t.tagId = ct.tag.tagId " +
+            "JOIN CollectionTag ct ON t.id = ct.tag.id " +
             "JOIN ct.collection c " +
             "JOIN CustomerCollection cc ON c.id = cc.collection.id " +
             "WHERE cc.customerId = :customerId AND c.id = :collectionId")

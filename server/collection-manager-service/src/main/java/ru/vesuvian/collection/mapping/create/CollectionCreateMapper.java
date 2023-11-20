@@ -75,7 +75,7 @@ public class CollectionCreateMapper {
     public Tag toTagEntity(TagCreateDto dto) {
         return tagRepository.findByNameExcludingCollections(dto.getTagName()).orElseGet(() -> {
             Tag newTag = new Tag();
-            newTag.setTagName(dto.getTagName());
+            newTag.setName(dto.getTagName());
             return tagRepository.save(newTag);
         });
     }

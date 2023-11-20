@@ -48,7 +48,7 @@ public class TagService {
 
     private Tag findOrCreateTag(String tagName) {
         return tagRepository.findByNameExcludingCollections(tagName).orElseGet(() -> {
-            var tag = Tag.builder().tagName(tagName).build();
+            var tag = Tag.builder().name(tagName).build();
             tagRepository.save(tag);
             return tag;
         });
