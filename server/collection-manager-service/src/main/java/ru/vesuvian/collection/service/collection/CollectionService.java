@@ -65,7 +65,7 @@ public class CollectionService {
 
     public List<CollectionGetDto> getMyCollections(Privacy privacy) {
         String UUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
-        List<CustomerCollection> customerCollections = customerCollectionRepository.findByCustomerIdWithCollectionsAndTags(UUID);
+        List<CustomerCollection> customerCollections = customerCollectionRepository.findByCustomerId(UUID);
 
         return customerCollections.stream()
                 .map(customerCollection -> collectionGetMapper.mapToDto(customerCollection.getCollection()))

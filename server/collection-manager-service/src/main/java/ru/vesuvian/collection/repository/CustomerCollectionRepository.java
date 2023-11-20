@@ -15,14 +15,24 @@ import java.util.Optional;
 
 @Repository
 public interface CustomerCollectionRepository extends JpaRepository<CustomerCollection, Long>, JpaSpecificationExecutor<CustomerCollection> {
-    @Query("SELECT cc FROM CustomerCollection cc JOIN FETCH cc.collection WHERE cc.customerId = :customerId")
-    List<CustomerCollection> findByCustomerIdWithCollections(@Param("customerId") String customerId);
 
-    @Query("SELECT cc FROM CustomerCollection cc JOIN FETCH cc.collection WHERE cc.customerId = :customerId AND cc.collection.id = :collectionId")
-    Optional<CustomerCollection> findByCustomerIdAndCollectionId(@Param("customerId") String customerId, @Param("collectionId") Long collectionId);
+    @Query("SELECT cc FROM CustomerCollection cc " +
+            "JOIN FETCH cc.collection c " +
+            "LEFT JOIN FETCH c.collectionTags ct " +
+            "LEFT JOIN FETCH ct.tag " +
+            "WHERE cc.customerId = :customerId " +
+            "AND cc.collectionId = :collectionId")
+    Optional<CustomerCollection> findByCustomerIdAndCollectionId(
+            @Param("customerId") String customerId,
+            @Param("collectionId") Long collectionId
+    );
 
-    @Query("SELECT cc FROM CustomerCollection cc JOIN FETCH cc.collection c LEFT JOIN FETCH c.collectionTags ct LEFT JOIN FETCH ct.tag WHERE cc.customerId = :customerId")
-    List<CustomerCollection> findByCustomerIdWithCollectionsAndTags(@Param("customerId") String customerId);
+    @Query("SELECT cc FROM CustomerCollection cc " +
+            "JOIN FETCH cc.collection c " +
+            "LEFT JOIN FETCH c.collectionTags ct " +
+            "LEFT JOIN FETCH ct.tag " +
+            "WHERE cc.customerId = :customerId")
+    List<CustomerCollection> findByCustomerId(@Param("customerId") String customerId);
 
     @Modifying
     @Transactional
