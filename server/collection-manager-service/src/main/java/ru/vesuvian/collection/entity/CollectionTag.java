@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(exclude = {"collection", "tag"})
 @Table(name = "collection_tag", indexes = {
         @Index(name = "idx_collection_tag_on_collection_and_tag", columnList = "collection_id, tag_id")
 })
