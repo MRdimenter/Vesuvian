@@ -23,7 +23,7 @@ public class TagGetDto {
 
     @Schema(description = "Tag ID")
     @JsonProperty("id")
-    private Long tagId;
+    private Integer tagId;
 
     @Schema(description = "Tag name")
     @JsonProperty("name")

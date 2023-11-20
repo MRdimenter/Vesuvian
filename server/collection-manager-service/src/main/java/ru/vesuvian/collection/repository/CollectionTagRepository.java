@@ -15,5 +15,9 @@ public interface CollectionTagRepository extends JpaRepository<CollectionTag, Lo
     @Query("DELETE FROM CollectionTag ct WHERE ct.collection.id = :collectionId")
     void deleteByCollectionId(@Param("collectionId") Long collectionId);
 
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM CollectionTag ct WHERE ct.collection.id = :collectionId AND ct.tag.id = :tagId")
+    void deleteByCollectionIdAndTagId(@Param("collectionId") Long collectionId, @Param("tagId") Integer tagId);
 
 }

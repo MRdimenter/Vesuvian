@@ -10,8 +10,10 @@ import ru.vesuvian.collection.entity.Collection;
 import ru.vesuvian.collection.entity.Tag;
 import ru.vesuvian.collection.exception.CollectionNotFoundException;
 import ru.vesuvian.collection.exception.MaxTagsPerCollectionReachedException;
+import ru.vesuvian.collection.exception.TagNotFoundException;
 import ru.vesuvian.collection.mapping.get.TagGetMapper;
 import ru.vesuvian.collection.repository.CollectionRepository;
+import ru.vesuvian.collection.repository.CollectionTagRepository;
 import ru.vesuvian.collection.repository.TagRepository;
 import ru.vesuvian.collection.security.AuthenticatedCustomerResolver;
 import ru.vesuvian.collection.service.collection.CollectionAccessService;
@@ -28,6 +30,7 @@ public class TagService {
     private final AuthenticatedCustomerResolver authenticatedCustomerResolver;
     private final CollectionTagService collectionTagService;
     private final CollectionRepository collectionRepository;
+    private final CollectionTagRepository collectionTagRepository;
     private final TagGetMapper tagGetMapper;
 
 
@@ -60,6 +63,14 @@ public class TagService {
         return tagList.stream()
                 .map(tag -> tagGetMapper.mapTagToDto(tag, collectionId))
                 .toList();
+    }
+
+    public void deleteTagByCollectionIdAndTagId(Long collectionId, Integer tagId) {
+        var customerId = authenticatedCustomerResolver.getAuthenticatedCustomerId();
+        tagRepository.findTagByCustomerIdAndCollectionIdAndTagId(collectionId, customerId, tagId)
+                .orElseThrow(() -> new TagNotFoundException("Tag with ID " + tagId + " not found"));
+
+        collectionTagRepository.deleteByCollectionIdAndTagId(collectionId, tagId);
     }
 
     private List<Tag> retrieveTagsByCollectionIdAndCustomerId(Long collectionId, String customerId) {

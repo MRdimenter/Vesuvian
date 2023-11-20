@@ -1,18 +1,16 @@
 package ru.vesuvian.collection.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import ru.vesuvian.collection.entity.Card;
 import ru.vesuvian.collection.entity.Tag;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface TagRepository extends JpaRepository<Tag, Long> {
+public interface TagRepository extends JpaRepository<Tag, Integer> {
     @Query("SELECT new Tag(t.id, t.name) FROM Tag t WHERE t.name = :tagName")
     Optional<Tag> findByNameExcludingCollections(@Param("tagName") String tagName);
 
@@ -22,5 +20,15 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
             "JOIN CustomerCollection cc ON c.id = cc.collection.id " +
             "WHERE cc.customerId = :customerId AND c.id = :collectionId")
     Optional<List<Tag>> findTagsByCustomerIdAndCollectionId(@Param("collectionId") Long collectionId,
-                                                  @Param("customerId") String customerId);
+                                                            @Param("customerId") String customerId);
+
+    @Query("SELECT t FROM Tag t " +
+            "JOIN CollectionTag ct ON t.id = ct.tag.id " +
+            "JOIN ct.collection c " +
+            "JOIN CustomerCollection cc ON c.id = cc.collection.id " +
+            "WHERE cc.customerId = :customerId AND c.id = :collectionId AND t.id = :tagId")
+    Optional<Tag> findTagByCustomerIdAndCollectionIdAndTagId(@Param("collectionId") Long collectionId,
+                                                             @Param("customerId") String customer,
+                                                             @Param("tagId") Integer tagId
+    );
 }

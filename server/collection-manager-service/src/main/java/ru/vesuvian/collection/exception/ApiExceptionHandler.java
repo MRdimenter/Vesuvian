@@ -62,4 +62,14 @@ public class ApiExceptionHandler {
 
         return new ResponseEntity<>(apiException, status);
     }
+
+    @ExceptionHandler(TagNotFoundException.class)
+    public ResponseEntity<Object> handleUnauthorizedAccessException(TagNotFoundException e) {
+        var status = HttpStatus.NOT_FOUND;
+        var apiException = new ApiException(e.getMessage(), status, ZonedDateTime.now());
+
+        log.info("API Exception: Status - {}, Message - {}", status, e.getMessage());
+
+        return new ResponseEntity<>(apiException, status);
+    }
 }

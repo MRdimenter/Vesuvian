@@ -64,4 +64,21 @@ public class TagController {
         return tagService.getTagByCollectionId(collectionId);
 
     }
+
+    @DeleteMapping("/{tagId}")
+    public void deleteTagByCollectionIdAndTagId(
+            @PathVariable
+            @Parameter(description = "ID of the collection where card will be delete",
+                    name = "collectionId",
+                    required = true,
+                    example = "1")
+            Long collectionId,
+            @PathVariable
+            @Parameter(description = "ID of the tag to be deleted",
+                    name = "tagId",
+                    required = true,
+                    example = "2")
+            Integer tagId) {
+        tagService.deleteTagByCollectionIdAndTagId(collectionId, tagId);
+    }
 }

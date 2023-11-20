@@ -20,7 +20,7 @@ import java.util.Set;
         })
 public class Tag {
 
-    public Tag(Long id, String name) {
+    public Tag(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -35,7 +35,7 @@ public class Tag {
             strategy = GenerationType.SEQUENCE,
             generator = "tags_sequence")
     @Column(name = "id", nullable = false)
-    private Long id;
+    private Integer id;
 
     @Column(name = "name")
     private String name;

@@ -24,14 +24,14 @@ public class CollectionTagService {
                 .build();
     }
 
-    public Set<Long> getExistingTagIdsInCollection(Collection collection) {
+    public Set<Integer> getExistingTagIdsInCollection(Collection collection) {
         return collection.getCollectionTags().stream()
                 .map(collectionTag -> collectionTag.getTag().getId())
                 .collect(Collectors.toSet());
     }
 
     public void validateTagNotInCollection(Collection collection, Tag tag) {
-        Set<Long> existingTagIds = getExistingTagIdsInCollection(collection);
+        Set<Integer> existingTagIds = getExistingTagIdsInCollection(collection);
         if (existingTagIds.contains(tag.getId())) {
             throw new TagAlreadyExistsInCollectionException("Tag already exists in the collection.");
         }
