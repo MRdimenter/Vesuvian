@@ -10,13 +10,14 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@EqualsAndHashCode(exclude = {"collection", "tag"})
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "collection_tag", indexes = {
         @Index(name = "idx_collection_tag_on_collection_and_tag", columnList = "collection_id, tag_id")
 })
 public class CollectionTag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
