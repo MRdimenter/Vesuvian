@@ -30,10 +30,10 @@ const CollectionPage = () => {
   }
 
   useEffect(() => {
-    if (collectionDataState?.collectionData) {
-      let { collectionData } = collectionDataState;
+    if (collectionDataState?.collectionCards) {
+      let { collectionCards } = collectionDataState;
 
-      setcollectionData(collectionData);
+      setcollectionData(collectionCards);
     } else {
       const localStorageService = new LocalStorageService('CollectionsPage');
       const collectionIdObject = localStorageService.getValue();

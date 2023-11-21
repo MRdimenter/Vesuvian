@@ -248,7 +248,6 @@ class ApiService {
     const fullCollectionURL = `${COLLECTION_URL}`;
     
     try {
-      // const response = this.deleteResourseByAuth(TEMP_BASE_URL, fullCollectionURL, collectionData)
       const response = await this.withId(this.deleteResourseByAuth.bind(this), TEMP_BASE_URL, fullCollectionURL, collectionId);
       console.log('getCollectionById response: ', response);
       return response;

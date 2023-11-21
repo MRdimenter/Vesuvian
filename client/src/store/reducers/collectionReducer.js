@@ -3,7 +3,10 @@ import { COLLECTION_DATA } from "../constants";
 const initialState = {
   loading: false,
   error: null,
-  collectionData: [],
+  collectionData: {
+    collectionId: null,
+    collectionCards: []
+  },
 };
 
 const collectionReducer = (state = initialState, action) => {
