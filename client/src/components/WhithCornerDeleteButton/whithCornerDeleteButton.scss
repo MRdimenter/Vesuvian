@@ -1,0 +1,14 @@
+.whith-corner-delete-button {
+  display: inline-block;
+  position: relative;
+}
+
+.corner-delete-button {
+  position: absolute;
+  top: -6.5px;
+  right: -6.5px;
+
+  .icon {
+    cursor: pointer;
+}
+}

@@ -7,6 +7,7 @@ import { OAuth2Service } from '../../../common/utils/OAuth2Service';
 import { ApiService } from '../../../common/utils/ApiService';
 
 import './collectionCreatingForm.scss';
+import { WhithCornerDeleteButton } from '../../WhithCornerDeleteButton/WhithCornerDeleteButton';
 
 
 const CollectionCreatingForm = () => {
@@ -100,6 +101,9 @@ const CollectionCreatingForm = () => {
           </div>
         </div>
         <div className="adding-collection-tags">
+          <WhithCornerDeleteButton>
+            <CardTag key={'tag'} tagText={'tag'} />
+          </WhithCornerDeleteButton>
           {getTags(tags)}
           {tags.length < 3 && <Button btnStyle='link' label='+добавить тег' action={handleSubmit} />}
         </div>
