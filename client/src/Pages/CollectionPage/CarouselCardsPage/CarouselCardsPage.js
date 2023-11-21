@@ -4,14 +4,6 @@ import { CardsPageContent } from './CardsPageContent/CardsPageContent';
 
 import './cardsPage.scss';
 
-
-const request = {
-  "term": "Term 1", // термин
-  "definition": "Definition 1", //определение
-  "hint": "Hint 1", //подсказка
-  "imageURL": "http://example.com/image1.jpg" //url картинки если она присутствует, проверка на null  
-}
-
 const getContent = (collectionData) => {
   return {
     frontSide: {
@@ -24,8 +16,6 @@ const getContent = (collectionData) => {
     imageURL: collectionData.imageURL && null,
   }
 }
-
-const content = getContent(request);
 
 const CarouselCardsPage = ({collectionData}) => {
   const collectionInfo = {

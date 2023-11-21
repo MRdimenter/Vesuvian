@@ -41,8 +41,8 @@ export const collectionAction = (collectionId) => {
       const response = await apiService.getCollectionById(collectionId);
       console.log('collectionAction response: ', response);
       const collectionDataWhithCollectionId = {
-        collectionId,
-        collectionData: response
+        collectionId: response.collection_id,
+        collectionCards: response.cards
       }
 
       // Завершение загрузки данных, установка loading: false

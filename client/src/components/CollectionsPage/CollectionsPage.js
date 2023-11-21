@@ -52,14 +52,15 @@ const CollectionsPage = () => {
     console.log('useEffect: errorCollectionData: ', errorCollectionData);
     if (isMakeTransition) {
       console.log('useEffect collectionDataState: ', collectionDataState);
-      if (collectionDataState?.collectionData && !loadingCollectionData && !errorCollectionData) {        
+      if (collectionDataState?.collectionCards && !loadingCollectionData && !errorCollectionData) {        
         const localStorageService = new LocalStorageService('CollectionsPage');
 
         localStorageService.setValue({collectionId: collectionDataState.collectionId});
         navigate('/collectionPage');
       } else {
-        console.log('collectionDataState?.collectionData?.length: ', collectionDataState?.collectionData?.length);
-        console.log('collectionDataState?.collectionData: ', collectionDataState?.collectionData);
+        console.log('collectionDataState?.collectionData?.collectionCards: ', collectionDataState?.collectionData?.collectionCards);
+        console.log('collectionDataState?.collectionCards: ', collectionDataState?.collectionCards);
+        console.log('collectionDataState: ', collectionDataState);
         console.log('!loadingCollectionData: ', !loadingCollectionData);
         console.log('!errorCollectionData: ', !errorCollectionData);
       }
