@@ -11,7 +11,7 @@ import { ErrorPage } from '../../components/ErrorPage/ErrorPage';
 const CollectionPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [collectionData, setcollectionData] = useState([]);
+  const [collectionCards, setcollectionCards] = useState([]);
   const [collectionTags, setcollectionTags] = useState([]);
   const [collectionTagsFetchError, setcollectionTagsFetchError] = useState();
   const [isTraining, setIsTraining] = useState(false);
@@ -33,7 +33,7 @@ const CollectionPage = () => {
     if (collectionDataState?.collectionCards) {
       let { collectionCards } = collectionDataState;
 
-      setcollectionData(collectionCards);
+      setcollectionCards(collectionCards);
     } else {
       const localStorageService = new LocalStorageService('CollectionsPage');
       const collectionIdObject = localStorageService.getValue();
@@ -116,8 +116,8 @@ const CollectionPage = () => {
     <div className='collection-page'>
       {spinner}
       {errorMessage}
-      { isShowCollectionEditingPage && <CollectionEditingPage collectionData={collectionData} collectionTags={collectionTags} onStartTraining={onStartTraining}/> }
-      { isShowCarouselCardsPage && <CarouselCardsPage collectionData={collectionData}/> }
+      { isShowCollectionEditingPage && <CollectionEditingPage collectionId={collectionDataState.collectionId} collectionCards={collectionCards} collectionTags={collectionTags} onStartTraining={onStartTraining}/> }
+      { isShowCarouselCardsPage && <CarouselCardsPage collectionCards={collectionCards}/> }
     </div>
   )
 }

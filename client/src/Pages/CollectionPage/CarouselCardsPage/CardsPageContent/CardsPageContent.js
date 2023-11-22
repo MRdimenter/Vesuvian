@@ -7,17 +7,17 @@ import './cardsPageContent.scss'
 
 const EMPTY_COLLETION_DATA = {term: '', definition: ''}
 
-const CardsPageContent = ({ collectionData, content, collectionInfo, currentPage, handlePrevPage, handleNextPage }) => {
+const CardsPageContent = ({ collectionCards, content, collectionInfo, currentPage, handlePrevPage, handleNextPage }) => {
   const [side, setSide] = useState('front-side'); // todo 'front-side' in constant
   const [isComleteCollection, setIsComleteCollection] = useState(false);
   const [firstCard, setFirstCard] = useState('previous');
   const [secondCard, setSecondCard] = useState('current');
   const [thirdCard, setThirdCard] = useState('next');
 
-  //TODO important: почитать почему изначально рендерится при пустом collectionData
-  const [firstCardContext, setFirstCardContext] = useState({term: collectionData[0]?.term, definition: collectionData[0]?.definition} || EMPTY_COLLETION_DATA); //TODO если не первая страница открыта то - collectionData[currentPage - 2].term
-  const [secondCardContext, setSecondCardContext] = useState({term: collectionData[currentPage - 1]?.term, definition: collectionData[currentPage - 1]?.definition} || EMPTY_COLLETION_DATA);
-  const [thirdCardContext, setThirdCardContext] = useState({term: collectionData[currentPage]?.term, definition: collectionData[currentPage]?.definition} || EMPTY_COLLETION_DATA);
+  //TODO important: почитать почему изначально рендерится при пустом collectionCards
+  const [firstCardContext, setFirstCardContext] = useState({term: collectionCards[0]?.term, definition: collectionCards[0]?.definition} || EMPTY_COLLETION_DATA); //TODO если не первая страница открыта то - collectionCards[currentPage - 2].term
+  const [secondCardContext, setSecondCardContext] = useState({term: collectionCards[currentPage - 1]?.term, definition: collectionCards[currentPage - 1]?.definition} || EMPTY_COLLETION_DATA);
+  const [thirdCardContext, setThirdCardContext] = useState({term: collectionCards[currentPage]?.term, definition: collectionCards[currentPage]?.definition} || EMPTY_COLLETION_DATA);
 
   const cardSideToggle = () => {
     console.log('cardSideToggle');
@@ -81,8 +81,8 @@ const CardsPageContent = ({ collectionData, content, collectionInfo, currentPage
   }
 
   useEffect(() => {
-    if (collectionData.length && currentPage > collectionData.length) { //TODO почему при > сразу true? (возможно проблема в типах при сравнении)
-      console.log('ififif :', `currentPage(${currentPage}) collectionData.length(${collectionData.length})`);
+    if (collectionCards.length && currentPage > collectionCards.length) { //TODO почему при > сразу true? (возможно проблема в типах при сравнении)
+      console.log('ififif :', `currentPage(${currentPage}) collectionCards.length(${collectionCards.length})`);
       setIsComleteCollection(true);
     }
   }, [currentPage, collectionInfo])
@@ -91,25 +91,25 @@ const CardsPageContent = ({ collectionData, content, collectionInfo, currentPage
 
   const getNextCardContent = () => {
     if (firstCard.includes('next')) {
-      setFirstCardContext({term: collectionData[currentPage]?.term, definition: collectionData[currentPage]?.definition});
+      setFirstCardContext({term: collectionCards[currentPage]?.term, definition: collectionCards[currentPage]?.definition});
     }
     if (secondCard.includes('next')) {
-      setSecondCardContext({term: collectionData[currentPage]?.term, definition: collectionData[currentPage]?.definition})
+      setSecondCardContext({term: collectionCards[currentPage]?.term, definition: collectionCards[currentPage]?.definition})
     }
     if (thirdCard.includes('next')) {
-      setThirdCardContext({term: collectionData[currentPage]?.term, definition: collectionData[currentPage]?.definition})
+      setThirdCardContext({term: collectionCards[currentPage]?.term, definition: collectionCards[currentPage]?.definition})
     }
   }
 
   const getPrevCardContent = () => {
     if (firstCard === 'previous') {
-      setFirstCardContext({term: collectionData[currentPage - 2]?.term, definition: collectionData[currentPage - 2]?.definition} || EMPTY_COLLETION_DATA);
+      setFirstCardContext({term: collectionCards[currentPage - 2]?.term, definition: collectionCards[currentPage - 2]?.definition} || EMPTY_COLLETION_DATA);
     }
     if (secondCard === 'previous') {
-      setSecondCardContext({term: collectionData[currentPage - 2]?.term, definition: collectionData[currentPage - 2]?.definition} || EMPTY_COLLETION_DATA)
+      setSecondCardContext({term: collectionCards[currentPage - 2]?.term, definition: collectionCards[currentPage - 2]?.definition} || EMPTY_COLLETION_DATA)
     }
     if (thirdCard === 'previous') {
-      setThirdCardContext({term: collectionData[currentPage - 2]?.term, definition: collectionData[currentPage - 2]?.definition} || EMPTY_COLLETION_DATA)
+      setThirdCardContext({term: collectionCards[currentPage - 2]?.term, definition: collectionCards[currentPage - 2]?.definition} || EMPTY_COLLETION_DATA)
     }
   }
 
@@ -132,10 +132,10 @@ const CardsPageContent = ({ collectionData, content, collectionInfo, currentPage
   }
 
   useEffect(() => {
-    setFirstCardContext({term: collectionData[currentPage - 2]?.term, definition: collectionData[currentPage - 2]?.definition} || '')
-    setSecondCardContext({term: collectionData[currentPage - 1]?.term, definition: collectionData[currentPage - 1]?.definition} || '');
-    setThirdCardContext({term: collectionData[currentPage]?.term, definition: collectionData[currentPage]?.definition} || '');
-  }, [collectionData])
+    setFirstCardContext({term: collectionCards[currentPage - 2]?.term, definition: collectionCards[currentPage - 2]?.definition} || '')
+    setSecondCardContext({term: collectionCards[currentPage - 1]?.term, definition: collectionCards[currentPage - 1]?.definition} || '');
+    setThirdCardContext({term: collectionCards[currentPage]?.term, definition: collectionCards[currentPage]?.definition} || '');
+  }, [collectionCards])
 
   return (
     <>

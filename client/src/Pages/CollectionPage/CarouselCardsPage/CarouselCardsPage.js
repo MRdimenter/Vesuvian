@@ -4,27 +4,27 @@ import { CardsPageContent } from './CardsPageContent/CardsPageContent';
 
 import './cardsPage.scss';
 
-const getContent = (collectionData) => {
+const getContent = (collectionCards) => {
   return {
     frontSide: {
-      text: collectionData.term,
+      text: collectionCards.term,
     },
     backSide: {
-      text: collectionData.definition,
+      text: collectionCards.definition,
     },
-    hint: collectionData.hint,
-    imageURL: collectionData.imageURL && null,
+    hint: collectionCards.hint,
+    imageURL: collectionCards.imageURL && null,
   }
 }
 
-const CarouselCardsPage = ({collectionData}) => {
+const CarouselCardsPage = ({collectionCards}) => {
   const collectionInfo = {
-    cardsInCollection: collectionData.length,
+    cardsInCollection: collectionCards.length,
   }
 
-  console.log('collectionData: ', collectionData);
+  console.log('collectionCards: ', collectionCards);
 
-  const content = getContent(collectionData);
+  const content = getContent(collectionCards);
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -41,7 +41,7 @@ const CarouselCardsPage = ({collectionData}) => {
       <CardsPageHeader currentPage={currentPage} cardsInCollection={collectionInfo.cardsInCollection} />
       <div className="cards-page-body">
         <CardsPageContent
-          collectionData={collectionData}
+          collectionCards={collectionCards}
           content={content}
           collectionInfo={collectionInfo}
           currentPage={currentPage}

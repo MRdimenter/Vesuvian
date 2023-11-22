@@ -4,13 +4,13 @@ import { NumberedCard } from "./NumberedCard/NumberedCard"
 
 import './collectionEditingPageBody.scss';
 
-const CollectionEditingPageBody = ({ collectionData }) => {
+const CollectionEditingPageBody = ({ collectionCards }) => {
 
-  const getCards = (collectionData) => {
+  const getCards = (collectionCards) => {
     return (
       <>
         {
-          collectionData.map((card, index) => {
+          collectionCards.map((card, index) => {
             const {term} = card;
               return (
                 <NumberedCard key={term + index} title={term} number={index + 1} />
@@ -25,7 +25,7 @@ const CollectionEditingPageBody = ({ collectionData }) => {
 
   return (
     <div className="collection-page-body">
-      {getCards(collectionData)}
+      {getCards(collectionCards)}
       <div className="new-card">
         <CollectionCard collection={addingCardTitle} backgroundStyle='dark-card-bg'/>
       </div>

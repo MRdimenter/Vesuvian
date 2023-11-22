@@ -29,6 +29,19 @@ const setErrorCollectionTags = (error) => ({
   error,
 });
 
+const startDeletingCollection = () => ({
+  type: COLLECTION_DATA.TAGS.START_LOADING_COLLECTION_TAGS,
+});
+
+const finishDeletingCollection = () => ({
+  type: COLLECTION_DATA.TAGS.FINISH_LOADING_COLLECTION_TAGS,
+});
+
+const setDeletingCollection = (error) => ({
+  type: COLLECTION_DATA.TAGS.SET_ERROR_COLLECTION_TAGS,
+  error,
+});
+
 export const collectionAction = (collectionId) => {
   const oauthService = new OAuth2Service();
   const apiService = new ApiService(oauthService);
@@ -64,6 +77,43 @@ export const collectionAction = (collectionId) => {
       dispatch(setErrorCollection(error));
 
       dispatch({type: COLLECTION_DATA.SET_ERROR_COLLECTION, payload: error});
+    }
+  }
+}
+
+export const delectecollectionAction = (collectionId) => {
+  const oauthService = new OAuth2Service();
+  const apiService = new ApiService(oauthService);
+
+  return async (dispatch) => {
+    try {
+      // Начало загрузки данных, установка loading: true
+      // dispatch(startLoadingCollection());
+      const response = await apiService.deleteCollection(collectionId);
+      
+
+      console.log('!!!!!!!!!! delectecollectionAction response: ', response);
+
+      // Завершение загрузки данных, установка loading: false
+      // dispatch(finishLoadingCollection());
+
+      dispatch({type: COLLECTION_DATA.DATA.DELETE_COLLECTION_DATA, payload: response});
+    } catch (error) {
+      console.log('&&&&&&&&&&&&&&&777')
+      console.error('An error occurred:', error);
+      if (error instanceof RefreshTokenMissingError || error instanceof BadRequestError) {
+        console.log('(((((99999999999999');
+        // TODO: общее состояние для RefreshTokenMissingError и BadRequestError
+      }
+      // для внешней (компонентом) обработки ошибки
+      // dispatch(finishLoadingCollection());
+      throw error;
+
+      // Ошибка загрузки данных, установка loading: false и сохранение ошибки
+      // dispatch(finishLoadingCollection());
+      // dispatch(setErrorCollection(error));
+
+      dispatch({type: COLLECTION_DATA.SET_ERROR_DELETE_COLLECTION_DATA, payload: error});
     }
   }
 }

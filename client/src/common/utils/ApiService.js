@@ -118,7 +118,9 @@ class ApiService {
     
 
     const response = await fetch(url, requestOptions);
-    if (!response.ok) {
+    console.log('!!!! response: ', response);
+    console.log('!!!! response.status: ', response.status);
+    if (response.status !== 204) {
       //throw new Error(`Could not fetch ${url}, received ${response}`);
       console.log('Boo', response.status); // воо
       if (response.status === 401) {
@@ -141,7 +143,7 @@ class ApiService {
         throw new ServerError(response.status);
       }
     }
-    return response.json();
+    return true;
     //return await fetch(url, requestOptions);
   }
 
@@ -248,11 +250,11 @@ class ApiService {
     const fullCollectionURL = `${COLLECTION_URL}`;
     
     try {
-      const response = await this.withId(this.deleteResourseByAuth.bind(this), TEMP_BASE_URL, fullCollectionURL, collectionId);
-      console.log('getCollectionById response: ', response);
-      return response;
+      const deleteResponse = await this.withId(this.deleteResourseByAuth.bind(this), TEMP_BASE_URL, fullCollectionURL, collectionId);
+      console.log('deleteCollection deleteResponse: ', deleteResponse);
+      return deleteResponse;
     } catch (error) {
-      console.log('необработанная ошибка getCollectionById', error);
+      console.log('необработанная ошибка deleteCollection', error);
       throw error; // Пробросываем ошибку для обработки её компонентом, вызывающим метод getAllCustomers
     }
     //return this.getResourseByAuth(CURRENT_CUSTOMER_URL);

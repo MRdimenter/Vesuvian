@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { ApiService } from '../../../../common/utils/ApiService';
 import { OAuth2Service } from '../../../../common/utils/OAuth2Service';
 import { Button, IconButton } from '../../../../components/Button/Button';
@@ -6,13 +7,48 @@ import { Icon } from '../../../../components/Icon/Icon';
 import { Title } from '../../../../components/Title/Title';
 
 import './collectionEditingPageHeader.scss';
+import { LocalStorageService } from '../../../../common/utils/LocalStorageService';
+import { useDispatch, useSelector } from 'react-redux';
+import { delectecollectionAction } from '../../../../store/actions/collectionAction';
+import { useNavigate } from 'react-router-dom';
+import { COLLECTION_DATA } from '../../../../store/constants';
 
 const collectionAuthor = '@skaipnik';
 const collectionRecentChangesDate= '09.08.2023 23:01';
 
-const CollectionEditingPageHeader = ({ collectionTitle = 'Basic English', tags=['English'], onStartTraining, collectionId}) => {
+const CollectionEditingPageHeader = ({ collectionTitle = 'Basic English', tags=['English'], onStartTraining, collectionId: propsCollectionId}) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const oauthService = new OAuth2Service();
   const apiService = new ApiService(oauthService);
+  const localStorageService = new LocalStorageService('CollectionsPage');
+
+  const [collectionId, setCollectionId] = useState();
+
+  const collectionDataState = useSelector((state) => state.collectionData);
+  const isDeletedCollection = useSelector((state) => state.collectionData.isDeleted);
+  console.log('collectionDataState: ', collectionDataState);
+  console.log('isDeletedCollection: ', isDeletedCollection);
+
+  useEffect(() => {
+    if (propsCollectionId) {
+      setCollectionId(propsCollectionId);
+    } else {
+      const collectionIdObject = localStorageService.getValue();
+      setCollectionId(collectionIdObject.collectionId);
+    }
+  }, [propsCollectionId])
+
+  useEffect(() => {
+    if (isDeletedCollection) {
+      console.log('isDeletedCollection');
+      dispatch({type: COLLECTION_DATA.DATA.DELETE_COLLECTION_DATA, payload: false});
+      navigate('/collectionsPage');
+      // navigate('/');
+    } else {
+      console.log('else isDeletedCollection');
+    }
+  },[isDeletedCollection])
 
   const handleSubmit = () => {
     console.log('addTabClick');
@@ -32,9 +68,11 @@ const CollectionEditingPageHeader = ({ collectionTitle = 'Basic English', tags=[
     )
   }
 
-  const deleteColletion = () => {
+  // TODO dвынести функцию удаления из хедера - негоже хедеру управлять данными приложения
+  const deleteColletion = async () => {
     console.log('deleteColletion, collectionId: ', collectionId);
-    apiService.deleteCollection(collectionId);
+    // apiService.deleteCollection(collectionId);
+    await dispatch(delectecollectionAction(collectionId));
   }
 
   return (

@@ -57,7 +57,8 @@ const collection = {
   "tags": ["природа", "английский"]
 }
 
-const CardsPageContent = ({ content, collectionInfo, currentPage, handlePrevPage, handleNextPage }) => {
+// TODO component for deleting
+const CardsPageContent_Old = ({ content, collectionInfo, currentPage, handlePrevPage, handleNextPage }) => {
   const [side, setSide] = useState('front-side');
   const [isComleteCollection, setIsComleteCollection] = useState(false);
   const [firstCard, setFirstCard] = useState('previous'); //
