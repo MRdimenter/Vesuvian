@@ -37,38 +37,44 @@ public class CollectionService {
     private final CollectionAccessService collectionAccessService;
     private final CollectionUpdateMapper collectionUpdateMapper;
     private final CardRepository cardRepository;
+    private final FavoriteCollectionService favoriteCollectionService;
 
     @Transactional
     public void createCollection(CollectionCreateDto collectionCreateDTO) {
-        String customerUUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
-        var collection = collectionCreateMapper.toEntity(collectionCreateDTO, customerUUID);
+        String UUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
+        var collection = collectionCreateMapper.toEntity(collectionCreateDTO, UUID);
 
         collection = collectionRepository.save(collection);
 
-        // Создаем и сохраняем CustomerCollection
         var customerCollection = CustomerCollection.builder()
                 .collectionId(collection.getId())
                 .customerId(collection.getCreatorCustomerId())
                 .build();
 
         customerCollectionRepository.save(customerCollection);
+        favoriteCollectionService.update(collectionCreateDTO, collection, UUID);
     }
 
     public CollectionGetDto getMyCollectionById(Long collectionId) {
-        String customerUUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
+        String UUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
         CustomerCollection customerCollection = customerCollectionRepository
-                .findByCustomerIdAndCollectionId(customerUUID, collectionId)
+                .findByCustomerIdAndCollectionId(UUID, collectionId)
                 .orElseThrow(() -> new CollectionNotFoundException("Collection not found"));
 
-        return collectionGetMapper.mapToDto(customerCollection.getCollection());
+        var isFavorite = favoriteCollectionService.isCollectionFavorite(UUID, collectionId);
+        return collectionGetMapper.mapToDto(customerCollection.getCollection(), isFavorite);
     }
 
     public List<CollectionGetDto> getMyCollections(Privacy privacy) {
         String UUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
-        List<CustomerCollection> customerCollections = customerCollectionRepository.findByCustomerId(UUID);
+        var customerCollections = customerCollectionRepository.findByCustomerId(UUID);
+
+        var favoriteCollectionIds = favoriteCollectionService.getCollectionIds(UUID);
 
         return customerCollections.stream()
-                .map(customerCollection -> collectionGetMapper.mapToDto(customerCollection.getCollection()))
+                .map(customerCollection ->
+                        collectionGetMapper.mapToDto(customerCollection.getCollection(),
+                                favoriteCollectionIds.contains(customerCollection.getCollectionId())))
                 .filter(collectionGetDTO -> privacyService.isCollectionVisibleBasedOnPrivacy(privacy, collectionGetDTO.getIsPublic()))
                 .collect(Collectors.toList());
     }
@@ -79,6 +85,7 @@ public class CollectionService {
         var collection = collectionAccessService.findCollection(collectionId, UUID);
 
         collectionUpdateMapper.updateCollection(collection, collectionUpdateDto);
+        favoriteCollectionService.update(collectionUpdateDto, collection, UUID);
         collectionRepository.save(collection);
     }
 
@@ -90,6 +97,8 @@ public class CollectionService {
         cardRepository.deleteByCollectionId(collectionId);
         customerCollectionRepository.deleteByCollectionId(collectionId);
         collectionTagRepository.deleteByCollectionId(collectionId);
+        favoriteCollectionService.deleteFavoriteCollection(UUID, collectionId);
+
         collectionRepository.deleteByCollectionId(collectionId);
     }
 
