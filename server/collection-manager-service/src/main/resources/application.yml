@@ -55,3 +55,7 @@ springdoc:
     oauth:
       client-id: swagger-ui
       app-name: swagger-ui
+
+logging:
+  level:
+    liquibase: DEBUG
