@@ -25,6 +25,5 @@ public class CardGetMapper {
                 .orderNumber(card.getOrderNumber())
                 .build();
     }
-
-
+    
 }
