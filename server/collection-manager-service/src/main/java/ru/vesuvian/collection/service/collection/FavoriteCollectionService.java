@@ -18,6 +18,7 @@ import java.util.Set;
 public class FavoriteCollectionService {
     private final CustomerFavoriteCollectionRepository customerFavoriteCollectionRepository;
 
+    
     public void update(CollectionDto collectionDto, Collection collection, String customerId) {
         if (!collectionDto.getIsFavorite()) {
             deleteFavoriteCollection(customerId, collection.getId());
