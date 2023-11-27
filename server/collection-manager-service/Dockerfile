@@ -11,6 +11,9 @@ ARG JAR_FILE=target/collection-manager-service-1.0.jar
 # Add the jar file to the container
 ADD ${JAR_FILE} app.jar
 
+# Add the changelog directory
+COPY /src/main/resources/db/changelog /db/changelog
+
 # Add environment variables
 ENV COLLECTION_MANAGER_POSTGRES_PASSWORD=$COLLECTION_MANAGER_POSTGRES_PASSWORD
 
