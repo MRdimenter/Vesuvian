@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.vesuvian.collection.dto.CollectionDto;
 
 import java.util.List;
 import java.util.Set;
@@ -18,7 +19,7 @@ import java.util.Set;
         name = "CollectionCreateDto",
         description = "Collection object"
 )
-public class CollectionCreateDto {
+public class CollectionCreateDto implements CollectionDto {
     @Schema(description = "Collection name")
     @JsonProperty("name")
     private String collectionName;
@@ -26,6 +27,10 @@ public class CollectionCreateDto {
     @Schema(description = "Is the collection public")
     @JsonProperty("is_public")
     private Boolean isPublic;
+
+    @Schema(description = "Is the collection a favorite")
+    @JsonProperty("is_favorite")
+    private Boolean isFavorite = false;
 
     @Schema(description = "Collection description")
     @JsonProperty("description")

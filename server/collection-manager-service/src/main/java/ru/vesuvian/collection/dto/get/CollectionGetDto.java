@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.vesuvian.collection.dto.CollectionDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.List;
         name = "CollectionGetDto",
         description = "Collection object"
 )
-public class CollectionGetDto {
+public class CollectionGetDto implements CollectionDto {
 
     @Schema(description = "Collection ID")
     @JsonProperty("collection_id")
@@ -36,6 +37,10 @@ public class CollectionGetDto {
     @Schema(description = "Is the collection public")
     @JsonProperty("is_public")
     private Boolean isPublic;
+
+    @Schema(description = "Is the collection a favorite")
+    @JsonProperty("is_favorite")
+    private Boolean isFavorite;
 
     @Schema(description = "Collection creation date")
     @JsonProperty("created_at")
@@ -59,4 +64,6 @@ public class CollectionGetDto {
 
     @JsonProperty("tags")
     private List<TagGetDto> tagGetDtoList;
+
+
 }

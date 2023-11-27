@@ -72,4 +72,14 @@ public class ApiExceptionHandler {
 
         return new ResponseEntity<>(apiException, status);
     }
+
+    @ExceptionHandler(CollectionAlreadyFavoriteException.class)
+    public ResponseEntity<Object> handleUnauthorizedAccessException(CollectionAlreadyFavoriteException e) {
+        var status = HttpStatus.CONFLICT;
+        var apiException = new ApiException(e.getMessage(), status, ZonedDateTime.now());
+
+        log.info("API Exception: Status - {}, Message - {}", status, e.getMessage());
+
+        return new ResponseEntity<>(apiException, status);
+    }
 }

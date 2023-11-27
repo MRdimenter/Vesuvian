@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CollectionGetMapper {
 
-    public CollectionGetDto mapToDto(Collection collection) {
+    public CollectionGetDto mapToDto(Collection collection, boolean isFavorite) {
         return CollectionGetDto.builder()
                 .collectionId(collection.getId())
                 .collectionName(collection.getName())
@@ -32,6 +32,7 @@ public class CollectionGetMapper {
                         .map(collectionTag -> mapToTag(collectionTag.getTag(), collection.getId()))
                         .collect(Collectors.toList())
                 )
+                .isFavorite(isFavorite)
                 .build();
     }
 

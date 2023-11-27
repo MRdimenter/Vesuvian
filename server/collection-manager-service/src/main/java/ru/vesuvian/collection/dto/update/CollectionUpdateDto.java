@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.vesuvian.collection.dto.CollectionDto;
 
 import java.time.LocalDateTime;
 
@@ -18,7 +19,7 @@ import java.time.LocalDateTime;
         name = "CollectionGetDto",
         description = "Collection object"
 )
-public class CollectionUpdateDto {
+public class CollectionUpdateDto implements CollectionDto {
 
     @Schema(description = "Collection name")
     @JsonProperty("name")
@@ -31,5 +32,9 @@ public class CollectionUpdateDto {
     @Schema(description = "Collection description")
     @JsonProperty("description")
     private String description;
+
+    @Schema(description = "Is the collection a favorite")
+    @JsonProperty("is_favorite")
+    private Boolean isFavorite = false;
 
 }
