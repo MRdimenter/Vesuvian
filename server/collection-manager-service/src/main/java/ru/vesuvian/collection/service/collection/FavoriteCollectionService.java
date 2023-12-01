@@ -18,18 +18,22 @@ import java.util.Set;
 public class FavoriteCollectionService {
     private final CustomerFavoriteCollectionRepository customerFavoriteCollectionRepository;
 
-    
-    public void update(CollectionDto collectionDto, Collection collection, String customerId) {
-        if (!collectionDto.getIsFavorite()) {
-            deleteFavoriteCollection(customerId, collection.getId());
+    public void handleFavoriteStatusUpdate(String customerId, Collection collection, CollectionDto collectionDto) {
+        var isFavorite = collectionDto.getIsFavorite();
+
+        if (isFavorite == null) {
             return;
         }
 
-        ensureCollectionIsNotAlreadyFavorite(customerId, collection.getId());
-        save(collection, customerId);
+        if (!isFavorite) {
+            delete(customerId, collection.getId());
+            return;
+        }
+
+        addCollectionToFavoritesIfAbsent(customerId, collection);
     }
 
-    private void save(Collection collection, String customerId) {
+    private void save(String customerId, Collection collection) {
         CustomerFavoriteCollection customerFavoriteCollection = CustomerFavoriteCollection.builder()
                 .customerId(customerId)
                 .collection(collection)
@@ -38,16 +42,17 @@ public class FavoriteCollectionService {
         customerFavoriteCollectionRepository.save(customerFavoriteCollection);
     }
 
-    public void deleteFavoriteCollection(String customerId, Long collectionId) {
+    public void delete(String customerId, Long collectionId) {
         customerFavoriteCollectionRepository.deleteByCustomerIdAndCollectionId(customerId, collectionId);
     }
 
-    private void ensureCollectionIsNotAlreadyFavorite(String customerId, Long collectionId) {
-        customerFavoriteCollectionRepository
-                .findByCustomerIdAndCollectionId(customerId, collectionId)
-                .ifPresent(cfc -> {
-                    throw new CollectionAlreadyFavoriteException("The collection is already in your favorites");
-                });
+    private void addCollectionToFavoritesIfAbsent(String customerId, Collection collection) {
+        Long collectionId = collection.getId();
+        if (!isCollectionFavorite(customerId, collectionId)) {
+            save(customerId, collection);
+        } else {
+            throw new CollectionAlreadyFavoriteException("The collection is already in your favorites");
+        }
     }
 
     public Set<Long> getCollectionIds(String customerId) {

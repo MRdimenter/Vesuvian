@@ -52,7 +52,7 @@ public class CollectionService {
                 .build();
 
         customerCollectionRepository.save(customerCollection);
-        favoriteCollectionService.update(collectionCreateDTO, collection, UUID);
+        favoriteCollectionService.handleFavoriteStatusUpdate(UUID, collection, collectionCreateDTO);
     }
 
     public CollectionGetDto getMyCollectionById(Long collectionId) {
@@ -85,7 +85,7 @@ public class CollectionService {
         var collection = collectionAccessService.findCollection(collectionId, UUID);
 
         collectionUpdateMapper.updateCollection(collection, collectionUpdateDto);
-        favoriteCollectionService.update(collectionUpdateDto, collection, UUID);
+        favoriteCollectionService.handleFavoriteStatusUpdate(UUID, collection, collectionUpdateDto);
         collectionRepository.save(collection);
     }
 
@@ -97,7 +97,7 @@ public class CollectionService {
         cardRepository.deleteByCollectionId(collectionId);
         customerCollectionRepository.deleteByCollectionId(collectionId);
         collectionTagRepository.deleteByCollectionId(collectionId);
-        favoriteCollectionService.deleteFavoriteCollection(UUID, collectionId);
+        favoriteCollectionService.delete(UUID, collectionId);
 
         collectionRepository.deleteByCollectionId(collectionId);
     }

@@ -35,6 +35,6 @@ public class CollectionUpdateDto implements CollectionDto {
 
     @Schema(description = "Is the collection a favorite")
     @JsonProperty("is_favorite")
-    private Boolean isFavorite = false;
+    private Boolean isFavorite;
 
 }
