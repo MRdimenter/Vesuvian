@@ -84,7 +84,17 @@ public class CollectionService {
         String UUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
         var collection = collectionAccessService.findCollection(collectionId, UUID);
 
-        collectionUpdateMapper.updateCollection(collection, collectionUpdateDto);
+        collectionUpdateMapper.updateCollectionForPut(collection, collectionUpdateDto);
+        favoriteCollectionService.handleFavoriteStatusUpdate(UUID, collection, collectionUpdateDto);
+        collectionRepository.save(collection);
+    }
+
+    @Transactional
+    public void updateCollectionPartiallyById(Long collectionId, CollectionUpdateDto collectionUpdateDto) {
+        String UUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
+        var collection = collectionAccessService.findCollection(collectionId, UUID);
+
+        collectionUpdateMapper.updateCollectionForPatch(collection, collectionUpdateDto);
         favoriteCollectionService.handleFavoriteStatusUpdate(UUID, collection, collectionUpdateDto);
         collectionRepository.save(collection);
     }
@@ -101,5 +111,6 @@ public class CollectionService {
 
         collectionRepository.deleteByCollectionId(collectionId);
     }
+
 
 }

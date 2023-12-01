@@ -80,6 +80,21 @@ public class CollectionController {
         collectionService.updateCollectionById(collectionId, collectionUpdateDto);
     }
 
+    @PatchMapping("/{collectionId}")
+    @Operation(summary = "Partially update collection by collection ID",
+            description = "Update specific attributes of a collection based on its ID")
+    public void updateCollectionPartiallyById(
+            @PathVariable
+            @Parameter(description = "ID of the collection to be updated", name = "collectionId", required = true, example = "789")
+            Long collectionId,
+            @RequestBody
+            @Parameter(description = "Updated collection data with only the fields that need to be updated", required = true,
+                    content = @Content(schema = @Schema(implementation = CollectionUpdateDto.class)))
+            CollectionUpdateDto collectionUpdateDto) {
+
+        collectionService.updateCollectionPartiallyById(collectionId, collectionUpdateDto);
+    }
+
 
     @DeleteMapping("/{collectionId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
