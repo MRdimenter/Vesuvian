@@ -16,8 +16,8 @@ spring:
         jwt:
           jwk-set-uri: http://212.113.120.198:8282/realms/dev/protocol/openid-connect/certs # ссылка на сертификаты authserver для проверки целостности access token
   liquibase:
-    enabled: false # временно
-    change-log: classpath:/db/changelog/db.changelog-master.yaml
+    enabled: true # временно
+   # change-log: classpath:/db/changelog/db.changelog-master.yaml
   datasource:
     url: jdbc:postgresql://collection-manager-postgres:5432/collections
     #url: jdbc:postgresql://localhost:5445/collections
@@ -56,6 +56,6 @@ springdoc:
       client-id: swagger-ui
       app-name: swagger-ui
 
-#logging:
-#  level:
-#    liquibase: DEBUG
+logging:
+  level:
+    liquibase: DEBUG

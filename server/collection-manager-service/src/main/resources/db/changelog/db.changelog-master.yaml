@@ -1,3 +1,4 @@
 databaseChangeLog: #параметр в котором находятся миграции
   - includeAll:  # список активных миграций
-      path: classpath:/db/changelog/changeset/ddl/
+      path: changeset/ddl/
+      relativeToChangelogFile: true
