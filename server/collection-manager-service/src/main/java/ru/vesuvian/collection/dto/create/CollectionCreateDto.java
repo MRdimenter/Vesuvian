@@ -17,30 +17,30 @@ import java.util.Set;
 @AllArgsConstructor
 @Schema(
         name = "CollectionCreateDto",
-        description = "Collection object"
+        description = "This is an object designed to create a collection"
 )
 public class CollectionCreateDto implements CollectionDto {
-    @Schema(description = "Collection name")
+    @Schema(description = "The name of the collection.")
     @JsonProperty("name")
     private String collectionName;
 
-    @Schema(description = "Is the collection public")
+    @Schema(description = "Flag indicating whether the collection is public. If true, the collection is visible to all users. Otherwise, it is private.")
     @JsonProperty("is_public")
     private Boolean isPublic;
 
-    @Schema(description = "Is the collection a favorite")
+    @Schema(description = "Indicates whether the collection is marked as a favorite by the user.")
     @JsonProperty("is_favorite")
     private Boolean isFavorite = false;
 
-    @Schema(description = "Collection description")
+    @Schema(description = "A brief description of the collection.")
     @JsonProperty("description")
     private String description;
 
-    @Schema(description = "Array of flashcards")
+    @Schema(description = "List of cards belonging to this collection")
     @JsonProperty("cards")
     private List<CardCreateDto> cards;
 
-    @Schema(description = "Array of tags")
+    @Schema(description = "List of tags belonging to this collection")
     @JsonProperty("tags")
     private Set<TagCreateDto> tags;
 }

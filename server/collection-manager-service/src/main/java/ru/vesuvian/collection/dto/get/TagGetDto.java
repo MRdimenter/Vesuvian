@@ -14,18 +14,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Schema(
         name = "TagGetDto",
-        description = "Tag object"
+        description = "This object is a collection tag"
 )
 public class TagGetDto {
-    @Schema(description = "Collection ID")
+    @Schema(description = "The ID of the collection associated with this tag. This field links the tag to a specific collection.")
     @JsonProperty("collection_id")
     private Long collectionId;
 
-    @Schema(description = "Tag ID")
+    @Schema(description = "Unique identifier for the tag. This ID is used to uniquely identify the tag across the system and facilitate operations like searching or categorizing.")
     @JsonProperty("id")
     private Integer tagId;
 
-    @Schema(description = "Tag name")
+    @Schema(description = "The name of the tag. This is a descriptive label used for easy identification and categorization of the collection it is associated with.")
     @JsonProperty("name")
     private String tagName;
 }

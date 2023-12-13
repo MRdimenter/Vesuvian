@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Schema(
         name = "CardUpdateDto",
-        description = "Card update dto object"
+        description = "This object is used to update the card"
 )
 public class CardUpdateDto {
     @Schema(description = "Flashcard term")

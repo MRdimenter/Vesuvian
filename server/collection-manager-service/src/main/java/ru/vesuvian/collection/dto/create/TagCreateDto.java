@@ -14,10 +14,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Schema(
         name = "TagCreateDto",
-        description = "Tag object"
+        description = "This is an object designed to create a tag"
 )
 public class TagCreateDto {
-
+    @Schema(description = "The name of the tag. This is a descriptive label used for easy identification and categorization of the collection it is associated with.")
     @JsonProperty("name")
     private String tagName;
 }

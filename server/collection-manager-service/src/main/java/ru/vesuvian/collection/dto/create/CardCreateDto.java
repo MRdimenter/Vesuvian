@@ -13,22 +13,22 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Schema(
         name = "CardCreateDto",
-        description = "Card  object"
+        description = "This is an object designed to create a card"
 )
 public class CardCreateDto {
-    @Schema(description = "Flashcard term")
+    @Schema(description = "The term or concept that the card is focused on. This is typically the key idea or question the card is addressing.")
     @JsonProperty("term")
     private String term;
 
-    @Schema(description = "Flashcard definition")
+    @Schema(description = "The definition or explanation of the term. This provides the answer or detailed information related to the term on the card.")
     @JsonProperty("definition")
     private String definition;
 
-    @Schema(description = "Flashcard hint")
+    @Schema(description = "An optional hint to assist in understanding or memorizing the term. This can be a mnemonic, related fact, or any helpful tip.")
     @JsonProperty("hint")
     private String hint;
 
-    @Schema(description = "image url")
+    @Schema(description = "URL of an image associated with the card. This can be a visual representation or supplementary material related to the card's content.")
     @JsonProperty("image_url")
     private String imageURL;
 }

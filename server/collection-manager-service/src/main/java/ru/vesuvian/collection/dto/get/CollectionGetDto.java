@@ -1,6 +1,5 @@
 package ru.vesuvian.collection.dto.get;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -18,52 +17,51 @@ import java.util.List;
 @AllArgsConstructor
 @Schema(
         name = "CollectionGetDto",
-        description = "Collection object"
+        description = "This object represents a collection entity, encapsulating all relevant details about a collection including its ID, creator, and attributes such as name, visibility, and status."
 )
 public class CollectionGetDto implements CollectionDto {
 
-    @Schema(description = "Collection ID")
+    @Schema(description = "Unique identifier for the collection. It is used to reference the collection across the system.")
     @JsonProperty("collection_id")
     private Long collectionId;
 
-    @Schema(description = "Collection creator ID")
+    @Schema(description = "ID of the collection creator. Created automatically when registering with Keycloak")
     @JsonProperty("collection_creator")
     private String creatorCustomerId;
 
-    @Schema(description = "Collection name")
+    @Schema(description = "The name of the collection.")
     @JsonProperty("name")
     private String collectionName;
 
-    @Schema(description = "Is the collection public")
+    @Schema(description = "Flag indicating whether the collection is public. If true, the collection is visible to all users. Otherwise, it is private.")
     @JsonProperty("is_public")
     private Boolean isPublic;
 
-    @Schema(description = "Is the collection a favorite")
+    @Schema(description = "Indicates whether the collection is marked as a favorite by the user.")
     @JsonProperty("is_favorite")
     private Boolean isFavorite;
 
-    @Schema(description = "Collection creation date")
+    @Schema(description = "The date and time when the collection was created.")
     @JsonProperty("created_at")
     private LocalDateTime createdAt;
 
-    @Schema(description = "The date the collection was last modified")
+    @Schema(description = "The date and time when the collection was last modified.")
     @JsonProperty("modified_date")
     private LocalDateTime modifiedDate;
 
-    @Schema(description = "Collection description")
+    @Schema(description = "A brief description of the collection.")
     @JsonProperty("description")
     private String description;
 
-    @Schema(description = "Collection rating")
+    @Schema(description = "Numerical ranking of the collection. Not yet in use.")
     @JsonProperty("rating")
     private Double rating;
 
-    @Schema(description = "Number of cards in the collection")
+    @Schema(description = "The total number of cards in the collection.")
     @JsonProperty("number_of_cards")
     private Integer numberOfCards;
 
+    @Schema(description = "A list of tags associated with the collection. Tags are keywords or labels that help in categorizing or describing the collection.")
     @JsonProperty("tags")
     private List<TagGetDto> tagGetDtoList;
-
-
 }

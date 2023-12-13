@@ -17,23 +17,23 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Schema(
         name = "CollectionGetDto",
-        description = "Collection object"
+        description = "This object is used to update the collection"
 )
 public class CollectionUpdateDto implements CollectionDto {
 
-    @Schema(description = "Collection name")
+    @Schema(description = "The name of the collection.")
     @JsonProperty("name")
     private String collectionName;
 
-    @Schema(description = "Is the collection public")
+    @Schema(description = "Flag indicating whether the collection is public. If true, the collection is visible to all users. Otherwise, it is private.")
     @JsonProperty("is_public")
     private Boolean isPublic;
 
-    @Schema(description = "Collection description")
+    @Schema(description = "A brief description of the collection.")
     @JsonProperty("description")
     private String description;
 
-    @Schema(description = "Is the collection a favorite")
+    @Schema(description = "Indicates whether the collection is marked as a favorite by the user.")
     @JsonProperty("is_favorite")
     private Boolean isFavorite;
 

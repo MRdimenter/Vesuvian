@@ -15,13 +15,15 @@ import java.util.List;
 @AllArgsConstructor
 @Schema(
         name = "CardListGetDto",
-        description = "Card response object"
+        description = "This object contains a list of cards and additional supporting information"
 )
 public class CardListGetDto {
-    @Schema(description = "Collection ID")
+    @Schema(description = "The ID of the collection that these cards belong to. This field links the list of cards to a specific collection in the system.")
     @JsonProperty("collection_id")
     private Long collectionId;
-    @Schema(description = "Cards")
+
+    @Schema(description = "A list of 'CardGetDto' objects. Each object in this list represents a flashcard, including its details such as card ID, term, definition, and related metadata.")
     @JsonProperty("cards")
     private List<CardGetDto> cards;
 }
+

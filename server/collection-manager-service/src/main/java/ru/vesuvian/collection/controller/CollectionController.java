@@ -45,10 +45,17 @@ public class CollectionController {
 
     @GetMapping("/{collectionId}")
     @Operation(summary = "Get collection by collection ID",
-            description = "Retrieve a specific collection based on its ID")
+            description = "Retrieve a specific collection based on its ID",
+            responses = {
+                    @ApiResponse(responseCode = "404", description = "Collection not found"),
+            })
     public CollectionGetDto getMyCollectionById(
             @PathVariable
-            @Parameter(description = "ID of the collection to be retrieved", name = "collectionId", required = true, example = "789")
+            @Parameter(description = "ID of the collection to be retrieved",
+                    name = "collectionId",
+                    required = true,
+                    example = "2",
+                    content = @Content(schema = @Schema(implementation = CollectionGetDto.class)))
             Long collectionId) {
 
         return collectionService.getMyCollectionById(collectionId);
@@ -66,7 +73,10 @@ public class CollectionController {
 
     @PutMapping("/{collectionId}")
     @Operation(summary = "Update collection by collection ID",
-            description = "Update a specific collection based on its ID")
+            description = "Update a specific collection based on its ID",
+            responses = {
+                    @ApiResponse(responseCode = "404", description = "Collection not found"),
+            })
     public void updateCollectionById(
             @PathVariable
             @Parameter(description = "ID of the collection to be updated", name = "collectionId", required = true, example = "789")

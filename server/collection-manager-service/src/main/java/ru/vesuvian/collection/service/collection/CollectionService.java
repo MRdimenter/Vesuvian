@@ -57,7 +57,7 @@ public class CollectionService {
 
     public CollectionGetDto getMyCollectionById(Long collectionId) {
         String UUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
-        CustomerCollection customerCollection = customerCollectionRepository
+        var customerCollection = customerCollectionRepository
                 .findByCustomerIdAndCollectionId(UUID, collectionId)
                 .orElseThrow(() -> new CollectionNotFoundException("Collection not found"));
 
