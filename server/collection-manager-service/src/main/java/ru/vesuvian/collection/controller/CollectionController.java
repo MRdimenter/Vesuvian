@@ -32,7 +32,8 @@ public class CollectionController {
             description = "Creates a new collection based on the provided data",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Collection created successfully"),
-                    @ApiResponse(responseCode = "400", description = "Invalid input")
+                    @ApiResponse(responseCode = "401", description = "Full authentication is required to access this resource"),
+                    @ApiResponse(responseCode = "400", description = "Bad Request")
             })
     public void createCollection(
             @RequestBody
@@ -47,7 +48,9 @@ public class CollectionController {
     @Operation(summary = "Get collection by collection ID",
             description = "Retrieve a specific collection based on its ID",
             responses = {
-                    @ApiResponse(responseCode = "404", description = "Collection not found"),
+                    @ApiResponse(responseCode = "404", description = "Collection not found", content = @Content(schema = @Schema(implementation = Void.class))),
+                    @ApiResponse(responseCode = "200", description = "Collection received successfully"),
+                    @ApiResponse(responseCode = "401", description = "Full authentication is required to access this resource", content = @Content(schema = @Schema(implementation = Void.class)))
             })
     public CollectionGetDto getMyCollectionById(
             @PathVariable
@@ -62,9 +65,15 @@ public class CollectionController {
     }
 
     @GetMapping("/me")
+    @Operation(summary = "Get user's collections",
+            description = "Returns all user collections",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Collection received successfully"),
+                    @ApiResponse(responseCode = "401", description = "Full authentication is required to access this resource", content = @Content(schema = @Schema(implementation = Void.class)))
+            })
     public List<CollectionGetDto> getMyCollections(
             @RequestParam(required = false, defaultValue = "all")
-            @Parameter(description = "Privacy filter", name = "privacy", required = false, example = "all",
+            @Parameter(description = "Collection privacy status filter", name = "privacy", required = false, example = "all",
                     schema = @Schema(type = "string", allowableValues = {"all", "public", "private"}))
             Privacy privacy
     ) {
@@ -76,10 +85,14 @@ public class CollectionController {
             description = "Update a specific collection based on its ID",
             responses = {
                     @ApiResponse(responseCode = "404", description = "Collection not found"),
+                    @ApiResponse(responseCode = "200", description = "Collection successfully updated"),
+                    @ApiResponse(responseCode = "409", description = "The collection is already in your favorites"),
+                    @ApiResponse(responseCode = "400", description = "Bad Request"),
+                    @ApiResponse(responseCode = "401", description = "Full authentication is required to access this resource")
             })
     public void updateCollectionById(
             @PathVariable
-            @Parameter(description = "ID of the collection to be updated", name = "collectionId", required = true, example = "789")
+            @Parameter(description = "ID of the collection to be updated", name = "collectionId", required = true, example = "700")
             Long collectionId,
 
             @RequestBody
@@ -92,7 +105,15 @@ public class CollectionController {
 
     @PatchMapping("/{collectionId}")
     @Operation(summary = "Partially update collection by collection ID",
-            description = "Update specific attributes of a collection based on its ID")
+            description = "Update specific attributes of a collection based on its ID",
+            responses = {
+                    @ApiResponse(responseCode = "404", description = "Collection not found"),
+                    @ApiResponse(responseCode = "200", description = "Collection successfully updated"),
+                    @ApiResponse(responseCode = "409", description = "The collection is already in your favorites"),
+                    @ApiResponse(responseCode = "400", description = "Bad Request"),
+                    @ApiResponse(responseCode = "401", description = "Full authentication is required to access this resource")
+            }
+    )
     public void updateCollectionPartiallyById(
             @PathVariable
             @Parameter(description = "ID of the collection to be updated", name = "collectionId", required = true, example = "789")
@@ -113,7 +134,8 @@ public class CollectionController {
             responses = {
                     @ApiResponse(responseCode = "204", description = "Collection deleted successfully"),
                     @ApiResponse(responseCode = "404", description = "Collection not found"),
-                    @ApiResponse(responseCode = "403", description = "Forbidden action for the user")
+                    @ApiResponse(responseCode = "403", description = "Forbidden action for the user"),
+                    @ApiResponse(responseCode = "401", description = "Full authentication is required to access this resource")
             })
     public void deleteCollectionById(
             @PathVariable

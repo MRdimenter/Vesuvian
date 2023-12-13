@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(
-        name = "CollectionGetDto",
+        name = "CollectionUpdateDto",
         description = "This object is used to update the collection"
 )
 public class CollectionUpdateDto implements CollectionDto {
