@@ -41,6 +41,14 @@ const CardCreatingForm = () => {
     setSelectedCollectionName(value);
   };
 
+  const handleSetFrontSideCardValue = (value) => {
+    if (value?.length < 25) {
+      setFrontSideCardValue(value);
+    } else {
+      //todo: при достижении максимума появляется предупреждение
+    }
+  }
+
   useEffect(() => {
     if (collectionsDataList?.length) {
       const firstCollectionName = collectionsDataList[0].name;
@@ -112,7 +120,7 @@ const CardCreatingForm = () => {
               id="front-side-card-textarea"
               placeholder='Введите текст лицевой стороны'
               value={frontSideCardValue}
-              onChange={(e) => setFrontSideCardValue(e.target.value)}
+              onChange={(e) => handleSetFrontSideCardValue(e.target.value)} //TODO ограничение на кол-во символов
             />
         </CardTransparentWhithBorder>
         <CardTransparentWhithBorder>

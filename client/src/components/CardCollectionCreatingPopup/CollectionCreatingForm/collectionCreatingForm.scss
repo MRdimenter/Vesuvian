@@ -43,11 +43,8 @@
       gap: 20px;
     }
 
-    .adding-collection-tags {
-      margin-top: 17px;
-    }
-
     .buttons-submit-collection-creation {
+      margin-top: 17px;
       display: flex;
       justify-content: center;
       gap: 20px; //there is no gap support yet for React Native
