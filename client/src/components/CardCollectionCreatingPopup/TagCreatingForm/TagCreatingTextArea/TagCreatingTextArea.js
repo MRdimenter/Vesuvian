@@ -1,16 +1,7 @@
-import { useEffect, useState } from 'react';
+import './tagCreatingTextArea.scss';
 
-import './cardCreatingTextarea.scss'
-
-const textSizeStyles = {
-  small: 'medium-small-text',
-  big: 'btn-link-font-big',
-}
-
-// TODO сделать универсальным (пригодилось для тэгов)
-const CardCreatingTextarea = ({ id, label, placeholder, value, onChange, textSize='big' }) => {
+const TagCreatingTextArea = () => {
   const [actualPlaceholder, setActualPlaceholder] = useState(placeholder)
-  const textSizeStyle = textSizeStyles[textSize];
 
   useEffect(() => {
     const textarea = document.getElementById(id);
@@ -18,7 +9,7 @@ const CardCreatingTextarea = ({ id, label, placeholder, value, onChange, textSiz
     function adjustTextarea() {
       textarea.style.height = '0px'; // Сначала сбросим высоту
 
-      var textHeight = textarea.scrollHeight - 4;
+      var textHeight = textarea.scrollHeight;
       textarea.style.height = textHeight + 'px';
     }
 
@@ -43,7 +34,7 @@ const CardCreatingTextarea = ({ id, label, placeholder, value, onChange, textSiz
       <label htmlFor={id}>{label}</label>
       <textarea
         id={id}
-        className={`centr-align-textarea ${textSizeStyle}`}
+        className="centr-align-textarea btn-link-font-big"
         placeholder={actualPlaceholder}
         value={value}
         onChange={onChange}
@@ -56,5 +47,5 @@ const CardCreatingTextarea = ({ id, label, placeholder, value, onChange, textSiz
 }
 
 export {
-  CardCreatingTextarea,
+  TagCreatingTextArea,
 }
