@@ -3,7 +3,7 @@ import { CollectionEditingPageBody } from './CollectionEditingPageBody/Collectio
 
 import './collectionEditingPage.scss';
 
-const CollectionEditingPage = ({collectionId, collectionCards, collectionTags, onStartTraining}) => {
+const CollectionEditingPage = ({collectionId, collectionCards, onStartTraining}) => {
   // TODO а чо компонент на каждую карточку вызывается?
   // TODO collectionId возможно временно (в зависимости где будет кнопка удаления коллекции)
   // console.log('CollectionEditingPage collectionData: ', collectionData);
@@ -12,7 +12,7 @@ const CollectionEditingPage = ({collectionId, collectionCards, collectionTags, o
   
   return (
     <div className='collection-page'>
-      <CollectionEditingPageHeader tags={collectionTags} onStartTraining={onStartTraining} collectionId={collectionId}/>
+      <CollectionEditingPageHeader onStartTraining={onStartTraining} collectionId={collectionId}/>
       <CollectionEditingPageBody collectionCards={collectionCards} />
     </div>
   )

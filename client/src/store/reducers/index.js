@@ -4,6 +4,7 @@ import { authenticationReducer } from './authenticationReducers';
 import { appendCurrentCustomerDataReducer } from './appendCurrentCustomerDataReducer';
 import { collectionReducer } from './collectionReducer';
 import { collectionTagsReducer } from './collectionTagsReducer';
+import { customerReducer } from './customerReducer';
 
 
 const reducers = combineReducers({
@@ -12,6 +13,7 @@ const reducers = combineReducers({
   currentCustomerData: appendCurrentCustomerDataReducer,
   collectionData: collectionReducer,
   collectionTags: collectionTagsReducer,
+  customerDataState: customerReducer,
 })
 
 export default reducers;

@@ -9,14 +9,9 @@ import './tagsCreatingForm.scss';
 
 const TagsCreatingFormId = 'tag-textarea';
 
-const TagsCreatingForm = ({tags, setTags, deleteTag}) => {
+const TagsCreatingForm = ({tags, setNewTag, deleteTag}) => {
   const [isShowTagCreatingForm, setIsShowTagCreatingForm] = useState(false);
   const [tagValue, setTagValue] = useState('');
-
-  const handleDeletingTag = (e) => {
-    // deleteTag(tag);
-    console.log(e);
-  }
 
   const getTags = (tags) => {
     return (
@@ -42,7 +37,10 @@ const TagsCreatingForm = ({tags, setTags, deleteTag}) => {
   }
 
   const addTag = () => {
-    setTags((prevState) => prevState.concat(tagValue))
+    // setTags((prevState) => prevState.concat(tagValue))
+    // setTagValue('');
+    // setIsShowTagCreatingForm(false);
+    setNewTag(tagValue);
     setTagValue('');
     setIsShowTagCreatingForm(false);
   }
@@ -64,6 +62,10 @@ const TagsCreatingForm = ({tags, setTags, deleteTag}) => {
       document.getElementById(TagsCreatingFormId).focus();  
     });
   }
+
+  // todo: есть проблемка с "+добавить тег": при добавлении третьего тэга через сервер:
+  // пропадает форма создания тэга, в этот момент отправляется запрос на создание
+  // при этом появляется "+добавить тег" - заменить на Loading (т.е. должно быть состояние ожидания)
 
   return (
     <div className="adding-collection-tags">

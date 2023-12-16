@@ -1,6 +1,8 @@
 import { IconButton } from '../Button/Button';
+
 import './whithCornerDeleteButton.scss';
 
+//TODO deleteTag не подходит для универсального компонента
 const WhithCornerDeleteButton = ({deleteTag, children}) => {
   
   return (
