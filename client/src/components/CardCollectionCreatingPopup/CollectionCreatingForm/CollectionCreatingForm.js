@@ -1,16 +1,12 @@
 import { useState } from 'react';
+import { ApiService } from '../../../common/utils/ApiService';
+import { OAuth2Service } from '../../../common/utils/OAuth2Service'; 
 import { Button } from '../../Button/Button';
-import { CardTag } from '../../CardTag/CardTag';
 import { InputBox } from '../../Forms/InputBox';
 import { TextArea } from '../../InputComponents/TextArea/TextArea';
-import { OAuth2Service } from '../../../common/utils/OAuth2Service';
-import { ApiService } from '../../../common/utils/ApiService';
-import { WhithCornerDeleteButton } from '../../WhithCornerDeleteButton/WhithCornerDeleteButton';
-import { TagCreatingForm } from '../TagCreatingForm/TagCreatingForm';
+import { TagsCreatingForm } from './TagsCreatingForm/TagsCreatingForm';
 
 import './collectionCreatingForm.scss';
-import { CardCreatingTextarea } from '../CardCreatingForm/CardCreatingTextarea/CardCreatingTextarea';
-import { TagsCreatingForm } from './TagsCreatingForm/TagsCreatingForm';
 
 
 const CollectionCreatingForm = () => {
@@ -78,6 +74,10 @@ const CollectionCreatingForm = () => {
     }
   }
 
+  const setNewTag = (newTagValue) => {
+    setTags((prevState) => prevState.concat(newTagValue))
+  }
+
   const collectionBtnStyle = (activeCreating === 'collectionCreating') ? 'undelined' : '';
   const cardBtnStyle = (activeCreating === 'cardCreating') ? 'undelined' : '';
 
@@ -110,12 +110,13 @@ const CollectionCreatingForm = () => {
             <Button btnStyle='link' label='Общедоступная' action={openCardCreating} textColor='black' fontSize='big' />
           </div>
         </div>
-        
-        <TagsCreatingForm
-          tags={tags}
-          setTags={setTags}
-          deleteTag={deleteTag}
-        />
+        <div className='tags-creating-form'>
+          <TagsCreatingForm
+            tags={tags}
+            setNewTag={setNewTag}
+            deleteTag={deleteTag}
+          />
+        </div>
         <div className="buttons-submit-collection-creation">
           <Button btnStyle='btn' label='Создать' action={submitCollectionCreation} />
           <Button btnStyle='btn' label='Отмена' link={'/'} />

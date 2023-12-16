@@ -81,6 +81,7 @@ export const collectionAction = (collectionId) => {
   }
 }
 
+// toto опечатка
 export const delectecollectionAction = (collectionId) => {
   const oauthService = new OAuth2Service();
   const apiService = new ApiService(oauthService);

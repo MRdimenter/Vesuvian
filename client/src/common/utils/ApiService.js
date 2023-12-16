@@ -98,6 +98,7 @@ class ApiService {
     }
     //TODO реакцию на успешное или неудачное создание коллекции
     console.log(response);
+    return(response.ok)
     //return response.json();
     //return await fetch(url, requestOptions);
   }
@@ -120,9 +121,12 @@ class ApiService {
     const response = await fetch(url, requestOptions);
     console.log('!!!! response: ', response);
     console.log('!!!! response.status: ', response.status);
-    if (response.status !== 204) {
+    // todo оставлять ли? с 200 и 204? (пока что сервер может выдать один из вариантов)
+    // if (response.status !== 200 || response.status !== 204) {
+      if(!response.ok) {
       //throw new Error(`Could not fetch ${url}, received ${response}`);
       console.log('Boo', response.status); // воо
+      
       if (response.status === 401) {
         console.log('if (response.status === 401)');
         //console.log('accessToken', accessToken);
@@ -152,6 +156,11 @@ class ApiService {
     return request(baseURL, modifiedPath);
   }
 
+  withIdAndItemId = (request, baseURL, path, collectionId, itemPath, itemId) => {
+    const modifiedPath = `${path}/${collectionId}/${itemPath}/${itemId}`;
+    return request(baseURL, modifiedPath);
+  }
+
   withPagesParams = (get, baseURL, path, page, size) => {
     const modifiedPath = `${path}?page=${page}&size=${size}`;
     return get(baseURL, modifiedPath);
@@ -178,6 +187,17 @@ class ApiService {
       throw error; // Пробросываем ошибку для обработки её компонентом, вызывающим метод getAllCustomers
     }
     //return this.getResourseByAuth(CURRENT_CUSTOMER_URL);
+  }
+
+  async getCustomerById(customerId) {
+    try {
+      const response = await this.withId(this.getResourseByAuth.bind(this), BASE_URL, CUSTOMERS_URL, customerId);
+      console.log('getCustomerById response: ', response);
+      return response;
+    } catch (error) {
+      console.log('необработанная ошибка getCustomerById', error);
+      throw error; // Пробросываем ошибку для обработки её компонентом, вызывающим метод getAllCustomers
+    }
   }
 
   async getCurrentCustomerCollections() {
@@ -225,6 +245,41 @@ class ApiService {
       return response;
     } catch (error) {
       console.log('необработанная ошибка getCollectionById', error);
+      throw error; // Пробросываем ошибку для обработки её компонентом, вызывающим метод getAllCustomers
+    }
+    //return this.getResourseByAuth(CURRENT_CUSTOMER_URL);
+  }
+
+  async postNewCollectionTagById(collectionData, colleciotId) {
+    const fullCollectionURL = `${COLLECTION_TAGS_URL}/${colleciotId}/${COLLECTION_TAGS_URL_TAIL}`;
+    
+    try {
+      const response = this.fetchResourseByAuth(TEMP_BASE_URL, fullCollectionURL, collectionData)
+      console.log('getCollectionById response: ', response);
+      return response;
+    } catch (error) {
+      console.log('необработанная ошибка getCollectionById', error);
+      throw error; // Пробросываем ошибку для обработки её компонентом, вызывающим метод getAllCustomers
+    }
+    //return this.getResourseByAuth(CURRENT_CUSTOMER_URL);
+  }
+
+  async deleteCollectionTag(tagId, collectionId) {
+    const fullCollectionURL = `${COLLECTION_TAGS_URL}`; // поменять на временный для тэгов
+    
+    try {
+      const deleteResponse = await this.withIdAndItemId(
+          this.deleteResourseByAuth.bind(this),
+          TEMP_BASE_URL,
+          fullCollectionURL,
+          collectionId,
+          COLLECTION_TAGS_URL_TAIL,
+          tagId
+        );
+      console.log('deleteCollection deleteResponse: ', deleteResponse);
+      return deleteResponse;
+    } catch (error) {
+      console.log('необработанная ошибка deleteCollection', error);
       throw error; // Пробросываем ошибку для обработки её компонентом, вызывающим метод getAllCustomers
     }
     //return this.getResourseByAuth(CURRENT_CUSTOMER_URL);

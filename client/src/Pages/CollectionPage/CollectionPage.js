@@ -66,41 +66,8 @@ const CollectionPage = () => {
         }
       }
       handleCollectionTagsAction(collectionIdObject);
-
-      // const handleCollectionDataAction = async (collectionIdObject) => {
-      //   const { collectionId } = collectionIdObject;
-      //   try {
-      //     await dispatch(collectionTagsAction(collectionId));
-      //   } catch (error) {
-      //     setcollectionTagsFetchError(error);
-      //   }
-      // }
-      // handleCollectionDataAction(collectionIdObject);
     }
   }, [navigate, collectionDataState, dispatch])
-
-  useEffect(() => {
-      const localStorageService = new LocalStorageService('CollectionsPage');
-      const collectionIdObject = localStorageService.getValue();
-
-      const handleCollectionTagsAction = async (collectionIdObject) => {
-        const { collectionId } = collectionIdObject;
-        try {
-          await dispatch(collectionTagsAction(collectionId));
-        } catch (error) {
-          setcollectionTagsFetchError(error);
-        }
-      }
-      handleCollectionTagsAction(collectionIdObject);
-  }, [])
-  
-  useEffect(() => {
-    if (collectionTagsState?.collectionTags?.length) {
-      const { collectionTags: collectionTagsObjects } = collectionTagsState;
-      const collectionTags = collectionTagsObjects.map((tagObject) => tagObject.name);
-      setcollectionTags(collectionTags);
-    }
-  }, [collectionTagsState])
 
   function Loading() {
     return <h2>🌀 Loading...</h2>;
@@ -116,7 +83,7 @@ const CollectionPage = () => {
     <div className='collection-page'>
       {spinner}
       {errorMessage}
-      { isShowCollectionEditingPage && <CollectionEditingPage collectionId={collectionDataState.collectionId} collectionCards={collectionCards} collectionTags={collectionTags} onStartTraining={onStartTraining}/> }
+      { isShowCollectionEditingPage && <CollectionEditingPage collectionId={collectionDataState.collectionId} collectionCards={collectionCards} onStartTraining={onStartTraining}/> }
       { isShowCarouselCardsPage && <CarouselCardsPage collectionCards={collectionCards}/> }
     </div>
   )

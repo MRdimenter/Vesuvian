@@ -1,34 +1,33 @@
 import { useEffect, useState } from 'react';
-import { ApiService } from '../../../../common/utils/ApiService';
-import { OAuth2Service } from '../../../../common/utils/OAuth2Service';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { LocalStorageService } from '../../../../common/utils/LocalStorageService';
+import { delectecollectionAction } from '../../../../store/actions/collectionAction';
 import { Button, IconButton } from '../../../../components/Button/Button';
-import { CardTag } from '../../../../components/CardTag/CardTag';
+import { CollectionTags } from './CollectionTags/CollectionTags';
+import { CollectionInformation } from './CollectionInformation/CollectionInformation';
 import { Icon } from '../../../../components/Icon/Icon';
 import { Title } from '../../../../components/Title/Title';
-
-import './collectionEditingPageHeader.scss';
-import { LocalStorageService } from '../../../../common/utils/LocalStorageService';
-import { useDispatch, useSelector } from 'react-redux';
-import { delectecollectionAction } from '../../../../store/actions/collectionAction';
-import { useNavigate } from 'react-router-dom';
 import { COLLECTION_DATA } from '../../../../store/constants';
 
+import './collectionEditingPageHeader.scss';
+
+// todo а у меня до сих пор нет реальных данных для коллекции?
 const collectionAuthor = '@skaipnik';
 const collectionRecentChangesDate= '09.08.2023 23:01';
 
-const CollectionEditingPageHeader = ({ collectionTitle = 'Basic English', tags=['English'], onStartTraining, collectionId: propsCollectionId}) => {
+// todo - а хорошо ли использовать OAuth2Service в хедере? и хедер ли это?? или самостоятельный уже компонент...
+const CollectionEditingPageHeader = ({ collectionTitle = 'Basic English', onStartTraining, collectionId: propsCollectionId}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const oauthService = new OAuth2Service();
-  const apiService = new ApiService(oauthService);
   const localStorageService = new LocalStorageService('CollectionsPage');
 
   const [collectionId, setCollectionId] = useState();
 
-  const collectionDataState = useSelector((state) => state.collectionData);
+  const state = useSelector((state) => state);
   const isDeletedCollection = useSelector((state) => state.collectionData.isDeleted);
-  console.log('collectionDataState: ', collectionDataState);
-  console.log('isDeletedCollection: ', isDeletedCollection);
+
+  console.log('HEADER state: ', state);
 
   useEffect(() => {
     if (propsCollectionId) {
@@ -50,22 +49,8 @@ const CollectionEditingPageHeader = ({ collectionTitle = 'Basic English', tags=[
     }
   },[isDeletedCollection])
 
-  const handleSubmit = () => {
-    console.log('addTabClick');
-  }
-
   const settingsSubmit = () => {
     console.log('settingsSubmitClick');
-  }
-
-  const getTags = (tags) => {
-    return (
-      <>
-        {tags.map((tag) => {
-          return (<CardTag key={tag} tagText={tag}/>) //TODO bad key
-        })}
-      </>
-    )
   }
 
   // TODO dвынести функцию удаления из хедера - негоже хедеру управлять данными приложения
@@ -81,8 +66,7 @@ const CollectionEditingPageHeader = ({ collectionTitle = 'Basic English', tags=[
         <div className="card-bar">
           <Title text ={collectionTitle}/>
           <Icon iconName='globe-svg' iconFormat='svg' width="40" height="40" />
-          {getTags(tags)}
-          {tags.length < 3 && <Button btnStyle='link' label='+добавить тег' action={handleSubmit} />}
+          <CollectionTags collectionId={collectionId} />
           <Button btnStyle='btn' label='Удалить коллекцию' action={deleteColletion} />
         </div>
         <div className="training-bar">
@@ -90,6 +74,7 @@ const CollectionEditingPageHeader = ({ collectionTitle = 'Basic English', tags=[
           <IconButton iconName={'gear-wheel-svg'} iconFormat='svg' width='30' height='30' onClick={settingsSubmit} />
         </div>
       </div>
+      <CollectionInformation collectionDataState={state}/>
       <div className="collection-page-header-bottom">
         <div className='collection-creator'>
           <span className='small-text'>Создано {collectionAuthor}</span>
