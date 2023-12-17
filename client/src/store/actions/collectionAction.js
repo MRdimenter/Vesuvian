@@ -29,15 +29,15 @@ const setErrorCollectionTags = (error) => ({
   error,
 });
 
-const startDeletingCollection = () => ({
+const startDeletingCollectionInfo = () => ({
   type: COLLECTION_DATA.TAGS.START_LOADING_COLLECTION_TAGS,
 });
 
-const finishDeletingCollection = () => ({
+const finishDeletingCollectionInfo = () => ({
   type: COLLECTION_DATA.TAGS.FINISH_LOADING_COLLECTION_TAGS,
 });
 
-const setDeletingCollection = (error) => ({
+const setDeletingCollectionInfo = (error) => ({
   type: COLLECTION_DATA.TAGS.SET_ERROR_COLLECTION_TAGS,
   error,
 });
@@ -98,7 +98,7 @@ export const delectecollectionAction = (collectionId) => {
       // Завершение загрузки данных, установка loading: false
       // dispatch(finishLoadingCollection());
 
-      dispatch({type: COLLECTION_DATA.DATA.DELETE_COLLECTION_DATA, payload: response});
+      dispatch({type: COLLECTION_DATA.INFO.DELETE_COLLECTION_INFO, payload: response});
     } catch (error) {
       console.log('&&&&&&&&&&&&&&&777')
       console.error('An error occurred:', error);
@@ -151,19 +151,17 @@ export const collectionTagsAction = (collectionId) => {
   }
 }
 
-export const collectionDataAction = (collectionId) => {
+export const collectionInfoAction = (collectionId) => {
   const oauthService = new OAuth2Service();
   const apiService = new ApiService(oauthService);
 
   return async (dispatch) => {
     try {
-      const response = await apiService.getCollectionDataById(collectionId);
-      const collectionDataWhithCollectionId = {
-        collectionId,
-        collectionTags: response
-      }
+      const response = await apiService.getCollectionInfoById(collectionId);
+      
+      console.log('!!!!!!!! response: ', response);
 
-      dispatch({type: COLLECTION_DATA.DATA.SET_COLLECTION_DATA_DATA, payload: collectionDataWhithCollectionId});
+      dispatch({type: COLLECTION_DATA.INFO.SET_COLLECTION_INFO, payload: response});
     } catch (error) {
       // для внешней (компонентом) обработки ошибки
       throw error;
