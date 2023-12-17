@@ -50,7 +50,7 @@ public class CollectionAccessService {
 
     private Collection findCollectionWithCardByCollectionIdAndCardId(Long collectionId, Long cardId) {
         return collectionRepository.findByIdWithCards(collectionId, cardId)
-                .orElseThrow(() -> new CollectionNotFoundException("Collection with ID " + collectionId + " not found"));
+                .orElseThrow(() -> new CollectionNotFoundException("Collection with ID: " + collectionId + " and card ID: " + cardId + " not found"));
     }
 
     private void validateCollectionAccess(Collection collection, String customerId) {
