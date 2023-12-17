@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "moment": "^2.29.4",
     "redux-thunk": "^2.4.2"
   }
 }

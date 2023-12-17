@@ -223,6 +223,19 @@ class ApiService {
     //return this.getResourseByAuth(CURRENT_CUSTOMER_URL);
   }
 
+  async getCollectionInfoById(colleciotId) {
+    const fullCollectionURL = `${COLLECTION_URL}/${colleciotId}`;
+    try {
+      const response = this.getResourseByAuth(TEMP_BASE_URL, fullCollectionURL);
+      console.log('getCollectionById response: ', response);
+      return response;
+    } catch (error) {
+      console.log('необработанная ошибка getCollectionById', error);
+      throw error; // Пробросываем ошибку для обработки её компонентом, вызывающим метод getAllCustomers
+    }
+    //return this.getResourseByAuth(CURRENT_CUSTOMER_URL);
+  }
+
   //TODO rename: по сути getCollectionById получает коллекцию карточек => getCollectionCardsById
   async getCollectionById(colleciotId) {
     const fullCollectionURL = `${COLLECTION_URL}/${colleciotId}/${COLLECTION_CARDS_URL_TAIL}`;

@@ -24,10 +24,8 @@ const CollectionEditingPageHeader = ({ collectionTitle = 'Basic English', onStar
 
   const [collectionId, setCollectionId] = useState();
 
-  const state = useSelector((state) => state);
-  const isDeletedCollection = useSelector((state) => state.collectionData.isDeleted);
-
-  console.log('HEADER state: ', state);
+  const collectionDataState = useSelector((state) => state.collectionData);
+  const isDeletedCollection = useSelector((state) => state.collectionInfo.isDeleted);
 
   useEffect(() => {
     if (propsCollectionId) {
@@ -41,7 +39,7 @@ const CollectionEditingPageHeader = ({ collectionTitle = 'Basic English', onStar
   useEffect(() => {
     if (isDeletedCollection) {
       console.log('isDeletedCollection');
-      dispatch({type: COLLECTION_DATA.DATA.DELETE_COLLECTION_DATA, payload: false});
+      dispatch({type: COLLECTION_DATA.INFO.DELETE_COLLECTION_INFO, payload: false});
       navigate('/collectionsPage');
       // navigate('/');
     } else {
@@ -74,15 +72,7 @@ const CollectionEditingPageHeader = ({ collectionTitle = 'Basic English', onStar
           <IconButton iconName={'gear-wheel-svg'} iconFormat='svg' width='30' height='30' onClick={settingsSubmit} />
         </div>
       </div>
-      <CollectionInformation collectionDataState={state}/>
-      <div className="collection-page-header-bottom">
-        <div className='collection-creator'>
-          <span className='small-text'>Создано {collectionAuthor}</span>
-        </div>
-        <div className='recent-collection-changes'>
-          <span className='small-text'>Последнее изменение от {collectionRecentChangesDate}</span>
-        </div>
-      </div>
+      <CollectionInformation collectionDataState={collectionDataState}/>
     </div>
   )
 }

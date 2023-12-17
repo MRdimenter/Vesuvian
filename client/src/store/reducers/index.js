@@ -5,6 +5,7 @@ import { appendCurrentCustomerDataReducer } from './appendCurrentCustomerDataRed
 import { collectionReducer } from './collectionReducer';
 import { collectionTagsReducer } from './collectionTagsReducer';
 import { customerReducer } from './customerReducer';
+import { collectionInfoReducer } from './collectionInfoReducer';
 
 
 const reducers = combineReducers({
@@ -12,6 +13,7 @@ const reducers = combineReducers({
   isAuth: authenticationReducer,
   currentCustomerData: appendCurrentCustomerDataReducer,
   collectionData: collectionReducer,
+  collectionInfo: collectionInfoReducer,
   collectionTags: collectionTagsReducer,
   customerDataState: customerReducer,
 })

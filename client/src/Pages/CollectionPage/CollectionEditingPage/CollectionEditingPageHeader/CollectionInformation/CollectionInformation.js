@@ -1,18 +1,35 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { customerDataAction } from '../../../../../store/actions/customerAction';
+import { collectionInfoAction } from '../../../../../store/actions/collectionAction';
 
 import './collectionInformation.scss';
+import moment from 'moment';
 
 const CollectionInformation = ({collectionDataState}) => {
   const dispatch = useDispatch();
 
   const customerDataState = useSelector((state) => state.customerDataState);
+  const state = useSelector((state) => state);
+  const collectionInfo = useSelector((state) => state.collectionInfo.collectionInfo)
+
+  useEffect(() => {
+    console.log('state: ', state);
+  }, [state])
+  
 
   const [userName, setUserName] = useState('');
-  console.log('CollectionInformation collectionDataState: ', collectionDataState);
+  const [collectionRecentChangesDate, setCollectionRecentChangesDate] = useState('');
+  
 
-  // const 
+  const handleCollectionInfoAction = async (collcetionId) => {
+    try {
+      await dispatch(collectionInfoAction(collcetionId));
+    } catch (error) {
+      // setcollectionTagsFetchError(error);
+      console.log('!!!!!!!! setcollectionTagsFetchError(error);');
+    }
+  }
   
 
   const handleCustomerDataAction = async (customerUUID) => {
@@ -25,21 +42,34 @@ const CollectionInformation = ({collectionDataState}) => {
   }
 
   useEffect(() => {
+    const { collectionId } = collectionDataState.collectionData;
+    if (collectionId) {
+      handleCollectionInfoAction(collectionId)  
+    }
+  }, [collectionDataState])
 
-    const customerUUID = 'be834a8c-58f0-4965-b941-523427293524';
+  const getModifiedDate = (date) => {
+    const dateObj = new Date(date);
+    const momentObj = moment(dateObj);
+    const momentString = momentObj.format('YYYY.MM.DD');
+    const momentTimeString = momentObj.format('h:mm');
+    return `${momentString} ${momentTimeString}`
+  }
+
+  useEffect(() => {
+    const customerUUID = collectionInfo.collection_creator;
+    const modifiedDate = collectionInfo.modified_date;
 
     handleCustomerDataAction(customerUUID);
-  }, [])
+    setCollectionRecentChangesDate(getModifiedDate(modifiedDate));
+  }, [collectionInfo])
 
   useEffect(() => {
     const { userName } = customerDataState.customerData;
-    console.log('useEffect: userName: ', userName);
     if (userName) {
       setUserName(userName)  ;
     }
   }, [customerDataState])
-
-  const collectionRecentChangesDate = 'collectionRecentChangesDate'
 
   return (
     <div className="collection-information">
