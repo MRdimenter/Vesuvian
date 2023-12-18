@@ -14,7 +14,6 @@ const CollectionTags = ({ collectionId }) => {
 
   const collectionTagsState = useSelector((state) => state.collectionTags.collectionTags);
   const state = useSelector((state) => state);
-  console.log('state: ', state);
   const [collectionTags, setcollectionTags] = useState([]);
   const [collectionTagsFetchError, setcollectionTagsFetchError] = useState();
 
@@ -28,10 +27,11 @@ const CollectionTags = ({ collectionId }) => {
   }
 
   const setNewTag = async (newTagValue) => {
-    const collectionData = {
+        const collectionData = {
       "name": newTagValue,
     }
 
+    // todo ошибка 409 Conflict - создание дублирующего тега
     const response = await apiService.postNewCollectionTagById(collectionData, collectionId);
     console.log('postNewCollectionTagById: response: ', response);
     if (response) {

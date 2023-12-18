@@ -37,10 +37,9 @@ const TagsCreatingForm = ({tags, setNewTag, deleteTag}) => {
   }
 
   const addTag = () => {
-    // setTags((prevState) => prevState.concat(tagValue))
-    // setTagValue('');
-    // setIsShowTagCreatingForm(false);
-    setNewTag(tagValue);
+    if (tagValue) {
+      setNewTag(tagValue); 
+    }
     setTagValue('');
     setIsShowTagCreatingForm(false);
   }
