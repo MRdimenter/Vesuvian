@@ -1,26 +1,26 @@
 
 import { Button } from '../../Button/Button';
+import { DropDownMenu } from '../../DropDownMenu/DropDownMenu';
 
 import './collectionsPageHeader.scss';
 
-const CollectionsPageHeader = () => {
+const CollectionsPageHeader = ({sortingOptions, selectedOtionIndex, setSelectedOptionIndex}) => {
   const handleSubmit = () => {
     console.log('handleSubmit');
   }
 
   return (
     <div className="collections-page-header">
-        <div className="collections-page-header-sortby">
-          <span>Сортировка по:    </span>
+      <DropDownMenu 
+        sortingOptions={sortingOptions}
+        selectedOtionIndex={selectedOtionIndex}
+        setSelectedOptionIndex={setSelectedOptionIndex}
+      />  
+      <div className="collections-page-header-groupby">
+        <span>Группировка по:</span>
           <Button btnStyle='link' label='Алфавиту' action={handleSubmit} />
-          <span>    </span>
-          <Button btnStyle='link' label='Дате' action={handleSubmit} />
-        </div>
-        <div className="collections-page-header-groupby">
-          <span>Группировка по:</span>
-            <Button btnStyle='link' label='Алфавиту' action={handleSubmit} />
-            <Button btnStyle='link' label='Тегу' action={handleSubmit} />
-        </div>
+          <Button btnStyle='link' label='Тегу' action={handleSubmit} />
+      </div>
       </div>
   )
 }

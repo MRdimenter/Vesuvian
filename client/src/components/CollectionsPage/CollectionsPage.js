@@ -13,14 +13,41 @@ import { ErrorPage } from '../ErrorPage/ErrorPage';
 
 import './collectionsPage.scss';
 
-function getAlfaFilterObjects(collections) {
+const getSortedCollectionsList = (arr, sortProp, order) => {
+  const sortOrder = order === 'decrease' ? -1 : 1;
+
+  console.log('getSortedCollectionsList: arr: ', arr);
+  console.log('getSortedCollectionsList: sortProp: ', sortProp);
+  console.log('getSortedCollectionsList: order: ', order);
+
+  return arr.slice().sort((a, b) => {
+    if (a[sortProp] < b[sortProp]) return -1 * sortOrder;
+    if (a[sortProp] > b[sortProp]) return 1 * sortOrder;
+    return 0;
+  });
+}
+
+// todo разделить функцию сортировки и группировки - сейчас это в одной, т.е.:
+// одна функция сортирует
+// вторая группирует уже отсортированный список
+// todo возможно правильнее делать это в компоненте отрисовке а не в получении данных!
+function getAlfaFilterObjects(collections, order) {
+  order = 'decrease'
+  // order = 'inc'
+  const sortOrder = order === 'decrease' ? -1 : 1;
+
   const firstLetters = new Map();
   const sortedCollections = {};
   collections.forEach(element => {
     firstLetters.set(element.name[0])
   });
 
-  const sortedFirstLetters = Array.from(firstLetters.keys()).sort();
+  const sortedFirstLetters = Array.from(firstLetters.keys()).sort((a, b) => {
+    if (a < b) return -1 * sortOrder;
+    if (a > b) return 1 * sortOrder;
+    return 0;
+  });
+
   sortedFirstLetters.forEach(letter => {
     sortedCollections[letter] = [];
   });
@@ -29,6 +56,7 @@ function getAlfaFilterObjects(collections) {
     sortedCollections[collection.name[0]].push(collection);
   })
 
+  // TODO переделать на массив объектов
   return Object.entries(sortedCollections);
 }
 
@@ -46,6 +74,27 @@ const CollectionsPage = () => {
   const loadingCollectionData = useSelector((state) => state.collectionData.loading);
   const errorCollectionData = useSelector((state) => state.collectionData.error);
 
+  // сортировка
+  const [selectedOtionIndex, setSelectedOptionIndex] = useState(0);
+
+  const getSortedCollectionsList = (arr, sortProp, order) => {
+    const sortOrder = order === 'decrease' ? -1 : 1;
+
+    console.log('getSortedCollectionsList: arr: ', arr);
+    console.log('getSortedCollectionsList: sortProp: ', sortProp);
+    console.log('getSortedCollectionsList: order: ', order);
+  
+    return arr.slice().sort((a, b) => {
+      if (a[sortProp] < b[sortProp]) return -1 * sortOrder;
+      if (a[sortProp] > b[sortProp]) return 1 * sortOrder;
+      return 0;
+    });
+  }
+
+  useEffect(() => {
+    const sortedCollections_1 = getSortedCollectionsList(collectionsList, sortingOptions[selectedOtionIndex].prop, sortingOptions[selectedOtionIndex].sortDirection)
+    console.log('sortedCollections_1: ', sortedCollections_1);
+  }, [selectedOtionIndex])
 
 
   useEffect(() => {
@@ -149,13 +198,41 @@ const CollectionsPage = () => {
     return <h2>🌀 Loading...</h2>;
   }
 
+  const sortingOptions = [
+    {
+      name: '↓ Сортировка по дате создания',
+      prop: 'created_at',
+      sortDirection: 'decrease',
+    },
+    {
+      name: '↑ Сортировка по дате создания',
+      prop: 'created_at',
+      sortDirection: 'increase',
+    },
+    {
+      name: '↓ Сортировка по алфавиту',
+      prop: 'name',
+      sortDirection: 'decrease',
+    },
+    {
+      name: '↑ Сортировка по алфавиту',
+      prop: 'name',
+      sortDirection: 'increase',
+    },
+  ]
+
   const spinner = (loading || loadingCollectionData) ? <div className='spinner'><Loading /></div> : null;
   const errorMessage = error ? <ErrorPage /> : null;
   const errorCollectionFetchingData = error ? <ErrorPage message='Не удалось загрузить коллекцию' /> : null;
   const collections = collectionsList ? 
     <>
-      <CollectionsPageHeader />
-      <CollectionsPageBody sortedCollections={collectionsList} onCollectionCardClick={onCollectionCardClick} />
+      <CollectionsPageHeader
+        sortingOptions={sortingOptions}
+        selectedOtionIndex={selectedOtionIndex}
+        setSelectedOptionIndex={setSelectedOptionIndex} />
+      <CollectionsPageBody 
+        sortedCollections={collectionsList}
+        onCollectionCardClick={onCollectionCardClick} />
     </> : null;
 
   return (
