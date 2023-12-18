@@ -13,11 +13,34 @@ import { ErrorPage } from '../ErrorPage/ErrorPage';
 
 import './collectionsPage.scss';
 
+const DESC = 'desc';
+const INC = 'inc';
+
+const sortingOptions = [
+  {
+    name: '↓ Сортировка по дате создания',
+    prop: 'created_at',
+    sortDirection: DESC,
+  },
+  {
+    name: '↑ Сортировка по дате создания',
+    prop: 'created_at',
+    sortDirection: INC,
+  },
+  {
+    name: '↓ Сортировка по алфавиту',
+    prop: 'name',
+    sortDirection: DESC,
+  },
+  {
+    name: '↑ Сортировка по алфавиту',
+    prop: 'name',
+    sortDirection: INC,
+  },
+]
+
 const getSortedCollectionsList = (arr, sortProp, order) => {
-  const sortOrder = order === 'decrease' ? -1 : 1;
-  // console.log('getSortedCollectionsList: arr: ', arr);
-  // console.log('getSortedCollectionsList: sortProp: ', sortProp);
-  // console.log('getSortedCollectionsList: order: ', order);
+  const sortOrder = order === DESC ? -1 : 1;
 
   return arr.slice().sort((a, b) => {
     if (a[sortProp] < b[sortProp]) return -1 * sortOrder;
@@ -26,43 +49,9 @@ const getSortedCollectionsList = (arr, sortProp, order) => {
   });
 }
 
-// todo разделить функцию сортировки и группировки - сейчас это в одной, т.е.:
-// одна функция сортирует
-// вторая группирует уже отсортированный список
-// todo возможно правильнее делать это в компоненте отрисовке а не в получении данных!
-function getAlfaFilterObjects(collections, order) {
-  // order = 'decrease'
-  // order = 'inc'
-  const sortOrder = order === 'decrease' ? -1 : 1;
-
-  const firstLetters = new Map();
-  const sortedCollections = {};
-  collections.forEach(element => {
-    firstLetters.set(element.name[0])
-  });
-
-  const sortedFirstLetters = Array.from(firstLetters.keys()).sort((a, b) => {
-    if (a < b) return -1 * sortOrder;
-    if (a > b) return 1 * sortOrder;
-    return 0;
-  });
-
-  sortedFirstLetters.forEach(letter => {
-    sortedCollections[letter] = [];
-  });
-
-  collections.forEach((collection) => {
-    sortedCollections[collection.name[0]].push(collection);
-  })
-
-  // TODO переделать на массив объектов
-  return Object.entries(sortedCollections);
-}
-
 const CollectionsPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
 
   const [collectionsList, setCollectionsList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -72,34 +61,11 @@ const CollectionsPage = () => {
   const collectionDataState = useSelector((state) => state.collectionData.collectionData);
   const loadingCollectionData = useSelector((state) => state.collectionData.loading);
   const errorCollectionData = useSelector((state) => state.collectionData.error);
-
   // сортировка
   const [selectedOtionIndex, setSelectedOptionIndex] = useState(0);
-
-  const getSortedCollectionsList = (arr, sortProp, order) => {
-    const sortOrder = order === 'decrease' ? -1 : 1;
-
-    // console.log('getSortedCollectionsList: arr: ', arr);
-    // console.log('getSortedCollectionsList: sortProp: ', sortProp);
-    // console.log('getSortedCollectionsList: order: ', order);
   
-    return arr.slice().sort((a, b) => {
-      if (a[sortProp] < b[sortProp]) return -1 * sortOrder;
-      if (a[sortProp] > b[sortProp]) return 1 * sortOrder;
-      return 0;
-    });
-  }
-
   useEffect(() => {
-    const sortedCollections_1 = getSortedCollectionsList(collectionsList, sortingOptions[selectedOtionIndex].prop, sortingOptions[selectedOtionIndex].sortDirection)
-    console.log('sortedCollections_1: ', sortedCollections_1);
-  }, [selectedOtionIndex])
-
-
-  useEffect(() => {
-    console.log('useEffect: errorCollectionData: ', errorCollectionData);
     if (isMakeTransition) {
-      console.log('useEffect collectionDataState: ', collectionDataState);
       if (collectionDataState?.collectionCards && !loadingCollectionData && !errorCollectionData) {        
         const localStorageService = new LocalStorageService('CollectionsPage');
 
@@ -121,7 +87,6 @@ const CollectionsPage = () => {
   }, [isMakeTransition])
   //-----------------------------------
 
-
   async function logout(dispatch) {
     const oAuth2Servise = new OAuth2Service();
 
@@ -141,8 +106,7 @@ const CollectionsPage = () => {
         console.log('reponseCollectionList: ', reponseCollectionList);
 
         if (reponseCollectionList) {
-          const sortedCollections = getAlfaFilterObjects(reponseCollectionList);
-          setCollectionsList(sortedCollections); // !!! original (working) string
+          setCollectionsList(reponseCollectionList); // !!! original (working) string
           //setTimeout(() => setCollectionsList(customers), 1000); // For testing long loading   
         } else {
           setError(true);
@@ -164,19 +128,6 @@ const CollectionsPage = () => {
     fetchCurrentCustomerCollections();
   }, [dispatch, navigate]);
 
-  async function getCollectionById() {
-    const oauthService = new OAuth2Service();
-    const apiService = new ApiService(oauthService);
-
-    try {
-      const reponseCollectionList = await apiService.getCollectionById(5);
-      console.log('reponseCollectionList: ', reponseCollectionList);
-    } catch (error) {
-      console.log('error: ', error);
-    }
-
-  }
-
   const onCollectionCardClick = async (collection) => {
     const { collection_id: collectionId } = collection;
     setIsMakeTransition(true);
@@ -193,40 +144,21 @@ const CollectionsPage = () => {
     return <h2>🌀 Loading...</h2>;
   }
 
-  const sortingOptions = [
-    {
-      name: '↓ Сортировка по дате создания',
-      prop: 'created_at',
-      sortDirection: 'decrease',
-    },
-    {
-      name: '↑ Сортировка по дате создания',
-      prop: 'created_at',
-      sortDirection: 'increase',
-    },
-    {
-      name: '↓ Сортировка по алфавиту',
-      prop: 'name',
-      sortDirection: 'decrease',
-    },
-    {
-      name: '↑ Сортировка по алфавиту',
-      prop: 'name',
-      sortDirection: 'increase',
-    },
-  ]
-
   const spinner = (loading || loadingCollectionData) ? <div className='spinner'><Loading /></div> : null;
   const errorMessage = error ? <ErrorPage /> : null;
   const errorCollectionFetchingData = error ? <ErrorPage message='Не удалось загрузить коллекцию' /> : null;
-  const collections = collectionsList ? 
+
+  const sortedCollectionList = getSortedCollectionsList(collectionsList, sortingOptions[selectedOtionIndex].prop, sortingOptions[selectedOtionIndex].sortDirection);
+  
+  const collections = sortedCollectionList ? 
     <>
       <CollectionsPageHeader
         sortingOptions={sortingOptions}
         selectedOtionIndex={selectedOtionIndex}
         setSelectedOptionIndex={setSelectedOptionIndex} />
       <CollectionsPageBody 
-        sortedCollections={collectionsList}
+        sortedCollections={sortedCollectionList}
+        sortingProp={sortingOptions[selectedOtionIndex].prop}
         onCollectionCardClick={onCollectionCardClick} />
     </> : null;
 
