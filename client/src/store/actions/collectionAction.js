@@ -129,6 +129,7 @@ export const collectionTagsAction = (collectionId) => {
       dispatch(startLoadingCollectionTags());
 
       const response = await apiService.getCollectionTagsById(collectionId);
+      console.log('!!!!!!!!!!!!!!!!!!!!!!!! response: ', response);
       const collectionTagsWhithCollectionId = {
         collectionId,
         collectionTags: response

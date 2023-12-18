@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
 import { customerDataAction } from '../../../../../store/actions/customerAction';
 import { collectionInfoAction } from '../../../../../store/actions/collectionAction';
-
 import './collectionInformation.scss';
-import moment from 'moment';
 
 const CollectionInformation = ({collectionDataState}) => {
   const dispatch = useDispatch();
@@ -12,10 +11,6 @@ const CollectionInformation = ({collectionDataState}) => {
   const customerDataState = useSelector((state) => state.customerDataState);
   const state = useSelector((state) => state);
   const collectionInfo = useSelector((state) => state.collectionInfo.collectionInfo)
-
-  useEffect(() => {
-    console.log('state: ', state);
-  }, [state])
   
 
   const [userName, setUserName] = useState('');

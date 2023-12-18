@@ -13,6 +13,8 @@ const CollectionTags = ({ collectionId }) => {
   const localStorageService = new LocalStorageService('CollectionsPage');
 
   const collectionTagsState = useSelector((state) => state.collectionTags.collectionTags);
+  const state = useSelector((state) => state);
+  console.log('state: ', state);
   const [collectionTags, setcollectionTags] = useState([]);
   const [collectionTagsFetchError, setcollectionTagsFetchError] = useState();
 
@@ -52,11 +54,19 @@ const CollectionTags = ({ collectionId }) => {
   }
 
   useEffect(() => {
+    const collectionIdObject = localStorageService.getValue();
+    handleCollectionTagsAction(collectionIdObject);
+  }, [])
+
+  useEffect(() => {
     console.log('useEffect: collectionTagsState: ', collectionTagsState);
     if (collectionTagsState?.collectionTags?.length) {
       const { collectionTags: collectionTagsObjects } = collectionTagsState;
       const collectionTags = collectionTagsObjects.map((tagObject) => tagObject.name);
       setcollectionTags(collectionTags);
+    } else {
+      const collectionIdObject = localStorageService.getValue();
+      handleCollectionTagsAction(collectionIdObject);
     }
   }, [collectionTagsState])
 

@@ -26,11 +26,6 @@ export const customerDataAction = (customerUUID) => {
       dispatch(startLoadingCustomerData());
 
       const response = await apiService.getCustomerById(customerUUID);
-      console.log('customerDataAction response: ', response);
-      // const collectionDataWhithCollectionId = {
-      //   customerId: response.collection_id,
-      //   collectionCards: response.cards
-      // }
 
       // Завершение загрузки данных, установка loading: false
       dispatch(finishLoadingCustomerData());

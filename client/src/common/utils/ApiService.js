@@ -192,7 +192,6 @@ class ApiService {
   async getCustomerById(customerId) {
     try {
       const response = await this.withId(this.getResourseByAuth.bind(this), BASE_URL, CUSTOMERS_URL, customerId);
-      console.log('getCustomerById response: ', response);
       return response;
     } catch (error) {
       console.log('необработанная ошибка getCustomerById', error);
@@ -227,7 +226,7 @@ class ApiService {
     const fullCollectionURL = `${COLLECTION_URL}/${colleciotId}`;
     try {
       const response = this.getResourseByAuth(TEMP_BASE_URL, fullCollectionURL);
-      console.log('getCollectionById response: ', response);
+      console.log('getCollectionInfoById response: ', response);
       return response;
     } catch (error) {
       console.log('необработанная ошибка getCollectionById', error);
@@ -254,10 +253,10 @@ class ApiService {
     const fullCollectionURL = `${COLLECTION_TAGS_URL}/${colleciotId}/${COLLECTION_TAGS_URL_TAIL}`;
     try {
       const response = this.getResourseByAuth(TEMP_BASE_URL, fullCollectionURL);
-      console.log('getCollectionById response: ', response);
+      console.log('getCollectionTagsById response: ', response);
       return response;
     } catch (error) {
-      console.log('необработанная ошибка getCollectionById', error);
+      console.log('необработанная ошибка getCollectionTagsById', error);
       throw error; // Пробросываем ошибку для обработки её компонентом, вызывающим метод getAllCustomers
     }
     //return this.getResourseByAuth(CURRENT_CUSTOMER_URL);

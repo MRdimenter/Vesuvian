@@ -15,10 +15,9 @@ import './collectionsPage.scss';
 
 const getSortedCollectionsList = (arr, sortProp, order) => {
   const sortOrder = order === 'decrease' ? -1 : 1;
-
-  console.log('getSortedCollectionsList: arr: ', arr);
-  console.log('getSortedCollectionsList: sortProp: ', sortProp);
-  console.log('getSortedCollectionsList: order: ', order);
+  // console.log('getSortedCollectionsList: arr: ', arr);
+  // console.log('getSortedCollectionsList: sortProp: ', sortProp);
+  // console.log('getSortedCollectionsList: order: ', order);
 
   return arr.slice().sort((a, b) => {
     if (a[sortProp] < b[sortProp]) return -1 * sortOrder;
@@ -32,7 +31,7 @@ const getSortedCollectionsList = (arr, sortProp, order) => {
 // вторая группирует уже отсортированный список
 // todo возможно правильнее делать это в компоненте отрисовке а не в получении данных!
 function getAlfaFilterObjects(collections, order) {
-  order = 'decrease'
+  // order = 'decrease'
   // order = 'inc'
   const sortOrder = order === 'decrease' ? -1 : 1;
 
@@ -80,9 +79,9 @@ const CollectionsPage = () => {
   const getSortedCollectionsList = (arr, sortProp, order) => {
     const sortOrder = order === 'decrease' ? -1 : 1;
 
-    console.log('getSortedCollectionsList: arr: ', arr);
-    console.log('getSortedCollectionsList: sortProp: ', sortProp);
-    console.log('getSortedCollectionsList: order: ', order);
+    // console.log('getSortedCollectionsList: arr: ', arr);
+    // console.log('getSortedCollectionsList: sortProp: ', sortProp);
+    // console.log('getSortedCollectionsList: order: ', order);
   
     return arr.slice().sort((a, b) => {
       if (a[sortProp] < b[sortProp]) return -1 * sortOrder;
@@ -107,10 +106,6 @@ const CollectionsPage = () => {
         localStorageService.setValue({collectionId: collectionDataState.collectionId});
         navigate('/collectionPage');
       } else {
-        console.log('collectionDataState?.collectionData?.collectionCards: ', collectionDataState?.collectionData?.collectionCards);
-        console.log('collectionDataState?.collectionCards: ', collectionDataState?.collectionCards);
-        console.log('collectionDataState: ', collectionDataState);
-        console.log('!loadingCollectionData: ', !loadingCollectionData);
         console.log('!errorCollectionData: ', !errorCollectionData);
       }
     }
