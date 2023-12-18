@@ -16,7 +16,7 @@ const COLLECTION_URL = 'api/v1/collections';
 const COLLECTION_CARDS_URL_TAIL = 'cards';
 const CREATE = 'create';
 //TODO api/v1/ in its own constatnt
-const COLLECTION_TAGS_URL = 'api/v1'; // TODO будет изменён на COLLECTION_URL (после изменений на сервере)
+const COLLECTION_TAGS_URL = 'api/v1/collections'; // TODO удалить теперь ненужную константу
 const COLLECTION_TAGS_URL_TAIL = 'tags';
 
 export {
