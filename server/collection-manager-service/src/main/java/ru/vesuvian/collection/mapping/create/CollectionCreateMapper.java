@@ -3,11 +3,11 @@ package ru.vesuvian.collection.mapping.create;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import ru.vesuvian.collection.dto.create.CardCreateDto;
 import ru.vesuvian.collection.dto.create.CollectionCreateDto;
 import ru.vesuvian.collection.dto.create.TagCreateDto;
 import ru.vesuvian.collection.entity.Card;
 import ru.vesuvian.collection.entity.Collection;
-import ru.vesuvian.collection.dto.create.CardCreateDto;
 import ru.vesuvian.collection.entity.CollectionTag;
 import ru.vesuvian.collection.entity.Tag;
 import ru.vesuvian.collection.repository.TagRepository;
@@ -49,8 +49,10 @@ public class CollectionCreateMapper {
                     .map(this::toTagEntity)
                     .collect(Collectors.toSet());
 
+
+            // TODO возникает проблема N+1 при создании коллекции с тегами
             Set<CollectionTag> collectionTags = tags.stream().map(tag -> {
-                CollectionTag collectionTag = new CollectionTag();
+                var collectionTag = new CollectionTag();
                 collectionTag.setCollection(collection);
                 collectionTag.setTag(tag);
                 return collectionTag;
@@ -72,6 +74,7 @@ public class CollectionCreateMapper {
         return card;
     }
 
+    // TODO возникает проблема N+1 при создании коллекции с тегами
     public Tag toTagEntity(TagCreateDto dto) {
         return tagRepository.findByNameExcludingCollections(dto.getTagName()).orElseGet(() -> {
             Tag newTag = new Tag();

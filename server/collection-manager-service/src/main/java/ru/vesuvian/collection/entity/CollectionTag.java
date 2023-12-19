@@ -22,9 +22,11 @@ public class CollectionTag {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "collection_id")
+    @EqualsAndHashCode.Include
     private Collection collection;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tag_id")
+    @EqualsAndHashCode.Include
     private Tag tag;
 }

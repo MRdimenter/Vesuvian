@@ -1,15 +1,13 @@
 package ru.vesuvian.collection.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,6 +16,8 @@ import java.util.Set;
         indexes = {
                 @Index(name = "idx_tag_name", columnList = "name")
         })
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 public class Tag {
 
     public Tag(Integer id, String name) {
@@ -35,6 +35,8 @@ public class Tag {
             strategy = GenerationType.SEQUENCE,
             generator = "tags_sequence")
     @Column(name = "id", nullable = false)
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private Integer id;
 
     @Column(name = "name")

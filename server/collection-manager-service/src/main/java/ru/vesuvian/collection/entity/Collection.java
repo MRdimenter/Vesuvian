@@ -80,8 +80,4 @@ public class Collection {
             numberOfCards--;
         }
     }
-
-    public void updateModifiedDate() {
-        modifiedDate = LocalDateTime.now(Clock.systemDefaultZone());
-    }
 }
