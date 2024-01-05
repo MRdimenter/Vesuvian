@@ -12,11 +12,22 @@ import { CollectionsPageHeader } from './CollectionsPageHeader/CollectionsPageHe
 import { ErrorPage } from '../ErrorPage/ErrorPage';
 
 import './collectionsPage.scss';
+import { sortObjectValues } from './helpers/sortObjectValues';
 
-const DESC = 'desc';
-const INC = 'inc';
+export const DESC = 'desc';
+export const INC = 'inc';
 
 const sortingOptions = [
+  {
+    name: '↑ Сортировка по алфавиту',
+    prop: 'name',
+    sortDirection: INC,
+  },
+  {
+    name: '↓ Сортировка по алфавиту',
+    prop: 'name',
+    sortDirection: DESC,
+  },
   {
     name: '↓ Сортировка по дате создания',
     prop: 'created_at',
@@ -27,26 +38,46 @@ const sortingOptions = [
     prop: 'created_at',
     sortDirection: INC,
   },
+]
+
+const groupingOptions = [
   {
-    name: '↓ Сортировка по алфавиту',
-    prop: 'name',
-    sortDirection: DESC,
-  },
-  {
-    name: '↑ Сортировка по алфавиту',
+    name: '↑ Группировка по алфавиту',
     prop: 'name',
     sortDirection: INC,
   },
+  {
+    name: '↓ Группировка по алфавиту',
+    prop: 'name',
+    sortDirection: DESC,
+  },
 ]
 
-const getSortedCollectionsList = (arr, sortProp, order) => {
+const getSortedGroupsOfCollections = (arr, sortProp, order) => {
   const sortOrder = order === DESC ? -1 : 1;
 
-  return arr.slice().sort((a, b) => {
-    if (a[sortProp] < b[sortProp]) return -1 * sortOrder;
-    if (a[sortProp] > b[sortProp]) return 1 * sortOrder;
-    return 0;
-  });
+  switch (sortProp) {
+    case 'name':
+      return arr.slice().sort((a, b) => {
+        if (a[sortProp].toLowerCase() < b[sortProp].toLowerCase()) return -1 * sortOrder;
+        if (a[sortProp].toLowerCase() > b[sortProp].toLowerCase()) return 1 * sortOrder;
+        return 0;
+      });
+    case '':
+      return arr.slice().sort((a, b) => {
+        if (a[sortProp] < b[sortProp]) return -1 * sortOrder;
+        if (a[sortProp] > b[sortProp]) return 1 * sortOrder;
+        return 0;
+      });
+  
+    default:
+      break;
+  }
+  // return arr.slice().sort((a, b) => {
+  //   if (a[sortProp] < b[sortProp]) return -1 * sortOrder;
+  //   if (a[sortProp] > b[sortProp]) return 1 * sortOrder;
+  //   return 0;
+  // });
 }
 
 const CollectionsPage = () => {
@@ -61,6 +92,8 @@ const CollectionsPage = () => {
   const collectionDataState = useSelector((state) => state.collectionData.collectionData);
   const loadingCollectionData = useSelector((state) => state.collectionData.loading);
   const errorCollectionData = useSelector((state) => state.collectionData.error);
+  // группировка
+  const[selectedGroupOtionIndex, setSelectedGroupOtionIndex] = useState(0);
   // сортировка
   const [selectedOtionIndex, setSelectedOptionIndex] = useState(0);
   
@@ -148,17 +181,23 @@ const CollectionsPage = () => {
   const errorMessage = error ? <ErrorPage /> : null;
   const errorCollectionFetchingData = error ? <ErrorPage message='Не удалось загрузить коллекцию' /> : null;
 
-  const sortedCollectionList = getSortedCollectionsList(collectionsList, sortingOptions[selectedOtionIndex].prop, sortingOptions[selectedOtionIndex].sortDirection);
+  const sortedGroupsOfCollections = getSortedGroupsOfCollections(collectionsList, sortingOptions[selectedGroupOtionIndex].prop, sortingOptions[selectedGroupOtionIndex].sortDirection);
+  console.log('sortedGroupsOfCollections: ', sortedGroupsOfCollections);
+  const sortedCardsInGroups = sortObjectValues(sortedGroupsOfCollections, false, 'name')
   
-  const collections = sortedCollectionList ? 
+  const collections = sortedGroupsOfCollections ? 
     <>
       <CollectionsPageHeader
+        groupingOptions={groupingOptions}
+        selectedGroupOtionIndex={selectedGroupOtionIndex}
+        setSelectedGroupOtionIndex={setSelectedGroupOtionIndex}
         sortingOptions={sortingOptions}
         selectedOtionIndex={selectedOtionIndex}
         setSelectedOptionIndex={setSelectedOptionIndex} />
       <CollectionsPageBody 
-        sortedCollections={sortedCollectionList}
-        sortingProp={sortingOptions[selectedOtionIndex].prop}
+        sortedCollections={sortedGroupsOfCollections}
+        groupingProp={groupingOptions[selectedGroupOtionIndex].prop}
+        sortingProp={sortingOptions[selectedOtionIndex]}
         onCollectionCardClick={onCollectionCardClick} />
     </> : null;
 

@@ -1,5 +1,26 @@
 .collections-page-header {
-  width: 100%;
+  // width: 100%;
+  // display: inline-flex;
+  // justify-content: space-between;
+  // justify-content: space-around;
+  // position: relative;
+
+  .asd {
+    // border: 2px solid white;
+    // position: absolute;
+    // display: inline-block;
+  }
+}
+
+flex-container {
   display: flex;
   justify-content: space-between;
+  position: relative;
+  background-color: skyblue;
+  // height: 100px;
+  width: 100%;
+}
+flex-item {
+  background: lightgreen;
+  width: 305px;
 }

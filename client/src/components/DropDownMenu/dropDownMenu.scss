@@ -1,14 +1,18 @@
 .drop-down-menu {
+  // position: relative;
   border: 1px solid #FFF;
   border-radius: 7px;
   width: 305px;
+  // height: 75px;
+  // max-height: fit-content;
   background: #263D44;
 
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 
-  position: relative;
+  position: absolute;
+  z-index: 1;
 
   .arrow-icon {
     position: absolute;
