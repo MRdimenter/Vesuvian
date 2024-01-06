@@ -3,14 +3,16 @@ package ru.vesuvian.collection.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -18,7 +20,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "collections",
+@Table(
+        name = "collections",
         indexes = {
                 @Index(name = "idx_collections_id", columnList = "id"),
                 @Index(name = "idx_collections_creator_customer_id", columnList = "creator_customer_id")
@@ -35,10 +38,22 @@ public class Collection {
     @ToString.Include
     private Long id;
 
-    @Column(name = "creator_customer_id", nullable = false, columnDefinition = "TEXT")
-    private String creatorCustomerId;
+    @Column(name = "creator_customer_id", nullable = false, columnDefinition = "UUID")
+    private UUID creatorCustomerId;
 
-    @Column(name = "name", nullable = false)
+    @Column(
+            name = "name",
+            nullable = false,
+            columnDefinition = "VARCHAR(38)")
+    @Size(
+            min = 1,
+            max = 38,
+            message = "Name length must be between 1 and 38 characters"
+    )
+    @Pattern(
+            regexp = "^[a-zA-Z0-9\\s-_]*$",
+            message = "Name allows only letters, digits, spaces, hyphens, and underscores"
+    )
     private String name;
 
     @Column(name = "is_public")
@@ -52,7 +67,7 @@ public class Collection {
     @Column(name = "modified_date")
     private LocalDateTime modifiedDate;
 
-    @Column(name = "description", columnDefinition = "TEXT")
+    @Column(name = "description", columnDefinition = "VARCHAR(500)")
     private String description;
 
     @Column(name = "rating")

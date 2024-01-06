@@ -1,4 +1,4 @@
-package ru.vesuvian.collection.utils;
+package ru.vesuvian.collection.utils.converter;
 
 
 import org.springframework.core.convert.converter.Converter;

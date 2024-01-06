@@ -56,6 +56,7 @@ springdoc:
       client-id: swagger-ui
       app-name: swagger-ui
 
+# LOG
 logging:
   level:
     liquibase: DEBUG

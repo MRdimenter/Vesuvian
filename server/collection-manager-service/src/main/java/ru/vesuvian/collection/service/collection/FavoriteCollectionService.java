@@ -11,6 +11,7 @@ import ru.vesuvian.collection.repository.CustomerFavoriteCollectionRepository;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -18,7 +19,7 @@ import java.util.Set;
 public class FavoriteCollectionService {
     private final CustomerFavoriteCollectionRepository customerFavoriteCollectionRepository;
 
-    public void handleFavoriteStatusUpdate(String customerId, Collection collection, CollectionDto collectionDto) {
+    public void handleFavoriteStatusUpdate(UUID customerId, Collection collection, CollectionDto collectionDto) {
         var isFavorite = collectionDto.getIsFavorite();
 
         if (isFavorite == null) {
@@ -33,7 +34,7 @@ public class FavoriteCollectionService {
         addCollectionToFavoritesIfAbsent(customerId, collection);
     }
 
-    private void save(String customerId, Collection collection) {
+    private void save(UUID customerId, Collection collection) {
         CustomerFavoriteCollection customerFavoriteCollection = CustomerFavoriteCollection.builder()
                 .customerId(customerId)
                 .collection(collection)
@@ -42,11 +43,11 @@ public class FavoriteCollectionService {
         customerFavoriteCollectionRepository.save(customerFavoriteCollection);
     }
 
-    public void delete(String customerId, Long collectionId) {
+    public void delete(UUID customerId, Long collectionId) {
         customerFavoriteCollectionRepository.deleteByCustomerIdAndCollectionId(customerId, collectionId);
     }
 
-    private void addCollectionToFavoritesIfAbsent(String customerId, Collection collection) {
+    private void addCollectionToFavoritesIfAbsent(UUID customerId, Collection collection) {
         Long collectionId = collection.getId();
         if (!isCollectionFavorite(customerId, collectionId)) {
             save(customerId, collection);
@@ -55,11 +56,11 @@ public class FavoriteCollectionService {
         }
     }
 
-    public Set<Long> getCollectionIds(String customerId) {
+    public Set<Long> getCollectionIds(UUID customerId) {
         return new HashSet<>(customerFavoriteCollectionRepository.findFavoriteCollectionIdsByCustomerId(customerId));
     }
 
-    public boolean isCollectionFavorite(String customerId, Long collectionId) {
-        return customerFavoriteCollectionRepository.existsByCustomerIdAndCollectionId(customerId, collectionId);
+    public boolean isCollectionFavorite(UUID uuid, Long collectionId) {
+        return customerFavoriteCollectionRepository.existsByCustomerIdAndCollectionId(uuid, collectionId);
     }
 }

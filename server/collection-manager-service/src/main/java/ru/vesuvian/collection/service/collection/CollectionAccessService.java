@@ -8,6 +8,8 @@ import ru.vesuvian.collection.exception.CollectionNotFoundException;
 import ru.vesuvian.collection.exception.UnauthorizedAccessException;
 import ru.vesuvian.collection.repository.CollectionRepository;
 
+import java.util.UUID;
+
 
 /**
  * Service responsible for handling access to collections based on
@@ -20,21 +22,21 @@ import ru.vesuvian.collection.repository.CollectionRepository;
 public class CollectionAccessService {
     private final CollectionRepository collectionRepository;
 
-    public Collection findCollection(Long collectionId, String UUID) {
+    public Collection findCollection(Long collectionId, UUID uuid) {
         var collection = findCollectionById(collectionId);
-        validateCollectionAccess(collection, UUID);
+        validateCollectionAccess(collection, uuid);
         return collection;
     }
 
-    public Collection findCollectionWithTags(Long collectionId, String UUID) {
+    public Collection findCollectionWithTags(Long collectionId, UUID uuid) {
         var collection = findCollectionWithTagsByCollectionId(collectionId);
-        validateCollectionAccess(collection, UUID);
+        validateCollectionAccess(collection, uuid);
         return collection;
     }
 
-    public Collection findCollectionWithCard(Long collectionId, String UUID, Long cardId) {
+    public Collection findCollectionWithCard(Long collectionId, UUID uuid, Long cardId) {
         var collection = findCollectionWithCardByCollectionIdAndCardId(collectionId, cardId);
-        validateCollectionAccess(collection, UUID);
+        validateCollectionAccess(collection, uuid);
         return collection;
     }
 
@@ -53,7 +55,7 @@ public class CollectionAccessService {
                 .orElseThrow(() -> new CollectionNotFoundException("Collection with ID: " + collectionId + " and card ID: " + cardId + " not found"));
     }
 
-    private void validateCollectionAccess(Collection collection, String customerId) {
+    private void validateCollectionAccess(Collection collection, UUID customerId) {
         if (!collection.getCreatorCustomerId().equals(customerId)) {
             throw new UnauthorizedAccessException("The customer does not have permission to access this collection");
         }

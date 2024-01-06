@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 // Composite Key
 @Embeddable
@@ -15,8 +16,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class CustomerCollectionId implements Serializable {
 
-    @Column(name = "customer_id")
-    private String customerId;
+    @Column(name = "customer_id", columnDefinition = "UUID")
+    private UUID customerId;
 
     @Column(name = "collection_id")
     private Long collectionId;

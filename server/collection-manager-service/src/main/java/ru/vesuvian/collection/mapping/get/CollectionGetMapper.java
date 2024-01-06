@@ -20,7 +20,7 @@ public class CollectionGetMapper {
         return CollectionGetDto.builder()
                 .collectionId(collection.getId())
                 .collectionName(collection.getName())
-                .creatorCustomerId(collection.getCreatorCustomerId())
+                .creatorCustomerId(collection.getCreatorCustomerId().toString())
                 .description(collection.getDescription())
                 .isPublic(collection.getIsPublic())
                 .modifiedDate(collection.getModifiedDate())

@@ -13,6 +13,7 @@ import ru.vesuvian.collection.entity.Tag;
 import ru.vesuvian.collection.repository.TagRepository;
 
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
@@ -21,11 +22,10 @@ import java.util.stream.Collectors;
 public class CollectionCreateMapper {
     private final TagRepository tagRepository;
 
-    public Collection toEntity(CollectionCreateDto collectionDto, String customerUUID) {
+    public Collection toEntity(CollectionCreateDto collectionDto, UUID customerUUID) {
         if (collectionDto == null) {
             return null;
         }
-
         Collection collection = new Collection();
         collection.setCreatorCustomerId(customerUUID);
         collection.setName(collectionDto.getCollectionName());

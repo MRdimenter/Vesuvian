@@ -20,6 +20,7 @@ import ru.vesuvian.collection.service.collection.CollectionAccessService;
 import ru.vesuvian.collection.service.collection.CollectionTagService;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -36,8 +37,8 @@ public class TagService {
 
     @Transactional
     public void createTagByCollectionId(Long collectionId, TagCreateDto tagCreateDto) {
-        String customerId = authenticatedCustomerResolver.getAuthenticatedCustomerId();
-        var collection = collectionAccessService.findCollectionWithTags(collectionId, customerId);
+        var uuid = authenticatedCustomerResolver.getAuthenticatedUUID();
+        var collection = collectionAccessService.findCollectionWithTags(collectionId, uuid);
 
         validateTagLimitPerCollection(collection);
 
@@ -58,22 +59,22 @@ public class TagService {
     }
 
     public List<TagGetDto> getTagByCollectionId(Long collectionId) {
-        var customerId = authenticatedCustomerResolver.getAuthenticatedCustomerId();
-        var tagList = retrieveTagsByCollectionIdAndCustomerId(collectionId, customerId);
+        var uuid = authenticatedCustomerResolver.getAuthenticatedUUID();
+        var tagList = retrieveTagsByCollectionIdAndCustomerId(collectionId, uuid);
         return tagList.stream()
                 .map(tag -> tagGetMapper.mapTagToDto(tag, collectionId))
                 .toList();
     }
 
     public void deleteTagByCollectionIdAndTagId(Long collectionId, Integer tagId) {
-        var customerId = authenticatedCustomerResolver.getAuthenticatedCustomerId();
-        tagRepository.findTagByCustomerIdAndCollectionIdAndTagId(collectionId, customerId, tagId)
+        var uuid = authenticatedCustomerResolver.getAuthenticatedUUID();
+        tagRepository.findTagByCustomerIdAndCollectionIdAndTagId(collectionId, uuid, tagId)
                 .orElseThrow(() -> new TagNotFoundException("Tag with ID " + tagId + " not found"));
 
         collectionTagRepository.deleteByCollectionIdAndTagId(collectionId, tagId);
     }
 
-    private List<Tag> retrieveTagsByCollectionIdAndCustomerId(Long collectionId, String customerId) {
+    private List<Tag> retrieveTagsByCollectionIdAndCustomerId(Long collectionId, UUID customerId) {
         return tagRepository.findTagsByCustomerIdAndCollectionId(collectionId, customerId)
                 .orElseThrow(() -> new CollectionNotFoundException("Collection with ID " + collectionId + " not found"));
     }

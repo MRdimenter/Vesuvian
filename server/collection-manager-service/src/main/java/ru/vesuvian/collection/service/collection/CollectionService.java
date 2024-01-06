@@ -41,8 +41,8 @@ public class CollectionService {
 
     @Transactional
     public void createCollection(CollectionCreateDto collectionCreateDTO) {
-        String UUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
-        var collection = collectionCreateMapper.toEntity(collectionCreateDTO, UUID);
+        var uuid = authenticatedCustomerResolver.getAuthenticatedUUID();
+        var collection = collectionCreateMapper.toEntity(collectionCreateDTO, uuid);
 
         collection = collectionRepository.save(collection);
 
@@ -52,24 +52,24 @@ public class CollectionService {
                 .build();
 
         customerCollectionRepository.save(customerCollection);
-        favoriteCollectionService.handleFavoriteStatusUpdate(UUID, collection, collectionCreateDTO);
+        favoriteCollectionService.handleFavoriteStatusUpdate(uuid, collection, collectionCreateDTO);
     }
 
     public CollectionGetDto getMyCollectionById(Long collectionId) {
-        String UUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
+        var uuid = authenticatedCustomerResolver.getAuthenticatedUUID();
         var customerCollection = customerCollectionRepository
-                .findByCustomerIdAndCollectionId(UUID, collectionId)
+                .findByCustomerIdAndCollectionId(uuid, collectionId)
                 .orElseThrow(() -> new CollectionNotFoundException("Collection not found"));
 
-        var isFavorite = favoriteCollectionService.isCollectionFavorite(UUID, collectionId);
+        var isFavorite = favoriteCollectionService.isCollectionFavorite(uuid, collectionId);
         return collectionGetMapper.mapToDto(customerCollection.getCollection(), isFavorite);
     }
 
     public List<CollectionGetDto> getMyCollections(Privacy privacy) {
-        String UUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
-        var customerCollections = customerCollectionRepository.findByCustomerId(UUID);
+        var uuid = authenticatedCustomerResolver.getAuthenticatedUUID();
+        var customerCollections = customerCollectionRepository.findByCustomerId(uuid);
 
-        var favoriteCollectionIds = favoriteCollectionService.getCollectionIds(UUID);
+        var favoriteCollectionIds = favoriteCollectionService.getCollectionIds(uuid);
 
         return customerCollections.stream()
                 .map(customerCollection ->
@@ -81,36 +81,34 @@ public class CollectionService {
 
     @Transactional
     public void updateCollectionById(Long collectionId, CollectionUpdateDto collectionUpdateDto) {
-        String UUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
-        var collection = collectionAccessService.findCollection(collectionId, UUID);
+        var uuid = authenticatedCustomerResolver.getAuthenticatedUUID();
+        var collection = collectionAccessService.findCollection(collectionId, uuid);
 
         collectionUpdateMapper.updateCollectionForPut(collection, collectionUpdateDto);
-        favoriteCollectionService.handleFavoriteStatusUpdate(UUID, collection, collectionUpdateDto);
+        favoriteCollectionService.handleFavoriteStatusUpdate(uuid, collection, collectionUpdateDto);
         collectionRepository.save(collection);
     }
 
     @Transactional
     public void updateCollectionPartiallyById(Long collectionId, CollectionUpdateDto collectionUpdateDto) {
-        String UUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
-        var collection = collectionAccessService.findCollection(collectionId, UUID);
+        var uuid = authenticatedCustomerResolver.getAuthenticatedUUID();
+        var collection = collectionAccessService.findCollection(collectionId, uuid);
 
         collectionUpdateMapper.updateCollectionForPatch(collection, collectionUpdateDto);
-        favoriteCollectionService.handleFavoriteStatusUpdate(UUID, collection, collectionUpdateDto);
+        favoriteCollectionService.handleFavoriteStatusUpdate(uuid, collection, collectionUpdateDto);
         collectionRepository.save(collection);
     }
 
     @Transactional
     public void deleteCollectionById(Long collectionId) {
-        String UUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
-        collectionAccessService.findCollection(collectionId, UUID);
+        var uuid = authenticatedCustomerResolver.getAuthenticatedUUID();
+        collectionAccessService.findCollection(collectionId, uuid);
 
         cardRepository.deleteByCollectionId(collectionId);
         customerCollectionRepository.deleteByCollectionId(collectionId);
         collectionTagRepository.deleteByCollectionId(collectionId);
-        favoriteCollectionService.delete(UUID, collectionId);
+        favoriteCollectionService.delete(uuid, collectionId);
 
         collectionRepository.deleteByCollectionId(collectionId);
     }
-
-
 }

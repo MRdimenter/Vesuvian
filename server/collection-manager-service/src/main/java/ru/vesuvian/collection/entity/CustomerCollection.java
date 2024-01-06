@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -20,8 +22,8 @@ import lombok.NoArgsConstructor;
 public class CustomerCollection {
 
     @Id
-    @Column(name = "customer_id")
-    private String customerId;
+    @Column(name = "customer_id", columnDefinition = "UUID")
+    private UUID customerId;
 
     @Id
     @Column(name = "collection_id")

@@ -12,6 +12,7 @@ import ru.vesuvian.collection.entity.CustomerCollection;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface CustomerCollectionRepository extends JpaRepository<CustomerCollection, Long>, JpaSpecificationExecutor<CustomerCollection> {
@@ -23,7 +24,7 @@ public interface CustomerCollectionRepository extends JpaRepository<CustomerColl
             "WHERE cc.customerId = :customerId " +
             "AND cc.collectionId = :collectionId")
     Optional<CustomerCollection> findByCustomerIdAndCollectionId(
-            @Param("customerId") String customerId,
+            @Param("customerId") UUID customerId,
             @Param("collectionId") Long collectionId
     );
 
@@ -32,7 +33,7 @@ public interface CustomerCollectionRepository extends JpaRepository<CustomerColl
             "LEFT JOIN FETCH c.collectionTags ct " +
             "LEFT JOIN FETCH ct.tag " +
             "WHERE cc.customerId = :customerId")
-    List<CustomerCollection> findByCustomerId(@Param("customerId") String customerId);
+    List<CustomerCollection> findByCustomerId(@Param("customerId") UUID customerId);
 
     @Modifying
     @Transactional

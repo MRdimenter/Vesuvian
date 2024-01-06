@@ -14,7 +14,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import ru.vesuvian.collection.exception.OAuth2ExceptionHandler;
-import ru.vesuvian.collection.utils.KCRoleConverter;
+import ru.vesuvian.collection.utils.converter.KCRoleConverter;
 
 import java.util.List;
 

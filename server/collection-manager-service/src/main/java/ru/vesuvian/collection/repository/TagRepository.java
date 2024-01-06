@@ -8,6 +8,7 @@ import ru.vesuvian.collection.entity.Tag;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface TagRepository extends JpaRepository<Tag, Integer> {
@@ -20,7 +21,7 @@ public interface TagRepository extends JpaRepository<Tag, Integer> {
             "JOIN CustomerCollection cc ON c.id = cc.collection.id " +
             "WHERE cc.customerId = :customerId AND c.id = :collectionId")
     Optional<List<Tag>> findTagsByCustomerIdAndCollectionId(@Param("collectionId") Long collectionId,
-                                                            @Param("customerId") String customerId);
+                                                            @Param("customerId") UUID customerId);
 
     @Query("SELECT t FROM Tag t " +
             "JOIN CollectionTag ct ON t.id = ct.tag.id " +
@@ -28,7 +29,7 @@ public interface TagRepository extends JpaRepository<Tag, Integer> {
             "JOIN CustomerCollection cc ON c.id = cc.collection.id " +
             "WHERE cc.customerId = :customerId AND c.id = :collectionId AND t.id = :tagId")
     Optional<Tag> findTagByCustomerIdAndCollectionIdAndTagId(@Param("collectionId") Long collectionId,
-                                                             @Param("customerId") String customer,
+                                                             @Param("customerId") UUID customerId,
                                                              @Param("tagId") Integer tagId
     );
 }

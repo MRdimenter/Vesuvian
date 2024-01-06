@@ -9,6 +9,7 @@ import ru.vesuvian.collection.entity.CustomerFavoriteCollection;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface CustomerFavoriteCollectionRepository extends JpaRepository<CustomerFavoriteCollection, Long> {
 
@@ -23,9 +24,9 @@ public interface CustomerFavoriteCollectionRepository extends JpaRepository<Cust
     @Query("SELECT cfc.collection.id " +
             "FROM CustomerFavoriteCollection cfc " +
             "WHERE cfc.customerId = :customerId")
-    List<Long> findFavoriteCollectionIdsByCustomerId(@Param("customerId") String customerId);
+    List<Long> findFavoriteCollectionIdsByCustomerId(@Param("customerId") UUID customerId);
 
-    boolean existsByCustomerIdAndCollectionId(String customerId, Long collection_id);
+    boolean existsByCustomerIdAndCollectionId(UUID customerId, Long collection_id);
 
     @Modifying
     @Transactional
@@ -34,7 +35,7 @@ public interface CustomerFavoriteCollectionRepository extends JpaRepository<Cust
             "AND cfc.collection.id = :collectionId"
     )
     void deleteByCustomerIdAndCollectionId(
-            @Param("customerId") String customerId,
+            @Param("customerId") UUID customerId,
             @Param("collectionId") Long collectionId
     );
 

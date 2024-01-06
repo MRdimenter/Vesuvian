@@ -19,11 +19,11 @@ import ru.vesuvian.collection.security.AuthenticatedCustomerResolver;
 import ru.vesuvian.collection.service.collection.CollectionAccessService;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
-
 public class CardService {
     private final CardRepository cardRepository;
     private final CardGetMapper cardGetMapper;
@@ -34,8 +34,8 @@ public class CardService {
     private final CardListGetDtoMapper cardListGetDtoMapper;
 
     public CardListGetDto getCardsByCollectionId(Long collectionId) {
-        var UUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
-        var cardList = retrieveCardsByCollectionIdAndCustomerId(collectionId, UUID);
+        var uuid = authenticatedCustomerResolver.getAuthenticatedUUID();
+        var cardList = retrieveCardsByCollectionIdAndCustomerId(collectionId, uuid);
         var cardDtoList = cardList.stream()
                 .map(card -> cardGetMapper.mapCardToDto(card, collectionId))
                 .toList();
@@ -45,8 +45,8 @@ public class CardService {
 
     @Transactional()
     public void createCardByCollectionId(Long collectionId, CardCreateDto cardCreateDto) {
-        String UUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
-        var collection = collectionAccessService.findCollection(collectionId, UUID);
+        var uuid = authenticatedCustomerResolver.getAuthenticatedUUID();
+        var collection = collectionAccessService.findCollection(collectionId, uuid);
         var card = collectionCreateMapper.toCardEntity(cardCreateDto);
 
         collection.incrementNumberOfCards();
@@ -57,8 +57,8 @@ public class CardService {
 
     @Transactional
     public void updateCardByCollectionIdAndCardId(Long collectionId, Long cardId, CardUpdateDto cardUpdateDto) {
-        String UUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
-        var collection = collectionAccessService.findCollectionWithCard(collectionId, UUID, cardId);
+        var uuid = authenticatedCustomerResolver.getAuthenticatedUUID();
+        var collection = collectionAccessService.findCollectionWithCard(collectionId, uuid, cardId);
         var card = collection.getCards().stream()
                 .findFirst()
                 .orElseThrow(
@@ -74,8 +74,8 @@ public class CardService {
 
     @Transactional
     public void deleteCardByCollectionIdAndCardId(Long collectionId, Long cardId) {
-        String UUID = authenticatedCustomerResolver.getAuthenticatedCustomerId();
-        var collection = collectionAccessService.findCollectionWithCard(collectionId, UUID, cardId);
+        var uuid = authenticatedCustomerResolver.getAuthenticatedUUID();
+        var collection = collectionAccessService.findCollectionWithCard(collectionId, uuid, cardId);
         var card = collection.getCards().stream()
                 .findFirst()
                 .orElseThrow(
@@ -88,7 +88,7 @@ public class CardService {
         card.setCollection(collection);
     }
 
-    private List<Card> retrieveCardsByCollectionIdAndCustomerId(Long collectionId, String customerId) {
+    private List<Card> retrieveCardsByCollectionIdAndCustomerId(Long collectionId, UUID customerId) {
         return cardRepository.findCardsByCollectionIdAndCustomerIdOrderByOrderNumber(collectionId, customerId)
                 .orElseThrow(
                         () -> new CollectionNotFoundException("Collection with ID " + collectionId + " not found")

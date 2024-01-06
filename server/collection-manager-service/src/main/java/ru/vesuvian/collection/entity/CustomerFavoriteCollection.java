@@ -3,6 +3,8 @@ package ru.vesuvian.collection.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.UUID;
+
 
 @Getter
 @Setter
@@ -15,14 +17,13 @@ import lombok.*;
                 columnList = "customer_id, collection_id")
 })
 public class CustomerFavoriteCollection {
-
     @Id
     @SequenceGenerator(name = "customer_favorite_collection_sequence", sequenceName = "customer_favorite_collection_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_favorite_collection_sequence")
     private Long id;
 
-    @Column(name = "customer_id")
-    private String customerId;
+    @Column(name = "customer_id", columnDefinition = "UUID")
+    private UUID customerId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "collection_id", nullable = false)

@@ -1,5 +1,6 @@
 package ru.vesuvian.collection.exception;
 
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -76,6 +77,16 @@ public class ApiExceptionHandler {
     @ExceptionHandler(CollectionAlreadyFavoriteException.class)
     public ResponseEntity<Object> handleUnauthorizedAccessException(CollectionAlreadyFavoriteException e) {
         var status = HttpStatus.CONFLICT;
+        var apiException = new ApiException(e.getMessage(), status, ZonedDateTime.now());
+
+        log.info("API Exception: Status - {}, Message - {}", status, e.getMessage());
+
+        return new ResponseEntity<>(apiException, status);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<Object> handleUnauthorizedAccessException(ConstraintViolationException e) {
+        var status = HttpStatus.BAD_REQUEST;
         var apiException = new ApiException(e.getMessage(), status, ZonedDateTime.now());
 
         log.info("API Exception: Status - {}, Message - {}", status, e.getMessage());
