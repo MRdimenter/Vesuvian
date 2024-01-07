@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../Button/Button';
 import { CardTransparentWhithBorder } from '../../Card/CardTransparentWhithBorder/CardTransparentWhithBorder';
-import { CollectionCard } from '../../CollectionCard/CollectionCard';
-import { InputBox } from '../../Forms/InputBox';
 import { Icon } from '../../Icon/Icon';
 import { TextArea } from '../../InputComponents/TextArea/TextArea';
 import { CardCreatingTextarea } from './CardCreatingTextarea/CardCreatingTextarea';
@@ -17,7 +15,7 @@ import { authenticationAction } from '../../../store/actions/authenticationActio
 
 import './cardCreatingForm.scss';
 
-const CardCreatingForm = () => {
+const CardCreatingForm = ({ isCollictionAddition, collectionIdForAddition }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -62,6 +60,7 @@ const CardCreatingForm = () => {
     const apiService = new ApiService(oauthService);
     const collectionId = collectionsDataList.find((collection) => collection.name === selectedCollectionName).collectionId;
     const response = await apiService.postCreateCard(collectionId, cardData);
+    //todo обработать response? и/или переделать на запрос с внутренней обработкой ошибок (через состояние redux)
   }
 
   async function logout(dispatch) {
@@ -73,6 +72,7 @@ const CardCreatingForm = () => {
   }
 
   useEffect(() => {
+    // todo вынести всю эту функцию и заменить на новый запрос через состояния запроса и встроенную переадресацию в Action
     const oauthService = new OAuth2Service();
     const apiService = new ApiService(oauthService);
 
@@ -86,7 +86,14 @@ const CardCreatingForm = () => {
           const collectionsDataList = reponseCollectionList.map((collection) => {
             return {collectionId: collection.collection_id, name: collection.name}
           })
-          setCollectionsDataList(collectionsDataList);
+          
+          //TODO возможно изменить запрос на получение конкретной коллекции дабы уменьшить запрос
+          if (isCollictionAddition && collectionsDataList.length) {
+            const collectionForAddition = collectionsDataList.find((collection) => collection.collectionId === collectionIdForAddition)
+            setCollectionsDataList([collectionForAddition]);
+          } else {
+            setCollectionsDataList(collectionsDataList);
+          }
 
         } else {
           // setError(true); // TODO if Error

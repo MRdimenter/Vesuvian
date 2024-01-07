@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { CardCollectionCreatingNav } from './CardCollectionCreatingNav/CardCollectionCreatingNav'
 import { CardCreatingForm } from './CardCreatingForm/CardCreatingForm';
 import { CollectionCreatingForm } from './CollectionCreatingForm/CollectionCreatingForm';
@@ -6,7 +7,12 @@ import { CollectionCreatingForm } from './CollectionCreatingForm/CollectionCreat
 import './cardCollectionCreatingPopup.scss';
 
 const CardCollectionCreatingPopup = () => {
-  const [activeCreating, setActiveCreating] = useState('collectionCreating')
+  const location = useLocation();
+  const { state } = location;
+  const isCollictionAddition = state?.from === '/collectionPage';
+  const collectionIdForAddition = state?.collectionIdForAddition;
+
+  const [activeCreating, setActiveCreating] = useState(isCollictionAddition ? 'cardCreating' : 'collectionCreating')
 
   const popupCreatingStyles = {
     cardCreating: 'card-creating-popup',
@@ -18,9 +24,18 @@ const CardCollectionCreatingPopup = () => {
 
   return (
     <div className={popupCreatingStyles[activeCreating]}>
-      <CardCollectionCreatingNav activeCreating={activeCreating} setActiveCreating={setActiveCreating} />
+      <CardCollectionCreatingNav
+        activeCreating={activeCreating}
+        setActiveCreating={setActiveCreating}
+        isCollictionAddition={isCollictionAddition}
+      />
       {isCollectionCreatingForm && <CollectionCreatingForm />}
-      {isCardCreatingForm && <CardCreatingForm />}
+      {isCardCreatingForm &&
+        <CardCreatingForm
+          isCollictionAddition={isCollictionAddition}
+          collectionIdForAddition={collectionIdForAddition}
+        />
+      }
     </div>
   )
 }

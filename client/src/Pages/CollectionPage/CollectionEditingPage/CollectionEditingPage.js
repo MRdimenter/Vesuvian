@@ -4,16 +4,22 @@ import { CollectionEditingPageBody } from './CollectionEditingPageBody/Collectio
 import './collectionEditingPage.scss';
 
 const CollectionEditingPage = ({collectionId, collectionCards, onStartTraining}) => {
+  // TODO important! при отсутствии карточек идет постоянный опрос сервера (да и при наличии тоже)
   // TODO а чо компонент на каждую карточку вызывается?
   // TODO collectionId возможно временно (в зависимости где будет кнопка удаления коллекции)
   // console.log('CollectionEditingPage collectionData: ', collectionData);
   // const collectionId = collectionData[0]?.collection_id;
-  console.log('CollectionEditingPage collectionId: ', collectionId);
-  
+
   return (
     <div className='collection-page'>
-      <CollectionEditingPageHeader onStartTraining={onStartTraining} collectionId={collectionId}/>
-      <CollectionEditingPageBody collectionCards={collectionCards} />
+      <CollectionEditingPageHeader 
+        collectionId={collectionId}
+        onStartTraining={onStartTraining}
+      />
+      <CollectionEditingPageBody
+        collectionId={collectionId}
+        collectionCards={collectionCards}
+      />
     </div>
   )
 }
