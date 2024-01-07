@@ -1,9 +1,8 @@
-import { useState } from 'react';
 import { Button } from '../../Button/Button';
 
 import './cardCollectionCreatingNav.scss';
 
-const CardCollectionCreatingNav = ({activeCreating, setActiveCreating}) => {
+const CardCollectionCreatingNav = ({ activeCreating, setActiveCreating, isCollictionAddition }) => {
 
   const openCollectionCreating = (e) => {
     console.log('e.target: ', e.nativeEvent);
@@ -25,10 +24,25 @@ const CardCollectionCreatingNav = ({activeCreating, setActiveCreating}) => {
     <div className="card-collection-creating-nav">
       <div className="card-collection-creating-nav-buttons">
         <div className={`${collectionBtnStyle}`}>
-          <Button btnStyle='link' label='Коллекция' id='asdasd' action={openCollectionCreating} textColor='black' fontSize='big'/>
+          <Button 
+            btnStyle='link'
+            label='Коллекция'
+            id='asdasd'
+            action={openCollectionCreating}
+            textColor={isCollictionAddition ? 'grey' : 'black'}
+            fontSize='big'
+            disabled={isCollictionAddition}
+          />
         </div>
         <div className={`${cardBtnStyle}`}>
-          <Button btnStyle='link' label='Карточка' action={openCardCreating} textColor='black' fontSize='big' />
+          <Button
+            btnStyle='link'
+            label='Карточка'
+            action={openCardCreating}
+            textColor='black'
+            fontSize='big'
+            disabled={isCollictionAddition}
+          />
         </div>
       </div>
     </div>
