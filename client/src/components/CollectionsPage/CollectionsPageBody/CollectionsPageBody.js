@@ -1,10 +1,8 @@
-import moment from 'moment';
 import { CollectionPageGroup } from './CollectionsPageGroup/CollectionPageGroup';
-
-import './collectionsPageBody.scss';
 import { sortObjectValues } from '../helpers/sortObjectValues';
 import { DESC } from '../CollectionsPage';
-import { convertObjectToArray } from '../helpers/convertObjectToArray';
+
+import './collectionsPageBody.scss';
 
 const getCollectionsPageGroups = (sortedCollections, onCollectionCardClick) => {
   return (
@@ -45,8 +43,6 @@ function getAlfaFilterObjects(collections, groupingProp, sortingProp) {
     groupedCollections[letter] = [];
   });
 
-  console.log('groupedCollections: ', groupedCollections);
-
   collections.forEach((collection) => {
     switch (groupingProp) {
       case 'name':
@@ -65,7 +61,6 @@ function getAlfaFilterObjects(collections, groupingProp, sortingProp) {
   })
   
   const descending = sortingProp.sortDirection === DESC;
-  console.log('!!! sortingProp: ', sortingProp);
   // created_at
   const sortedGoups = sortObjectValues(groupedCollections, descending, sortingProp.prop)
 
@@ -75,7 +70,6 @@ function getAlfaFilterObjects(collections, groupingProp, sortingProp) {
 
 const CollectionsPageBody = ({onCollectionCardClick, sortedCollections, groupingProp, sortingProp}) => {
   const groupedCollections = getAlfaFilterObjects(sortedCollections, groupingProp, sortingProp);
-  console.log('groupedCollections: ', groupedCollections);
 
   return (
     <div className="collections-page-body">

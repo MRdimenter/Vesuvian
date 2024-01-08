@@ -3,7 +3,10 @@ import { COLLECTION_DATA } from "../constants";
 const initialState = {
   loading: false,
   error: null,
-  collectionTags: [],
+  collectionTags: {
+    collectionId: null,
+    collectionTags: [],
+  }
 };
 
 const collectionTagsReducer = (state = initialState, action) => {
@@ -15,7 +18,7 @@ const collectionTagsReducer = (state = initialState, action) => {
     case COLLECTION_DATA.TAGS.SET_COLLECTION_TAGS_DATA:
       return { ...state, loading: false, error: null, collectionTags: action.payload };
     default:
-      return state;
+      return { ...state };
   }
 }
 

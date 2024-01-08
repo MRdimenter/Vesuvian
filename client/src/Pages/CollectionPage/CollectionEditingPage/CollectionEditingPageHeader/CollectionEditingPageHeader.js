@@ -17,7 +17,7 @@ const collectionAuthor = '@skaipnik';
 const collectionRecentChangesDate= '09.08.2023 23:01';
 
 // todo - а хорошо ли использовать OAuth2Service в хедере? и хедер ли это?? или самостоятельный уже компонент...
-const CollectionEditingPageHeader = ({ collectionTitle = 'Basic English', onStartTraining, collectionId: propsCollectionId}) => {
+const CollectionEditingPageHeader = ({ collectionTitle = `Basic English default`, onStartTraining, collectionId: propsCollectionId}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const localStorageService = new LocalStorageService('CollectionsPage');
@@ -26,6 +26,7 @@ const CollectionEditingPageHeader = ({ collectionTitle = 'Basic English', onStar
 
   const collectionDataState = useSelector((state) => state.collectionData);
   const isDeletedCollection = useSelector((state) => state.collectionInfo.isDeleted);
+  const collectionInfo = useSelector((state) => state.collectionInfo.collectionInfo)
 
   useEffect(() => {
     if (propsCollectionId) {
@@ -62,7 +63,7 @@ const CollectionEditingPageHeader = ({ collectionTitle = 'Basic English', onStar
     <div className='collection-page-header'>
       <div className="collection-page-header-top">
         <div className="card-bar">
-          <Title text ={collectionTitle}/>
+          <Title text ={collectionInfo.name}/>
           <Icon iconName='globe-svg' iconFormat='svg' width="40" height="40" />
           <CollectionTags collectionId={collectionId} />
           <Button btnStyle='btn' label='Удалить коллекцию' action={deleteColletion} />

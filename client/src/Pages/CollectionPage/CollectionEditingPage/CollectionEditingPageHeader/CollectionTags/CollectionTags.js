@@ -1,18 +1,21 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { collectionTagsAction } from '../../../../../store/actions/collectionAction';
-import { TagsCreatingForm } from '../../../../../components/CardCollectionCreatingPopup/CollectionCreatingForm/TagsCreatingForm/TagsCreatingForm';
 import { OAuth2Service } from '../../../../../common/utils/OAuth2Service';
 import { ApiService } from '../../../../../common/utils/ApiService';
 import { LocalStorageService } from '../../../../../common/utils/LocalStorageService';
+import { collectionTagsAction } from '../../../../../store/actions/collectionAction';
+import { TagsCreatingForm } from '../../../../../components/CardCollectionCreatingPopup/CollectionCreatingForm/TagsCreatingForm/TagsCreatingForm';
 
+// TODO добавить очистку данных для тэгов коллекции при покидании коллекции 
+// (при переходе на другую коллекцию до обновления данных сохраняются данные о предыдущей коллекции)
+// хотя вроде исправил проверкой принадлежности к данной коллекции
 const CollectionTags = ({ collectionId }) => {
   const dispatch = useDispatch();
   const oauthService = new OAuth2Service();
   const apiService = new ApiService(oauthService);
   const localStorageService = new LocalStorageService('CollectionsPage');
 
-  const collectionTagsState = useSelector((state) => state.collectionTags?.collectionTags ?? []);
+  const collectionTagsState = useSelector((state) => state.collectionTags);
   const [collectionTags, setcollectionTags] = useState([]);
   const [collectionTagsFetchError, setcollectionTagsFetchError] = useState();
 
@@ -41,8 +44,8 @@ const CollectionTags = ({ collectionId }) => {
   }
 
   const deleteTag = async (tagComponent) => {
-    const tagIndex = tagComponent.props.index;
-    const tagId = collectionTagsState.collectionTags[tagIndex]?.id;
+    const tagIndex = tagComponent.props.index; 
+    const tagId = collectionTagsState.collectionTags.collectionTags[tagIndex]?.id;
 
     const response = await apiService.deleteCollectionTag(tagId, collectionId);
     console.log('deleteTag postNewCollectionTagById: response: ', response);
@@ -58,11 +61,14 @@ const CollectionTags = ({ collectionId }) => {
   }, [])
 
   useEffect(() => {
-      const { collectionTags: collectionTagsObjects } = collectionTagsState;
-      const collectionTags = collectionTagsObjects.map((tagObject) => tagObject.name);
-      
+    const { collectionTags: collectionTagsObject } = collectionTagsState;
+
+    // если тэги принадлежат выбранной коллекции
+    if (collectionTagsObject.collectionId === collectionId) {
+      const collectionTags = collectionTagsObject.collectionTags.map((tagObject) => tagObject.name);
       setcollectionTags(collectionTags);
-  }, [collectionTagsState])
+    }
+  }, [collectionTagsState, collectionId])
 
   return (
     <TagsCreatingForm

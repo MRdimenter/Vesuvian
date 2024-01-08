@@ -3,7 +3,7 @@ import { CollectionEditingPageBody } from './CollectionEditingPageBody/Collectio
 
 import './collectionEditingPage.scss';
 
-const CollectionEditingPage = ({collectionId, collectionCards, onStartTraining}) => {
+const CollectionEditingPage = ({ collectionId, collectionCards, onStartTraining }) => {
   // TODO important! при отсутствии карточек идет постоянный опрос сервера (да и при наличии тоже)
   // TODO а чо компонент на каждую карточку вызывается?
   // TODO collectionId возможно временно (в зависимости где будет кнопка удаления коллекции)
@@ -12,7 +12,7 @@ const CollectionEditingPage = ({collectionId, collectionCards, onStartTraining})
 
   return (
     <div className='collection-page'>
-      <CollectionEditingPageHeader 
+      <CollectionEditingPageHeader
         collectionId={collectionId}
         onStartTraining={onStartTraining}
       />

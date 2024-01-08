@@ -12,13 +12,12 @@ const CollectionPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [collectionCards, setcollectionCards] = useState([]);
-  const [collectionTags, setcollectionTags] = useState([]);
   const [collectionTagsFetchError, setcollectionTagsFetchError] = useState();
   const [isTraining, setIsTraining] = useState(false);
 
   //на случай потери данных о коллекции (при перезагрузке приложения)
   const collectionDataState = useSelector((state) => state.collectionData.collectionData);
-  const loadingCollectionData = useSelector((state) => state.collectionData.loading);
+    const loadingCollectionData = useSelector((state) => state.collectionData.loading);
   const errorCollectionData = useSelector((state) => state.collectionData.error);
 
   const collectionTagsState = useSelector((state) => state.collectionTags.collectionTags);
@@ -83,7 +82,13 @@ const CollectionPage = () => {
     <div className='collection-page'>
       {spinner}
       {errorMessage}
-      { isShowCollectionEditingPage && <CollectionEditingPage collectionId={collectionDataState.collectionId} collectionCards={collectionCards} onStartTraining={onStartTraining}/> }
+      { isShowCollectionEditingPage && 
+        <CollectionEditingPage
+          collectionId={collectionDataState.collectionId}
+          collectionCards={collectionCards}
+          onStartTraining={onStartTraining}
+        />
+      }
       { isShowCarouselCardsPage && <CarouselCardsPage collectionCards={collectionCards}/> }
     </div>
   )

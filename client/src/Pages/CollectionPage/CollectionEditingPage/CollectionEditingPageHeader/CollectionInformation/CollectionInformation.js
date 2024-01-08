@@ -11,12 +11,12 @@ const CollectionInformation = ({collectionDataState}) => {
   const customerDataState = useSelector((state) => state.customerDataState);
   const state = useSelector((state) => state);
   const collectionInfo = useSelector((state) => state.collectionInfo.collectionInfo)
-  
+    
 
   const [userName, setUserName] = useState('');
   const [collectionRecentChangesDate, setCollectionRecentChangesDate] = useState('');
   
-
+  // TODO вынести на уровень выше, т.к. эта информация нужна еще и для name of collection
   const handleCollectionInfoAction = async (collcetionId) => {
     try {
       await dispatch(collectionInfoAction(collcetionId));
@@ -68,11 +68,16 @@ const CollectionInformation = ({collectionDataState}) => {
 
   return (
     <div className="collection-information">
-      <div className='collection-creator'>
-        <span className='small-text'>{`Создано ${userName ? `@${userName}` : ''}`}</span>
+      <div className="collection-creation-information">
+        <div className='collection-creator'>
+          <span className='small-text'>{`Создано ${userName ? `@${userName}` : ''}`}</span>
+        </div>
+        <div className='recent-collection-changes'>
+          <span className='small-text'>Последнее изменение от {collectionRecentChangesDate}</span>
+        </div>
       </div>
-      <div className='recent-collection-changes'>
-        <span className='small-text'>Последнее изменение от {collectionRecentChangesDate}</span>
+      <div className="collection-information-description text-size-big">
+        {collectionInfo.description}
       </div>
     </div>
   )

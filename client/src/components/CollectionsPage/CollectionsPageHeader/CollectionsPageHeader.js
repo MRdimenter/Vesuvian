@@ -4,7 +4,15 @@ import { DropDownMenuGrouping } from '../../DropDownMenu/DropDownMenuGrouping';
 
 import './collectionsPageHeader.scss';
 
-const CollectionsPageHeader = ({groupingOptions, selectedGroupOtionIndex, setSelectedGroupOtionIndex, sortingOptions, selectedOtionIndex, setSelectedOptionIndex}) => {
+const CollectionsPageHeader = ({
+  groupingOptions,
+  selectedGroupOtionIndex,
+  setSelectedGroupOtionIndex,
+  sortingOptions,
+  selectedOtionIndex,
+  setSelectedOptionIndex,
+}) => {
+
   const handleSubmit = () => {
     console.log('handleSubmit');
   }

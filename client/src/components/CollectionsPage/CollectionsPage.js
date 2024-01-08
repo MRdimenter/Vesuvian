@@ -73,16 +73,12 @@ const getSortedGroupsOfCollections = (arr, sortProp, order) => {
     default:
       break;
   }
-  // return arr.slice().sort((a, b) => {
-  //   if (a[sortProp] < b[sortProp]) return -1 * sortOrder;
-  //   if (a[sortProp] > b[sortProp]) return 1 * sortOrder;
-  //   return 0;
-  // });
 }
 
 const CollectionsPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const localStorageService = new LocalStorageService('CollectionsPage');
 
   const [collectionsList, setCollectionsList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -136,7 +132,6 @@ const CollectionsPage = () => {
       setLoading(true);
       try {
         const reponseCollectionList = await apiService.getCurrentCustomerCollections();
-        console.log('reponseCollectionList: ', reponseCollectionList);
 
         if (reponseCollectionList) {
           setCollectionsList(reponseCollectionList); // !!! original (working) string
@@ -163,6 +158,10 @@ const CollectionsPage = () => {
 
   const onCollectionCardClick = async (collection) => {
     const { collection_id: collectionId } = collection;
+
+    const localStorageService = new LocalStorageService('CollectionsPage');
+    localStorageService.setValue({collectionId: collectionDataState.collectionId});
+
     setIsMakeTransition(true);
 
     // TODO добавитбь проверку (tryCatch) на ошибки при dispatch(collectionAction
@@ -182,7 +181,6 @@ const CollectionsPage = () => {
   const errorCollectionFetchingData = error ? <ErrorPage message='Не удалось загрузить коллекцию' /> : null;
 
   const sortedGroupsOfCollections = getSortedGroupsOfCollections(collectionsList, sortingOptions[selectedGroupOtionIndex].prop, sortingOptions[selectedGroupOtionIndex].sortDirection);
-  console.log('sortedGroupsOfCollections: ', sortedGroupsOfCollections);
   const sortedCardsInGroups = sortObjectValues(sortedGroupsOfCollections, false, 'name')
   
   const collections = sortedGroupsOfCollections ? 
@@ -193,7 +191,8 @@ const CollectionsPage = () => {
         setSelectedGroupOtionIndex={setSelectedGroupOtionIndex}
         sortingOptions={sortingOptions}
         selectedOtionIndex={selectedOtionIndex}
-        setSelectedOptionIndex={setSelectedOptionIndex} />
+        setSelectedOptionIndex={setSelectedOptionIndex}
+      />
       <CollectionsPageBody 
         sortedCollections={sortedGroupsOfCollections}
         groupingProp={groupingOptions[selectedGroupOtionIndex].prop}
