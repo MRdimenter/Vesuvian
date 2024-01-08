@@ -32,7 +32,7 @@ const CollectionInformation = ({collectionDataState}) => {
       await dispatch(customerDataAction(customerUUID));
     } catch (error) {
       // setcollectionTagsFetchError(error);
-      console.log('!!!!!!!!  setcollectionTagsFetchError(error);');
+      console.log('!!!!!!!!  handleCustomerDataAction(error): ', error);
     }
   }
 

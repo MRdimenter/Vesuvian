@@ -22,7 +22,6 @@ function getCollectionCards(firstLetterOfCollection, onCollectionCardClick) {
   return (
     <>
       {firstLetterOfCollection.map((collection) => {
-        console.log('collection: ', collection);
         return (
           <div className='collection-card-wrapper'>
             <CollectionCard collection={collection} onCollectionCardClick={onCollectionCardClick}/>

@@ -12,8 +12,7 @@ const CollectionTags = ({ collectionId }) => {
   const apiService = new ApiService(oauthService);
   const localStorageService = new LocalStorageService('CollectionsPage');
 
-  const collectionTagsState = useSelector((state) => state.collectionTags.collectionTags);
-  const state = useSelector((state) => state);
+  const collectionTagsState = useSelector((state) => state.collectionTags?.collectionTags ?? []);
   const [collectionTags, setcollectionTags] = useState([]);
   const [collectionTagsFetchError, setcollectionTagsFetchError] = useState();
 
@@ -46,7 +45,7 @@ const CollectionTags = ({ collectionId }) => {
     const tagId = collectionTagsState.collectionTags[tagIndex]?.id;
 
     const response = await apiService.deleteCollectionTag(tagId, collectionId);
-    console.log('postNewCollectionTagById: response: ', response);
+    console.log('deleteTag postNewCollectionTagById: response: ', response);
     if (response) {
       const collectionIdObject = localStorageService.getValue();
       handleCollectionTagsAction(collectionIdObject);
@@ -59,15 +58,10 @@ const CollectionTags = ({ collectionId }) => {
   }, [])
 
   useEffect(() => {
-    console.log('useEffect: collectionTagsState: ', collectionTagsState);
-    if (collectionTagsState?.collectionTags?.length) {
       const { collectionTags: collectionTagsObjects } = collectionTagsState;
       const collectionTags = collectionTagsObjects.map((tagObject) => tagObject.name);
+      
       setcollectionTags(collectionTags);
-    } else {
-      const collectionIdObject = localStorageService.getValue();
-      handleCollectionTagsAction(collectionIdObject);
-    }
   }, [collectionTagsState])
 
   return (
