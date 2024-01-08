@@ -49,4 +49,3 @@ jobs:
             docker rm react-app-container || true
             docker run -d --name react-app-container -p 80:80 ghcr.io/mrdimenter/react-app-container:latest 
           "
-
