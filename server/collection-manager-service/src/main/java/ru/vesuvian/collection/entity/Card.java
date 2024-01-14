@@ -2,6 +2,7 @@ package ru.vesuvian.collection.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -39,12 +40,27 @@ public class Card {
     private Collection collection;
 
     @Column(name = "term", nullable = false)
+    @Size(
+            min = 1,
+            max = 1000,
+            message = "Term length must be between 1 and 1000 characters"
+    )
     private String term;
 
     @Column(name = "definition", nullable = false)
+    @Size(
+            min = 1,
+            max = 1000,
+            message = "Definition length must be between 1 and 1000 characters"
+    )
     private String definition;
 
     @Column(name = "hint")
+    @Size(
+            min = 1,
+            max = 255,
+            message = "Hint length must be between 1 and 1000 characters"
+    )
     private String hint;
 
     @CreationTimestamp
