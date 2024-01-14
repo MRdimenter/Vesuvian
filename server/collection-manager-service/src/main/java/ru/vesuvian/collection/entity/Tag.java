@@ -1,6 +1,7 @@
 package ru.vesuvian.collection.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.util.HashSet;
@@ -40,6 +41,11 @@ public class Tag {
     private Integer id;
 
     @Column(name = "name")
+    @Size(
+            min = 1,
+            max = 15,
+            message = "Name length must be between 1 and 15 characters"
+    )
     private String name;
 
     // Отношение один-ко-многим между Tag и CollectionTagRepository
