@@ -20,8 +20,8 @@ const CardCreatingForm = ({ isCollictionAddition, collectionIdForAddition }) => 
   const navigate = useNavigate();
 
   const [frontSideCardValue, setFrontSideCardValue] = useState('');
-  const [backSideCardValue, setBackSideCardValue] = useState('');
-  const [definitionValue, setDefinitionValue] = useState('');
+  const [cardDefinition, setCardDefinition] = useState('');
+  const [hint, setHint] = useState('');
   const [selectedCollectionName, setSelectedCollectionName] = useState('');
   const [collectionsDataList, setCollectionsDataList] = useState([]);
 
@@ -31,8 +31,8 @@ const CardCreatingForm = ({ isCollictionAddition, collectionIdForAddition }) => 
 
   const cardData = {
     "term": frontSideCardValue,
-    "definition": definitionValue,
-    "hint": backSideCardValue
+    "definition": cardDefinition,
+    "hint": hint,
   }
 
   const handleSelectChange = (value) => {
@@ -134,8 +134,8 @@ const CardCreatingForm = ({ isCollictionAddition, collectionIdForAddition }) => 
           <CardCreatingTextarea
               id="back-side-card-textarea"
               placeholder='Введите текст обратной стороны'
-              value={backSideCardValue}
-              onChange={(e) => setBackSideCardValue(e.target.value)}
+              value={cardDefinition}
+              onChange={(e) => setCardDefinition(e.target.value)}
             />
         </CardTransparentWhithBorder>
       </div>
@@ -146,8 +146,8 @@ const CardCreatingForm = ({ isCollictionAddition, collectionIdForAddition }) => 
             id="card-hint-textarea"
             label="Введите описание"
             placeholder='Введите описание'
-            value={definitionValue}
-            onChange={(e) => setDefinitionValue(e.target.value)}
+            value={hint}
+            onChange={(e) => setHint(e.target.value)}
           />
         </div>
         <div className="collection-additional-settings-column">
