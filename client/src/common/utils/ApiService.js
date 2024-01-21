@@ -1,4 +1,4 @@
-import { BASE_URL, COLLECTION_URL, COLLECTION_CARDS_URL_TAIL, CURRENT_CUSTOMER_COLLECTIONS_URL, CURRENT_CUSTOMER_URL, CUSTOMERS_URL, TEMP_BASE_PORT, TEMP_BASE_URL, COLLECTION_TAGS_URL, COLLECTION_TAGS_URL_TAIL, CREATE } from "../constants/urlConstants";
+import { BASE_URL, COLLECTION_URL, COLLECTION_CARDS_URL_TAIL, CURRENT_CUSTOMER_COLLECTIONS_URL, CURRENT_CUSTOMER_URL, CUSTOMERS_URL, TEMP_BASE_PORT, TEMP_BASE_URL, COLLECTION_TAGS_URL, COLLECTION_TAGS_URL_TAIL, CREATE, METHOD } from "../constants/urlConstants";
 import { ServerError } from "./Errors/Errors";
 import { getAccessToken } from "./useOAuth2";
 
@@ -58,12 +58,12 @@ class ApiService {
     //return await fetch(url, requestOptions);
   }
 
-  async fetchResourseByAuth(baseURL, path, data) {
+  async fetchResourseByAuth(method, baseURL, path, data) {
     const url = `${baseURL}/${path}`;
     let accessToken = getAccessToken();
 
     const requestOptions = {
-      method: 'POST',
+      method,
       headers: {
         'Accept': '*/*',
         'Content-Type': 'application/json',
@@ -266,7 +266,7 @@ class ApiService {
     const fullCollectionURL = `${COLLECTION_TAGS_URL}/${colleciotId}/${COLLECTION_TAGS_URL_TAIL}`;
     
     try {
-      const response = this.fetchResourseByAuth(TEMP_BASE_URL, fullCollectionURL, collectionData)
+      const response = this.fetchResourseByAuth(METHOD.POST, TEMP_BASE_URL, fullCollectionURL, collectionData)
       console.log('getCollectionById response: ', response);
       return response;
     } catch (error) {
@@ -302,7 +302,22 @@ class ApiService {
     const fullCollectionURL = `${COLLECTION_URL}/${CREATE}`;
     
     try {
-      const response = this.fetchResourseByAuth(TEMP_BASE_URL, fullCollectionURL, collectionData)
+      const response = this.fetchResourseByAuth(METHOD.POST, TEMP_BASE_URL, fullCollectionURL, collectionData)
+      console.log('getCollectionById response: ', response);
+      return response;
+    } catch (error) {
+      console.log('необработанная ошибка getCollectionById', error);
+      throw error; // Пробросываем ошибку для обработки её компонентом, вызывающим метод getAllCustomers
+    }
+    //return this.getResourseByAuth(CURRENT_CUSTOMER_URL);
+  }
+
+  //TODO пора бы разделять API на сущности: CustomerAPI, CollectionAPI etc.
+  async putCreateCollection(collectionData, collectionId) {
+    const fullCollectionURL = `${COLLECTION_URL}/${collectionId}`;
+    
+    try {
+      const response = this.fetchResourseByAuth(METHOD.PUT, TEMP_BASE_URL, fullCollectionURL, collectionData)
       console.log('getCollectionById response: ', response);
       return response;
     } catch (error) {
@@ -332,7 +347,7 @@ class ApiService {
     const fullCollectionURL = `${COLLECTION_URL}/${collectionId}/${COLLECTION_CARDS_URL_TAIL}`;
     
     try {
-      const response = this.fetchResourseByAuth(TEMP_BASE_URL, fullCollectionURL, cardData)
+      const response = this.fetchResourseByAuth(METHOD.POST, TEMP_BASE_URL, fullCollectionURL, cardData)
       console.log('getCollectionById response: ', response);
       return response;
     } catch (error) {

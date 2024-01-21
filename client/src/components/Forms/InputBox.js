@@ -55,7 +55,7 @@ function inputValidation(event, password, onValidationChange) {
   }
 }
 
-const InputBox = ({ type = "text", className, labelContent, necessary, value, onChange, password = '', onValidationChange, hitnText }) => {
+const InputBox = ({ type = "text", className, labelContent, necessary, value, onChange, password = '', onValidationChange, hitnText, disable }) => {
   const [showInputHint, setShowInputHint] = useState(false);
 
   const inputHintToggle = () => {
@@ -76,7 +76,9 @@ const InputBox = ({ type = "text", className, labelContent, necessary, value, on
         value={value}
         onChange={(e) => onChange(e)}
         onFocus={(e) => clearWarn(e)}
-        onBlur={(e) => inputValidation(e, password, onValidationChange)} />
+        onBlur={(e) => inputValidation(e, password, onValidationChange)}
+        disable={disable}
+      />
     </div>
   )
 }

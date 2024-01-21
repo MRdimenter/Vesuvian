@@ -19,6 +19,11 @@ const CREATE = 'create';
 const COLLECTION_TAGS_URL = 'api/v1/collections'; // TODO удалить теперь ненужную константу
 const COLLECTION_TAGS_URL_TAIL = 'tags';
 
+const METHOD = {
+    POST: 'POST',
+    PUT: 'PUT'
+}
+
 export {
     BASE_HOSTNAME,
     BASE_URL,
@@ -33,4 +38,5 @@ export {
     CREATE,
     COLLECTION_TAGS_URL,
     COLLECTION_TAGS_URL_TAIL,
+    METHOD,
 }

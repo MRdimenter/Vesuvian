@@ -9,7 +9,9 @@ import './cardCollectionCreatingPopup.scss';
 const CardCollectionCreatingPopup = () => {
   const location = useLocation();
   const { state } = location;
-  const isCollictionAddition = state?.from === '/collectionPage';
+  
+  const isCollectionSetting = state?.from === 'onCollectionSetting';
+  const isCollictionAddition = state?.from === 'CollectionEditingPageBody';
   const collectionIdForAddition = state?.collectionIdForAddition;
 
   const [activeCreating, setActiveCreating] = useState(isCollictionAddition ? 'cardCreating' : 'collectionCreating')
@@ -27,9 +29,15 @@ const CardCollectionCreatingPopup = () => {
       <CardCollectionCreatingNav
         activeCreating={activeCreating}
         setActiveCreating={setActiveCreating}
+        isCollectionSetting={isCollectionSetting}
         isCollictionAddition={isCollictionAddition}
       />
-      {isCollectionCreatingForm && <CollectionCreatingForm />}
+      {isCollectionCreatingForm && 
+        <CollectionCreatingForm
+          isCollectionSetting={isCollectionSetting}
+          collectionIdForAddition={collectionIdForAddition}
+        />
+      }
       {isCardCreatingForm &&
         <CardCreatingForm
           isCollictionAddition={isCollictionAddition}

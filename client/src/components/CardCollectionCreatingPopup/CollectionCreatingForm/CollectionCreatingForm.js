@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ApiService } from '../../../common/utils/ApiService';
 import { OAuth2Service } from '../../../common/utils/OAuth2Service'; 
 import { Button } from '../../Button/Button';
@@ -7,14 +7,16 @@ import { TextArea } from '../../InputComponents/TextArea/TextArea';
 import { TagsCreatingForm } from './TagsCreatingForm/TagsCreatingForm';
 
 import './collectionCreatingForm.scss';
+import { useSelector } from 'react-redux';
 
 
-const CollectionCreatingForm = () => {
+const CollectionCreatingForm = ({ isCollectionSetting, collectionIdForAddition}) => {
+  const collectionInfo = useSelector((state) => state.collectionInfo.collectionInfo)
+
   const [activeCreating, setActiveCreating] = useState('collectionCreating')
-  const [colletionName, setColletionName] = useState('');
-  const [collectionDescription, setCollectionDescription] = useState('');
-  const [tags, setTags] = useState([]);
-  
+  const [colletionName, setColletionName] = useState(isCollectionSetting ? collectionInfo.name : '');
+  const [collectionDescription, setCollectionDescription] = useState(isCollectionSetting ? collectionInfo.description : '');
+  const [tags, setTags] = useState(isCollectionSetting ? collectionInfo.tags.map((tagObj) => tagObj.name) : []);
 
   //TODO сделать запрос через валидацию
   const handleValidationChange = () => {
@@ -35,7 +37,8 @@ const CollectionCreatingForm = () => {
     }
   }
 
-  const submitCollectionCreation = async () => {
+  const submitCollectionCreation = async (e) => {
+    e.preventDefault();
     console.log('submitCollectionCreation');
     //TODO попробую сначала так, а потом через Action
     const oauthService = new OAuth2Service();
@@ -54,8 +57,16 @@ const CollectionCreatingForm = () => {
       "tags": getCollectionTags(tags),
     }
 
-    const response = await apiService.postCreateCollection(collectionData);
-    console.log('postCreateCollection: response: ', response);
+    if (!isCollectionSetting) {
+      const response = await apiService.postCreateCollection(collectionData);
+      console.log('postCreateCollection: response: ', response);
+    }
+
+    if (isCollectionSetting) {
+      const collectionId = collectionInfo.collection_id;
+      const response = await apiService.putCreateCollection(collectionData, collectionId);
+      console.log('putCreateCollection: response: ', response); 
+    }
   }
 
   const deleteTag = (tagComponent) => {
@@ -84,7 +95,6 @@ const CollectionCreatingForm = () => {
   return (
     <div className="collection-creating-form-wrapper">
       <form className="collection-creating-form" onKeyDown={handleKeyEnter}>
-
         <InputBox 
           className="collectionName"
           labelContent="Название"
@@ -92,6 +102,7 @@ const CollectionCreatingForm = () => {
           value={colletionName} 
           onChange={(e) => setColletionName(e.target.value)}
           onValidationChange={handleValidationChange}
+          disable={isCollectionSetting}
         />
 
         <TextArea 
@@ -118,7 +129,7 @@ const CollectionCreatingForm = () => {
           />
         </div>
         <div className="buttons-submit-collection-creation">
-          <Button btnStyle='btn' label='Создать' action={submitCollectionCreation} />
+          <Button btnStyle='btn' label={`${!isCollectionSetting ? 'Создать' : 'Изменить'}`} action={(e) => submitCollectionCreation(e)} />
           <Button btnStyle='btn' label='Отмена' link={'/'} />
         </div>
       </form>
