@@ -2,7 +2,7 @@ import { Button } from '../../Button/Button';
 
 import './cardCollectionCreatingNav.scss';
 
-const CardCollectionCreatingNav = ({ activeCreating, setActiveCreating, isCollictionAddition }) => {
+const CardCollectionCreatingNav = ({ activeCreating, setActiveCreating, isCollectionSetting, isCollictionAddition }) => {
 
   const openCollectionCreating = (e) => {
     console.log('e.target: ', e.nativeEvent);
@@ -31,7 +31,7 @@ const CardCollectionCreatingNav = ({ activeCreating, setActiveCreating, isCollic
             action={openCollectionCreating}
             textColor={isCollictionAddition ? 'grey' : 'black'}
             fontSize='big'
-            disabled={isCollictionAddition}
+            disabled={isCollictionAddition || isCollectionSetting}
           />
         </div>
         <div className={`${cardBtnStyle}`}>
@@ -39,9 +39,9 @@ const CardCollectionCreatingNav = ({ activeCreating, setActiveCreating, isCollic
             btnStyle='link'
             label='Карточка'
             action={openCardCreating}
-            textColor='black'
+            textColor={isCollectionSetting ? 'grey' : 'black'}
             fontSize='big'
-            disabled={isCollictionAddition}
+            disabled={isCollictionAddition || isCollectionSetting}
           />
         </div>
       </div>

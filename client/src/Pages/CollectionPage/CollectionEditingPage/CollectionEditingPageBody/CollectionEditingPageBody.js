@@ -9,7 +9,7 @@ const CollectionEditingPageBody = ({ collectionId, collectionCards }) => {
   const location = useLocation()
   
   const onCollectionCardClick = () => {
-    navigate('/cardCreatingPage', { state: { from: location.pathname, collectionIdForAddition: collectionId } });
+    navigate('/cardCreatingPage', { state: { from: 'CollectionEditingPageBody', collectionIdForAddition: collectionId } });
   }
 
   const getCards = (collectionCards) => {

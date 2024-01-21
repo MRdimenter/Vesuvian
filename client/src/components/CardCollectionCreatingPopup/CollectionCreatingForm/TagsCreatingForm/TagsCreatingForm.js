@@ -28,12 +28,15 @@ const TagsCreatingForm = ({tags, setNewTag, deleteTag}) => {
     )
   }
 
-  const handleSetTagValue = (value) => {
+  const handleSetTagValue = (e) => {
+    const { value } = e.target;
+
     if (value?.length < 14) {
       setTagValue(value);
     } else {
       //todo: при достижении максимума появляется предупреждение
     }
+    e.preventDefault();
   }
 
   const addTag = () => {
@@ -55,11 +58,12 @@ const TagsCreatingForm = ({tags, setNewTag, deleteTag}) => {
     }
   }
   
-  const handleOnClickBtnAddTag = () => {
+  const handleOnClickBtnAddTag = (e) => {
     setIsShowTagCreatingForm(true);
     setTimeout(() => {
       document.getElementById(TagsCreatingFormId).focus();  
     });
+    e.preventDefault();
   }
 
   // todo: есть проблемка с "+добавить тег": при добавлении третьего тэга через сервер:
@@ -70,7 +74,7 @@ const TagsCreatingForm = ({tags, setNewTag, deleteTag}) => {
     <div className="adding-collection-tags">
       {getTags(tags)}
       {tags.length < 3 && !isShowTagCreatingForm && 
-        <Button btnStyle='link' label='+добавить тег' textColor='black' action={handleOnClickBtnAddTag} />}
+        <Button btnStyle='link' label='+добавить тег' textColor='black' action={(e) => handleOnClickBtnAddTag(e)} />}
       {isShowTagCreatingForm &&
       <div onBlur={handleOnBlur} onKeyDown={handleAddTagKeyEnter}>
         <TagCreatingForm>
@@ -78,7 +82,7 @@ const TagsCreatingForm = ({tags, setNewTag, deleteTag}) => {
               id={TagsCreatingFormId}
               placeholder=''
               value={tagValue}
-              onChange={(e) => handleSetTagValue(e.target.value)}
+              onChange={(e) => handleSetTagValue(e)}
               textSize='small'
             />
         </TagCreatingForm>

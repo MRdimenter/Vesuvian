@@ -39,10 +39,8 @@ const CollectionEditingPageHeader = ({ collectionTitle = `Basic English default`
 
   useEffect(() => {
     if (isDeletedCollection) {
-      console.log('isDeletedCollection');
       dispatch({type: COLLECTION_DATA.INFO.DELETE_COLLECTION_INFO, payload: false});
       navigate('/collectionsPage');
-      // navigate('/');
     } else {
       console.log('else isDeletedCollection');
     }
@@ -54,9 +52,11 @@ const CollectionEditingPageHeader = ({ collectionTitle = `Basic English default`
 
   // TODO dвынести функцию удаления из хедера - негоже хедеру управлять данными приложения
   const deleteColletion = async () => {
-    console.log('deleteColletion, collectionId: ', collectionId);
-    // apiService.deleteCollection(collectionId);
     await dispatch(delectecollectionAction(collectionId));
+  }
+
+  const onCollectionSetting = () => {
+    navigate('/cardCreatingPage', { state: { from: 'onCollectionSetting', collectionIdForAddition: collectionId } });
   }
 
   return (
@@ -67,6 +67,7 @@ const CollectionEditingPageHeader = ({ collectionTitle = `Basic English default`
           <Icon iconName='globe-svg' iconFormat='svg' width="40" height="40" />
           <CollectionTags collectionId={collectionId} />
           <Button btnStyle='btn' label='Удалить коллекцию' action={deleteColletion} />
+          <button onClick={onCollectionSetting}>CollectionSetting</button>
         </div>
         <div className="training-bar">
           <Button btnStyle='btn' label='Начать тренировку' action={onStartTraining} />
