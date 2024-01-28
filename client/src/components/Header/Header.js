@@ -11,6 +11,7 @@ export const Header = () => {
       <Link className='Logo' to={'/'}> <h1 className='header-1'>VESUVIAN</h1> </Link>
       <nav className='header-nav'>
         <Link className='Logo customer-list' to={'/listItem'}>Customers List</Link>
+        <Link className='Logo customer-list' to={'/userSettingsPage'}>userSettingsPage</Link>
         <div className='header-nav-button'>
           <Button btnStyle='btn' label='Коллекция' link={'/collectionPage'} />
         </div>
