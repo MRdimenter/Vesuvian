@@ -89,8 +89,8 @@ const CollectionCreatingForm = ({ isCollectionSetting, collectionIdForAddition})
     setTags((prevState) => prevState.concat(newTagValue))
   }
 
-  const collectionBtnStyle = (activeCreating === 'collectionCreating') ? 'undelined' : '';
-  const cardBtnStyle = (activeCreating === 'cardCreating') ? 'undelined' : '';
+  const collectionBtnStyle = (activeCreating === 'collectionCreating') ? 'underlined' : '';
+  const cardBtnStyle = (activeCreating === 'cardCreating') ? 'underlined' : '';
 
   return (
     <div className="collection-creating-form-wrapper">

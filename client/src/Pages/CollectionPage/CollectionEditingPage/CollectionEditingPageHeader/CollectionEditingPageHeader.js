@@ -12,10 +12,6 @@ import { COLLECTION_DATA } from '../../../../store/constants';
 
 import './collectionEditingPageHeader.scss';
 
-// todo а у меня до сих пор нет реальных данных для коллекции?
-const collectionAuthor = '@skaipnik';
-const collectionRecentChangesDate= '09.08.2023 23:01';
-
 // todo - а хорошо ли использовать OAuth2Service в хедере? и хедер ли это?? или самостоятельный уже компонент...
 const CollectionEditingPageHeader = ({ collectionTitle = `Basic English default`, onStartTraining, collectionId: propsCollectionId}) => {
   const dispatch = useDispatch();

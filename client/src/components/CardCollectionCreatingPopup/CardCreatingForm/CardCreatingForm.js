@@ -15,7 +15,7 @@ import { authenticationAction } from '../../../store/actions/authenticationActio
 
 import './cardCreatingForm.scss';
 
-const CardCreatingForm = ({ isCollictionAddition, collectionIdForAddition }) => {
+const CardCreatingForm = ({ isCollectionAddition, collectionIdForAddition }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -88,7 +88,7 @@ const CardCreatingForm = ({ isCollictionAddition, collectionIdForAddition }) => 
           })
           
           //TODO возможно изменить запрос на получение конкретной коллекции дабы уменьшить запрос
-          if (isCollictionAddition && collectionsDataList.length) {
+          if (isCollectionAddition && collectionsDataList.length) {
             const collectionForAddition = collectionsDataList.find((collection) => collection.collectionId === collectionIdForAddition)
             setCollectionsDataList([collectionForAddition]);
           } else {

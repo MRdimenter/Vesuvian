@@ -12,6 +12,11 @@
   }
 }
 
-.undelined {
+.underlined {
   border-bottom: 1px solid black;
+}
+// todo .underlined встречается ещё в button.scss
+// todo создание нового класса для цвета не думаю, что хорошая идея underlined-white
+.underlined-white {
+  border-bottom: 1px solid white;
 }

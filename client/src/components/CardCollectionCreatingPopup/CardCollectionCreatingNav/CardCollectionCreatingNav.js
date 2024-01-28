@@ -2,10 +2,10 @@ import { Button } from '../../Button/Button';
 
 import './cardCollectionCreatingNav.scss';
 
-const CardCollectionCreatingNav = ({ activeCreating, setActiveCreating, isCollectionSetting, isCollictionAddition }) => {
+// TODO универсальный компонент возможно в компоненте whithNav
+const CardCollectionCreatingNav = ({ activeCreating, setActiveCreating, isCollectionSetting, isCollectionAddition }) => {
 
   const openCollectionCreating = (e) => {
-    console.log('e.target: ', e.nativeEvent);
    if (activeCreating !== 'collectionCreating') {
     setActiveCreating('collectionCreating');
    } 
@@ -17,8 +17,8 @@ const CardCollectionCreatingNav = ({ activeCreating, setActiveCreating, isCollec
     } 
    }
 
-  const collectionBtnStyle = (activeCreating === 'collectionCreating') ? 'undelined' : '';
-  const cardBtnStyle = (activeCreating === 'cardCreating') ? 'undelined' : '';
+  const collectionBtnStyle = (activeCreating === 'collectionCreating') ? 'underlined' : '';
+  const cardBtnStyle = (activeCreating === 'cardCreating') ? 'underlined' : '';
 
   return (
     <div className="card-collection-creating-nav">
@@ -27,11 +27,11 @@ const CardCollectionCreatingNav = ({ activeCreating, setActiveCreating, isCollec
           <Button 
             btnStyle='link'
             label='Коллекция'
-            id='asdasd'
+            id='asdasd' //TODO why? )
             action={openCollectionCreating}
-            textColor={isCollictionAddition ? 'grey' : 'black'}
+            textColor={isCollectionAddition ? 'grey' : 'black'}
             fontSize='big'
-            disabled={isCollictionAddition || isCollectionSetting}
+            disabled={isCollectionAddition || isCollectionSetting}
           />
         </div>
         <div className={`${cardBtnStyle}`}>
@@ -41,7 +41,7 @@ const CardCollectionCreatingNav = ({ activeCreating, setActiveCreating, isCollec
             action={openCardCreating}
             textColor={isCollectionSetting ? 'grey' : 'black'}
             fontSize='big'
-            disabled={isCollictionAddition || isCollectionSetting}
+            disabled={isCollectionAddition || isCollectionSetting}
           />
         </div>
       </div>

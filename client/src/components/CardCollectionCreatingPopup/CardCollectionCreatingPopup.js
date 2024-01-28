@@ -11,10 +11,10 @@ const CardCollectionCreatingPopup = () => {
   const { state } = location;
   
   const isCollectionSetting = state?.from === 'onCollectionSetting';
-  const isCollictionAddition = state?.from === 'CollectionEditingPageBody';
+  const isCollectionAddition = state?.from === 'CollectionEditingPageBody';
   const collectionIdForAddition = state?.collectionIdForAddition;
 
-  const [activeCreating, setActiveCreating] = useState(isCollictionAddition ? 'cardCreating' : 'collectionCreating')
+  const [activeCreating, setActiveCreating] = useState(isCollectionAddition ? 'cardCreating' : 'collectionCreating')
 
   const popupCreatingStyles = {
     cardCreating: 'card-creating-popup',
@@ -30,7 +30,7 @@ const CardCollectionCreatingPopup = () => {
         activeCreating={activeCreating}
         setActiveCreating={setActiveCreating}
         isCollectionSetting={isCollectionSetting}
-        isCollictionAddition={isCollictionAddition}
+        isCollectionAddition={isCollectionAddition}
       />
       {isCollectionCreatingForm && 
         <CollectionCreatingForm
@@ -40,7 +40,7 @@ const CardCollectionCreatingPopup = () => {
       }
       {isCardCreatingForm &&
         <CardCreatingForm
-          isCollictionAddition={isCollictionAddition}
+          isCollectionAddition={isCollectionAddition}
           collectionIdForAddition={collectionIdForAddition}
         />
       }
