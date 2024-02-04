@@ -5,6 +5,7 @@ import { IconButton } from '../Button/Button';
 import { Icon } from '../Icon/Icon';
 
 import './InputBox.scss';
+import { WhithCornerDeleteButton } from '../WhithCornerDeleteButton/WhithCornerDeleteButton';
 
 function validateInput(id, value, password) {
   const alphaExp = /^[a-zA-Zа-яА-Я-\s]+$/;
@@ -55,7 +56,21 @@ function inputValidation(event, password, onValidationChange) {
   }
 }
 
-const InputBox = ({ type = "text", className, labelContent, necessary, value, onChange, password = '', onValidationChange, hitnText, disable }) => {
+const InputWhithButton = ({ className, type, value, onChange, onFocus, onBlur, disable }) => {
+  return (
+    <input className="form-input"
+    id={className}
+    type={type}
+    value={value}
+    onChange={onChange}
+    onFocus={onFocus}
+    onBlur={onBlur}
+    disable={disable}
+  />
+  )
+}
+
+const InputBox = ({ type = "text", className, labelContent, necessary, value, onChange, password = '', onValidationChange, hitnText, disable, direction='columnInputBox' }) => {
   const [showInputHint, setShowInputHint] = useState(false);
 
   const inputHintToggle = () => {
@@ -64,26 +79,42 @@ const InputBox = ({ type = "text", className, labelContent, necessary, value, on
 
   const star = <span style={{ color: 'red' }}>*</span>
   return (
-    <div className={`inputBox ${className}`}>
-      <div className='inputBox-header'>
+    <div className={`inputBox ${className} ${direction}`}>
+      <div className='inputBox-label'>
         <label className="form-label small-text" htmlFor={className}>{labelContent} {necessary && star}</label>
-        <IconButton iconName={'interrogation-mark-in-circle'} width='12' height='12' onClick={inputHintToggle}/>
       </div>
+      <WhithCornerDeleteButton
+        deleteTag={inputHintToggle}
+        icon='interrogation-mark-in-circle'
+        iconFormat='png'
+      >
+        <input className="form-input"
+          id={className}
+          type={type}
+          value={value}
+          onChange={(e) => onChange(e)}
+          onFocus={(e) => clearWarn(e)}
+          onBlur={(e) => inputValidation(e, password, onValidationChange)}
+          disable={disable}
+        />
+      </WhithCornerDeleteButton>
       {showInputHint && <pre className='input-hint small-small-text'>{ hitnText }</pre>}
-      <input className="form-input"
-        id={className}
-        type={type}
-        value={value}
-        onChange={(e) => onChange(e)}
-        onFocus={(e) => clearWarn(e)}
-        onBlur={(e) => inputValidation(e, password, onValidationChange)}
-        disable={disable}
-      />
     </div>
   )
 }
+const inputWhithButton = ({ className, type, value, onChange, onFocus, onBlur, disable }) => {
+  <input className="form-input"
+    id={className}
+    type={type}
+    value={value}
+    onChange={onChange}
+    onFocus={onFocus}
+    onBlur={onBlur}
+    disable={disable}
+  />
+}
 
-const PasswordInputBox = ({ className, labelContent, necessary, value, onChange, password = '',onValidationChange, hitnText }) => {
+const PasswordInputBox = ({ className, labelContent, necessary, value, onChange, password = '',onValidationChange, hitnText, direction }) => {
   const [passwordType, setPasswordType] = useState('password');
 
   const passwordTypeToggle = () => {
@@ -96,9 +127,22 @@ const PasswordInputBox = ({ className, labelContent, necessary, value, onChange,
 
   return (
     <>
-      <EyePasswordButton passwordType={passwordType} onClick={passwordTypeToggle}/>
-      <InputBox className={className} type={passwordType} labelContent={labelContent} necessary={necessary} value={value} 
-        onChange={(e) => onChange(e.target.value)} password={password} onValidationChange={onValidationChange} hitnText={hitnText} />
+      <EyePasswordButton
+        passwordType={passwordType}
+        onClick={passwordTypeToggle}
+      />
+      <InputBox
+        className={className}
+        type={passwordType}
+        labelContent={labelContent}
+        necessary={necessary}
+        value={value} 
+        onChange={(e) => onChange(e.target.value)}
+        password={password}
+        onValidationChange={onValidationChange}
+        hitnText={hitnText}
+        direction={direction}
+      />
     </>   
   )
 }

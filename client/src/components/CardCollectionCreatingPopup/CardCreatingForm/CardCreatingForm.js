@@ -117,6 +117,7 @@ const CardCreatingForm = ({ isCollectionAddition, collectionIdForAddition }) => 
     fetchCurrentCustomerCollections();
   }, [dispatch, navigate]);
 
+  console.log('collectionsDataList: ', collectionsDataList);
   const options = collectionsDataList.map((collection) => collection.name);
 
   return (

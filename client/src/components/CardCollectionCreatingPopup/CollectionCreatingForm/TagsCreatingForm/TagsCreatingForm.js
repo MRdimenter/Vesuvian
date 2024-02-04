@@ -19,7 +19,7 @@ const TagsCreatingForm = ({tags, setNewTag, deleteTag}) => {
         {tags.map((tag, index) => {
           return  (
             //TODO bad key
-            <WhithCornerDeleteButton deleteTag={deleteTag}>
+            <WhithCornerDeleteButton deleteTag={deleteTag} icon='corner-delete-button'>
               <CardTag key={tag} tagText={tag} index={index}/>
             </WhithCornerDeleteButton>
           )
