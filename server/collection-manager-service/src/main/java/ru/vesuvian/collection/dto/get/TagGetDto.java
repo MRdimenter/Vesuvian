@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.vesuvian.collection.dto.TagDto;
 
 @Data
 @Builder
@@ -16,7 +17,7 @@ import lombok.NoArgsConstructor;
         name = "TagGetDto",
         description = "This object is a collection tag"
 )
-public class TagGetDto {
+public class TagGetDto implements TagDto {
     @Schema(description = "The ID of the collection associated with this tag. This field links the tag to a specific collection.")
     @JsonProperty("collection_id")
     private Long collectionId;
@@ -28,4 +29,5 @@ public class TagGetDto {
     @Schema(description = "The name of the tag. This is a descriptive label used for easy identification and categorization of the collection it is associated with.")
     @JsonProperty("name")
     private String tagName;
+
 }

@@ -108,7 +108,6 @@ public class CollectionService {
         customerCollectionRepository.deleteByCollectionId(collectionId);
         collectionTagRepository.deleteByCollectionId(collectionId);
         favoriteCollectionService.delete(uuid, collectionId);
-
         collectionRepository.deleteByCollectionId(collectionId);
     }
 }

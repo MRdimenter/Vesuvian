@@ -6,10 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.vesuvian.collection.dto.create.TagCreateDto;
 import ru.vesuvian.collection.dto.get.TagGetDto;
-import ru.vesuvian.collection.entity.Collection;
 import ru.vesuvian.collection.entity.Tag;
 import ru.vesuvian.collection.exception.CollectionNotFoundException;
-import ru.vesuvian.collection.exception.MaxTagsPerCollectionReachedException;
 import ru.vesuvian.collection.exception.TagNotFoundException;
 import ru.vesuvian.collection.mapping.get.TagGetMapper;
 import ru.vesuvian.collection.repository.CollectionRepository;
@@ -18,6 +16,7 @@ import ru.vesuvian.collection.repository.TagRepository;
 import ru.vesuvian.collection.security.AuthenticatedCustomerResolver;
 import ru.vesuvian.collection.service.collection.CollectionAccessService;
 import ru.vesuvian.collection.service.collection.CollectionTagService;
+import ru.vesuvian.collection.validation.TagValidator;
 
 import java.util.List;
 import java.util.UUID;
@@ -33,26 +32,22 @@ public class TagService {
     private final CollectionRepository collectionRepository;
     private final CollectionTagRepository collectionTagRepository;
     private final TagGetMapper tagGetMapper;
-
+    private final TagValidator validator;
 
     @Transactional
     public void createTagByCollectionId(Long collectionId, TagCreateDto tagCreateDto) {
         var uuid = authenticatedCustomerResolver.getAuthenticatedUUID();
         var collection = collectionAccessService.findCollectionWithTags(collectionId, uuid);
-
-        validateTagLimitPerCollection(collection);
-
+        validator.validate(collection, tagCreateDto);
         var tag = findOrCreateTag(tagCreateDto.getTagName());
-        collectionTagService.validateTagNotInCollection(collection, tag);
-
         var collectionTag = collectionTagService.createCollectionTag(collection, tag);
         collection.getCollectionTags().add(collectionTag);
         collectionRepository.save(collection);
     }
 
-    private Tag findOrCreateTag(String tagName) {
-        return tagRepository.findByNameExcludingCollections(tagName).orElseGet(() -> {
-            var tag = Tag.builder().name(tagName).build();
+    private Tag findOrCreateTag(String name) {
+        return tagRepository.findByNameExcludingCollections(name).orElseGet(() -> {
+            var tag = Tag.builder().name(name).build();
             tagRepository.save(tag);
             return tag;
         });
@@ -77,13 +72,6 @@ public class TagService {
     private List<Tag> retrieveTagsByCollectionIdAndCustomerId(Long collectionId, UUID customerId) {
         return tagRepository.findTagsByCustomerIdAndCollectionId(collectionId, customerId)
                 .orElseThrow(() -> new CollectionNotFoundException("Collection with ID " + collectionId + " not found"));
-    }
-
-    private void validateTagLimitPerCollection(Collection collection) {
-        int currentTagCount = collection.getCollectionTags().size();
-        if (currentTagCount >= 3) {
-            throw new MaxTagsPerCollectionReachedException("Maximum 3 tags allowed per collection.");
-        }
     }
 }
 

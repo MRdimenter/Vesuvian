@@ -11,6 +11,7 @@ import ru.vesuvian.collection.entity.Collection;
 import ru.vesuvian.collection.entity.CollectionTag;
 import ru.vesuvian.collection.entity.Tag;
 import ru.vesuvian.collection.repository.TagRepository;
+import ru.vesuvian.collection.validation.TagValidator;
 
 import java.util.Set;
 import java.util.UUID;
@@ -21,17 +22,20 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CollectionCreateMapper {
     private final TagRepository tagRepository;
+    private final TagValidator tagValidator;
 
     public Collection toEntity(CollectionCreateDto collectionDto, UUID customerUUID) {
         if (collectionDto == null) {
             return null;
         }
-        Collection collection = new Collection();
-        collection.setCreatorCustomerId(customerUUID);
-        collection.setName(collectionDto.getCollectionName());
-        collection.setIsPublic(collectionDto.getIsPublic());
-        collection.setDescription(collectionDto.getDescription());
-        collection.setNumberOfCards((collectionDto.getCards() != null) ? collectionDto.getCards().size() : 0);
+
+        Collection collection = Collection.builder()
+                .creatorCustomerId(customerUUID)
+                .name(collectionDto.getCollectionName())
+                .isPublic(collectionDto.getIsPublic())
+                .description(collectionDto.getDescription())
+                .numberOfCards((collectionDto.getCards() != null) ? collectionDto.getCards().size() : 0)
+                .build();
 
         // Если в DTO есть карточки, тогда маппим их и устанавливаем их коллекции
         if (collectionDto.getCards() != null && !collectionDto.getCards().isEmpty()) {
@@ -49,7 +53,6 @@ public class CollectionCreateMapper {
                     .map(this::toTagEntity)
                     .collect(Collectors.toSet());
 
-
             // TODO возникает проблема N+1 при создании коллекции с тегами
             Set<CollectionTag> collectionTags = tags.stream().map(tag -> {
                 var collectionTag = new CollectionTag();
@@ -57,8 +60,9 @@ public class CollectionCreateMapper {
                 collectionTag.setTag(tag);
                 return collectionTag;
             }).collect(Collectors.toSet());
-
+            
             collection.setCollectionTags(collectionTags);
+            tagValidator.validate(collection);
         }
 
         return collection;

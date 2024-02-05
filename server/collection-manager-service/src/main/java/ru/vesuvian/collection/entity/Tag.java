@@ -34,7 +34,8 @@ public class Tag {
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "tags_sequence")
+            generator = "tags_sequence"
+    )
     @Column(name = "id", nullable = false)
     @EqualsAndHashCode.Include
     @ToString.Include
