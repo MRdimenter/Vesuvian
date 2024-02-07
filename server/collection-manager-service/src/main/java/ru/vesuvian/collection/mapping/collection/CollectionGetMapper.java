@@ -4,10 +4,9 @@ package ru.vesuvian.collection.mapping.collection;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import ru.vesuvian.collection.dto.get.CollectionGetDto;
-import ru.vesuvian.collection.dto.get.TagGetDto;
+import ru.vesuvian.collection.dto.collection.CollectionGetDto;
 import ru.vesuvian.collection.entity.Collection;
-import ru.vesuvian.collection.entity.Tag;
+import ru.vesuvian.collection.mapping.tag.TagGetMapper;
 
 import java.util.stream.Collectors;
 
@@ -15,6 +14,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 public class CollectionGetMapper {
+    private final TagGetMapper tagGetMapper;
 
     public CollectionGetDto mapToDto(Collection collection, boolean isFavorite) {
         return CollectionGetDto.builder()
@@ -29,20 +29,10 @@ public class CollectionGetMapper {
                 .createdAt(collection.getCreatedAt())
                 .tagGetDtoList(collection.getCollectionTags()
                         .stream()
-                        .map(collectionTag -> mapToTag(collectionTag.getTag(), collection.getId()))
+                        .map(collectionTag -> tagGetMapper.mapTagToDto(collectionTag.getTag(), collection.getId()))
                         .collect(Collectors.toList())
                 )
                 .isFavorite(isFavorite)
                 .build();
     }
-
-    public TagGetDto mapToTag(Tag tag, Long collectionId) {
-        return TagGetDto.builder()
-                .collectionId(collectionId)
-                .tagId(tag.getId())
-                .tagName(tag.getName())
-                .build();
-    }
-
-
 }

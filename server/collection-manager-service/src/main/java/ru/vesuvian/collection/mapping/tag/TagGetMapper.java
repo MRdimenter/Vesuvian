@@ -3,7 +3,7 @@ package ru.vesuvian.collection.mapping.tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import ru.vesuvian.collection.dto.get.TagGetDto;
+import ru.vesuvian.collection.dto.tag.TagGetDto;
 import ru.vesuvian.collection.entity.Tag;
 
 @Component
@@ -18,5 +18,4 @@ public class TagGetMapper {
                 .tagName(tag.getName())
                 .build();
     }
-
 }

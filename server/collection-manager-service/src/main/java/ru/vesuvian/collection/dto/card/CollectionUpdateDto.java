@@ -1,4 +1,4 @@
-package ru.vesuvian.collection.dto.create;
+package ru.vesuvian.collection.dto.card;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -8,18 +8,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.vesuvian.collection.dto.CollectionDto;
 
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDateTime;
+
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(
-        name = "CollectionCreateDto",
-        description = "This is an object designed to create a collection"
+        name = "CollectionUpdateDto",
+        description = "This object is used to update the collection"
 )
-public class CollectionCreateDto implements CollectionDto {
+public class CollectionUpdateDto implements CollectionDto {
+
     @Schema(description = "The name of the collection.")
     @JsonProperty("name")
     private String collectionName;
@@ -28,19 +29,12 @@ public class CollectionCreateDto implements CollectionDto {
     @JsonProperty("is_public")
     private Boolean isPublic;
 
-    @Schema(description = "Indicates whether the collection is marked as a favorite by the user.")
-    @JsonProperty("is_favorite")
-    private Boolean isFavorite = false;
-
     @Schema(description = "A brief description of the collection.")
     @JsonProperty("description")
     private String description;
 
-    @Schema(description = "List of cards belonging to this collection")
-    @JsonProperty("cards")
-    private List<CardCreateDto> cards;
+    @Schema(description = "Indicates whether the collection is marked as a favorite by the user.")
+    @JsonProperty("is_favorite")
+    private Boolean isFavorite;
 
-    @Schema(description = "List of tags belonging to this collection")
-    @JsonProperty("tags")
-    private Set<TagCreateDto> tags;
 }

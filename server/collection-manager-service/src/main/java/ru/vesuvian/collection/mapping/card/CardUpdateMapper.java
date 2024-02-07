@@ -2,11 +2,8 @@ package ru.vesuvian.collection.mapping.card;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import ru.vesuvian.collection.dto.update.CardUpdateDto;
+import ru.vesuvian.collection.dto.card.CardUpdateDto;
 import ru.vesuvian.collection.entity.Card;
-
-import java.time.Clock;
-import java.time.LocalDateTime;
 
 @Slf4j
 @Component

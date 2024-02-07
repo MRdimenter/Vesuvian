@@ -1,4 +1,4 @@
-package ru.vesuvian.collection.dto.create;
+package ru.vesuvian.collection.dto.tag;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;

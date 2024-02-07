@@ -4,7 +4,7 @@ package ru.vesuvian.collection.mapping.card;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import ru.vesuvian.collection.dto.get.CardGetDto;
+import ru.vesuvian.collection.dto.card.CardGetDto;
 import ru.vesuvian.collection.entity.Card;
 
 @Component

@@ -1,4 +1,4 @@
-package ru.vesuvian.collection.dto.get;
+package ru.vesuvian.collection.dto.card;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;

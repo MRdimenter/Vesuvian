@@ -5,8 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.vesuvian.collection.dto.TagDto;
 import ru.vesuvian.collection.entity.Collection;
-import ru.vesuvian.collection.exception.MaxTagsPerCollectionReachedException;
-import ru.vesuvian.collection.exception.TagAlreadyExistsInCollectionException;
+import ru.vesuvian.collection.exception.tag.MaxTagsPerCollectionReachedException;
+import ru.vesuvian.collection.exception.tag.TagAlreadyExistsInCollectionException;
 import ru.vesuvian.collection.properties.TagProperties;
 
 import java.util.Set;

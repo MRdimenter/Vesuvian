@@ -8,12 +8,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.vesuvian.collection.dto.create.TagCreateDto;
-import ru.vesuvian.collection.dto.get.TagGetDto;
+import ru.vesuvian.collection.dto.tag.TagCreateDto;
+import ru.vesuvian.collection.dto.tag.TagGetDto;
 import ru.vesuvian.collection.service.tag.TagService;
 
 import java.util.List;
@@ -23,6 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @Tag(name = "Tag", description = "Tag management API")
+@Validated
 public class TagController {
 
     private final TagService tagService;
@@ -38,6 +41,7 @@ public class TagController {
     })
     public void createTagByCollectionId(
             @PathVariable
+            @Positive(message = "Collection ID must be a positive")
             @Parameter(
                     description = "ID of the collection to which the tag should be added",
                     required = true,
@@ -66,6 +70,7 @@ public class TagController {
     @GetMapping
     public List<TagGetDto> getTagByCollectionId(
             @PathVariable
+            @Positive(message = "Collection ID must be a positive")
             @Parameter(description = "ID of the collection to be retrieved",
                     name = "collectionId",
                     required = true,
@@ -87,12 +92,14 @@ public class TagController {
             })
     public void deleteTagByCollectionIdAndTagId(
             @PathVariable
+            @Positive(message = "Collection ID must be a positive")
             @Parameter(description = "ID of the collection where tag will be delete",
                     name = "collectionId",
                     required = true,
                     example = "1")
             Long collectionId,
             @PathVariable
+            @Positive(message = "Tag ID must be a positive")
             @Parameter(description = "ID of the tag to be deleted",
                     name = "tagId",
                     required = true,

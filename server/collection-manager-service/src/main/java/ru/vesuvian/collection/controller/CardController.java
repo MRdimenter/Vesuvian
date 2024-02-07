@@ -6,13 +6,15 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.vesuvian.collection.dto.create.CardCreateDto;
-import ru.vesuvian.collection.dto.get.CardListGetDto;
-import ru.vesuvian.collection.dto.update.CardUpdateDto;
+import ru.vesuvian.collection.dto.card.CardCreateDto;
+import ru.vesuvian.collection.dto.card.CardListGetDto;
+import ru.vesuvian.collection.dto.card.CardUpdateDto;
 import ru.vesuvian.collection.service.card.CardService;
 
 @RestController
@@ -20,10 +22,11 @@ import ru.vesuvian.collection.service.card.CardService;
 @RequiredArgsConstructor
 @Slf4j
 @Tag(name = "Card", description = "Cards management API")
+@Validated
 public class CardController {
     private final CardService cardService;
 
-    @GetMapping
+    @GetMapping(name = "getCardsByCollectionId")
     @Operation(summary = "Get cards by collection ID",
             description = "Get cards based on collection ID",
             responses = {
@@ -33,11 +36,14 @@ public class CardController {
                     @ApiResponse(responseCode = "403", description = "Forbidden action for the user", content = @Content(schema = @Schema(implementation = Void.class))),
             })
     public CardListGetDto getCardsByCollectionId(
-            @PathVariable
-            @Parameter(description = "ID of the collection to be retrieved",
+            @PathVariable(name = "collectionId")
+            @Positive(message = "Collection ID must be a positive")
+            @Parameter(
+                    description = "ID of the collection to be retrieved",
                     name = "collectionId",
                     required = true,
-                    example = "1")
+                    example = "1"
+            )
             Long collectionId) {
         return cardService.getCardsByCollectionId(collectionId);
     }
@@ -55,10 +61,13 @@ public class CardController {
             })
     public void createCardByCollectionId(
             @PathVariable
-            @Parameter(description = "ID of the collection where card will be added",
+            @Positive(message = "Collection ID must be a positive")
+            @Parameter(
+                    description = "ID of the collection where card will be added",
                     name = "collectionId",
                     required = true,
-                    example = "1")
+                    example = "1"
+            )
             Long collectionId,
             @RequestBody
             @Parameter(description = "Card data to be created", required = true)
@@ -82,16 +91,22 @@ public class CardController {
     )
     public void updateCardPartiallyByCollectionId(
             @PathVariable
-            @Parameter(description = "ID of the collection where card will be updated",
+            @Positive(message = "Collection ID must be a positive")
+            @Parameter(
+                    description = "ID of the collection where card will be updated",
                     name = "collectionId",
                     required = true,
-                    example = "1")
+                    example = "1"
+            )
             Long collectionId,
             @PathVariable
-            @Parameter(description = "ID of the card to be updated",
+            @Positive(message = "Card ID must be a positive")
+            @Parameter(
+                    description = "ID of the card to be updated",
                     name = "cardId",
                     required = true,
-                    example = "2")
+                    example = "2"
+            )
             Long cardId,
             @RequestBody
             @Parameter(description = "Updated card data", required = true)
@@ -112,16 +127,22 @@ public class CardController {
             })
     public void deleteCardByCollectionId(
             @PathVariable
-            @Parameter(description = "ID of the collection where card will be delete",
+            @Positive(message = "Collection ID must be a positive")
+            @Parameter(
+                    description = "ID of the collection where card will be delete",
                     name = "collectionId",
                     required = true,
-                    example = "1")
+                    example = "1"
+            )
             Long collectionId,
             @PathVariable
-            @Parameter(description = "ID of the card to be deleted",
+            @Positive(message = "Card ID must be a positive")
+            @Parameter(
+                    description = "ID of the card to be deleted",
                     name = "cardId",
                     required = true,
-                    example = "2")
+                    example = "2"
+            )
             Long cardId) {
         cardService.deleteCardByCollectionIdAndCardId(collectionId, cardId);
     }

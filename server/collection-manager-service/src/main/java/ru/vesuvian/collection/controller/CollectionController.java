@@ -6,13 +6,15 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.vesuvian.collection.dto.create.CollectionCreateDto;
-import ru.vesuvian.collection.dto.get.CollectionGetDto;
-import ru.vesuvian.collection.dto.update.CollectionUpdateDto;
+import ru.vesuvian.collection.dto.collection.CollectionCreateDto;
+import ru.vesuvian.collection.dto.collection.CollectionGetDto;
+import ru.vesuvian.collection.dto.card.CollectionUpdateDto;
 import ru.vesuvian.collection.enums.Privacy;
 import ru.vesuvian.collection.service.collection.CollectionService;
 
@@ -23,6 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @Tag(name = "Collection", description = "Collection management API")
+@Validated
 public class CollectionController {
     private final CollectionService collectionService;
 
@@ -54,6 +57,7 @@ public class CollectionController {
             })
     public CollectionGetDto getMyCollectionById(
             @PathVariable
+            @Positive(message = "Collection ID must be a positive")
             @Parameter(description = "ID of the collection to be retrieved",
                     name = "collectionId",
                     required = true,
@@ -92,6 +96,7 @@ public class CollectionController {
             })
     public void updateCollectionById(
             @PathVariable
+            @Positive(message = "Collection ID must be a positive")
             @Parameter(description = "ID of the collection to be updated", name = "collectionId", required = true, example = "700")
             Long collectionId,
 
@@ -117,6 +122,7 @@ public class CollectionController {
     public void updateCollectionPartiallyById(
             @PathVariable
             @Parameter(description = "ID of the collection to be updated", name = "collectionId", required = true, example = "789")
+            @Positive(message = "Collection ID must be a positive")
             Long collectionId,
             @RequestBody
             @Parameter(description = "Updated collection data with only the fields that need to be updated", required = true,
@@ -139,6 +145,7 @@ public class CollectionController {
             })
     public void deleteCollectionById(
             @PathVariable
+            @Positive(message = "Collection ID must be a positive")
             @Parameter(name = "collectionId", description = "ID of the collection to be deleted", required = true, example = "789")
             Long collectionId) {
         collectionService.deleteCollectionById(collectionId);

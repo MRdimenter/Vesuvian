@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.vesuvian.collection.dto.CollectionDto;
 import ru.vesuvian.collection.entity.Collection;
 import ru.vesuvian.collection.entity.CustomerFavoriteCollection;
-import ru.vesuvian.collection.exception.CollectionAlreadyFavoriteException;
+import ru.vesuvian.collection.exception.collection.CollectionAlreadyFavoriteException;
 import ru.vesuvian.collection.repository.CustomerFavoriteCollectionRepository;
 
 import java.util.HashSet;
@@ -19,7 +19,7 @@ import java.util.UUID;
 public class FavoriteCollectionService {
     private final CustomerFavoriteCollectionRepository customerFavoriteCollectionRepository;
 
-    public void handleFavoriteStatusUpdate(UUID customerId, Collection collection, CollectionDto collectionDto, boolean isNewCollection) {
+    public void handleFavoriteStatusUpdate(UUID uuid, Collection collection, CollectionDto collectionDto, boolean isNewCollection) {
         var isFavorite = collectionDto.getIsFavorite();
 
         if (isFavorite == null) {
@@ -28,37 +28,37 @@ public class FavoriteCollectionService {
 
         if (!isFavorite) {
             if (isNewCollection) return;
-            delete(customerId, collection.getId());
+            delete(uuid, collection.getId());
             return;
         }
 
-        addCollectionToFavoritesIfAbsent(customerId, collection);
+        addCollectionToFavoritesIfAbsent(uuid, collection);
     }
 
-    private void save(UUID customerId, Collection collection) {
+    private void save(UUID uuid, Collection collection) {
         CustomerFavoriteCollection customerFavoriteCollection = CustomerFavoriteCollection.builder()
-                .customerId(customerId)
+                .customerId(uuid)
                 .collection(collection)
                 .build();
 
         customerFavoriteCollectionRepository.save(customerFavoriteCollection);
     }
 
-    public void delete(UUID customerId, Long collectionId) {
-        customerFavoriteCollectionRepository.deleteByCustomerIdAndCollectionId(customerId, collectionId);
+    public void delete(UUID uuid, Long collectionId) {
+        customerFavoriteCollectionRepository.deleteByCustomerIdAndCollectionId(uuid, collectionId);
     }
 
-    private void addCollectionToFavoritesIfAbsent(UUID customerId, Collection collection) {
+    private void addCollectionToFavoritesIfAbsent(UUID uuid, Collection collection) {
         Long collectionId = collection.getId();
-        if (!isCollectionFavorite(customerId, collectionId)) {
-            save(customerId, collection);
+        if (!isCollectionFavorite(uuid, collectionId)) {
+            save(uuid, collection);
         } else {
             throw new CollectionAlreadyFavoriteException("The collection is already in your favorites");
         }
     }
 
-    public Set<Long> getCollectionIds(UUID customerId) {
-        return new HashSet<>(customerFavoriteCollectionRepository.findFavoriteCollectionIdsByCustomerId(customerId));
+    public Set<Long> getCollectionIds(UUID uuid) {
+        return new HashSet<>(customerFavoriteCollectionRepository.findFavoriteCollectionIdsByCustomerId(uuid));
     }
 
     public boolean isCollectionFavorite(UUID uuid, Long collectionId) {

@@ -1,4 +1,4 @@
-package ru.vesuvian.collection.dto.get;
+package ru.vesuvian.collection.dto.collection;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.vesuvian.collection.dto.CollectionDto;
+import ru.vesuvian.collection.dto.tag.TagGetDto;
 
 import java.time.LocalDateTime;
 import java.util.List;

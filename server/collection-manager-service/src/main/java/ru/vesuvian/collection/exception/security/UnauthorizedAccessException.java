@@ -1,4 +1,4 @@
-package ru.vesuvian.collection.exception;
+package ru.vesuvian.collection.exception.security;
 
 
 public class UnauthorizedAccessException extends RuntimeException {

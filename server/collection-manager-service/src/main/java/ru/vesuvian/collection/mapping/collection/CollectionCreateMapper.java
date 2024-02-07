@@ -3,15 +3,11 @@ package ru.vesuvian.collection.mapping.collection;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import ru.vesuvian.collection.dto.create.CollectionCreateDto;
+import ru.vesuvian.collection.dto.collection.CollectionCreateDto;
 import ru.vesuvian.collection.entity.Card;
 import ru.vesuvian.collection.entity.Collection;
-import ru.vesuvian.collection.entity.CollectionTag;
-import ru.vesuvian.collection.entity.Tag;
 import ru.vesuvian.collection.mapping.card.CardCreateMapper;
 import ru.vesuvian.collection.mapping.tag.TagCreateMapper;
-import ru.vesuvian.collection.properties.TagProperties;
-import ru.vesuvian.collection.validation.TagValidator;
 
 import java.util.Set;
 import java.util.UUID;

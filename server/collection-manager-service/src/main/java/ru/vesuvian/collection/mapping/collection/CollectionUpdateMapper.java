@@ -2,7 +2,7 @@ package ru.vesuvian.collection.mapping.collection;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import ru.vesuvian.collection.dto.update.CollectionUpdateDto;
+import ru.vesuvian.collection.dto.card.CollectionUpdateDto;
 import ru.vesuvian.collection.entity.Collection;
 
 @Slf4j

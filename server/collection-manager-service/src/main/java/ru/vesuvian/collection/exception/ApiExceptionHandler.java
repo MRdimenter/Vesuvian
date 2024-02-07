@@ -6,6 +6,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import ru.vesuvian.collection.exception.card.CardNotFoundException;
+import ru.vesuvian.collection.exception.collection.CollectionAlreadyFavoriteException;
+import ru.vesuvian.collection.exception.collection.CollectionNotFoundException;
+import ru.vesuvian.collection.exception.security.UnauthorizedAccessException;
+import ru.vesuvian.collection.exception.tag.MaxTagsPerCollectionReachedException;
+import ru.vesuvian.collection.exception.tag.TagAlreadyExistsInCollectionException;
+import ru.vesuvian.collection.exception.tag.TagNotFoundException;
 
 import java.time.ZonedDateTime;
 

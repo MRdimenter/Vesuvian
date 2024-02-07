@@ -4,12 +4,12 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.vesuvian.collection.dto.create.CollectionCreateDto;
-import ru.vesuvian.collection.dto.get.CollectionGetDto;
-import ru.vesuvian.collection.dto.update.CollectionUpdateDto;
+import ru.vesuvian.collection.dto.collection.CollectionCreateDto;
+import ru.vesuvian.collection.dto.collection.CollectionGetDto;
+import ru.vesuvian.collection.dto.card.CollectionUpdateDto;
 import ru.vesuvian.collection.entity.CustomerCollection;
 import ru.vesuvian.collection.enums.Privacy;
-import ru.vesuvian.collection.exception.CollectionNotFoundException;
+import ru.vesuvian.collection.exception.collection.CollectionNotFoundException;
 import ru.vesuvian.collection.mapping.collection.CollectionCreateMapper;
 import ru.vesuvian.collection.mapping.collection.CollectionGetMapper;
 import ru.vesuvian.collection.mapping.collection.CollectionUpdateMapper;
@@ -45,12 +45,12 @@ public class CollectionService {
         var collection = collectionCreateMapper.toEntity(collectionCreateDTO, uuid);
 
         collection = collectionRepository.save(collection);
-//
+
         var customerCollection = CustomerCollection.builder()
                 .collectionId(collection.getId())
                 .customerId(collection.getCreatorCustomerId())
                 .build();
-//
+
         customerCollectionRepository.save(customerCollection);
         favoriteCollectionService.handleFavoriteStatusUpdate(uuid, collection, collectionCreateDTO, true);
     }

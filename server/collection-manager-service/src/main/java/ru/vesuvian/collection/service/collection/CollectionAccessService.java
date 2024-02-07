@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.vesuvian.collection.entity.Collection;
-import ru.vesuvian.collection.exception.CollectionNotFoundException;
-import ru.vesuvian.collection.exception.UnauthorizedAccessException;
+import ru.vesuvian.collection.exception.collection.CollectionNotFoundException;
+import ru.vesuvian.collection.exception.security.UnauthorizedAccessException;
 import ru.vesuvian.collection.repository.CollectionRepository;
 
 import java.util.UUID;

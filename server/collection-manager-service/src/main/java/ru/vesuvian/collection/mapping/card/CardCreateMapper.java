@@ -1,7 +1,7 @@
 package ru.vesuvian.collection.mapping.card;
 
 import org.springframework.stereotype.Component;
-import ru.vesuvian.collection.dto.create.CardCreateDto;
+import ru.vesuvian.collection.dto.card.CardCreateDto;
 import ru.vesuvian.collection.entity.Card;
 
 @Component
