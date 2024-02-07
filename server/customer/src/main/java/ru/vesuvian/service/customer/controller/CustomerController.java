@@ -50,8 +50,8 @@ public class CustomerController {
     }
 
     @Operation(
-            summary = "Get customer by ID",
-            description = "Fetches the information of a customer by their ID."
+            summary = "Get customer by UUID",
+            description = "Fetches the information of a customer by their UUID."
     )
     @ApiResponses({
             @ApiResponse(
@@ -128,9 +128,9 @@ public class CustomerController {
     @PostMapping("/create")
     public void createCustomer(
             @Parameter(description = "Customer information", required = true)
-            @RequestBody CustomerRegistrationDto customer
+            @RequestBody CustomerRegistrationDto customerRegistrationDto
     ) {
-        customerService.createCustomer(customer);
+        customerService.createCustomer(customerRegistrationDto);
     }
 
     @Operation(
@@ -157,8 +157,8 @@ public class CustomerController {
     @PutMapping()
     public void updateCustomer(
             @Parameter(description = "Updated customer information", required = true)
-            @RequestBody CustomerUpdateDto customerRegistrationDto
+            @RequestBody CustomerUpdateDto customerUpdateDto
     ) {
-        customerService.updateCustomer(customerRegistrationDto);
+        customerService.updateCustomer(customerUpdateDto);
     }
 }
