@@ -74,7 +74,7 @@ public class CustomerController {
     })
     @GetMapping("/{customerId}")
     public CustomerGetDto getCustomerById(
-            @Parameter(description = "The ID of the customer to retrieve", required = true, name = "customerId")
+            @Parameter(description = "The UUID of the customer to retrieve", required = true, name = "customerId")
             @PathVariable String customerId
     ) {
         return customerService.getCustomerById(customerId);
