@@ -19,7 +19,7 @@ import java.util.UUID;
 public class FavoriteCollectionService {
     private final CustomerFavoriteCollectionRepository customerFavoriteCollectionRepository;
 
-    public void handleFavoriteStatusUpdate(UUID customerId, Collection collection, CollectionDto collectionDto) {
+    public void handleFavoriteStatusUpdate(UUID customerId, Collection collection, CollectionDto collectionDto, boolean isNewCollection) {
         var isFavorite = collectionDto.getIsFavorite();
 
         if (isFavorite == null) {
@@ -27,6 +27,7 @@ public class FavoriteCollectionService {
         }
 
         if (!isFavorite) {
+            if (isNewCollection) return;
             delete(customerId, collection.getId());
             return;
         }

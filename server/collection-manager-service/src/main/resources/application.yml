@@ -60,3 +60,7 @@ springdoc:
 logging:
   level:
     liquibase: DEBUG
+
+#Tag
+tag:
+  max-tags-in-collection: 3

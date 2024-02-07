@@ -10,10 +10,11 @@ import ru.vesuvian.collection.dto.update.CardUpdateDto;
 import ru.vesuvian.collection.entity.Card;
 import ru.vesuvian.collection.exception.CardNotFoundException;
 import ru.vesuvian.collection.exception.CollectionNotFoundException;
-import ru.vesuvian.collection.mapping.create.CollectionCreateMapper;
-import ru.vesuvian.collection.mapping.get.CardGetMapper;
-import ru.vesuvian.collection.mapping.get.CardListGetDtoMapper;
-import ru.vesuvian.collection.mapping.update.CardUpdateMapper;
+import ru.vesuvian.collection.mapping.card.CardCreateMapper;
+import ru.vesuvian.collection.mapping.collection.CollectionCreateMapper;
+import ru.vesuvian.collection.mapping.card.CardGetMapper;
+import ru.vesuvian.collection.mapping.card.CardListGetDtoMapper;
+import ru.vesuvian.collection.mapping.card.CardUpdateMapper;
 import ru.vesuvian.collection.repository.CardRepository;
 import ru.vesuvian.collection.security.AuthenticatedCustomerResolver;
 import ru.vesuvian.collection.service.collection.CollectionAccessService;
@@ -32,6 +33,7 @@ public class CardService {
     private final CollectionCreateMapper collectionCreateMapper;
     private final CardUpdateMapper cardUpdateMapper;
     private final CardListGetDtoMapper cardListGetDtoMapper;
+    private final CardCreateMapper cardCreateMapper;
 
     public CardListGetDto getCardsByCollectionId(Long collectionId) {
         var uuid = authenticatedCustomerResolver.getAuthenticatedUUID();
@@ -47,7 +49,7 @@ public class CardService {
     public void createCardByCollectionId(Long collectionId, CardCreateDto cardCreateDto) {
         var uuid = authenticatedCustomerResolver.getAuthenticatedUUID();
         var collection = collectionAccessService.findCollection(collectionId, uuid);
-        var card = collectionCreateMapper.toCardEntity(cardCreateDto);
+        var card = cardCreateMapper.toCardEntity(cardCreateDto);
 
         collection.incrementNumberOfCards();
 

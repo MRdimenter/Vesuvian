@@ -9,7 +9,7 @@ import ru.vesuvian.collection.dto.get.TagGetDto;
 import ru.vesuvian.collection.entity.Tag;
 import ru.vesuvian.collection.exception.CollectionNotFoundException;
 import ru.vesuvian.collection.exception.TagNotFoundException;
-import ru.vesuvian.collection.mapping.get.TagGetMapper;
+import ru.vesuvian.collection.mapping.tag.TagGetMapper;
 import ru.vesuvian.collection.repository.CollectionRepository;
 import ru.vesuvian.collection.repository.CollectionTagRepository;
 import ru.vesuvian.collection.repository.TagRepository;

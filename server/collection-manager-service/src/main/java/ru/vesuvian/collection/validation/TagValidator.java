@@ -7,6 +7,7 @@ import ru.vesuvian.collection.dto.TagDto;
 import ru.vesuvian.collection.entity.Collection;
 import ru.vesuvian.collection.exception.MaxTagsPerCollectionReachedException;
 import ru.vesuvian.collection.exception.TagAlreadyExistsInCollectionException;
+import ru.vesuvian.collection.properties.TagProperties;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 public class TagValidator implements Validator<Collection, TagDto> {
+    private final TagProperties tagProperties;
 
     @Override
     public void validate(Collection collection) {
@@ -23,18 +25,23 @@ public class TagValidator implements Validator<Collection, TagDto> {
 
     @Override
     public void validate(Collection collection, TagDto tag) {
-        validateTagNotInCollection(collection, tag);
+        validateTagExistInCollection(collection, tag);
         validateTagLimitPerCollection(collection);
     }
 
     private void validateTagLimitPerCollection(Collection collection) {
         int currentTagCount = collection.getCollectionTags().size();
-        if (currentTagCount >= 3) {
-            throw new MaxTagsPerCollectionReachedException("Maximum 3 tags allowed per collection.");
+        if (currentTagCount > tagProperties.getMaxTagsInCollection()) {
+            throw new MaxTagsPerCollectionReachedException(
+                    String.format(
+                            "Maximum %d tags allowed per collection.",
+                            tagProperties.getMaxTagsInCollection()
+                    )
+            );
         }
     }
 
-    private void validateTagNotInCollection(Collection collection, TagDto tag) {
+    private void validateTagExistInCollection(Collection collection, TagDto tag) {
         Set<String> existingTagIds = getExistingTagsNameInCollection(collection);
         if (existingTagIds.contains(tag.getTagName())) {
             throw new TagAlreadyExistsInCollectionException("Tag already exists in the collection.");
@@ -46,6 +53,4 @@ public class TagValidator implements Validator<Collection, TagDto> {
                 .map(collectionTag -> collectionTag.getTag().getName())
                 .collect(Collectors.toSet());
     }
-
-
 }

@@ -10,9 +10,9 @@ import ru.vesuvian.collection.dto.update.CollectionUpdateDto;
 import ru.vesuvian.collection.entity.CustomerCollection;
 import ru.vesuvian.collection.enums.Privacy;
 import ru.vesuvian.collection.exception.CollectionNotFoundException;
-import ru.vesuvian.collection.mapping.create.CollectionCreateMapper;
-import ru.vesuvian.collection.mapping.get.CollectionGetMapper;
-import ru.vesuvian.collection.mapping.update.CollectionUpdateMapper;
+import ru.vesuvian.collection.mapping.collection.CollectionCreateMapper;
+import ru.vesuvian.collection.mapping.collection.CollectionGetMapper;
+import ru.vesuvian.collection.mapping.collection.CollectionUpdateMapper;
 import ru.vesuvian.collection.repository.CardRepository;
 import ru.vesuvian.collection.repository.CollectionRepository;
 import ru.vesuvian.collection.repository.CollectionTagRepository;
@@ -45,14 +45,14 @@ public class CollectionService {
         var collection = collectionCreateMapper.toEntity(collectionCreateDTO, uuid);
 
         collection = collectionRepository.save(collection);
-
+//
         var customerCollection = CustomerCollection.builder()
                 .collectionId(collection.getId())
                 .customerId(collection.getCreatorCustomerId())
                 .build();
-
+//
         customerCollectionRepository.save(customerCollection);
-        favoriteCollectionService.handleFavoriteStatusUpdate(uuid, collection, collectionCreateDTO);
+        favoriteCollectionService.handleFavoriteStatusUpdate(uuid, collection, collectionCreateDTO, true);
     }
 
     public CollectionGetDto getMyCollectionById(Long collectionId) {
@@ -85,7 +85,7 @@ public class CollectionService {
         var collection = collectionAccessService.findCollection(collectionId, uuid);
 
         collectionUpdateMapper.updateCollectionForPut(collection, collectionUpdateDto);
-        favoriteCollectionService.handleFavoriteStatusUpdate(uuid, collection, collectionUpdateDto);
+        favoriteCollectionService.handleFavoriteStatusUpdate(uuid, collection, collectionUpdateDto, false);
         collectionRepository.save(collection);
     }
 
@@ -95,7 +95,7 @@ public class CollectionService {
         var collection = collectionAccessService.findCollection(collectionId, uuid);
 
         collectionUpdateMapper.updateCollectionForPatch(collection, collectionUpdateDto);
-        favoriteCollectionService.handleFavoriteStatusUpdate(uuid, collection, collectionUpdateDto);
+        favoriteCollectionService.handleFavoriteStatusUpdate(uuid, collection, collectionUpdateDto, false);
         collectionRepository.save(collection);
     }
 

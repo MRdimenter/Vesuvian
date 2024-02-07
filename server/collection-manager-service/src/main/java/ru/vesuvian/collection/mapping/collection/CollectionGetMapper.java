@@ -1,4 +1,4 @@
-package ru.vesuvian.collection.mapping.get;
+package ru.vesuvian.collection.mapping.collection;
 
 
 import lombok.RequiredArgsConstructor;

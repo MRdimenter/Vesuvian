@@ -1,4 +1,4 @@
-package ru.vesuvian.collection.mapping.get;
+package ru.vesuvian.collection.mapping.tag;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

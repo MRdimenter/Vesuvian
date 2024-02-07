@@ -1,4 +1,4 @@
-package ru.vesuvian.collection.mapping.update;
+package ru.vesuvian.collection.mapping.collection;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
