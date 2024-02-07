@@ -15,19 +15,23 @@ public interface TagRepository extends JpaRepository<Tag, Integer> {
     @Query("SELECT new Tag(t.id, t.name) FROM Tag t WHERE t.name = :tagName")
     Optional<Tag> findByNameExcludingCollections(@Param("tagName") String tagName);
 
-    @Query("SELECT t FROM Tag t " +
-            "JOIN CollectionTag ct ON t.id = ct.tag.id " +
-            "JOIN ct.collection c " +
-            "JOIN CustomerCollection cc ON c.id = cc.collection.id " +
-            "WHERE cc.customerId = :customerId AND c.id = :collectionId")
+    @Query("""
+            SELECT t FROM Tag t
+            JOIN CollectionTag ct ON t.id = ct.tag.id
+            JOIN ct.collection c
+            JOIN CustomerCollection cc ON c.id = cc.collection.id
+            WHERE cc.customerId = :customerId AND c.id = :collectionId
+            """)
     Optional<List<Tag>> findTagsByCustomerIdAndCollectionId(@Param("collectionId") Long collectionId,
                                                             @Param("customerId") UUID customerId);
 
-    @Query("SELECT t FROM Tag t " +
-            "JOIN CollectionTag ct ON t.id = ct.tag.id " +
-            "JOIN ct.collection c " +
-            "JOIN CustomerCollection cc ON c.id = cc.collection.id " +
-            "WHERE cc.customerId = :customerId AND c.id = :collectionId AND t.id = :tagId")
+    @Query("""
+            SELECT t FROM Tag t
+            JOIN CollectionTag ct ON t.id = ct.tag.id
+            JOIN ct.collection c
+            JOIN CustomerCollection cc ON c.id = cc.collection.id
+            WHERE cc.customerId = :customerId AND c.id = :collectionId AND t.id = :tagId
+            """)
     Optional<Tag> findTagByCustomerIdAndCollectionIdAndTagId(@Param("collectionId") Long collectionId,
                                                              @Param("customerId") UUID customerId,
                                                              @Param("tagId") Integer tagId

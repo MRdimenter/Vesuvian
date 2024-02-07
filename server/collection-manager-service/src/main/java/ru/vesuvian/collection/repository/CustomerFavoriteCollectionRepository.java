@@ -13,27 +13,32 @@ import java.util.UUID;
 
 public interface CustomerFavoriteCollectionRepository extends JpaRepository<CustomerFavoriteCollection, Long> {
 
-    @Query("SELECT cfc FROM CustomerFavoriteCollection cfc " +
-            "WHERE cfc.customerId = :customerId " +
-            "AND cfc.collection.id = :collectionId")
+    @Query("""
+            SELECT cfc FROM CustomerFavoriteCollection cfc
+            WHERE cfc.customerId = :customerId
+            AND cfc.collection.id = :collectionId
+            """)
     Optional<CustomerFavoriteCollection> findByCustomerIdAndCollectionId(
             @Param("customerId") String customerId,
             @Param("collectionId") Long collectionId
     );
 
-    @Query("SELECT cfc.collection.id " +
-            "FROM CustomerFavoriteCollection cfc " +
-            "WHERE cfc.customerId = :customerId")
+    @Query("""
+            SELECT cfc.collection.id
+            FROM CustomerFavoriteCollection cfc
+            WHERE cfc.customerId = :customerId
+            """)
     List<Long> findFavoriteCollectionIdsByCustomerId(@Param("customerId") UUID customerId);
 
     boolean existsByCustomerIdAndCollectionId(UUID customerId, Long collection_id);
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM CustomerFavoriteCollection cfc " +
-            "WHERE cfc.customerId = :customerId " +
-            "AND cfc.collection.id = :collectionId"
-    )
+    @Query("""
+            DELETE FROM CustomerFavoriteCollection cfc
+            WHERE cfc.customerId = :customerId
+            AND cfc.collection.id = :collectionId
+            """)
     void deleteByCustomerIdAndCollectionId(
             @Param("customerId") UUID customerId,
             @Param("collectionId") Long collectionId

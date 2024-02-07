@@ -17,22 +17,26 @@ import java.util.UUID;
 @Repository
 public interface CustomerCollectionRepository extends JpaRepository<CustomerCollection, Long>, JpaSpecificationExecutor<CustomerCollection> {
 
-    @Query("SELECT cc FROM CustomerCollection cc " +
-            "JOIN FETCH cc.collection c " +
-            "LEFT JOIN FETCH c.collectionTags ct " +
-            "LEFT JOIN FETCH ct.tag " +
-            "WHERE cc.customerId = :customerId " +
-            "AND cc.collectionId = :collectionId")
+    @Query("""
+            SELECT cc FROM CustomerCollection cc
+            JOIN FETCH cc.collection c
+            LEFT JOIN FETCH c.collectionTags ct
+            LEFT JOIN FETCH ct.tag
+            WHERE cc.customerId = :customerId
+            AND cc.collectionId = :collectionId
+            """)
     Optional<CustomerCollection> findByCustomerIdAndCollectionId(
             @Param("customerId") UUID customerId,
             @Param("collectionId") Long collectionId
     );
 
-    @Query("SELECT cc FROM CustomerCollection cc " +
-            "JOIN FETCH cc.collection c " +
-            "LEFT JOIN FETCH c.collectionTags ct " +
-            "LEFT JOIN FETCH ct.tag " +
-            "WHERE cc.customerId = :customerId")
+    @Query("""
+            SELECT cc FROM CustomerCollection cc
+            JOIN FETCH cc.collection c
+            LEFT JOIN FETCH c.collectionTags ct
+            LEFT JOIN FETCH ct.tag
+            WHERE cc.customerId = :customerId
+            """)
     List<CustomerCollection> findByCustomerId(@Param("customerId") UUID customerId);
 
     @Modifying

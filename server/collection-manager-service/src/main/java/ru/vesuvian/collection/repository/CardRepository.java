@@ -15,20 +15,22 @@ import java.util.UUID;
 
 @Repository
 public interface CardRepository extends JpaRepository<Card, Long> {
-    @Query("SELECT c FROM Card c " +
-            "JOIN CustomerCollection cc ON cc.collectionId = c.collection.id " +
-            "WHERE c.collection.id = :collectionId " +
-            "AND cc.customerId = :customerId " +
-            "ORDER BY c.orderNumber")
+    @Query(""" 
+            SELECT c FROM Card c
+            JOIN CustomerCollection cc ON cc.collectionId = c.collection.id
+            WHERE c.collection.id = :collectionId
+            AND cc.customerId = :customerId
+            ORDER BY c.orderNumber
+            """)
     Optional<List<Card>> findCardsByCollectionIdAndCustomerIdOrderByOrderNumber(@Param("collectionId") Long collectionId,
                                                                                 @Param("customerId") UUID customerId);
-
-
-    @Query("SELECT c FROM Card c " +
-            "JOIN CustomerCollection cc ON cc.collectionId = c.collection.id " +
-            "WHERE c.collection.id = :collectionId " +
-            "AND cc.customerId = :customerId " +
-            "AND c.id = :cardId"
+    @Query("""
+            SELECT c FROM Card c
+            JOIN CustomerCollection cc ON cc.collectionId = c.collection.id
+            WHERE c.collection.id = :collectionId
+            AND cc.customerId = :customerId
+            AND c.id = :cardId
+            """
     )
     Optional<Card> findCardByCollectionIdAndCustomerIdAndCardId(@Param("collectionId") Long collectionId,
                                                                 @Param("customerId") UUID customerId,
@@ -38,5 +40,4 @@ public interface CardRepository extends JpaRepository<Card, Long> {
     @Transactional
     @Query("DELETE FROM Card c WHERE c.collection.id = :collectionId")
     void deleteByCollectionId(@Param("collectionId") Long collectionId);
-
 }

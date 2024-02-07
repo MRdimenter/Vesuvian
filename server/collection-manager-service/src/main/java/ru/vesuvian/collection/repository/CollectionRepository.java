@@ -15,10 +15,12 @@ public interface CollectionRepository extends JpaRepository<Collection, Long> {
     @Query("SELECT c FROM Collection c JOIN FETCH c.cards card WHERE c.id = :collectionId AND card.id = :cardId")
     Optional<Collection> findByIdWithCards(@Param("collectionId") Long collectionId, @Param("cardId") Long cardId);
 
-    @Query("SELECT c FROM Collection c " +
-            "LEFT JOIN FETCH c.collectionTags ct " +
-            "LEFT JOIN FETCH ct.tag " +
-            "WHERE c.id = :collectionId")
+    @Query("""
+            SELECT c FROM Collection c
+            LEFT JOIN FETCH c.collectionTags ct
+            LEFT JOIN FETCH ct.tag
+            WHERE c.id = :collectionId
+            """)
     Optional<Collection> findByIdWithTags(@Param("collectionId") Long collectionId);
 
     @Modifying
