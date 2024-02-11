@@ -1,5 +1,6 @@
 import { Button } from '../../../../../components/Button/Button';
 import { InputBox } from '../../../../../components/Forms/InputBox';
+
 import './personDataFormEmail.scss';
 
 const PersonDataFormEmail = ({ className, labelContent, necessary, value, onChange, onValidationChange, hitnText, direction }) => {
@@ -17,10 +18,10 @@ const PersonDataFormEmail = ({ className, labelContent, necessary, value, onChan
         value={value} 
         onChange={onChange}
         onValidationChange={onValidationChange}
-        hitnText={hitnText}
+        hitnText={null}
         direction={direction}
       />
-      <span style={{color: 'green'}}>Подтверждён</span>
+      {/* <span style={{color: 'green'}}>Подтверждён</span> */}
       <Button
           btnStyle='link'
           label='Изменить E-mail'

@@ -41,6 +41,7 @@ const CollectionCreatingForm = ({ isCollectionSetting, collectionIdForAddition})
     e.preventDefault();
     console.log('submitCollectionCreation');
     //TODO попробую сначала так, а потом через Action
+    // todo вынести из субмита пожалуй - это что ж каждый раз будет oauthService и apiService создаваться?
     const oauthService = new OAuth2Service();
     const apiService = new ApiService(oauthService);
 
