@@ -158,13 +158,10 @@ const CardCreatingForm = ({ isCollectionAddition, collectionIdForAddition }) => 
             initSelectedValue={selectedCollectionName}
             onChange={handleSelectChange}
           />
-
           <div className="attaching-image" onClick={attachingImage}>
             <Icon iconName='paperclip-svg' iconFormat='svg' width="25" height="25" />
             <span className='attaching-image-text'>Прикрепить изображение</span>
           </div>
-
-          
         </div>
       </div>
 

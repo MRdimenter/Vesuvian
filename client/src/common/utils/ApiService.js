@@ -151,6 +151,8 @@ class ApiService {
     //return await fetch(url, requestOptions);
   }
 
+
+
   withId = (request, baseURL, path, id) => {
     const modifiedPath = `${path}/${id}`;
     return request(baseURL, modifiedPath);
@@ -357,6 +359,21 @@ class ApiService {
     //return this.getResourseByAuth(CURRENT_CUSTOMER_URL);
   }
 
+  //TODO пора бы разделять API на сущности: CustomerAPI, CollectionAPI etc.
+  async putCustomerData(customerData) {
+    // todo rename
+    const fullCollectionURL = `${CUSTOMERS_URL}`;
+    
+    try {
+      const response = this.fetchResourseByAuth(METHOD.PUT, BASE_URL, fullCollectionURL, customerData)
+      console.log('putCustomerData response: ', response);
+      return response;
+    } catch (error) {
+      console.log('необработанная ошибка putCustomerData', error);
+      throw error; // Пробросываем ошибку для обработки её компонентом, вызывающим метод getAllCustomers
+    }
+    //return this.getResourseByAuth(CURRENT_CUSTOMER_URL);
+  }
 }
 
 export {

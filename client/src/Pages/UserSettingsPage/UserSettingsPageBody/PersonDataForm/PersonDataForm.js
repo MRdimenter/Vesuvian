@@ -8,6 +8,13 @@ import './personDataForm.scss'
 import { PersonDataFormPassword } from './PersonDataFormPassword/PersonDataFormPassword';
 import { PersonDataFormEmail } from './PersonDataFormEmail/PersonDataFormEmail';
 import { CollectionSelection } from '../../../../components/CardCollectionCreatingPopup/CardCreatingForm/CollectionSelection/CollectionSelection';
+import { Button } from '../../../../components/Button/Button';
+import { OAuth2Service } from '../../../../common/utils/OAuth2Service';
+import { ApiService } from '../../../../common/utils/ApiService';
+import { appendCurrentCustomerDataAction } from '../../../../store/actions/appendCurrentCustomerDataAction';
+
+// todo откуда берутся два похожих поля currentCustomerData и customerDataState?
+// todo думается, одно нужно ликвидировать (попробовать, но возможно они из разных источников и разные по актуальности)
 
 const collectionsDataListDefault = [
   {
@@ -27,11 +34,13 @@ const collectionsDataListDefault = [
 const PersonDataForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const state = useSelector((state) => state)
+  const customerDataState = useSelector((state) => state.customerDataState)
 
-  const [firstName, setFirstName] = useState('servertest');
-  const [lastName, setLastName] = useState('servertest');
-  const [email, setEmail] = useState('servertest@test.com');
-  const [username, setUsername] = useState('servertest');
+  const [firstName, setFirstName] = useState(customerDataState.customerData.firstName);
+  const [lastName, setLastName] = useState(customerDataState.customerData.lastName);
+  const [email, setEmail] = useState(customerDataState.customerData.email);
+  const [username, setUsername] = useState(customerDataState.customerData.userName);
   const [password, setPassword] = useState('servertest');
   const [confirmPassword, setConfirmPassword] = useState('servertest');
   
@@ -60,7 +69,10 @@ const PersonDataForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const isFormValid = Object.values(validationData).every((isValid) => isValid);
-    
+    // todo вынести из субмита пожалуй - это что ж каждый раз будет oauthService и apiService создаваться?
+    const oauthService = new OAuth2Service();
+    const apiService = new ApiService(oauthService);
+
     setIsIncorrectInputs(false);
     setIsOccupiedEmail(false);
 
@@ -68,23 +80,21 @@ const PersonDataForm = () => {
       const credentials = {
         "firstName": firstName,
         "lastName": lastName,
+        // ждем обновления запроса (пока что запрос не позволяет обновлять это поле)
+        // "username": username,
+        // будет обновляться отдельным запросом?
         "email": email,
-        "enabled": true,
-        "username": username,
-        "password": password
+        // нужно уточнить что это за поле
+        // "enabled": true,
+        // обновляется отдельным запросом
+        // "password": password
       }
 
-      try {
-        const response = await postRegistration(REGISTR_URL_PATH, credentials)
-        if (response.status === 201) {
-          // TODO переход на страничку "Пользователь {username} успешно зарегестрирован", кнопка перехода на login
-          navigate("/login");
-        }
-        if (response.status === 409) {
-          setIsOccupiedEmail(true);
-        }
-      } catch (error) {
-        console.log('error: ', error);
+      const response = await apiService.putCustomerData(credentials);
+      console.log('putCreateCollection: response: ', response);
+      // если данные успешно обновились на сервере - обновить CustomerData в приложении
+      if (response) {
+        dispatch(appendCurrentCustomerDataAction());
       }
     } else {
       console.log('else');
@@ -94,6 +104,8 @@ const PersonDataForm = () => {
   }
 
   const options = collectionsDataList.map((collection) => collection.name);
+
+  const languageOptions = ['Русский']
 
   useEffect(() => {
     const { firstName, lastName, email, userName} = currentCustomerData;
@@ -142,6 +154,16 @@ const PersonDataForm = () => {
         direction='rowInputBox'
       />
       <InputBox
+        className="username"
+        labelContent="Никнейм"
+        necessary={true}
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        onValidationChange={handleValidationChange}
+        hitnText={usernameNameHitnText}
+        direction='rowInputBox'
+      />
+      <PersonDataFormEmail
         className="email"
         type="email"
         labelContent="Email"
@@ -150,16 +172,6 @@ const PersonDataForm = () => {
         onChange={(e) => setEmail(e.target.value)}
         onValidationChange={handleValidationChange}
         hitnText={emailNameHitnText}
-        direction='rowInputBox'
-      />
-      <PersonDataFormEmail
-        className="username"
-        labelContent="Никнейм"
-        necessary={true}
-        value={username} 
-        onChange={(e) => setUsername(e.target.value)}
-        onValidationChange={handleValidationChange}
-        hitnText={usernameNameHitnText}
         direction='rowInputBox'
       />
       <PersonDataFormPassword
@@ -173,11 +185,27 @@ const PersonDataForm = () => {
         direction='rowInputBox'
       />
       <CollectionSelection
-        label='Выбрать коллекцию'
+        label='Видимость'
         options={options}
         initSelectedValue={selectedCollectionName}
         onChange={handleSelectChange}
+        direction='row'
+        selectWidth={'159px'}
       />
+      <div className="person-data-form-common">
+        <span className='person-data-form-common-label btn-link-font-big'>Общие</span>
+        <CollectionSelection
+          label='Язык'
+          options={languageOptions}
+          initSelectedValue={selectedCollectionName}
+          onChange={handleSelectChange}
+          direction='row'
+          selectWidth={'159px'}
+        />
+      </div>
+      <div className='person-data-form-button'>
+        <Button btnStyle='btn' label='СОХРАНИТЬ ИЗМЕНЕНИЯ' action={e => handleSubmit(e)} />
+      </div>
     </form>
   )
 }

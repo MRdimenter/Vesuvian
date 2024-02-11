@@ -1,7 +1,28 @@
 .person-data-form {
   border: 1 px solid salmon;
+  margin-top: 30px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 
   .first-name-setting {
     border: 1px solid white;
+  }
+
+  .person-data-form-common {
+    // margin-top: 30px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    .person-data-form-common-label {
+      border-bottom: 1px solid white;
+    }
+  }
+
+  .person-data-form-button {
+    margin-top: 95px;
   }
 }

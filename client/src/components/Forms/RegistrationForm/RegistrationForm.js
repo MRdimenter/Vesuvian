@@ -61,6 +61,7 @@ const RegistrationForm = () => {
         "firstName": firstName,
         "lastName": lastName,
         "email": email,
+        // todo удочнить за что отвечает этот "enabled": true
         "enabled": true,
         "username": username,
         "password": password
