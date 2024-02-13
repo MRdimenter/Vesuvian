@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import ru.vesuvian.collection.entity.Card;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -22,19 +21,8 @@ public interface CardRepository extends JpaRepository<Card, Long> {
             AND cc.customerId = :customerId
             ORDER BY c.orderNumber
             """)
-    Optional<List<Card>> findCardsByCollectionIdAndCustomerIdOrderByOrderNumber(@Param("collectionId") Long collectionId,
-                                                                                @Param("customerId") UUID customerId);
-    @Query("""
-            SELECT c FROM Card c
-            JOIN CustomerCollection cc ON cc.collectionId = c.collection.id
-            WHERE c.collection.id = :collectionId
-            AND cc.customerId = :customerId
-            AND c.id = :cardId
-            """
-    )
-    Optional<Card> findCardByCollectionIdAndCustomerIdAndCardId(@Param("collectionId") Long collectionId,
-                                                                @Param("customerId") UUID customerId,
-                                                                @Param("cardId") Long cardId);
+    List<Card> findCardsByCollectionIdAndCustomerId(@Param("collectionId") Long collectionId,
+                                                    @Param("customerId") UUID customerId);
 
     @Modifying
     @Transactional
