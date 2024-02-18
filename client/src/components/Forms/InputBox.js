@@ -6,6 +6,7 @@ import { Icon } from '../Icon/Icon';
 
 import './InputBox.scss';
 import { WhithCornerDeleteButton } from '../WhithCornerDeleteButton/WhithCornerDeleteButton';
+import { WhithEyePasswordButton } from './WhithEyePasswordButton/WhithEyePasswordButton';
 
 function validateInput(id, value, password) {
   const alphaExp = /^[a-zA-Zа-яА-Я-\s]+$/;
@@ -56,7 +57,7 @@ function inputValidation(event, password, onValidationChange) {
   }
 }
 
-const InputWhithButton = ({ className, type, value, onChange, onFocus, onBlur, disable }) => {
+const InputWhithButton = ({ className, type, value, onChange, onFocus, onBlur, disabled }) => {
   return (
     <input className="form-input"
     id={className}
@@ -65,12 +66,24 @@ const InputWhithButton = ({ className, type, value, onChange, onFocus, onBlur, d
     onChange={onChange}
     onFocus={onFocus}
     onBlur={onBlur}
-    disable={disable}
-  />
+    disabled={disabled} />
   )
 }
 
-const InputBox = ({ type = "text", className, labelContent, necessary, value, onChange, password = '', onValidationChange, hitnText, disable, direction='columnInputBox' }) => {
+const InputBox = ({
+  type = "text",
+  className,
+  labelContent,
+  inputBoxLabelWidth='auto',
+  necessary,
+  value,
+  onChange,
+  password = '',
+  onValidationChange,
+  hitnText,
+  disabled,
+  direction='columnInputBox'
+}) => {
   const [showInputHint, setShowInputHint] = useState(false);
 
   const inputHintToggle = () => {
@@ -78,9 +91,12 @@ const InputBox = ({ type = "text", className, labelContent, necessary, value, on
   }
 
   const star = <span style={{ color: 'red' }}>*</span>
+
+  const disabledStyle = disabled ? 'disabled' : '';
+
   return (
     <div className={`inputBox ${className} ${direction}`}>
-      <div className='inputBox-label'>
+      <div className='inputBox-label' style={{ width: `${inputBoxLabelWidth}`}}>
         <label className="form-label small-text" htmlFor={className}>{labelContent} {necessary && star}</label>
       </div>
       <WhithCornerDeleteButton
@@ -88,21 +104,21 @@ const InputBox = ({ type = "text", className, labelContent, necessary, value, on
         icon='interrogation-mark-in-circle'
         iconFormat='png'
       >
-        <input className="form-input"
-          id={className}
-          type={type}
-          value={value}
-          onChange={(e) => onChange(e)}
-          onFocus={(e) => clearWarn(e)}
-          onBlur={(e) => inputValidation(e, password, onValidationChange)}
-          disable={disable}
-        />
-      </WhithCornerDeleteButton>
+      <input className="form-input"
+        id={className}
+        type={type}
+        value={value}
+        onChange={(e) => onChange(e)}
+        onFocus={(e) => clearWarn(e)}
+        onBlur={(e) => inputValidation(e, password, onValidationChange)}
+        disabled={disabled}
+      />
+            </WhithCornerDeleteButton>
       {showInputHint && <pre className='input-hint small-small-text'>{ hitnText }</pre>}
     </div>
   )
 }
-const inputWhithButton = ({ className, type, value, onChange, onFocus, onBlur, disable }) => {
+const inputWhithButton = ({ className, type, value, onChange, onFocus, onBlur, disabled }) => {
   <input className="form-input"
     id={className}
     type={type}
@@ -110,11 +126,11 @@ const inputWhithButton = ({ className, type, value, onChange, onFocus, onBlur, d
     onChange={onChange}
     onFocus={onFocus}
     onBlur={onBlur}
-    disable={disable}
+    disabled={disabled}
   />
 }
 
-const PasswordInputBox = ({ className, labelContent, necessary, value, onChange, password = '',onValidationChange, hitnText, direction }) => {
+const PasswordInputBox = ({ className, labelContent, necessary, value, onChange, password = '',onValidationChange, hitnText, direction, inputBoxLabelWidth, disabled }) => {
   const [passwordType, setPasswordType] = useState('password');
 
   const passwordTypeToggle = () => {
@@ -131,10 +147,11 @@ const PasswordInputBox = ({ className, labelContent, necessary, value, onChange,
         passwordType={passwordType}
         onClick={passwordTypeToggle}
       />
-      <InputBox
+    <InputBox
         className={className}
         type={passwordType}
         labelContent={labelContent}
+        inputBoxLabelWidth={inputBoxLabelWidth}
         necessary={necessary}
         value={value} 
         onChange={(e) => onChange(e.target.value)}
@@ -142,8 +159,9 @@ const PasswordInputBox = ({ className, labelContent, necessary, value, onChange,
         onValidationChange={onValidationChange}
         hitnText={hitnText}
         direction={direction}
+        disabled={disabled}
       />
-    </>   
+    </> 
   )
 }
 

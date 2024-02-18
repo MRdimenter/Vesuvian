@@ -13,12 +13,14 @@ const PersonDataFormPassword = ({ className, labelContent, necessary, value, onC
         <PasswordInputBox
           className={className}
           labelContent={labelContent}
+          inputBoxLabelWidth='100px'
           necessary={necessary}
           value={value} 
           onChange={onChange}
           onValidationChange={onValidationChange}
           hitnText={hitnText}
           direction={direction}
+          disabled={true}
         />
         <Button
           btnStyle='link'

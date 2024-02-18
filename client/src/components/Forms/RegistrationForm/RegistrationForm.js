@@ -98,27 +98,68 @@ const RegistrationForm = () => {
     <div className="registration-wrapper">
       {isOccupiedEmail && <WarningMessageUnoccupiedEmail />}
       <form className="registration-form" onSubmit={handleSubmit}>
-        <InputBox className="firstName" labelContent="Имя" necessary={true} value={firstName} 
-                  onChange={(e) => setFirstName(e.target.value)} onValidationChange={handleValidationChange} 
-                  hitnText={firstNameHitnText}/>
-        <InputBox className="lastName" labelContent="Фамилия" value={lastName} 
-                  onChange={(e) => setLastName(e.target.value)} onValidationChange={handleValidationChange}
-                  hitnText={lastNameHitnText}/>
-        <InputBox className="email" type="email" labelContent="Email" necessary={true} value={email} 
-                  onChange={(e) => setEmail(e.target.value)} onValidationChange={handleValidationChange}
-                  hitnText={emailNameHitnText}/>
-        <InputBox className="username" labelContent="Никнейм" necessary={true} value={username} 
-                  onChange={(e) => setUsername(e.target.value)} onValidationChange={handleValidationChange}
-                  hitnText={usernameNameHitnText}/>
-        <PasswordInputBox className="password" labelContent="Пароль" necessary={true} value={password} 
-                          onChange={setPassword} onValidationChange={handleValidationChange}
-                          hitnText={passwordNameHitnText}/>
-        <PasswordInputBox className="confirmPassword" labelContent="Введите пароль повторно" necessary={true} value={confirmPassword}
-                          onChange={setConfirmPassword} password={password} onValidationChange={handleValidationChange} 
-                          hitnText={confirmPasswordNameHitnText}/>
+        <InputBox
+          className="firstName"
+          labelContent="Имя"
+          necessary={true}
+          value={firstName} 
+          onChange={(e) => setFirstName(e.target.value)}
+          onValidationChange={handleValidationChange} 
+          hitnText={firstNameHitnText}
+        />
+        <InputBox
+          className="lastName"
+          labelContent="Фамилия"
+          value={lastName} 
+          onChange={(e) => setLastName(e.target.value)}
+          onValidationChange={handleValidationChange}
+          hitnText={lastNameHitnText}
+        />
+        <InputBox
+          className="email"
+          type="email"
+          labelContent="Email"
+          necessary={true}
+          value={email} 
+          onChange={(e) => setEmail(e.target.value)}
+          onValidationChange={handleValidationChange}
+          hitnText={emailNameHitnText}
+        />
+        <InputBox
+          className="username"
+          labelContent="Никнейм"
+          necessary={true}
+          value={username} 
+          onChange={(e) => setUsername(e.target.value)}
+          onValidationChange={handleValidationChange}
+          hitnText={usernameNameHitnText}
+        />
+        <PasswordInputBox
+          className="password"
+          labelContent="Пароль"
+          necessary={true}
+          value={password} 
+          onChange={setPassword}
+          onValidationChange={handleValidationChange}
+          hitnText={passwordNameHitnText}
+        />
+        <PasswordInputBox
+          className="confirmPassword"
+          labelContent="Введите пароль повторно"
+          necessary={true}
+          value={confirmPassword}
+          onChange={setConfirmPassword}
+          password={password}
+          onValidationChange={handleValidationChange} 
+          hitnText={confirmPasswordNameHitnText}
+        />
         <p><span style={{ color: 'red' }}>*</span>- поля обязательные для заполнения</p>
         <div className="registration-button-wrapper">
-          <Button btnStyle='link' label='Регистрация' action={handleSubmit} />
+          <Button
+            btnStyle='link'
+            label='Регистрация'
+            action={handleSubmit}
+          />
         </div>
       </form>
       <RegistrationFormFooter />
@@ -130,11 +171,3 @@ const RegistrationForm = () => {
 export {
   RegistrationForm,
 }
-
-/*
-<EyePasswordButton passwordType={passwordType} onClick={passwordTypeToggle}/>
-        <InputBox className="password" type={passwordType} labelContent="Пароль" necessary={true} value={password} onChange={(e) => setPassword(e.target.value)} onValidationChange={handleValidationChange} />
-        <EyePasswordButton passwordType={passwordType} onClick={passwordTypeToggle}/>
-        <InputBox className="confirmPassword" type="password" labelContent="Введите пароль повторно" necessary={true} value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)} password={password} onValidationChange={handleValidationChange} />
-*/
