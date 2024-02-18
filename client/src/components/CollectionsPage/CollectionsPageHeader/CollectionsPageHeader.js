@@ -20,20 +20,22 @@ const CollectionsPageHeader = ({
   return (
     <flex-container className="collections-page-header">
       <flex-item>
+        {/* todo rename asd */}
         <div className='asd'>
           <DropDownMenuGrouping 
             groupingOptions={groupingOptions}
             selectedGroupOtionIndex={selectedGroupOtionIndex}
             setSelectedGroupOtionIndex={setSelectedGroupOtionIndex}
+            // width={}
           />
         </div>
       </flex-item>
       <flex-item>
         <div className='asd'>
-          <DropDownMenu 
-            sortingOptions={sortingOptions}
-            selectedOtionIndex={selectedOtionIndex}
-            setSelectedOptionIndex={setSelectedOptionIndex}
+        <DropDownMenuGrouping 
+            groupingOptions={sortingOptions}
+            selectedGroupOtionIndex={selectedOtionIndex}
+            setSelectedGroupOtionIndex={setSelectedOptionIndex}
           />
         </div>
       </flex-item>

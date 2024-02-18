@@ -24,6 +24,10 @@
     background: #DEF6E9;
   }
 
+  .disabled {
+    background-color: rgba($btn-green, .5);
+  }
+
   .colletion-name-input {
     margin-top: 5px;
     margin-bottom: 10px;
@@ -38,7 +42,7 @@
   }
   
   .inputBox-label {
-    width: 100px;
+    // width: 100px;
     display: flex;
     justify-content: space-between;
   }
@@ -100,6 +104,14 @@
   .search-input-field:focus {
     outline: none;
   }
+}
+
+.password-input-box {
+  border: 1px solid blue;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
 
 // for small monitors

@@ -3,7 +3,17 @@ import { InputBox } from '../../../../../components/Forms/InputBox';
 
 import './personDataFormEmail.scss';
 
-const PersonDataFormEmail = ({ className, labelContent, necessary, value, onChange, onValidationChange, hitnText, direction }) => {
+const PersonDataFormEmail = ({
+  className,
+  labelContent,
+  inputBoxLabelWidth,
+  necessary,
+  value,
+  onChange,
+  onValidationChange,
+  hitnText,
+  direction
+}) => {
   const openPersonData = () => {
     console.log('openPersonData');
   }
@@ -14,6 +24,7 @@ const PersonDataFormEmail = ({ className, labelContent, necessary, value, onChan
       <InputBox
         className={className}
         labelContent={labelContent}
+        inputBoxLabelWidth={inputBoxLabelWidth}
         necessary={necessary}
         value={value} 
         onChange={onChange}
@@ -22,14 +33,14 @@ const PersonDataFormEmail = ({ className, labelContent, necessary, value, onChan
         direction={direction}
       />
       {/* <span style={{color: 'green'}}>Подтверждён</span> */}
-      <Button
+      {/* <Button
           btnStyle='link'
           label='Изменить E-mail'
           action={openPersonData}
           textColor={(activeTab === 'personData') ? 'white': 'grey'}
           fontSize='normal'
           disabled={(activeTab === 'personData')}
-        />
+        /> */}
     </div>
   )
 }

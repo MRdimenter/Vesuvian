@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { InputBox, PasswordInputBox } from '../../../../components/Forms/InputBox'
 import { REGISTR_URL_PATH } from '../../../../common/constants/urlConstants';
 import { postRegistration } from '../../../../common/utils/fetchWrapper';
-import './personDataForm.scss'
 import { PersonDataFormPassword } from './PersonDataFormPassword/PersonDataFormPassword';
 import { PersonDataFormEmail } from './PersonDataFormEmail/PersonDataFormEmail';
 import { CollectionSelection } from '../../../../components/CardCollectionCreatingPopup/CardCreatingForm/CollectionSelection/CollectionSelection';
@@ -12,6 +11,10 @@ import { Button } from '../../../../components/Button/Button';
 import { OAuth2Service } from '../../../../common/utils/OAuth2Service';
 import { ApiService } from '../../../../common/utils/ApiService';
 import { appendCurrentCustomerDataAction } from '../../../../store/actions/appendCurrentCustomerDataAction';
+import { DropDownMenuGrouping } from '../../../../components/DropDownMenu/DropDownMenuGrouping';
+import { WhithLabel } from '../../../../components/WhithLabel/WhithLabel';
+
+import './personDataForm.scss'
 
 // todo откуда берутся два похожих поля currentCustomerData и customerDataState?
 // todo думается, одно нужно ликвидировать (попробовать, но возможно они из разных источников и разные по актуальности)
@@ -28,6 +31,13 @@ const collectionsDataListDefault = [
   {
     collectionId: 3,
     name: 'Всем',
+  },
+]
+
+const languageOptions = [
+  {
+    collectionId: 1,
+    name: 'Русский',
   },
 ]
 
@@ -103,9 +113,7 @@ const PersonDataForm = () => {
     }
   }
 
-  const options = collectionsDataList.map((collection) => collection.name);
-
-  const languageOptions = ['Русский']
+  const visibilityOptions = collectionsDataList.map((collection) => collection.name);
 
   useEffect(() => {
     const { firstName, lastName, email, userName} = currentCustomerData;
@@ -137,6 +145,7 @@ const PersonDataForm = () => {
       <InputBox 
         className="first-name-setting"
         labelContent="Имя"
+        inputBoxLabelWidth='100px'
         necessary={true}
         value={firstName}
         onChange={(e) => setFirstName(e.target.value)}
@@ -147,6 +156,7 @@ const PersonDataForm = () => {
       <InputBox 
         className="lastName"
         labelContent="Фамилия"
+        inputBoxLabelWidth='100px'
         value={lastName} 
         onChange={(e) => setLastName(e.target.value)}
         onValidationChange={handleValidationChange}
@@ -156,6 +166,7 @@ const PersonDataForm = () => {
       <InputBox
         className="username"
         labelContent="Никнейм"
+        inputBoxLabelWidth='100px'
         necessary={true}
         value={username}
         onChange={(e) => setUsername(e.target.value)}
@@ -167,6 +178,7 @@ const PersonDataForm = () => {
         className="email"
         type="email"
         labelContent="Email"
+        inputBoxLabelWidth='100px'
         necessary={true}
         value={email} 
         onChange={(e) => setEmail(e.target.value)}
@@ -184,24 +196,24 @@ const PersonDataForm = () => {
         hitnText={passwordNameHitnText}
         direction='rowInputBox'
       />
-      <CollectionSelection
-        label='Видимость'
-        options={options}
-        initSelectedValue={selectedCollectionName}
-        onChange={handleSelectChange}
-        direction='row'
-        selectWidth={'159px'}
-      />
+      <WhithLabel label="Видимость">
+        <DropDownMenuGrouping
+          groupingOptions={collectionsDataListDefault}
+          selectedGroupOtionIndex={selectedCollectionName}
+          setSelectedGroupOtionIndex={handleSelectChange}
+          width={'159px'}
+        />
+      </WhithLabel>
       <div className="person-data-form-common">
         <span className='person-data-form-common-label btn-link-font-big'>Общие</span>
-        <CollectionSelection
-          label='Язык'
-          options={languageOptions}
-          initSelectedValue={selectedCollectionName}
-          onChange={handleSelectChange}
-          direction='row'
-          selectWidth={'159px'}
+        <WhithLabel label="Язык">
+        <DropDownMenuGrouping
+          groupingOptions={languageOptions}
+          selectedGroupOtionIndex={selectedCollectionName}
+          setSelectedGroupOtionIndex={handleSelectChange}
+          width={'159px'}
         />
+      </WhithLabel>
       </div>
       <div className='person-data-form-button'>
         <Button btnStyle='btn' label='СОХРАНИТЬ ИЗМЕНЕНИЯ' action={e => handleSubmit(e)} />

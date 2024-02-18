@@ -8,7 +8,9 @@ import "./dropDownMenu.scss";
 
 // todo закрытие меню при клике вне его
 // todo добавить рамочку выбранного варианта при открыто меню
-const DropDownMenuGrouping = ({groupingOptions, selectedGroupOtionIndex, setSelectedGroupOtionIndex}) => {
+// todo rename setSelectedGroupOtionIndex on onChange
+// todo а почему он не универсальный? и дублируется в getCollectionsPageGroups
+const DropDownMenuGrouping = ({groupingOptions, selectedGroupOtionIndex, setSelectedGroupOtionIndex, width}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItemIndex, setSelectedItemIndex] = useState(0);
 
@@ -46,13 +48,14 @@ const DropDownMenuGrouping = ({groupingOptions, selectedGroupOtionIndex, setSele
   }
 
   return (
-    <ul onClick={handleOnClickDropDownMenu} className="drop-down-menu">
+    <div className="drop-down-menu" style={{ width: `${width}`}}>
+      <ul onClick={handleOnClickDropDownMenu}>
+        {isOpen ? getListItems(groupingOptions) : getSelectedItem(groupingOptions[selectedItemIndex])}
+      </ul>
       <div className={`arrow-icon ${isOpen ? '' : 'icon-close'}`}>
         <Icon iconName='opening-arrow-svg' iconFormat='svg' width="15" height="15" />
       </div>
-      {isOpen ? getListItems(groupingOptions) : getSelectedItem(groupingOptions[selectedItemIndex])}
-    </ul>
-    
+    </div>
   );
 };
 

@@ -103,7 +103,7 @@ const CollectionCreatingForm = ({ isCollectionSetting, collectionIdForAddition})
           value={colletionName} 
           onChange={(e) => setColletionName(e.target.value)}
           onValidationChange={handleValidationChange}
-          disable={isCollectionSetting}
+          disabled={isCollectionSetting}
         />
 
         <TextArea 
