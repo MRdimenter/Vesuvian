@@ -2,8 +2,18 @@ import { EyePasswordButton } from '../RegistrationForm/EyePasswordButton/EyePass
 
 import './whithEyePasswordButton.scss'
 
-const WhithEyePasswordButton = ({ children, passwordType, passwordTypeToggle }) => {
+const WhithEyePasswordButton = ({ children, passwordType, setPasswordType }) => {
+
+  const passwordTypeToggle = () => {
+    if (passwordType === 'password') {
+      setPasswordType('text')
+    } else {
+      setPasswordType('password')
+    }
+  }
+  
   return (
+    <>
     <div className='whith-eye-password-button'>
       {children}
       <div className='whith-eye-password-button-button'>
@@ -13,6 +23,8 @@ const WhithEyePasswordButton = ({ children, passwordType, passwordTypeToggle }) 
         />
       </div>
     </div>
+    </>
+    
   )
 }
 

@@ -1,11 +1,11 @@
 import validator from 'validator';
 import { EyePasswordButton } from './RegistrationForm/EyePasswordButton/EyePasswordButton';
 import { useState } from 'react';
-import { IconButton } from '../Button/Button';
 import { Icon } from '../Icon/Icon';
 
 import './InputBox.scss';
-import { WhithCornerDeleteButton } from '../WhithCornerDeleteButton/WhithCornerDeleteButton';
+import { WhithHintButton } from '../Input/WhithCornerDeleteButton/WhithHintButton';
+import { WhithLabel } from '../Input/WhithLabel/WhithLabel';
 import { WhithEyePasswordButton } from './WhithEyePasswordButton/WhithEyePasswordButton';
 
 function validateInput(id, value, password) {
@@ -57,24 +57,11 @@ function inputValidation(event, password, onValidationChange) {
   }
 }
 
-const InputWhithButton = ({ className, type, value, onChange, onFocus, onBlur, disabled }) => {
-  return (
-    <input className="form-input"
-    id={className}
-    type={type}
-    value={value}
-    onChange={onChange}
-    onFocus={onFocus}
-    onBlur={onBlur}
-    disabled={disabled} />
-  )
-}
-
 const InputBox = ({
   type = "text",
   className,
   labelContent,
-  inputBoxLabelWidth='auto',
+  inputBoxLabelWidth = 'auto',
   necessary,
   value,
   onChange,
@@ -82,55 +69,84 @@ const InputBox = ({
   onValidationChange,
   hitnText,
   disabled,
-  direction='columnInputBox'
+  direction = 'columnInputBox'
 }) => {
-  const [showInputHint, setShowInputHint] = useState(false);
-
-  const inputHintToggle = () => {
-    setShowInputHint((prev) => !prev);
-  }
-
-  const star = <span style={{ color: 'red' }}>*</span>
-
+  
   const disabledStyle = disabled ? 'disabled' : '';
-
   return (
     <div className={`inputBox ${className} ${direction}`}>
-      <div className='inputBox-label' style={{ width: `${inputBoxLabelWidth}`}}>
-        <label className="form-label small-text" htmlFor={className}>{labelContent} {necessary && star}</label>
-      </div>
-      <WhithCornerDeleteButton
-        deleteTag={inputHintToggle}
-        icon='interrogation-mark-in-circle'
-        iconFormat='png'
+      <WhithLabel
+        labelContent={labelContent}
+        necessary={necessary}
+        classNameFor={className}
+        inputBoxLabelWidth={inputBoxLabelWidth}
       >
-      <input className="form-input"
-        id={className}
-        type={type}
-        value={value}
-        onChange={(e) => onChange(e)}
-        onFocus={(e) => clearWarn(e)}
-        onBlur={(e) => inputValidation(e, password, onValidationChange)}
-        disabled={disabled}
-      />
-            </WhithCornerDeleteButton>
-      {showInputHint && <pre className='input-hint small-small-text'>{ hitnText }</pre>}
+        <WhithHintButton hitnText={hitnText}>
+          <input 
+            className={`form-input ${disabledStyle}`}
+            id={className}
+            type={type}
+            value={value}
+            onChange={(e) => onChange(e)}
+            onFocus={(e) => clearWarn(e)}
+            onBlur={(e) => inputValidation(e, password, onValidationChange)}
+            disabled={disabled}
+          />
+        </WhithHintButton>
+      </WhithLabel>
+    </div>
+    
+  )
+}
+
+const PasswordInputBox = ({
+  className,
+  labelContent,
+  necessary,
+  value,
+  onChange,
+  password = '',
+  onValidationChange,
+  hitnText,
+  inputBoxLabelWidth,
+  disabled,
+  direction = 'columnInputBox'
+}) => {
+  const [passwordType, setPasswordType] = useState('password');
+
+  const disabledStyle = disabled ? 'disabled' : '';
+  return (
+    <div className={`inputBox ${className} ${direction}`}>
+      <WhithLabel
+        labelContent={labelContent}
+        necessary={necessary}
+        classNameFor={className}
+        inputBoxLabelWidth={inputBoxLabelWidth}
+      >
+        <WhithHintButton hitnText={hitnText}>
+          <WhithEyePasswordButton
+            passwordType={passwordType}
+            setPasswordType={setPasswordType}
+          >
+            
+            <input 
+              className={`form-input ${disabledStyle}`}
+              id={className}
+              type={passwordType}
+              value={value}
+              onChange={(e) => onChange(e)}
+              onFocus={(e) => clearWarn(e)}
+              onBlur={(e) => inputValidation(e, password, onValidationChange)}
+              disabled={disabled}
+            />
+          </WhithEyePasswordButton>
+        </WhithHintButton>
+      </WhithLabel>
     </div>
   )
 }
-const inputWhithButton = ({ className, type, value, onChange, onFocus, onBlur, disabled }) => {
-  <input className="form-input"
-    id={className}
-    type={type}
-    value={value}
-    onChange={onChange}
-    onFocus={onFocus}
-    onBlur={onBlur}
-    disabled={disabled}
-  />
-}
 
-const PasswordInputBox = ({ className, labelContent, necessary, value, onChange, password = '',onValidationChange, hitnText, direction, inputBoxLabelWidth, disabled }) => {
+const PasswordInputBox_old = ({ className, labelContent, necessary, value, onChange, password = '', onValidationChange, hitnText, direction, inputBoxLabelWidth, disabled }) => {
   const [passwordType, setPasswordType] = useState('password');
 
   const passwordTypeToggle = () => {
@@ -147,13 +163,13 @@ const PasswordInputBox = ({ className, labelContent, necessary, value, onChange,
         passwordType={passwordType}
         onClick={passwordTypeToggle}
       />
-    <InputBox
+      <InputBox
         className={className}
         type={passwordType}
         labelContent={labelContent}
         inputBoxLabelWidth={inputBoxLabelWidth}
         necessary={necessary}
-        value={value} 
+        value={value}
         onChange={(e) => onChange(e.target.value)}
         password={password}
         onValidationChange={onValidationChange}
@@ -161,7 +177,7 @@ const PasswordInputBox = ({ className, labelContent, necessary, value, onChange,
         direction={direction}
         disabled={disabled}
       />
-    </> 
+    </>
   )
 }
 
@@ -169,7 +185,7 @@ const SearchInput = () => {
   return (
     <div className="search-input">
       <Icon iconName='loupe' width="25" height="25" />
-      <input type='text'  className='search-input-field btn-link-font' placeholder='Поиск'></input>
+      <input type='text' className='search-input-field btn-link-font' placeholder='Поиск'></input>
     </div>
   )
 }

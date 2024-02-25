@@ -1,7 +1,7 @@
 @import "../../common/styles/color.scss";
 
 .inputBox {
-  border: 1px solid blue;
+  // border: 1px solid blue;
   margin-top: 10px;
   display: flex;
 
@@ -71,12 +71,12 @@
 }
 
 .columnInputBox {
-  border: 2px solid green;
+  // border: 2px solid green;
   flex-direction: column;
 }
 
 .rowInputBox {
-  border: 2px solid blue;
+  // border: 2px solid blue;
   flex-direction: row;
   align-items: center;
   gap: 50px;
@@ -104,14 +104,6 @@
   .search-input-field:focus {
     outline: none;
   }
-}
-
-.password-input-box {
-  border: 1px solid blue;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
 }
 
 // for small monitors

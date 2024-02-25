@@ -1,7 +1,9 @@
 import { Button } from '../../../../../components/Button/Button';
-import { PasswordInputBox } from '../../../../../components/Forms/InputBox';
+import { InputBox } from '../../../../../components/Forms/InputBox';
+
 import './personDataFormPassword.scss';
 
+// в качестве InputBox заглушка, т.к. изменение пароля производится в отдельной форме
 const PersonDataFormPassword = ({ className, labelContent, necessary, value, onChange, onValidationChange, hitnText, direction }) => {
   const openPersonData = () => {
     console.log('openPersonData');
@@ -10,7 +12,16 @@ const PersonDataFormPassword = ({ className, labelContent, necessary, value, onC
 
   return (
     <div className="person-data-form-password">
-        <PasswordInputBox
+        <InputBox
+          className="password"
+          labelContent="Пароль"
+          inputBoxLabelWidth='100px'
+          value={`*********`}
+          hitnText={null}
+          direction='rowInputBox'
+          disabled={true}
+        />
+        {/* <PasswordInputBox
           className={className}
           labelContent={labelContent}
           inputBoxLabelWidth='100px'
@@ -21,7 +32,7 @@ const PersonDataFormPassword = ({ className, labelContent, necessary, value, onC
           hitnText={hitnText}
           direction={direction}
           disabled={true}
-        />
+        /> */}
         <Button
           btnStyle='link'
           label='Изменить пароль'
