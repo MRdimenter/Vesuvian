@@ -9,7 +9,10 @@ const UserDropdown = () => {
     return (
         <ul className="dropdown-menu">
             <li className="dropdown-item">Profile</li>
-            <li className="dropdown-item">Settings</li>
+            <li className="dropdown-item">
+                <Button btnStyle='link' label='Settings' link={'/userSettingsPage'} action={() => logout()} />
+            {/* <Route path='/userSettingsPage' element={<UserSettingsPage />}></Route> */}
+            </li>
             <li className="dropdown-item">
                 <Button btnStyle='link' label='LogOut' link={'/'} action={() => logout()} />
             </li>

@@ -1,0 +1,25 @@
+.container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  height: 50px;
+  background-color: lightblue;
+  transition: width 0.5s ease, height 0.5s ease, transform 0.5s ease; /* добавляем transition для плавного изменения ширины, высоты и transform */
+  cursor: pointer;
+  overflow: hidden; /* скрываем часть содержимого, которая выходит за пределы контейнера */
+}
+
+.container.open {
+  width: 100px; /* увеличиваем ширину контейнера */
+  height: 100px; /* увеличиваем высоту контейнера */
+  transform: translate(-50%, 50%); /* сдвигаем компонент вниз и влево */
+}
+
+.content {
+  width: 100%; /* ширина содержимого равна ширине контейнера */
+  height: 100%; /* высота содержимого равна высоте контейнера */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

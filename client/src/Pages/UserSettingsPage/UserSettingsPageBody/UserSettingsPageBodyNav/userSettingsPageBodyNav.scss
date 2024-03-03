@@ -1,9 +1,7 @@
 .user-settings-page-body-nav {
-  border: 1px solid white;
   width: 100%;
-  
 
-  .user-settings-page-body-buttons {
+  .user-settings-page-body-nav-buttons {
     display: flex;
     justify-content: space-between;
     gap: 20px; //there is no gap support yet for React Native

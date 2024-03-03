@@ -10,14 +10,18 @@ import "./dropDownMenu.scss";
 // todo добавить рамочку выбранного варианта при открыто меню
 // todo rename setSelectedGroupOtionIndex on onChange
 // todo а почему он не универсальный? и дублируется в getCollectionsPageGroups
-const DropDownMenuGrouping = ({groupingOptions, selectedGroupOtionIndex, setSelectedGroupOtionIndex, width}) => {
+const DropDownMenuGrouping = ({ groupingOptions, selectedGroupOtionIndex, setSelectedGroupOtionIndex, width }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItemIndex, setSelectedItemIndex] = useState(0);
 
   const handleOnClickDropDownMenu = () => {
     if (!isOpen) {
-      setIsOpen(true); 
+      setIsOpen(true);
     }
+  }
+
+  const onDropDownClick = () => {
+
   }
 
   const handleOnSelect = (itemIndex) => {
@@ -43,17 +47,25 @@ const DropDownMenuGrouping = ({groupingOptions, selectedGroupOtionIndex, setSele
 
   const getSelectedItem = (item) => {
     return (
-      <DropDownMenuItem item={item}/>
+      <DropDownMenuItem item={item} />
     )
   }
+  
+  const zIndex = isOpen ? 'aboveElementsStyle' : '';
 
   return (
-    <div className="drop-down-menu" style={{ width: `${width}`}}>
-      <ul onClick={handleOnClickDropDownMenu}>
-        {isOpen ? getListItems(groupingOptions) : getSelectedItem(groupingOptions[selectedItemIndex])}
-      </ul>
-      <div className={`arrow-icon ${isOpen ? '' : 'icon-close'}`}>
-        <Icon iconName='opening-arrow-svg' iconFormat='svg' width="15" height="15" />
+    <div className={`drop-wrapper ${zIndex}`}>
+      <div 
+        className="drop-down-menu"
+        style={{width: `${width}`}}
+        onClick={handleOnClickDropDownMenu}
+      >
+        <ul>
+          {isOpen ? getListItems(groupingOptions) : getSelectedItem(groupingOptions[selectedItemIndex])}
+        </ul>
+        <div className={`arrow-icon ${isOpen ? '' : 'icon-close'}`}>
+          <Icon iconName='opening-arrow-svg' iconFormat='svg' width="15" height="15" />
+        </div>
       </div>
     </div>
   );

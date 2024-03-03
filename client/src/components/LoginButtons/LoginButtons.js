@@ -5,6 +5,7 @@ import { Button } from '../Button/Button';
 import { UserAccountMenu } from '../Header/UserAccountMenu/UserAccountMenu';
 
 import './loginButtons.scss';
+import { AccountMenu } from '../Header/AccountMenu/AccountMenu';
 
 /*
 Компонент отображает кнопки для авторизации и регистрации в пользовательском интерфейсе. 
@@ -27,7 +28,8 @@ const RegistrationButtons = () => {
 
 export const LoginButtons = () => {
   const dispatch = useDispatch();
-  const {authStatus: isAuthenticated, authState: isAuthenticationVerified} = useSelector((state) => state.isAuth);
+  // todo оригинально - две константы разные по названию, но с одинаковым значением! ))
+  const {authStatus, authStatus: isAuthenticated, authState: isAuthenticationVerified} = useSelector((state) => state.isAuth);
   
   const content = isAuthenticationVerified && (isAuthenticated ? <UserAccountMenu /> : <RegistrationButtons dispatch={dispatch}/>);
 
@@ -37,6 +39,7 @@ export const LoginButtons = () => {
   return (
     <div className='login-buttons'>
       {content}
+      <AccountMenu />
     </div>
   )
 }

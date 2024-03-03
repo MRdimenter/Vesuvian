@@ -1,38 +1,49 @@
-.drop-down-menu {
-  border: 1px solid #FFF;
-  border-radius: 7px;
-  // width: 305px;
-  background: #263D44;
+.drop-wrapper {
+  position: absolute;
+  // height: 100px;
+  // width: 100%;
 
-  display: flex;
-  // flex-direction: column;
-  flex-direction: row;
-  // align-items: flex-start;
-  justify-content: space-between;
-
-  .arrow-icon {
-    border: 1px solid white;
-    margin-top: 10px;
-    margin-right: 10px;
-    align-self: flex-start;
-    // rotate: (180deg);
-    transition: transform 0.4s;
-    transform: rotate(0deg);
-    // display: inline;
-  }
-
-  .icon-close {
+  .drop-down-menu {
+    // position: absolute;
     
-    transition: transform 0.4s;
-    transform: rotate(180deg);
-    
+    border: 1px solid #FFF;
+    border-radius: 7px;
+    // width: 305px;
+    background: #263D44;
+  
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  
+    .ul {
+      border: 2px solid yellow;
+    }
+  
+    .arrow-icon {
+      margin-top: 10px;
+      margin-right: 10px;
+      align-self: flex-start;
+      // rotate: (180deg);
+      // transition: transform 0.4s;
+      transform: rotate(0deg);
+      // display: inline;
+    }
+  
+    .icon-close {
+      // transition: transform 0.4s;
+      transform: rotate(180deg);
+    }
+  
+    ul {
+      // border: 1px solid white;
+      // margin-right: 30px;
+    }
+    li {
+      padding: 10px 20px;
+    }
   }
+}
 
-  ul {
-    // border: 1px solid white;
-    // margin-right: 30px;
-  }
-  li {
-    padding: 10px 20px;
-  }
+.aboveElementsStyle {
+  z-index: 100;
 }

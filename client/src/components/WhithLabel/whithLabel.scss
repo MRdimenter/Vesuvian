@@ -1,12 +1,17 @@
 .whith-label {
-  border: 1px solid white;
   display: flex;
   align-items: center;
   flex-direction: row;
   gap: 50px;
+  position: relative;
+  width: 650px;
 
   .whith-label-label {
     display: inline-block;
     width: 100px;
+  }
+
+  .children {
+    display: flex;
   }
 }

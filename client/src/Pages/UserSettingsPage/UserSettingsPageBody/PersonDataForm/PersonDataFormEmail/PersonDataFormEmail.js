@@ -29,7 +29,7 @@ const PersonDataFormEmail = ({
         value={value} 
         onChange={onChange}
         onValidationChange={onValidationChange}
-        hitnText={null}
+        hitnText={hitnText}
         direction={direction}
       />
       {/* <span style={{color: 'green'}}>Подтверждён</span> */}

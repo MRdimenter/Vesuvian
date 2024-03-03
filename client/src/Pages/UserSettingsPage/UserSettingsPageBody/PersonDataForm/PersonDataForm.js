@@ -205,7 +205,9 @@ const PersonDataForm = () => {
         />
       </WhithLabel>
       <div className="person-data-form-common">
-        <span className='person-data-form-common-label btn-link-font-big'>Общие</span>
+        <div className='person-data-form-common-label'>
+          <span className='btn-link-font-big'>Общие</span>
+        </div>
         <WhithLabel label="Язык">
         <DropDownMenuGrouping
           groupingOptions={languageOptions}

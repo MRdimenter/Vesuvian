@@ -6,8 +6,11 @@ const WhithLabel = ({ children, label }) => {
       <div className='whith-label-label'>
         <span>{label}</span>
       </div>
+      <div className='children' style={{height: '50px'}}>
+      {/* <div className='children'> */}
+          {children}
+      </div>
       
-      {children}
     </div>
   )
 }

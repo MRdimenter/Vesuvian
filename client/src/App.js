@@ -43,7 +43,7 @@ export const App = () => {
       <div className={`main-wrapper`}>
         <div className="main">
           <Header />
-          <TestPanel />
+          {/* <TestPanel /> */}
           <div className='main-container'>
             <Routes>
               <Route path='/' element={<Main />} exact />
