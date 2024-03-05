@@ -38,6 +38,7 @@ public class TagController {
             @ApiResponse(responseCode = "404", description = "Collection not found"),
             @ApiResponse(responseCode = "403", description = "Forbidden action for the user"),
             @ApiResponse(responseCode = "422", description = "Collection tag limit exceeded"),
+            @ApiResponse(responseCode = "409", description = "Tag already exists in the collection"),
     })
     public void createTagByCollectionId(
             @PathVariable
