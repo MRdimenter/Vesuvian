@@ -2,6 +2,7 @@ package ru.vesuvian.collection.dto.collection;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +23,8 @@ import java.util.Set;
         description = "This is an object designed to create a collection"
 )
 public class CollectionCreateDto implements CollectionDto {
+
+    @NotNull(message = "Collection name cannot be null")
     @Schema(description = "The name of the collection.")
     @JsonProperty("name")
     private String collectionName;
