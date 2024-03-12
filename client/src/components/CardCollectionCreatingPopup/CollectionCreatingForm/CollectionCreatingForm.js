@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { ApiService } from '../../../common/utils/ApiService';
 import { OAuth2Service } from '../../../common/utils/OAuth2Service'; 
 import { Button } from '../../Button/Button';
 import { InputBox } from '../../Forms/InputBox';
 import { TextArea } from '../../InputComponents/TextArea/TextArea';
 import { TagsCreatingForm } from './TagsCreatingForm/TagsCreatingForm';
+import ToggleButton from '../../ToggleButton/ToggleButton';
 
 import './collectionCreatingForm.scss';
-import { useSelector } from 'react-redux';
 
 
 const CollectionCreatingForm = ({ isCollectionSetting, collectionIdForAddition}) => {
@@ -16,25 +17,12 @@ const CollectionCreatingForm = ({ isCollectionSetting, collectionIdForAddition})
   const [activeCreating, setActiveCreating] = useState('collectionCreating')
   const [colletionName, setColletionName] = useState(isCollectionSetting ? collectionInfo.name : '');
   const [collectionDescription, setCollectionDescription] = useState(isCollectionSetting ? collectionInfo.description : '');
+  const [collectionUsingPossibility, setCollectionUsingPossibility] = useState('privateUsing');
   const [tags, setTags] = useState(isCollectionSetting ? collectionInfo.tags.map((tagObj) => tagObj.name) : []);
 
   //TODO сделать запрос через валидацию
   const handleValidationChange = () => {
     console.log('handleValidationChange');
-  }
-
-
-  const openCollectionCreating = (e) => {
-    console.log('e.target: ', e.nativeEvent);
-    if (activeCreating !== 'collectionCreating') {
-      setActiveCreating('collectionCreating');
-    }
-  }
-
-  const openCardCreating = () => {
-    if (activeCreating !== 'cardCreating') {
-      setActiveCreating('cardCreating');
-    }
   }
 
   const submitCollectionCreation = async (e) => {
@@ -79,10 +67,10 @@ const CollectionCreatingForm = ({ isCollectionSetting, collectionIdForAddition})
     });
   }
 
-  const handleKeyEnter = (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      // todo переход на следующий компонент
+  const collectionUsingPossibilityHandle = (e) => {
+    const installedUsingPossibility = e.target.id;
+    if (collectionUsingPossibility !== installedUsingPossibility) {
+      setCollectionUsingPossibility(installedUsingPossibility);
     }
   }
 
@@ -90,8 +78,12 @@ const CollectionCreatingForm = ({ isCollectionSetting, collectionIdForAddition})
     setTags((prevState) => prevState.concat(newTagValue))
   }
 
-  const collectionBtnStyle = (activeCreating === 'collectionCreating') ? 'underlined' : '';
-  const cardBtnStyle = (activeCreating === 'cardCreating') ? 'underlined' : '';
+  const handleKeyEnter = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      // todo переход на следующий компонент
+    }
+  }
 
   return (
     <div className="collection-creating-form-wrapper">
@@ -105,7 +97,6 @@ const CollectionCreatingForm = ({ isCollectionSetting, collectionIdForAddition})
           onValidationChange={handleValidationChange}
           disabled={isCollectionSetting}
         />
-
         <TextArea 
           id="collectionDescription"
           label="Введите описание"
@@ -113,14 +104,19 @@ const CollectionCreatingForm = ({ isCollectionSetting, collectionIdForAddition})
           value={collectionDescription}
           onChange={(e) => setCollectionDescription(e.target.value)}
         />
-
         <div className="card-collection-creating-nav-buttons">
-          <div className={`${collectionBtnStyle}`}>
-            <Button btnStyle='link' label='Приватная' id='asdasd' action={openCollectionCreating} textColor='black' fontSize='big' />
-          </div>
-          <div className={`${cardBtnStyle}`}>
-            <Button btnStyle='link' label='Общедоступная' action={openCardCreating} textColor='black' fontSize='big' />
-          </div>
+          <ToggleButton
+            id='privateUsing'
+            label='Приватная'
+            onClick={collectionUsingPossibilityHandle}
+            activeState={collectionUsingPossibility}
+          />
+          <ToggleButton
+            id='publicUsing'
+            label='Общедоступная'
+            onClick={collectionUsingPossibilityHandle}
+            activeState={collectionUsingPossibility}
+          />
         </div>
         <div className='tags-creating-form'>
           <TagsCreatingForm

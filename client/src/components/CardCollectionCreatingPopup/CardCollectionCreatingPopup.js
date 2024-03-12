@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { CardCollectionCreatingNav } from './CardCollectionCreatingNav/CardCollectionCreatingNav'
 import { CardCreatingForm } from './CardCreatingForm/CardCreatingForm';
@@ -8,11 +8,14 @@ import './cardCollectionCreatingPopup.scss';
 
 const CardCollectionCreatingPopup = () => {
   const location = useLocation();
-  const { state } = location;
-  
-  const isCollectionSetting = state?.from === 'onCollectionSetting';
-  const isCollectionAddition = state?.from === 'CollectionEditingPageBody';
-  const collectionIdForAddition = state?.collectionIdForAddition;
+
+  // const isCollectionSetting = locationState === 'onCollectionSetting';
+  // const isCollectionAddition = locationState === 'CollectionEditingPageBody';
+  // Необходимо для сохранения состояния "перешли из коллекции"
+  const [locationState, setLocationState] = useState(location.state);
+  const isCollectionSetting = useMemo(() => locationState?.from === 'onCollectionSetting', [locationState]);
+  const isCollectionAddition = useMemo(() => locationState?.from === 'CollectionEditingPageBody', [locationState]);
+  const collectionIdForAddition = locationState?.collectionIdForAddition;
 
   const [activeCreating, setActiveCreating] = useState(isCollectionAddition ? 'cardCreating' : 'collectionCreating')
 
