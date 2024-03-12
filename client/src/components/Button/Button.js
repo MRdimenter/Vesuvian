@@ -9,7 +9,7 @@ import './button.scss';
 * TODO Description
 **/
 
-const Button = ({ label = 'btn', btnStyle='link', link, action, textColor='white', fontSize='normal', disabled }) => {
+const Button = ({ id, label = 'btn', btnStyle='link', link, action, textColor='white', fontSize='normal', disabled }) => {
   const textColors = {
     white: 'text-color-white',
     black: 'text-color-black',
@@ -25,6 +25,7 @@ const Button = ({ label = 'btn', btnStyle='link', link, action, textColor='white
   return (
     <Link to={link} className='link-button'>
       <button
+        id={id}
         color={'black'}
         type="button"
         disabled={disabled}
