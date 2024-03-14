@@ -13,6 +13,7 @@ import ru.vesuvian.service.customer.exception.NotFoundException;
 import ru.vesuvian.service.customer.processing.CustomerProcessing;
 import ru.vesuvian.service.customer.utils.KeycloakRoles;
 import ru.vesuvian.service.customer.utils.mapping.CustomerMapping;
+import ru.vesuvian.service.customer.utils.mapping.impl.KeycloakCustomerMappingImpl;
 
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class KeycloakCustomerService {
     private final KeycloakRealmResourceManager realmResourceManager;
     private final CustomerProcessing customerProcessing;
     private final CustomerMapping<UserRepresentation> customerMapping;
+    private final KeycloakCustomerMappingImpl keycloakCustomerMapping;
 
     public String createCustomerInKeycloak(CustomerRegistrationDto customer) {
         var realmResource = realmResourceManager.getRealmResource();
@@ -51,9 +53,7 @@ public class KeycloakCustomerService {
         var usersResource = userResourceManager.getUsersResource(realmResource);
         var authenticatedUser = usersResource.get(UUID).toRepresentation();
 
-        authenticatedUser.setFirstName(customerUpdateDto.firstName());
-        authenticatedUser.setLastName(customerUpdateDto.lastName());
-        authenticatedUser.setEmail(customerUpdateDto.email());
+        keycloakCustomerMapping.updateFromDto(customerUpdateDto, authenticatedUser);
 
         var userResource = userResourceManager.getUserResource(realmResource, UUID);
         userResource.update(authenticatedUser);

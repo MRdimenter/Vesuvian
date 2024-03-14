@@ -9,5 +9,4 @@ import java.util.List;
 public interface CustomerMapping<T> {
     CustomerGetDto toCustomerGetDto(T source);
     List<CustomerGetDto> toCustomerGetDtos(List<T> sourceList);
-    T updateFromDto(CustomerUpdateDto customerUpdateDto, Customer customer);
 }

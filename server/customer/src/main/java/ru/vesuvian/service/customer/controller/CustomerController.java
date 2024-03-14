@@ -154,7 +154,7 @@ public class CustomerController {
                     content = @Content
             )
     })
-    @PutMapping()
+    @PatchMapping()
     public void updateCustomer(
             @Parameter(description = "Updated customer information", required = true)
             @RequestBody CustomerUpdateDto customerUpdateDto

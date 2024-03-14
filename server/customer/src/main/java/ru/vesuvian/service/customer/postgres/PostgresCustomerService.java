@@ -13,14 +13,14 @@ import ru.vesuvian.service.customer.entity.Customer;
 import ru.vesuvian.service.customer.exception.ExceptionMessageProvider;
 import ru.vesuvian.service.customer.exception.UserNotFoundException;
 import ru.vesuvian.service.customer.repository.CustomerRepository;
-import ru.vesuvian.service.customer.utils.mapping.CustomerMapping;
+import ru.vesuvian.service.customer.utils.mapping.PostgresCustomerMapping;
 
 @Component
 @Slf4j
 @RequiredArgsConstructor
 public class PostgresCustomerService {
     private final CustomerRepository customerRepository;
-    private final CustomerMapping<Customer> customerMapping;
+    private final PostgresCustomerMapping<Customer> customerMapping;
     private final ExceptionMessageProvider errorMsg;
 
     public void saveCustomerInDatabase(CustomerRegistrationDto customer, String UUID) {
@@ -56,7 +56,7 @@ public class PostgresCustomerService {
         var customer = customerRepository.findByUUID(UUID).orElseThrow(
                 () -> new UserNotFoundException(
                         errorMsg.userNotFound(UUID)));
-        customer = customerMapping.updateFromDto(customerUpdateDto, customer);
+        customerMapping.updateFromDto(customerUpdateDto, customer);
         customerRepository.save(customer);
     }
 }
