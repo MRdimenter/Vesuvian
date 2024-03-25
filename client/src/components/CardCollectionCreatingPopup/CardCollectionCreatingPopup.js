@@ -12,7 +12,7 @@ const CardCollectionCreatingPopup = () => {
   // const isCollectionSetting = locationState === 'onCollectionSetting';
   // const isCollectionAddition = locationState === 'CollectionEditingPageBody';
   // Необходимо для сохранения состояния "перешли из коллекции"
-  const [locationState, setLocationState] = useState(location.state);
+  const [locationState, _] = useState(location.state);
   const isCollectionSetting = useMemo(() => locationState?.from === 'onCollectionSetting', [locationState]);
   const isCollectionAddition = useMemo(() => locationState?.from === 'CollectionEditingPageBody', [locationState]);
   const collectionIdForAddition = locationState?.collectionIdForAddition;

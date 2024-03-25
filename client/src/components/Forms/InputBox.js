@@ -115,6 +115,7 @@ const PasswordInputBox = ({
   const [passwordType, setPasswordType] = useState('password');
 
   const disabledStyle = disabled ? 'disabled' : '';
+  
   return (
     <div className={`inputBox ${className} ${direction}`}>
       <WhithLabel
@@ -128,13 +129,12 @@ const PasswordInputBox = ({
             passwordType={passwordType}
             setPasswordType={setPasswordType}
           >
-            
             <input 
               className={`form-input ${disabledStyle}`}
               id={className}
               type={passwordType}
               value={value}
-              onChange={(e) => onChange(e)}
+              onChange={(e) => onChange(e.target.value)}
               onFocus={(e) => clearWarn(e)}
               onBlur={(e) => inputValidation(e, password, onValidationChange)}
               disabled={disabled}

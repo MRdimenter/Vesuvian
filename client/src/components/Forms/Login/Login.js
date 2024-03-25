@@ -6,7 +6,7 @@ import './login.scss';
 
 import { authenticationAction, authenticationStateAction } from '../../../store/actions/authenticationActions';
 import { OAuth2Service } from '../../../common/utils/OAuth2Service';
-import { InputBox } from '../InputBox';
+import { InputBox, PasswordInputBox } from '../InputBox';
 import { WrongCredentialWarning } from './WrongCredentialWarning';
 import { LoginFooter } from './LoginFooter';
 import { WarningMessage } from './WarningMessage';
@@ -18,14 +18,13 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState('testcollections'); // TODO default state 'testcollections' for testing
-  const [password, setPassword] = useState('Test!1234'); // TODO default state 'Test!1234' for testing
+  const [username, setUsername] = useState('servertestA'); // TODO default state 'testcollections' for testing, actual: servertestA
+  const [password, setPassword] = useState('servertest!1234A'); // TODO default state 'Test!1234' for testing, actual: servertest!1234A
 
   const [isWrongCredentials, setIsWrongCredentials] = useState(false);
   const [isInputsValidated, setIsInputsValidated] = useState(false);
   const [validationData, setValidationData] = useState({});
   const [sendingCredentials, setSendingCredentials] = useState(false);
-
 
   const handleValidationChange = (inputId, isValid) => {
     setValidationData((prevData) => ({
@@ -84,8 +83,20 @@ const Login = () => {
           {isWrongCredentials && <WrongCredentialWarning />}
           <h1>Please Log In</h1>
           <form className='login-form' onSubmit={handleSubmit}>
-            <InputBox className="username" labelContent="Username" value={username} onChange={(e) => setUsername(e.target.value)} onValidationChange={handleValidationChange} />
-            <InputBox className="password" type="password" labelContent="Password" value={password} onChange={(e) => setPassword(e.target.value)} onValidationChange={handleValidationChange} />
+            <InputBox
+              className="username"
+              labelContent="Никнейм"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              onValidationChange={handleValidationChange}
+            />
+            <PasswordInputBox
+              className="password"
+              labelContent="Пароль"
+              value={password}
+              onChange={setPassword}
+              onValidationChange={handleValidationChange}
+            />
             <div className='login-button-wrapper'>
               <Button btnStyle='link' label='Вход' action={handleSubmit} />
             </div>
