@@ -143,9 +143,6 @@ const RegistrationForm = () => {
           onValidationChange={handleValidationChange}
           hitnText={passwordNameHitnText}
         />
-
-
-        
         <PasswordInputBox
           className="confirmPassword"
           labelContent="Введите пароль повторно"

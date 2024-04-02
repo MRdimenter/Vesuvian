@@ -3,7 +3,7 @@ import { Icon } from "../../../Icon/Icon"
 import './eyePasswordButton.scss'
 
 const EyePasswordButton = ({ passwordType, onClick }) => {
-  const iconName = (passwordType === 'password') ? 'view' : 'hide';
+  const iconName = (passwordType === 'password') ? 'hide' : 'view';
   
   return (
     <button onClick={onClick} className="button-eye" type="button">
