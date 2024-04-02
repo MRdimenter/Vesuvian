@@ -1,5 +1,8 @@
 package ru.vesuvian.service.customer.utils.mapping.impl;
 
+import org.keycloak.admin.client.resource.UserResource;
+import org.keycloak.admin.client.resource.UsersResource;
+import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.stereotype.Component;
 import ru.vesuvian.service.customer.dto.CustomerGetDto;
@@ -9,6 +12,7 @@ import ru.vesuvian.service.customer.utils.mapping.KeycloakCustomerMapping;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.TimeZone;
 import java.util.stream.Collectors;
 

@@ -23,7 +23,7 @@ import java.util.List;
 public class KeycloakCustomerService {
     private final KeycloakCustomerResourceManager userResourceManager;
     private final KeycloakRoleManager roleManager;
-    private final KeycloakCustomerRepresentationFactory userRepresentationFactory;
+    private final KeycloakCustomerRepresentation keycloakCustomerRepresentation;
     private final KeycloakResponseManager responseManager;
     private final KeycloakCreateUserFactory createUserFactory;
     private final KeycloakRealmResourceManager realmResourceManager;
@@ -33,7 +33,7 @@ public class KeycloakCustomerService {
 
     public String createCustomerInKeycloak(CustomerRegistrationDto customer) {
         var realmResource = realmResourceManager.getRealmResource();
-        var userRepresentation = userRepresentationFactory.createUserRepresentation(customer);
+        var userRepresentation = keycloakCustomerRepresentation.createUser(customer);
 
         var response = createUserFactory.createUser(realmResource, userRepresentation);
         responseManager.handleUserCreationResponse(response);
@@ -51,11 +51,13 @@ public class KeycloakCustomerService {
     public void updateCustomer(CustomerUpdateDto customerUpdateDto, String UUID) {
         var realmResource = realmResourceManager.getRealmResource();
         var usersResource = userResourceManager.getUsersResource(realmResource);
-        var authenticatedUser = usersResource.get(UUID).toRepresentation();
+        var userResource = usersResource.get(UUID);
+        var authenticatedUser = userResource.toRepresentation();
 
         keycloakCustomerMapping.updateFromDto(customerUpdateDto, authenticatedUser);
+        keycloakCustomerRepresentation.updateUserPassword(customerUpdateDto, userResource);
 
-        var userResource = userResourceManager.getUserResource(realmResource, UUID);
+        userResource = userResourceManager.getUserResource(realmResource, UUID);
         userResource.update(authenticatedUser);
     }
 
