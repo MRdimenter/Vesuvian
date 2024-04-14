@@ -1,0 +1,45 @@
+.list-enter {
+  opacity: 0;
+  max-height: 0;
+}
+
+.list-enter-active {
+  opacity: 1;
+  max-height: 100px; /* Высота, на которую должен расшириться список */
+  transition: opacity 300ms, max-height 300ms;
+}
+
+.list-exit {
+  opacity: 1;
+  max-height: 100px; /* Высота списка перед закрытием */
+}
+
+.list-exit-active {
+  opacity: 0;
+  max-height: 0;
+  transition: opacity 300ms, max-height 300ms;
+}
+
+/* Дополнительные стили по желанию */
+.dropdown {
+  position: relative;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.list li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.list li:hover {
+  background-color: #ddd;
+}
