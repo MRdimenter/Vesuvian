@@ -5,7 +5,6 @@ import { Button } from '../Button/Button';
 import { UserAccountMenu } from '../Header/UserAccountMenu/UserAccountMenu';
 
 import './loginButtons.scss';
-import { AccountMenu } from '../Header/AccountMenu/AccountMenu';
 
 /*
 Компонент отображает кнопки для авторизации и регистрации в пользовательском интерфейсе. 
@@ -39,7 +38,6 @@ export const LoginButtons = () => {
   return (
     <div className='login-buttons'>
       {content}
-      <AccountMenu />
     </div>
   )
 }

@@ -2,11 +2,13 @@ import { Button } from '../../Button/Button'
 import picture from '../../../../src/img/pictures/promo-img.png';
 
 import './promo.scss'
+import { ReactTransitionGroupMenu } from '../../Header/ReactTransitionGroupMenu/ReactTransitionGroupMenu';
 
 const Promo = () => {
   return (
     <div className='promo-wrapper'>
       <section className='promo-header'>
+      <ReactTransitionGroupMenu />
         <div className='promo-header-content big-text'>
           <div className='promo-header-column justify-left'>
             <p>учиться</p>
