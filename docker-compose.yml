@@ -82,6 +82,7 @@ services:
       - SPRING_DATASOURCE_PASSWORD=${CUSTOMER_POSTGRES_PASSWORD}
     depends_on:
       - eureka-server
+      - zipkin
     networks:
       - vesuvian-network
 

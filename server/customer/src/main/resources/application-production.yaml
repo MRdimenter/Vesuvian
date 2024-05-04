@@ -31,6 +31,8 @@ spring:
     addresses: rabbitmq:5672
     username: admin
     password: ${RABBITMQ_USER_ADMIN_PASSWORD}
+  zipkin:
+    base-url: http://zipkin:9411 # Базовый URL для Zipkin
 
 # Keycloak configuration
 keycloak:
