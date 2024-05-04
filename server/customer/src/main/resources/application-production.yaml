@@ -9,7 +9,7 @@ spring:
   application:
     name: customer
   zipkin:
-    base-url: http://zipkin:9411
+    base-url: http://9411/zipkin/
   config:
     import: optional:file:.env[.properties]
   security:
