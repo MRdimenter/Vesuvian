@@ -162,6 +162,8 @@ services:
     container_name: zipkin
     ports:
       - "9411:9411" # Port used for the Zipkin UI and HTTP Api
+    networks:
+      - vesuvian-network
 
 volumes:
   postgres_data:
