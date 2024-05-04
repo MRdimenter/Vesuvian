@@ -55,6 +55,7 @@ public class SpringSecurityConfig {
                 .requestMatchers("/webjars/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/v1/customers/create").permitAll()
                 .requestMatchers("/api/v1/customers/*").hasRole("user")
+                .requestMatchers("/actuator/zipkin/**").permitAll() // Разрешаем доступ к Micrometer Zipkin
                 .anyRequest().authenticated() // остальной API будет доступен только аутентифицированным пользователям
                 .and()
                 .csrf().disable()  // отключаем встроенную защиту от csrf атак, используется из OAUTH2

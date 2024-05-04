@@ -1,0 +1,97 @@
+# Server configuration
+server:
+  port: 8090
+  ssl:
+    enabled: false # настройка для Spring что бы он использовал SSL
+
+# Spring configuration
+spring:
+  application:
+    name: customer
+  zipkin:
+    base-url: http://localhost:9411
+  config:
+    import: optional:file:.env[.properties]
+  security:
+    oauth2:
+      resource-server:
+        jwt:
+          jwk-set-uri: http://212.113.120.198:8282/realms/dev/protocol/openid-connect/certs # ссылка на сертификаты authserver для проверки целостности access token
+  datasource:
+    #url: jdbc:postgresql://customer-postgres:5432/customers
+    url: jdbc:postgresql://localhost:5435/customers
+    username: postgres
+    password: ${CUSTOMER_POSTGRES_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      format_sql: true
+    show-sql: true
+  rabbitmq:
+    #addresses: rabbitmq:5672
+    addresses: localhost:5672
+    username: admin
+    password: ${RABBITMQ_USER_ADMIN_PASSWORD}
+
+# Keycloak configuration
+keycloak:
+  realm: dev
+  auth-server-url: http://212.113.120.198:8282/auth
+
+  authorization:
+    auth-server-url: http://212.113.120.198:8282
+    realm: dev
+    resource: app-dev-client
+    username: admin
+    password: ${KEYCLOAK_USER_ADMIN_PASSWORD}
+
+clientURL: http://localhost:3000 # тестовый порт REACT
+
+# Swagger configuration
+springdoc:
+  swagger-ui:
+    oauth:
+      client-id: swagger-ui
+      app-name: swagger-ui
+#    url: /swagger/v1/customers
+#  api-docs:
+#    path: /swagger/v1/customers
+
+# Eureka configuration
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      #defaultZone: http://eureka-server:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/
+
+# RabbitMQ configuration
+rabbitmq:
+  exchanges:
+    customer-events: customer.events.exchange
+  queues:
+    image-service-new-customer: image.service.new-customer.queue
+  routing-keys:
+    new-customer-event: new.customer.event
+
+
+# Micrometer with Zipkin configuration
+management:
+  metrics:
+    export:
+      zipkin:
+        enabled: true
+  tracing:
+    zipkin:
+      enabled: true
+    sampler:
+      probability: 1.0
+    web:
+      client:
+        skipPattern: null
+      server:
+        skipPattern: null
