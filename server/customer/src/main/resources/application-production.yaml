@@ -9,7 +9,7 @@ spring:
   application:
     name: customer
   zipkin:
-    base-url: http://9411/zipkin/
+    base-url: http://zipkin:9411/api/v2/spans
   config:
     import: optional:file:.env[.properties]
   security:
@@ -86,6 +86,7 @@ management:
   tracing:
     zipkin:
       enabled: true
+      base-url: http://zipkin:9411/api/v2/spans # Ваш URL для Zipkin
     sampler:
       probability: 0.1
     web:
