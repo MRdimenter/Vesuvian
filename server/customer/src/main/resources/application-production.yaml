@@ -8,8 +8,6 @@ server:
 spring:
   application:
     name: customer
-  zipkin:
-    base-url: http://zipkin:9411/api/v2/spans
   config:
     import: optional:file:.env[.properties]
   security:
@@ -79,18 +77,9 @@ rabbitmq:
 
 # Micrometer with Zipkin configuration
 management:
-  metrics:
-    export:
-      zipkin:
-        enabled: true
   tracing:
-    zipkin:
-      enabled: true
-      base-url: http://zipkin:9411/api/v2/spans # Ваш URL для Zipkin
-    sampler:
-      probability: 0.1
-    web:
-      client:
-        skipPattern: null
-      server:
-        skipPattern: null
+    sampling:
+      probability: 1.0 # only for testing purpose, switch back to 0.1 for production code
+  zipkin:
+    tracing:
+      endpoint: http://zipkin:9411/api/v2/spans
