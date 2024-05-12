@@ -14,6 +14,8 @@
     position: relative;
     z-index: 1;
     background-color: $btn-green;
+    border-color: $btn-green;
+    border-style: none;
   }
 
   .btn_group-transition {
@@ -62,8 +64,8 @@
 .alert-enter-active {
   opacity: 1;
   transform: translateX(0);
-  transition: opacity 300ms, transform 300ms;
-  animation: show-loader 0.5s forwards;
+  // transition: opacity 300ms, transform 300ms;
+  animation: show-loader 0.2s forwards;
 }
 
 
@@ -89,7 +91,7 @@
 
 .alert-exit-active {
   opacity: 1;
-  animation: show-loader 0.5s reverse;
+  animation: show-loader 0.2s reverse;
 }
 
 .alert-exit-done {
