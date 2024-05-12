@@ -3,11 +3,13 @@
 .dropdown-menu {
     // position: absolute;
     width: 100px;
-    background: $light-grey;
+    // background: $light-grey;
+    background-color: $btn-green;
     padding: 10px; 
 }
 
 .dropdown-item {
     margin-top: 10px;
     margin-right: 10px;
+    color: black;
 }

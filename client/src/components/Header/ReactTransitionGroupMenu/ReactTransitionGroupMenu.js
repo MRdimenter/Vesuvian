@@ -1,48 +1,38 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { UserDropdown } from '../UserAccountMenu/UserDropdown/UserDropdown';
 
+// import './styles.scss'; // Подключаем файл стилей для анимации
 import './reactTransitionGroupMenu.scss';
 
-function ReactTransitionGroupMenu() {
-  const [showButton, setShowButton] = useState(true);
-  const [showMessage, setShowMessage] = useState(false);
+const ReactTransitionGroupMenu = () => {
+  const [isVisible, setIsVisible] = useState(false);
 
-  const toggleMenu = () => {
-    setShowMessage(!showMessage);
+  const toggleVisibility = () => {
+    setIsVisible(!isVisible);
   };
 
-
   return (
-    <div style={{ paddingTop: '2rem' }} className='dropdown_wrapper-transition'>
-      <button className="dropdown-btn-transition" onClick={() => toggleMenu()}>
+    <div className='dropdown_wrapper-transition'>
+      <button className="dropdown-btn-transition" onClick={toggleVisibility}>
         Меню
       </button>
       <CSSTransition
-        in={showMessage}
-        timeout={500}
-        classNames="alert"
-        // unmountOnExit
-        onEnter={() => setShowButton(false)}
-        onExited={() => setShowButton(true)}
+        in={isVisible}
+        timeout={100} // Время анимации в миллисекундах
+        classNames="alert" // Имя класса для анимации (fade-enter, fade-enter-active, fade-exit, fade-exit-active)
+        unmountOnExit // Если true, компонент будет удален из DOM после окончания анимации при скрытии
       >
       <div className={`btn_group-transition ${'name'}`}>
         <div className='reverse-rotation'>
           <UserDropdown />
         </div>
-      
-        {/* <ul className={`list ${listStyle}`}>
-          <li>1!!!!!!!!</li>
-          <li>1</li>
-          <li>1</li>
-        </ul> */}
       </div>
-        
       </CSSTransition>
     </div>
   );
-}
+};
 
 export {
   ReactTransitionGroupMenu
-}
+};
