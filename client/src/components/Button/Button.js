@@ -15,6 +15,7 @@ const Button = ({ id, label = 'btn', btnStyle='link', link, action, textColor='w
     black: 'text-color-black',
   }
   const btnLinkFont = {
+    small: 'medium-small-text',
     normal: 'btn-link-font',
     big: 'btn-link-font-big',
   }

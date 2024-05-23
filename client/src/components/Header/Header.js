@@ -4,27 +4,28 @@ import { Button } from '../Button/Button';
 import { SearchInput } from '../Forms/InputBox';
 
 import './header.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavPanel } from './NavPanel/NavPanel';
 
-export const Header = () => {
+const Header = () => {
+
+  const dispatch = useDispatch();
+  // todo оригинально - две константы разные по названию, но с одинаковым значением! ))
+  const {authStatus, authStatus: isAuthenticated, authState: isAuthenticationVerified} = useSelector((state) => state.isAuth);
+  
+  // const content = isAuthenticationVerified && (isAuthenticated ? <UserAccountMenu /> : <RegistrationButtons dispatch={dispatch}/>);
+
+  const isAuth = isAuthenticationVerified && isAuthenticated;
+
   return (
     <div className='header'>
       <Link className='Logo' to={'/'}> <h1 className='header-1'>VESUVIAN</h1> </Link>
-      <nav className='header-nav'>
-        {/* <Link className='Logo customer-list' to={'/listItem'}>Customers List</Link> */}
-        {/* <Link className='Logo customer-list' to={'/userSettingsPage'}>userSettingsPage</Link> */}
-        <div className='header-nav-button'>
-          <Button btnStyle='btn' label='Коллекция' link={'/collectionPage'} />
-        </div>
-        <div className='header-nav-button'>
-          <Button btnStyle='btn' label='Коллекции' link={'/collectionsPage'} />
-        </div>
-        <div className="header-nav-button">
-          <Button btnStyle='btn' label='+' link={'/cardCreatingPage'} />
-        </div>
-        <SearchInput />
-      </nav>
-      <LoginButtons />
+      {isAuth && <NavPanel />}
+      <LoginButtons isAuth={isAuth} />
     </div>
   )
 }
 
+export {
+  Header,
+}

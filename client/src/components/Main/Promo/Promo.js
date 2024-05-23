@@ -1,8 +1,8 @@
 import { Button } from '../../Button/Button'
+import { ReactTransitionGroupMenu } from '../../Header/ReactTransitionGroupMenu/ReactTransitionGroupMenu';
 import picture from '../../../../src/img/pictures/promo-img.png';
 
 import './promo.scss'
-import { ReactTransitionGroupMenu } from '../../Header/ReactTransitionGroupMenu/ReactTransitionGroupMenu';
 
 const Promo = () => {
   return (
@@ -31,8 +31,8 @@ const Promo = () => {
           </div>
           <div className="promo-offer-column">
             <div className='promo-offer-text-column'>
-              <h2 className='h2-promo'>Upload your learning cats</h2>
-              <p className='h5-promo'>Upload all of your learning materials into your iDoRecall library. Word files, PowerPoints, PDFs, images, media hosted on YouTube, Vimeo, Soundcloud, and much more.</p>
+              <h2 className='middle-promo'>Ваш любимый сервис для создания карточек</h2>
+              <p className='h5-promo'>С их помощью вы сможете освоить любой учебный материал. Эффективный способ повторения поможет вам усвоить нужную информацию и успешно применять её на практике.</p>
             </div>
           </div>
         </div>
@@ -40,8 +40,8 @@ const Promo = () => {
         <div className="promo-offer">
           <div className="promo-offer-column">
             <div className='promo-offer-text-column'>
-              <h2 className='h2-promo'>Upload your learning materials</h2>
-              <p className='h5-promo'>Upload all of your learning materials into your iDoRecall library. Word files, PowerPoints, PDFs, images, media hosted on YouTube, Vimeo, Soundcloud, and much more.</p>
+              <h2 className='middle-promo'>Персонализация карточек</h2>
+              <p className='h5-promo'>Добавляйте индивидуальный характер к вашим карточкам с помощью загрузки собственных изображений и формул. Максимум возможностей для эффективной подготовки к экзаменам, тестам и презентациям.</p>
             </div>
           </div>
           <div className="promo-offer-column flex-column-justify-right">
@@ -55,14 +55,12 @@ const Promo = () => {
           </div>
           <div className="promo-offer-column">
             <div className='promo-offer-text-column'>
-              <h2 className='h2-promo'>Upload your learning materials</h2>
-              <p className='h5-promo'>Upload all of your learning materials into your iDoRecall library. Word files, PowerPoints, PDFs, images, media hosted on YouTube, Vimeo, Soundcloud, and much more.</p>
+              <h2 className='middle-promo'>Обмен коллекциями</h2>
+              <p className='h5-promo'>Ищите коллекции по интересующим вас темам и делитесь своими собственными наработками с друзьями или учебными группами. Расширяйте границы знаний вместе с Vesuvian.</p>
             </div>
           </div>
         </div>
-
       </section>
-
 
     </div>
   )

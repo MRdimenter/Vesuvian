@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { Button } from '../Button/Button';
 import { UserAccountMenu } from '../Header/UserAccountMenu/UserAccountMenu';
@@ -19,21 +18,25 @@ RegistrationButtons содержит кнопки для перехода к ф�
 const RegistrationButtons = () => {
   return (
     <>
-      <Button btnStyle='link' label='ВХОД' link={'/login'} />
-      <Button btnStyle='btn' label='РЕГИСТРАЦИЯ' link={'/registrationForm'} />
+      <Button
+        btnStyle='link'
+        fontSize='small'
+        label='ВХОД'
+        link={'/login'}
+      />
+      <Button
+        btnStyle='btn'
+        fontSize='small'
+        label='РЕГИСТРАЦИЯ'
+        link={'/registrationForm'}
+      />
     </>
   )
 }
 
-export const LoginButtons = () => {
+export const LoginButtons = ({ isAuth }) => {
   const dispatch = useDispatch();
-  // todo оригинально - две константы разные по названию, но с одинаковым значением! ))
-  const {authStatus, authStatus: isAuthenticated, authState: isAuthenticationVerified} = useSelector((state) => state.isAuth);
-  
-  const content = isAuthenticationVerified && (isAuthenticated ? <UserAccountMenu /> : <RegistrationButtons dispatch={dispatch}/>);
-
-  useEffect(() => {
-  }, [isAuthenticated])
+  const content = isAuth ? <UserAccountMenu /> : <RegistrationButtons dispatch={dispatch}/>;
 
   return (
     <div className='login-buttons'>
