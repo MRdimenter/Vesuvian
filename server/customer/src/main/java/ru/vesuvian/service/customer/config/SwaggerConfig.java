@@ -43,7 +43,7 @@ public class SwaggerConfig {
 
         private OAuthFlow createAuthorizationCodeFlow() {
                 return new OAuthFlow()
-                        .tokenUrl("http://212.113.120.198:8282/realms/dev/protocol/openid-connect/token")
+                        .tokenUrl("http://217.18.61.22:8282/realms/dev/protocol/openid-connect/token")
                         .scopes(new Scopes().addString("user", "Access to user data"));
         }
 }
