@@ -14,7 +14,7 @@ spring:
     oauth2:
       resource-server:
         jwt:
-          jwk-set-uri: http://212.113.120.198:8282/realms/dev/protocol/openid-connect/certs # ссылка на сертификаты authserver для проверки целостности access token
+          jwk-set-uri: http://217.18.61.22:8282/realms/dev/protocol/openid-connect/certs # ссылка на сертификаты authserver для проверки целостности access token
   liquibase:
     enabled: false # временно
     change-log: classpath:/db/changelog/db.changelog-master.yaml
@@ -38,9 +38,9 @@ spring:
 # Keycloak configuration
 keycloak:
   realm: dev
-  auth-server-url: http://212.113.120.198:8282/auth
+  auth-server-url: http://217.18.61.22:8282/auth
   authorization:
-    auth-server-url: http://212.113.120.198:8282
+    auth-server-url: http://217.18.61.22:8282
     realm: dev
     resource: collection-manager-client
     username: admin
