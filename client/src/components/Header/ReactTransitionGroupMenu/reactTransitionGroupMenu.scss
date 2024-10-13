@@ -26,15 +26,28 @@
     justify-self: end;
 
     display: flex;
-    // flex-direction: column;
-    // align-items: flex-start;
-    // justify-content: flex-start;
+    // flex-direction: row-reverse;
+    
 
-    padding-top: 10px;
-    padding-left: 50px;
 
     .reverse-rotation {
+      width: 188px;
+      // height: 100%
+      height: 100%;
+      // width: 100%;
+      // padding-top: 20px;
+      // border: 1px solid red;
       transform: rotate(-90deg);
+
+      .username {
+        // border: 1px solid red;
+        padding: 8px 0;
+        width: calc(100% - 50px);
+        // padding: auto;
+        display: flex;
+        justify-content: center;
+        // align-items: center;
+      }
     }
 
     // в случае использования списка
@@ -73,8 +86,8 @@
   border-radius: 25px;
   background-color: $btn-green;
   
-  height: 150px;
-  width: 150px;
+  width: 219px; // reverse
+  height: 188px; // reverse
 }
 
 .alert-enter-done * {
@@ -106,8 +119,8 @@
   50%{
   }
   100%{
-    height: 150px;
-    width: 150px;
+    width: 219px; // reverse
+    height: 188px; // reverse
     background-color: $btn-green;
   }
 }

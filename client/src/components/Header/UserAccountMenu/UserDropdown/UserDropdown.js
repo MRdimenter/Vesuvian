@@ -8,12 +8,12 @@ const UserDropdown = () => {
 
   return (
     <ul className="dropdown-menu">
-      <li className="dropdown-item">Profile</li>
+      <li className="dropdown-item">Профиль</li>
       <li className="dropdown-item">
         <Button
           btnStyle='link'
           textColor='black'
-          label='Settings'
+          label='Настройки'
           link={'/userSettingsPage'}
           action={logout}
         />
@@ -22,8 +22,8 @@ const UserDropdown = () => {
       <li className="dropdown-item">
         <Button 
           btnStyle='link'
-          textColor='black'
-          label='LogOut'
+          textColor='red'
+          label='Выйти'
           link={'/'}
           action={logout}
         />
