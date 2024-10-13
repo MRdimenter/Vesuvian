@@ -8,15 +8,12 @@
 
   background-color: transparent;
 
-  // display: flex;
-  // flex-direction: column;
-  // align-items: center;
-
-  border: 2px solid red;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   .footer-nav {
-    border: 1px solid green;
-    // width: 100%;
+    width: 870px;
     height: 100px;
 
     display: grid;
@@ -27,6 +24,17 @@
     li {
       display: flex;
       justify-content: center;
+
+      .socialLinks {
+        display: flex;
+        gap: 10px;
+
+        img {
+          filter: gray; /* IE6-9 */
+          -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+          filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
+        }
+      }
     }
 
     // li:first-child {

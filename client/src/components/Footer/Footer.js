@@ -1,4 +1,4 @@
-import { Button } from '../Button/Button';
+import { Button, IconButton } from '../Button/Button';
 
 import './footer.scss';
 
@@ -6,7 +6,7 @@ export const Footer = () => {
   return (
     <div className='footer small-text'>
       <ul className='footer-nav'>
-        <li style={{ border: '1px solid yellow'}}>
+        <li>
           <Button
             btnStyle='link'
             fontSize='small'
@@ -14,7 +14,7 @@ export const Footer = () => {
             link={'/registrationForm'}
           />
         </li>
-        <li style={{ border: '1px solid yellow'}}>
+        <li>
           <Button
             btnStyle='link'
             fontSize='small'
@@ -22,7 +22,7 @@ export const Footer = () => {
             link={'/registrationForm'}
           />
         </li>
-        <li style={{ border: '1px solid yellow'}}>
+        <li>
           <Button
             btnStyle='link'
             fontSize='small'
@@ -30,12 +30,20 @@ export const Footer = () => {
             link={'/registrationForm'}
           />
         </li>
-        <li style={{ border: '1px solid yellow'}}>
-          <Button
+        <li>
+          {/* <Button
             btnStyle='link'
             label='Ещё что-то'
             link={'/registrationForm'}
-          />
+          /> */}
+          <ul className='socialLinks'>
+            <li><IconButton iconName={'telleg_icon'} width='25' height='25' /></li>
+            <li><IconButton iconName={'twit_icon'} width='25' height='25' /></li>
+            <li><IconButton iconName={'vk_icon'} width='25' height='25' /></li>
+          </ul>
+          
+          
+          
         </li>
       </ul>
         <div className='copyright'>
