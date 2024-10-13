@@ -42,7 +42,7 @@ const Button = ({ id, label = 'btn', btnStyle='link', link, action, textColor='w
 //TODO cursor
 const IconButton = ({ iconName, iconFormat, width='20', height='20', onClick, disabled, cursor }) => {
   return (
-    <button onClick={onClick} className="icon-button" type="button" disabled={disabled}>
+    <button onClick={onClick} className="icon-button" type="button" disabled={disabled} >
       <Icon iconName={iconName} iconFormat={iconFormat} width={width} height={height} />
     </button>
   )
