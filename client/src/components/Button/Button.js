@@ -13,6 +13,7 @@ const Button = ({ id, label = 'btn', btnStyle='link', link, action, textColor='w
   const textColors = {
     white: 'text-color-white',
     black: 'text-color-black',
+    red: 'text-color-red',
   }
   const btnLinkFont = {
     small: 'medium-small-text',

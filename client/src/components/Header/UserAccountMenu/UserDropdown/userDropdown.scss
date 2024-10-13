@@ -1,15 +1,27 @@
 @import "../../../../common/styles/color.scss";
 
 .dropdown-menu {
-    // position: absolute;
-    width: 100px;
-    // background: $light-grey;
-    background-color: $btn-green;
-    padding: 10px; 
+  // position: absolute;
+  width: 100px;
+  // background: $light-grey;
+  background-color: inherit;
+  padding-left: 35px;
+  // height: 50px !important;
+
+  * {
+    font-weight: bold;
+  }
+}
+
+.dropdown-menu ul {
+  border: 2px solid black;
+  list-style-type: none;
+  float: left;
+  margin: 0 15px; /*расстояние между пунктами по ширине*/
 }
 
 .dropdown-item {
-    margin-top: 10px;
-    margin-right: 10px;
-    color: black;
+  margin-top: 30px;
+  margin-right: 10px;
+  color: black;
 }
