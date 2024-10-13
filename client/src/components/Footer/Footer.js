@@ -37,7 +37,7 @@ export const Footer = () => {
             link={'/registrationForm'}
           /> */}
           <ul className='socialLinks'>
-            <li><IconButton iconName={'tell_icon'} width='25' height='25' /></li>
+            <li><IconButton iconName={'telleg_icon'} width='25' height='25' /></li>
             <li><IconButton iconName={'twit_icon'} width='25' height='25' /></li>
             <li><IconButton iconName={'vk_icon'} width='25' height='25' /></li>
           </ul>
